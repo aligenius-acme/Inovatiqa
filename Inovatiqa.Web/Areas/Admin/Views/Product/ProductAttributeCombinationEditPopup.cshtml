@@ -1,0 +1,26 @@
+@model ProductAttributeCombinationModel
+
+@{
+    Layout = "_AdminPopupLayout";
+
+    //page title
+    ViewBag.PageTitle = "Edit combination";
+}
+
+<form asp-controller="Product" asp-action="ProductAttributeCombinationEditPopup"
+      asp-route-btnId="@Context.Request.Query["btnId"]"
+      asp-route-formId="@Context.Request.Query["formId"]">
+    <input asp-for="ProductId" type="hidden" />
+    <div class="content-header clearfix">
+        <h1 class="pull-left">
+            Edit combination
+        </h1>
+        <div class="pull-right">
+            <button type="submit" name="save" class="btn bg-blue">
+                <i class="fa fa-floppy-o"></i>
+                Save
+            </button>
+        </div>
+    </div>    
+    @await Html.PartialAsync("_CreateOrUpdateProductAttributeCombination", Model)    
+</form>

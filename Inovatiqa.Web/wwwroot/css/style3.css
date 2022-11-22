@@ -1,0 +1,1136 @@
+.top_bar_account ul {
+    list-style: none;
+    display: flex;
+    justify-content: flex-end;
+    margin: 0px;
+}
+
+.top_bar_account ul li a {
+    font-size: 16px;
+    line-height: 30px;
+    letter-spacing: .15px;
+    font-weight: 400;
+    color: #fff;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    display: block;
+}
+
+.top_bar_account ul li:last-child a {
+    margin-left: 30px;
+    position: relative;
+}
+
+.details_top_bar {
+    background-color: #0068A3;
+}
+
+.top_bar_account ul li:last-child a:after {content: "\f0d7";font-family: fontawesome;margin-left: 12px;}
+
+.sidebar_menu {
+    background-color: #fff;
+    box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.25);
+}
+
+.sidebar_menu h3 {
+    font-size: 20px;
+    background-color: #0068A3;
+    color: #fff;
+    font-weight: 400;
+    padding: 20px 26px;
+    margin: 0px;
+}
+
+.sidebar_menu ul {
+    list-style: none;
+    margin: 0px;
+    margin-top: 10px;
+}
+
+.sidebar_menu ul li a {
+    font-size: 17px;
+    color: rgb(118 118 118 / 85%);
+    font-weight: 400;
+    line-height: 21px;
+    padding: 15px 26px;
+    display: inline-block;
+}
+
+.sidebar_menu ul li {display: block;}
+
+.sidebar_menu ul li a.active, .sidebar_menu ul li:hover a {
+    background-color: #E3F2FD;
+    color: #000;
+    display: block;
+}
+
+.sidebar_menu ul li:last-child {
+    border-top: 1px solid #E5E5E5;
+    padding-bottom: 10px;
+}
+
+.deshboard_section{
+    padding-top: 58px;
+    padding-bottom:50px;
+}
+
+
+.information_account .Account.Information {
+   /* display: flex;
+    justify-content: space-between;*/
+}
+.information_account {
+    width: 100%;
+    max-width: 940px;
+}
+.information_account p {
+    font-size: 14px;
+    color: #000;
+    line-height: 16.8px;
+    font-weight: 400;
+    margin: 0px;
+    padding-bottom: 35px;
+}
+
+.information_account .one_col h4 {
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 18px;
+}
+
+.information_account hr.line {
+    border-top: 1px solid #F1F3F6;
+    margin-top: 10px;
+    width: 85%;
+}
+
+.newcustomer-area.billing_chang_addres{
+    background-color: #fff;
+   padding-top: 0px;
+   padding-bottom: 0px;
+   padding-left: 15px;
+   padding-right: 15px;
+}
+
+.newcustomer-area.billing_chang_addres .accountform-area .form-title h5 {
+    font-size: 20px;
+    line-height: 24px;
+    color: #000000;
+    font-weight: 400;
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+
+.newcustomer-area.billing_chang_addres hr.line{
+    width: 100%;
+    margin-top: 10px;
+    border-top: 1px solid #F1F3F6;
+        margin-bottom: 43px;
+
+}
+.newcustomer-area.billing_chang_addres .accountform-area .form-group input, .newcustomer-area.billing_chang_addres .accountform-area .form-group select {
+    max-width: 100%;
+    width: 100%;
+}
+.newcustomer-area.billing_chang_addres .accountform-area .form-group label {
+    min-width: 140px;
+    width: 100%;
+}
+.newcustomer-area.billing_chang_addres form.createaccount-form {
+    width: 100%;
+    max-width: 500px;
+}
+.newcustomer-area.billing_chang_addres input.btn.btn-signin {
+    width: 150px!important;
+    float: right;
+}
+
+.newcustomer-area.billing_chang_addres .createaccount-form  .col-md-9 {
+    padding-left: 70px;
+}
+
+.shipping_chang_addres input[type=checkbox] {
+    width: 15px;
+    height: 15px;
+    margin: 0px;
+    margin-right: 0;
+    outline: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    position: absolute;
+    left: 8px;
+    right: 0px;
+    top: 8px;
+    bottom: 0px;
+    background-color: #fff;
+    background: url(../images/UIComponents/new-customer-check.png) center center / 100% 100% no-repeat;
+    border: 1px solid #C4C4C4;
+}
+.shipping_chang_addres input[type=checkbox]:checked {
+    width: 15px;
+    height: 15px;
+    margin: 0px;
+    margin-right: 0;
+    outline: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: url(../images/UIComponents/new-cus-form-checked.svg) center center / 100% 100% no-repeat;
+    position: absolute;
+    left: 8px;
+    right: 0px;
+    top: 8px;
+    bottom: 0px;
+    border: 1px solid #C4C4C4;
+    background-color: #fff;
+}
+.shipping_details {
+    border: 1px solid #D1D1D1;
+    padding: 15px;
+    position: relative;
+    padding-left: 40px;
+    padding-top: 21px;
+    padding-bottom: 25px;
+    margin-bottom: 56px;
+}
+.shipping_details h3 {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 19.2px;
+    margin: 0px;
+}
+.shipping_details h4 {
+    font-size: 14px;
+    line-height: 16.8px;
+    color: #000;
+    font-weight: 400;
+    margin: 0;
+    margin-top: 8px;
+}
+.shipping_details p {
+    font-size: 14px;
+    line-height: 16.8px;
+    color: #868686;
+    font-weight: 400;
+    margin: 0;
+    margin-top: 8px;
+}
+ a.btn.primary.edit.font_roboto {
+    background: #6A983C;
+    border-radius: 1px;
+    color: #fff;
+    padding: 8px 12px;
+    font-size: 12px;
+    line-height: 14.6px;
+    margin-top: 30px;
+}
+.greenBackground{
+    background-color: #F0FFDD;
+}
+.shipping_chang_addres .add_remove {
+    float: right;
+}
+.shipping_chang_addres .add_remove a {
+    margin-left: 25px;
+    font-size: 14px;
+    color: #3A3A3A;
+    font-weight: 400;
+    line-height: 16.41px;
+    letter-spacing: 1px;
+}
+.shipping_chang_addres .add_remove a img {
+    margin-right: 8.67px;
+}
+.shipping_chang_addres .add_remove a:first-child {
+    color: #c4c4c4;
+}
+
+
+.option_select h3 {
+    margin: 0;
+    font-size: 14.5px;
+    line-height: 22.4px;
+    color: #000;
+    font-weight: 400;
+    margin-bottom: 16px;
+}
+.option_select a.btn.primary.edit.font_roboto {
+    margin-top: 0;
+    margin-right: 24px;
+}
+.user_details .form-group label {
+    margin-bottom: 16px;
+}
+a.btn.primary.edit.font_roboto.danger {
+    background-color: #D50029;
+}
+ .user_details .form-group input {
+    background-color: #F0FFDD!important;
+    color: #000;
+}
+.user_details {
+    width: 100%;
+    max-width: 440px;
+}
+.user_details ::-webkit-input-placeholder { /* Edge */
+  color: #000;
+}
+.form-title.add_sub_account {
+    margin-top: 45px;
+}
+.form-title.add_sub_account hr.line {
+    margin-bottom: 0px;
+    margin-top: 0px;
+}
+.form-title.add_sub_account a.btn.primary.edit.font_roboto {
+    margin-top: 20px;
+}
+
+
+.k .payment_portal_top .payment_type_list ul {display: flex;list-style: none;margin-bottom: 0px;}
+
+.k .payment_portal_top .payment_type_list ul li a {
+    font-size: 17px;
+    color: rgb(118 118 118 / 85%);
+    line-height: 21px;
+    font-weight: 400;
+    letter-spacing: 0.1px;
+    padding-right: 25px;
+    margin-right: 33px;
+    padding-top: 8px;
+    display: inline-block;
+}
+.k .payment_portal_top .payment_type_list ul li a.active, .k .payment_portal_top .payment_type_list ul li a:hover{
+    color: #000;
+}
+
+.k .payment_portal_top hr.line {
+    border-top: 1px solid #E2E8F0;
+    margin-top: 15px;
+    margin-bottom: 44px;
+}
+
+.k .payment_portal_top .details_off_amount {
+    display: flex;
+    background-color: #F1F3F6;
+    border: 1px solid #D1D1D1;
+    padding: 16px 0px;
+}
+
+.k .payment_portal_top .details_off_amount .boxss h4 {
+    font-size: 11px;
+    color: #000;
+    line-height: 13.2px;
+    font-weight: 400;
+    margin: 0;
+}
+
+.k .payment_portal_top .details_off_amount .boxss p {
+    font-size: 15px;
+    color: #FD6020;
+    line-height: 18px;
+    font-weight: 400;
+    margin: 0;
+    margin-top: 12px;
+}
+
+.k .payment_portal_top .details_off_amount .boxss {
+    padding: 0px 14px;
+    border-right: 1px solid #DADADA;
+}
+
+.k .payment_portal_top .details_off_amount .boxss:last-child {
+    border-right: none;
+}
+
+.k .payment_portal_top .account_balances {
+    background-color: #f1f3f6;
+    margin-top: 20px;
+    padding: 18px 14px;
+    border: 1px solid #D1D1D1;
+}
+
+.k .payment_portal_top .account_balances h4 {
+    font-size: 11px;
+    color: #000;
+    line-height: 13.2px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.k .payment_portal_top .account_balances p {
+    font-size: 11px;
+    color: #000;
+    line-height: 13.2px;
+    font-weight: 400;
+    margin: 0;
+    margin-top: 8px;
+}
+
+.k .payment_portal_top {
+    width: 100%;
+    max-width: 790px;
+}
+
+
+
+.k .payment_portal_bottom{
+    margin-top: 47px;
+        box-shadow: 0px 4px 4px 0px rgb(0 0 0 / 25%);
+    border: 1px solid #E2E8F0;
+    border-radius: 4px;
+}
+.k .payment_portal_bottom table {
+    margin-bottom: 40px;
+}
+.k .payment_portal_bottom table tr:last-child {
+    border-bottom: 1px solid #E2E8F0;
+}
+.k .payment_portal_bottom table tr th {
+    font-size: 13.5px;
+    font-weight: 400;
+    color: #3A3A3A;
+    line-height: 15.82px;
+    padding: 12px 7px;
+    background-color: #EDF2F7;
+}
+
+.k .payment_portal_bottom table tr td {
+    font-size: 13px;
+    font-weight: 400;
+    color: #636363;
+    line-height: 15.23px;
+    padding: 25px 7px;
+}
+
+.k .payment_portal_bottom table tr {
+    border-top: 1px solid #E2E8F0;
+}
+
+.k .payment_portal_bottom table tr:first-child {
+    border-top: none;
+}
+
+.k .payment_portal_bottom table tr td:last-child  {
+   padding: 20px 7px;
+}
+.newcustomer-area.billing_chang_addres .accountform-area{
+    display: block;
+}
+.k .payment_portal_bottom .table > thead > tr > th, .k .payment_portal_bottom .table > tbody > tr > td {
+    border-right: none;
+    border-top: none;
+}
+.k .payment_portal_bottom .table>thead>tr>th {
+   vertical-align: middle;
+    border-bottom: none;
+}
+.k .payment_portal_bottom .table>tbody>tr>td {
+   vertical-align: middle;
+}
+
+
+.k .payment_portal_top h2 {
+    font-size: 16px;
+    color: #000;
+    line-height: 19.2px;
+    font-weight: 400;
+    margin-bottom: 20px;
+    margin-top: 0px;
+}
+.k .payment_portal_top .details_off_amount.open_invoices .boxss h4 {
+    font-size: 14px;
+    color: #000;
+    line-height: 16.8px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.k .payment_portal_top .details_off_amount.open_invoices .boxss p {
+    font-size: 12px;
+    color: #000;
+    line-height: 15.4px;
+    font-weight: 400;
+    margin: 0;
+    margin-top: 12px;
+}
+.k .payment_portal_top .details_off_amount.open_invoices .boxss {
+    padding-right: 20px;
+}
+.k .payment_portal_top .details_off_amount.open_invoices .boxss:nth-child(2), .k .payment_portal_top .details_off_amount.open_invoices .boxss:last-child{
+padding-left: 30px;
+}
+.k .payment_portal_top .details_off_amount.open_invoices_amount {
+    margin-top: 20px;
+}
+.k .payment_portal_top .details_off_amount.open_invoices_amount .boxss:nth-child(2) p {
+    color: #6A983C;
+}
+.k .payment_portal_top .details_off_amount.open_invoices_amount .boxss p {
+    color: #636363;
+    margin-top: 18px;
+}
+.k .payment_portal_top .details_off_amount.open_invoices_amount .boxss a.btn.primary.edit.font_roboto {
+    margin: 0!important;
+    background: #0068A3;
+}
+.k .payment_portal_top .details_off_amount.open_invoices_amount {
+    display: flex;
+    align-items: center;
+}
+.k .payment_portal_top .details_off_amount.open_invoices_amount .boxss {
+    border-right: none;
+    padding-right: 40px;
+}
+.k .payment_portal_top .details_off_amount.open_invoices .boxss:first-child {
+    width: 100%;
+    max-width: 390px;
+}
+.k .payment_portal_top .details_off_amount.open_invoices_amount .boxss:nth-child(4){
+        border-right: 1px solid #DADADA;
+}
+.k .payment_portal_top .details_off_amount.open_invoices_amount .boxss:last-child{
+padding-left: 48px;
+}
+
+.checkbox.k {
+       float: right;
+    margin-bottom: 8px;
+    margin-top: 36px;
+}
+.checkbox.k label {
+    display: flex;
+    align-items: center;
+    font-size: 13.5px;
+    line-height: 16.2px;
+    font-weight: 600;
+    color: #000;
+}
+.checkbox.k input.click-check {
+    margin-top: 0px;
+}
+    .checkbox.k label input[type=checkbox]:checked, .payment_portal_bottom_open_invoice input[type=checkbox]:checked {
+        background: url(../images/UIComponents/new-cus-form-checked.svg) center center / 100% 100% no-repeat;
+        border: 1px solid #C4C4C4;
+    }
+    .checkbox.k label input[type=checkbox], .payment_portal_bottom_open_invoice input[type=checkbox] {
+        width: 15px;
+        height: 15px;
+        margin: 0px;
+        margin-right: 14px;
+        margin-left: 14px;
+        outline: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        background: url(../images/UIComponents/new-customer-check.png) center center / 100% 100% no-repeat;
+        position: relative;
+        left: 0px;
+        right: 0px;
+        top: 0px;
+        bottom: 0px;
+        border: 1px solid #C4C4C4;
+        background-color: #fff;
+    }
+.payment_portal_bottom.payment_portal_bottom_open_invoice input.form-control {
+    background: #FFFFFF;
+    border: 1px solid #D1D1D1;
+    box-sizing: border-box;
+    border-radius: 1px;
+    box-shadow: none;
+    height: 30px;
+}
+.k .payment_portal_bottom.payment_portal_bottom_open_invoice {
+    margin-top: 0;
+}
+.k .payment_portal_bottom.payment_portal_bottom_open_invoice table tr th {
+    font-size: 12.5px;
+}
+.k .payment_portal_bottom.payment_portal_bottom_open_invoice table tr td {
+    font-size: 11px;
+}
+.k .payment_portal_bottom.payment_portal_bottom_open_invoice table tr td:first-child {
+    color: #46760A;
+}
+
+
+
+.k .my_details .form-title h5 {
+    font-size: 18px;
+    color: #000;
+    line-height: 21px;
+    font-weight: 400;
+    margin-bottom: 0px;
+}
+
+.k .my_details hr.line {
+    border-top: 1px solid #E2E8F0;
+    margin-top: 23px;
+}
+.k .my_details .form-title a {
+    font-size: 13px;
+    line-height: 15.23px;
+    font-weight: 400;
+    color: #FF8B00;
+    display: flex;
+    justify-content: flex-end;
+}
+.k .my_details .form-title p {
+    font-size: 13.5px;
+    line-height: 16.2px;
+    color: #000;
+    font-weight: 400;
+    margin-bottom: 0px;
+    margin-top: 20px;
+}
+.k .my_details .list_item_order {
+    float: right;
+}
+.k .my_details .list_item_order a.btn.primary.edit.font_roboto {
+    margin-left: 28px;
+}
+.k .my_details .list_item_order a.btn.primary.edit.font_roboto.danger{
+    background-color: #0068A3;
+}
+.k .payment_portal_bottom.my_list_table table tr th {
+    padding: 12px 33px;
+}
+.k .payment_portal_bottom.my_list_table table tr td {
+    padding: 25px 33px;
+}
+.k .show_item p{
+    font-size: 13.5px;
+    line-height: 16.2px;
+    color: #636363;
+    font-weight: 400;
+    margin-bottom: 0px;
+    margin-top: 20px;
+}
+.k .my_details .accountform-area {
+    margin-bottom: 100px;
+}
+.k .payment_portal_bottom.my_list_table1 table tr td:nth-child(2) {
+    color: #46760A;
+}
+.k .my_details .form-title1 p {
+    margin-top: 56px;
+}
+
+/* The Modal (background) */
+.modal.filling_details {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 248px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal.filling_details .modal-content {
+  position: relative;
+  background-color: #fefefe;
+  margin: auto;
+  padding: 0;
+  border: none;
+    width: 58%;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+  -webkit-animation-name: animatetop;
+  -webkit-animation-duration: 0.4s;
+  animation-name: animatetop;
+  animation-duration: 0.4s
+}
+
+/* Add Animation */
+@-webkit-keyframes animatetop {
+  from {top:-300px; opacity:0} 
+  to {top:0; opacity:1}
+}
+
+@keyframes animatetop {
+  from {top:-300px; opacity:0}
+  to {top:0; opacity:1}
+}
+
+/* The Close Button */
+/*.close {
+  color: white;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}*/
+
+.modal.filling_details .modal-header {
+  padding: 0px 20px;
+  background-color: #0068A3;
+  color: white;
+}
+
+.modal.filling_details .modal-body {padding: 25px 20px;}
+
+.modal.filling_details .modal-footer {
+  padding: 25px 20px;
+    background-color: #fff;
+    color: white;
+    border: none;
+    padding-top: 15px;
+}
+.modal.filling_details .modal-body .pop_up_data .form-group label {
+    font-size: 12.5px;
+    line-height: 15px;
+    color: #000000;
+    font-weight: 600;
+    margin-bottom: 0px;
+}
+.modal.filling_details .modal-body .pop_up_data .form-group select {
+    height: auto;
+    border: 1px solid #D1D1D1;
+    box-sizing: border-box;
+    border-radius: 1px;
+    box-shadow: none;
+    padding: 9px 14px;
+    background: #fff url(../images/UIComponents/arrow_up_down.svg) center right 20px / auto no-repeat;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+.modal.filling_details .modal-body .pop_up_data .form-group select option {
+    font-size: 14px;
+    line-height: 17px;
+    color: #000;
+    font-weight: 400;
+    padding: 13px 14px!important;
+    height: auto;
+}
+.modal.filling_details .modal-body .pop_up_data .form-group input {
+    background: #FFFFFF;
+    border: 1px solid #D1D1D1;
+    box-sizing: border-box;
+    border-radius: 1px;
+    box-shadow: none;
+    height: 35px;
+}
+.modal.filling_details .modal-body .pop_up_data ::-webkit-input-placeholder { /* Edge */
+  color: #979797;
+}
+.modal.filling_details .modal-body .pop_up_data select {
+  color: #000;
+}
+.modal.filling_details .modal-body .pop_up_data .form-group {
+    margin-bottom: 0;
+}
+
+.modal.filling_details .modal-header h2 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.modal.filling_details .modal-body .pop_up_data p {
+    margin: 0px;
+    text-align: right;
+    color: #979797;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    margin-top: 5px;
+}
+
+
+.modal.filling_details .modal-body .pop_up_form .shipping_details input[type=checkbox]:checked {
+    background: url(../images/UIComponents/new-customer-check.png) center center / 100% 100% no-repeat;
+    border: 1px solid #C4C4C4;
+}
+
+.modal.filling_details .modal-body .pop_up_form .shipping_details input[type=checkbox] {
+    width: 15px;
+    height: 15px;
+    margin: 0px;
+    margin-right: 0;
+    outline: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: url(../images/UIComponents/new-cus-form-checked.svg) center center / 100% 100% no-repeat;
+    position: absolute;
+    left: 12px;
+    right: 0px;
+    top: 20px;
+    bottom: 0px;
+    border: 1px solid #C4C4C4;
+    background-color: #fff;
+}
+
+.modal.filling_details .modal-body .pop_up_form .shipping_details {
+    margin-bottom: 0px;
+        padding-top: 17px;
+    padding-bottom: 16px;
+}
+.modal.filling_details .modal-footer a.btn.primary.edit.font_roboto.blue {
+    background-color: #0068A3;
+}
+
+.modal.filling_details .modal-footer .btn.primary.edit.white.close1 {
+    text-shadow: initial;
+    float: initial;
+    opacity: 1;
+    background-color: transparent;
+    font-weight: 400;
+    color: #FD6020;
+}
+.modal-footer a.btn.primary.edit.font_roboto {
+    margin-top: 0px;
+}
+.modal.filling_details .title_list_for_box h4 {
+    margin-top: 0px;
+    font-size: 15px;
+    color: #000;
+}
+
+.modal.filling_details .title_list_for_box {
+    margin-top: 25px;
+}
+
+
+
+#panel {
+  padding: 21px;
+
+}
+
+#panel {
+  display: none;
+  position: absolute;
+  left: auto;
+  right: 0;
+  background-color: #fff;
+    box-shadow: 0px 4px 4px 0px rgb(0 0 0 / 25%);
+    z-index: 9999;
+}
+#panel .addres_box {
+    display: flex;
+    align-items: center;
+        justify-content: space-between;
+}
+
+#panel .addres_box .adress h2 {
+    font-weight: 600;
+    margin: 0;
+    font-size: 18.5px;
+    line-height: 22.2px;
+}
+
+#panel .addres_box .adress h3 {
+    font-weight: 700;
+    margin: 0;
+    font-size: 16px;
+    line-height: 19.2px;
+    margin-top: 15px;
+    margin-bottom: 4px;
+}
+#panel hr.line {
+    border-top: 1px solid #E2E8F0;
+}
+#panel .addres_box .adress h4 {
+    font-weight: 400;
+    margin: 0;
+    font-size: 14px;
+    line-height: 16.8px;
+    margin-bottom: 4px;
+}
+
+#panel .addres_box .adress p {
+    font-weight: 400;
+    margin: 0;
+    font-size: 14px;
+    line-height: 19.8px;
+    margin-top: 0;
+    color: #868686;
+}
+
+#panel .adress_btn {
+    min-width: 100px;
+    text-align: end;
+}
+
+.adress_btn a.btn.primary.edit.font_roboto {
+    margin-top: 15px;
+    background-color: #0068A3
+}
+
+.k.shipping_add {
+    padding-top: 49px;
+    padding-bottom: 49px;
+    background-color: #F1F3F6;
+}
+.k.shipping_add .shipping_details {
+    padding: 0;
+    position: relative;
+    border: none;
+    margin-bottom: 0px;
+    margin-top: 38px;
+}
+.k.shipping_add .shipping_details h3 {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 19.2px;
+    margin: 0px;
+}
+.k.shipping_add .shipping_details h4 {
+    font-size: 14px;
+    line-height: 16.8px;
+    color: #000;
+    font-weight: 400;
+    margin: 0;
+    margin-top: 8px;
+}
+.k.shipping_add .shipping_details p {
+    font-size: 14px;
+    line-height: 16.8px;
+    color: #868686;
+    font-weight: 400;
+    margin: 0;
+    margin-top: 8px;
+}
+.k.shipping_add a.btn.primary.edit.font_roboto {
+    background: #6A983C;
+    border-radius: 1px;
+    color: #fff;
+    padding: 8px 12px;
+    font-size: 12px;
+    line-height: 14.6px;
+    margin-top: 40px;
+}
+.k.shipping_add .adress_selection h2 {
+    font-size: 22px;
+    line-height: 26.4px;
+    font-weight: 400;
+    margin-bottom: 0px;
+    margin-top: 0px;
+}
+
+.k.shipping_add .adress_selection hr.line {
+    margin-top: 16px;
+    border-top: 1px solid #DADADA;
+}
+.k.shipping_add .row.default_spacing {
+    padding-top: 20px;
+    padding-bottom: 150px;
+}
+
+.k.shipping_add .current_data {
+    border: 1px solid #E2E8F0;
+    border-radius: 1px;
+    padding: 22px;
+    margin-top: 38px;
+    width: 100%;
+    max-width: 350px;
+        display: inline-block;
+}
+.k.shipping_add .current_data .adress h2 {
+    font-weight: 600;
+    margin: 0;
+    font-size: 18.5px;
+    line-height: 22.2px;
+}
+.k.shipping_add .current_data .adress h3 {
+    font-weight: 700;
+    margin: 0;
+    font-size: 16px;
+    line-height: 19.2px;
+    margin-top: 15px;
+    margin-bottom: 4px;
+}
+.k.shipping_add .current_data .adress h3 {
+    font-weight: 700;
+    margin: 0;
+    font-size: 16px;
+    line-height: 19.2px;
+    margin-top: 15px;
+    margin-bottom: 4px;
+}
+.k.shipping_add .current_data .adress h4 {
+    font-weight: 400;
+    margin: 0;
+    font-size: 14px;
+    line-height: 16.8px;
+    margin-bottom: 4px;
+}
+.k.shipping_add .current_data .adress p {
+    font-weight: 400;
+    margin: 0;
+    font-size: 14px;
+    line-height: 19.8px;
+    margin-top: 0;
+    color: #868686;
+}
+
+
+@media screen and (max-width: 1200px){
+.k .payment_portal_bottom.my_list_table table tr td {
+    padding: 25px 30px;
+}
+.k .payment_portal_bottom.my_list_table table tr th {
+    padding: 12px 30px;
+}
+.k .my_details .form-title1 p {
+    margin-top: 30px;
+}
+.modal.filling_details {
+    padding-top: 100px;
+}
+}
+@media screen and (max-width: 990px){
+    .sidebar_menu {
+    margin-bottom: 40px;
+}
+.information_account hr.line {
+    width: 100%;
+}
+.information_account p br{
+    display: none;
+}
+.k .payment_portal_top .details_off_amount.open_invoices_amount .boxss {
+    padding-right: 35px;
+}
+.k .my_details .accountform-area {
+    margin-bottom: 70px;
+}
+.modal.filling_details .modal-content {
+    width: 85%;
+}
+.k.shipping_add .shipping_details {
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+.k.shipping_add a.btn.primary.edit.font_roboto {
+    margin-top: 20px;
+}
+.k.shipping_add .current_data {
+    margin-top: 20px;
+}
+.k.shipping_add .row.default_spacing {
+    padding-bottom: 60px;
+}
+}
+@media screen and (max-width: 767px){
+.Account.Information .one_col {
+    margin-bottom: 35px;
+}
+.deshboard_section {
+    padding-bottom: 25px;
+}
+.information_account .one_col {
+    margin-bottom: 35px;
+}
+
+.information_account p {
+    padding-bottom: 10px;
+}
+.newcustomer-area.billing_chang_addres .createaccount-form  .col-md-9 {
+    padding-left: 15px;
+}
+.shipping_details {
+    margin-bottom: 20px;
+}
+.shipping_chang_addres .add_remove {
+    padding-bottom: 20px;
+}
+.form-title.add_sub_account {
+    padding-bottom: 20px;
+}
+.k .payment_portal_bottom {
+    overflow: auto;
+}
+.k .payment_portal_top .payment_type_list ul li a {
+    font-size: 16px;
+    padding-right: 10px;
+    margin-right: 10px;
+}
+.k .payment_portal_top .details_off_amount.open_invoices_amount .boxss:last-child {
+    padding-left: 15px;
+}
+.k .payment_portal_top .details_off_amount.open_invoices_amount .boxss {
+    padding-right: 12px;
+}
+.k .payment_portal_top .details_off_amount.open_invoices .boxss p br {
+    display: none;
+}
+.k .payment_portal_bottom.my_list_table table tr td {
+    padding: 25px 20px;
+}
+.k .payment_portal_bottom.my_list_table table tr th {
+    padding: 12px 20px;
+}
+
+.modal.filling_details {
+    padding-top: 60px;
+}
+.modal.filling_details .modal-body .pop_up_form .shipping_details {
+    margin-bottom: 20px;
+}
+.modal.filling_details .modal-body {
+    padding-bottom: 0px;
+    padding-top: 10px;
+}
+.modal.filling_details .modal-footer {
+    padding-top: 0px;
+    padding-bottom: 15px;
+}
+.modal.filling_details .title_list_for_box {
+    margin-top: 10px;
+}
+}
+
+@media screen and (max-width: 480px){
+.k .payment_portal_top .payment_type_list ul {
+    display: initial;
+}
+.k .payment_portal_top .details_off_amount {
+    display: inherit;
+}
+.k .payment_portal_top .details_off_amount .boxss {
+    border-right: none;
+    padding: 10px 14px;
+    border-bottom: 1px solid #DADADA;
+}
+.k .payment_portal_top .details_off_amount .boxss p {
+    margin-top: 6px;
+}
+.k .payment_portal_top .details_off_amount {
+    padding: 0;
+}
+.k .payment_portal_top .details_off_amount .boxss:last-child {
+    border-bottom: none;
+}
+.k .payment_portal_top .details_off_amount.open_invoices .boxss{
+    padding: 20px 14px;
+}
+.k .payment_portal_top .details_off_amount.open_invoices .boxss:nth-child(2), .k .payment_portal_top .details_off_amount.open_invoices .boxss:last-child {
+    padding-left: 14px;
+}
+.k .payment_portal_top .details_off_amount.open_invoices_amount {
+    display: inherit;
+}
+.k .payment_portal_top .details_off_amount.open_invoices_amount .boxss p {
+    color: #636363;
+    margin-top: 10px;
+}
+.k .payment_portal_top .details_off_amount.open_invoices_amount .boxss {
+    padding: 20px;
+}
+.k .payment_portal_top .details_off_amount.open_invoices_amount .boxss:last-child {
+    padding-left: 20px;
+}
+.k .payment_portal_bottom table {
+    margin-bottom: 30px;
+}
+.k .payment_portal_bottom.my_list_table {
+    margin-top: 25px;
+}
+}

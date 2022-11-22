@@ -1,0 +1,406 @@
+@model ShipmentSearchModel
+@inject Inovatiqa.Services.WorkContext.Interfaces.IWorkContextService workContextService
+@{
+    //page title
+    ViewBag.PageTitle = "Shipments";
+
+}
+
+@{
+    const string hideSearchBlockAttributeName = "ShipmentsPage.HideSearchBlock";
+    var hideSearchBlock = genericAttributeService.GetAttribute<bool>(workContextService.CurrentCustomer, hideSearchBlockAttributeName, workContextService.CurrentCustomer.Id);
+}
+
+<form asp-controller="Order" asp-action="ShipmentList" method="post">
+    <div class="content-header clearfix">
+        <h1 class="pull-left">
+            Shipments
+        </h1>
+        <div class="pull-right">
+            <div class="btn-group">
+                <button type="button" class="btn bg-purple">
+                    <i class="fa fa-file-pdf-o"></i>
+                    Print packaging slips
+                </button>
+                <button type="button" class="btn bg-purple dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    <span class="caret"></span>
+                    <span class="sr-only">&nbsp;</span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li>
+                        <button type="submit" name="exportpackagingslips-all">
+                            Print packaging slips (all found)
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button" id="exportpackagingslips-selected">
+                            Print packaging slips (selected)
+                        </button>
+                    </li>
+                </ul>
+            </div>
+            <button type="button" id="ship-selected" class="btn bg-aqua">
+                <i class="fa fa-truck"></i>
+                Set as shipped (selected)
+            </button>
+            @*<button type="button" id="deliver-selected" class="btn bg-green">
+                <i class="fa fa-check-square-o"></i>
+                Set as delivered (selected)
+            </button>*@
+        </div>
+    </div>
+    <div class="content">
+        <div class="form-horizontal">
+            <div class="panel-group">
+                <div class="panel panel-default panel-search">
+                    <div class="panel-body">
+                        <div class="row search-row @(!hideSearchBlock ? "opened" : "")" data-hideAttribute="@hideSearchBlockAttributeName">
+                            <div class="search-text">Search</div>
+                            <div class="icon-search"><i class="fa fa-search" aria-hidden="true"></i></div>
+                            <div class="icon-collapse"><i class="fa fa-angle-down" aria-hidden="true"></i></div>
+                        </div>
+
+                        <div class="search-body @(hideSearchBlock ? "closed" : "")">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <div class="col-md-4">
+                                            <nop-label asp-for="StartDate" />
+                                        </div>
+                                        <div class="col-md-8">
+                                            <nop-editor asp-for="StartDate" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-4">
+                                            <nop-label asp-for="EndDate" />
+                                        </div>
+                                        <div class="col-md-8">
+                                            <nop-editor asp-for="EndDate" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-4">
+                                            <nop-label asp-for="TrackingNumber" />
+                                        </div>
+                                        <div class="col-md-8">
+                                            <nop-editor asp-for="TrackingNumber" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group" style="display:none">
+                                        <div class="col-md-4">
+                                            <nop-label asp-for="WarehouseId" />
+                                        </div>
+                                        <div class="col-md-8">
+                                            <nop-select asp-for="WarehouseId" asp-items="Model.AvailableWarehouses" />
+                                        </div>
+                                    </div>
+                                    @*<div class="form-group">
+                                        <div class="col-md-4">
+                                            <nop-label asp-for="LoadNotDelivered" />
+                                        </div>
+                                        <div class="col-md-8">
+                                            <nop-editor asp-for="LoadNotDelivered" />
+                                        </div>
+                                    </div>*@
+                                    <div class="form-group">
+                                        <div class="col-md-4">
+                                            <nop-label asp-for="OrderId" />
+                                        </div>
+                                        <div class="col-md-8">
+                                            <nop-editor asp-for="OrderId" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-7">
+                                    <div class="form-group">
+                                        <div class="col-md-4">
+                                            <nop-label asp-for="CountryId" />
+                                        </div>
+                                        <div class="col-md-8">
+                                            <nop-select asp-for="CountryId" asp-items="Model.AvailableCountries" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-4">
+                                            <nop-label asp-for="StateProvinceId" />
+                                        </div>
+                                        <div class="col-md-8">
+                                            <nop-select asp-for="StateProvinceId" asp-items="Model.AvailableStates" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-4">
+                                            <nop-label asp-for="County" />
+                                        </div>
+                                        <div class="col-md-8">
+                                            <nop-editor asp-for="County" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-4">
+                                            <nop-label asp-for="City" />
+                                        </div>
+                                        <div class="col-md-8">
+                                            <nop-editor asp-for="City" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-4">
+                                            <nop-label asp-for="LoadNotShipped" />
+                                        </div>
+                                        <div class="col-md-8">
+                                            <nop-editor asp-for="LoadNotShipped" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-7 col-md-offset-5">
+                                        <button type="button" id="search-shipments" class="btn btn-primary btn-search">
+                                            <i class="fa fa-search"></i>
+                                            Search
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+             <div class="panel panel-default">
+                <div class="panel-body">
+                    @await Html.PartialAsync("Table", new DataTablesModel
+                    {
+                        Name = "shipments-grid",
+                        UrlRead = new DataUrl("ShipmentListSelect", "Order", null),
+                        SearchButtonId = "search-shipments",
+                        PrimaryKeyColumn = nameof(ShipmentModel.Id),
+                        Length = Model.PageSize,
+                        LengthMenu = Model.AvailablePageSizes,
+                        Filters = new List<FilterParameter>
+                        {
+                            new FilterParameter(nameof(Model.StartDate), typeof(DateTime?)),
+                            new FilterParameter(nameof(Model.EndDate), typeof(DateTime?)),
+                            new FilterParameter(nameof(Model.TrackingNumber)),
+                            new FilterParameter(nameof(Model.CountryId)),
+                            new FilterParameter(nameof(Model.StateProvinceId)),
+                            new FilterParameter(nameof(Model.County)),
+                            new FilterParameter(nameof(Model.City)),
+                            new FilterParameter(nameof(Model.WarehouseId)),
+                            new FilterParameter(nameof(Model.LoadNotShipped), typeof(bool)),
+                            new FilterParameter(nameof(Model.LoadNotDelivered),typeof(bool)),
+                            new FilterParameter(nameof(Model.OrderId))
+                        },
+                        ColumnCollection = new List<ColumnProperty>
+                        {
+                            new ColumnProperty(null)
+                            {
+                                Render = new RenderChildCaret(),
+                                Width = "5",
+                                Searchable = false,
+                                ClassName =  InovatiqaColumnClassDefaults.ChildControl,
+                            },
+                            new ColumnProperty(nameof(ShipmentModel.Id))
+                            {
+                                IsMasterCheckBox = true,
+                                Render = new RenderCheckBox("checkbox_shipments"),
+                                Searchable = false,
+                                ClassName =  InovatiqaColumnClassDefaults.CenterAll,
+                                Width = "50"
+                            },
+                            new ColumnProperty(nameof(ShipmentModel.Id))
+                            {
+                                Title = "Shipment #",
+                                Width = "80"
+                            },
+                            new ColumnProperty(nameof(ShipmentModel.CustomOrderNumber))
+                            {
+                                Title = "Order #",
+                                Width = "100"
+                            },
+                            new ColumnProperty(nameof(ShipmentModel.TrackingNumber))
+                            {
+                                Title = "Tracking number"
+                            },
+                            new ColumnProperty(nameof(ShipmentModel.TotalWeight))
+                            {
+                                Title = "Total weight",
+                                Width = "100",
+                                Visible = false
+                            },
+                            new ColumnProperty(nameof(ShipmentModel.ShippedDate))
+                            {
+                                Title = "Date shipped",
+                                Width = "150"
+                            },
+                            new ColumnProperty(nameof(ShipmentModel.DeliveryDate))
+                            {
+                                Title = "Date delivered",
+                                Width = "150",
+                                Visible = false
+                            },
+                            new ColumnProperty(nameof(OrderModel.Id))
+                            {
+                                Title = "View",
+                                Width = "100",
+                                ClassName = InovatiqaColumnClassDefaults.Button,
+                                Render = new RenderButtonView(new DataUrl("~/Admin/Order/ShipmentDetails/"))
+                            }
+                        },
+                        ChildTable = new DataTablesModel
+                        {
+                            Name = "products-grid",
+                            UrlRead = new DataUrl("ShipmentsItemsByShipmentId", "Order", null),
+                            IsChildTable = true,
+                            Paging = false,
+                            Length = Model.PageSize,
+                            LengthMenu = Model.AvailablePageSizes,
+                            Filters = new List<FilterParameter>
+                            {
+                                new FilterParameter(nameof(ShipmentItemSearchModel.ShipmentId), nameof(OrderModel.Id), true)
+                            },
+                            ColumnCollection = new List<ColumnProperty>
+                            {
+                                new ColumnProperty(nameof(ShipmentItemModel.ProductName))
+                                {
+                                    Title = "Product",
+                                    Width = "400"
+                                },
+                                new ColumnProperty(nameof(ShipmentItemModel.ShippedFromWarehouse))
+                                {
+                                    Title = "Warehouse",
+                                    Width = "150"
+                                },
+                                new ColumnProperty(nameof(ShipmentItemModel.QuantityInThisShipment))
+                                {
+                                    Title = "Qty shipped",
+                                    Width = "150"
+                                },
+                                new ColumnProperty(nameof(ShipmentItemModel.ItemWeight))
+                                {
+                                    Title = "Item weight",
+                                    Width = "150"
+                                },
+                                new ColumnProperty(nameof(ShipmentItemModel.ItemDimensions))
+                                {
+                                    Title = "Item dimensions",
+                                    Width = "150"
+                                }
+                            }
+                        }
+                    })
+                </div>
+            </div>
+                <script>
+                    $(document).ready(function() {
+                        //load states when changing a country dropdownlist
+                        $("#@Html.IdFor(model => model.CountryId)").change(function() {
+                            var selectedItem = $(this).val();
+                            var ddlStates = $("#@Html.IdFor(model => model.StateProvinceId)");
+                            $.ajax({
+                                cache: false,
+                                type: "GET",
+                                url: "@(Url.Action("GetStatesByCountryId", "Country"))",
+                                data: {
+                                    "countryId": selectedItem,
+                                    "addAsterisk": "true"
+                                },
+                                success: function (data, textStatus, jqXHR) {
+                                    ddlStates.html('');
+                                    $.each(data, function(id, option) {
+                                        ddlStates.append($('<option></option>').val(option.id).html(option.name));
+                                    });
+                                },
+                                error: function (jqXHR, textStatus, errorThrown) {
+                                    $("#statesAlert").click();
+                                }
+                            });
+                        });
+
+                        //"ship selected" button
+                        $('#ship-selected').click(function(e) {
+                            e.preventDefault();
+
+                            var postData = {
+                                selectedIds: selectedIds
+                            };
+                            addAntiForgeryToken(postData);
+
+                            $.ajax({
+                                cache: false,
+                                type: "POST",
+                                url: "@(Url.Action("SetAsShippedSelected", "Order"))",
+                                data: postData,
+                                traditional: true,
+                                error: function (jqXHR, textStatus, errorThrown) {
+                                    $('#setAsShippedSelectedFailed-info').text(errorThrown);
+                                    $("#setAsShippedSelectedFailed").click();
+                                },
+                                complete: function (jqXHR, textStatus) {
+                                    updateTable('#shipments-grid');
+                                }
+                            });
+                            return false;
+                        });
+
+                        //"deliver selected" button
+                        $('#deliver-selected').click(function(e) {
+                            e.preventDefault();
+
+                            var postData = {
+                                selectedIds: selectedIds
+                            };
+                            addAntiForgeryToken(postData);
+
+                            $.ajax({
+                                cache: false,
+                                type: "POST",
+                                url: "@(Url.Action("SetAsDeliveredSelected", "Order"))",
+                                data: postData,
+                                traditional: true,
+                                error: function (jqXHR, textStatus, errorThrown) {
+                                    $('#setAsDeliveredSelectedFailed-info').text(errorThrown);
+                                    $("#setAsDeliveredSelectedFailed").click();
+                                },
+                                complete: function (jqXHR, textStatus) {
+                                    updateTable('#shipments-grid');
+                                }
+                            });
+                            return false;
+                        });
+                    });
+
+                </script>
+
+            </div>
+        </div>
+    </div>
+</form>
+<nop-alert asp-alert-id="statesAlert" asp-alert-message="Failed to retrieve states." />
+<nop-alert asp-alert-id="setAsShippedSelectedFailed" />
+<nop-alert asp-alert-id="setAsDeliveredSelectedFailed" />
+
+@*export selected (Excel). We don't use GET approach because it's limited to 2K-4K chars and won't work for large number of entities*@
+<form asp-controller="Order" asp-action="PdfPackagingSlipSelected" method="post" id="pdf-packaging-slip-selected-form">
+    <input type="hidden" id="selectedIds" name="selectedIds" value="" />
+</form>
+
+<script>
+    $(document).ready(function () {
+        $('#exportpackagingslips-selected').click(function (e) {
+            e.preventDefault();
+            var ids = selectedIds.join(",");
+            if (!ids) {
+                $('#exportPackagingSlipsSelected-info').text("No shipments selected");
+                $("#exportPackagingSlipsSelected").click();
+            }
+            else {
+                $('#pdf-packaging-slip-selected-form #selectedIds').val(ids);
+                $('#pdf-packaging-slip-selected-form').submit();
+                updateTable('#shipments-grid');
+            }
+            return false;
+        });
+    });
+</script>
+<nop-alert asp-alert-id="exportPackagingSlipsSelected" />

@@ -1,0 +1,240 @@
+﻿@using Inovatiqa.Web.Models.Order
+@model ReturnRequestItemsSelectionModel
+@{
+    Layout = "_ColumnsOne";
+}
+@{
+    ViewBag.Title = "Return requests";
+}
+@*
+    @Html.Resource(@<script src="@Url.Content("https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js")" type="text/javascript"></script>, "js")
+    @Html.Resource(@<link href="@Url.Content("https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css")" rel="stylesheet" type="text/css" />, "css")
+    @Html.Resource(@<script src="@Url.Content("https://cdnjs.cloudflare.com/ajax/libs/jquery.tipsy/1.0.3/jquery.tipsy.min.js")" type="text/javascript"></script>, "js")
+    @Html.Resource(@<link href="@Url.Content("https://cdnjs.cloudflare.com/ajax/libs/jquery.tipsy/1.0.3/jquery.tipsy.min.css")" rel="stylesheet" type="text/css" />, "css")
+    @Html.Resource(@<link rel="stylesheet" href="@Url.Content("https://pro.fontawesome.com/releases/v5.10.0/css/all.css")" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />, "css")
+    <style>
+        .content-component {
+            border: 1px solid #ccc !important;
+            margin-bottom: 10px !important;
+            border-radius: 3px !important;
+            background: #fff !important;
+            color: #333 !important;
+            box-shadow: 0 2px 1px rgba(0,0,0,0.1) !important;
+            border-top: 1px solid #ddd !important;
+        }
+
+        .main-header {
+            background: #f2f2f2 !important;
+            padding: 2px !important;
+            cursor: pointer !important;
+        }
+
+            .main-header .main {
+                overflow: auto !important;
+                list-style: none !important;
+            }
+
+                .main-header .main > * {
+                    display: block !important;
+                    float: left !important;
+                    margin-right: 20px !important;
+                    font-weight: bold !important;
+                    padding: 1px 0 !important;
+                    color: #999 !important;
+                }
+
+        .po-header-detail {
+            padding: 5px 10px 5px 20px !important;
+            border: 1px solid #eee !important;
+            background: #fff !important;
+            -moz-border-radius: 5px !important;
+        }
+
+        ul.return-total li {
+            clear: both !important;
+        }
+
+        .po-header-detail ul li {
+            float: none !important;
+            margin: 0 !important;
+            font-size: 11px !important;
+            color: #333 !important;
+            font-weight: normal !important;
+        }
+
+        .component-body {
+            padding: 10px !important;
+        }
+
+        .tblSimple {
+            width: 100% !important;
+            border-spacing: 0px !important;
+            clear: both !important;
+            margin-bottom: 5px !important;
+        }
+
+            .tblSimple thead {
+                background: #fafafa !important;
+            }
+
+            .tblSimple > tbody > tr > td {
+                vertical-align: middle !important;
+            }
+
+            .tblSimple td {
+                padding: 4px 2px !important;
+                border-top: 1px solid #ddd !important;
+            }
+
+        .cursor-pointer {
+            cursor: pointer !important;
+        }
+
+        .header-component {
+            width: 120px !important;
+            display: inline !important;
+        }
+
+        .null {
+            border: 1px solid red;
+        }
+    </style>
+    <div class="page account-page return-request-list-page from-panel">
+        <div class="page-title panel-heading">
+            <h1>Return requests</h1>
+        </div>
+
+        <div style="text-align:right;float:right;">
+            <input type="button" value="Cancel" class="btn btn-primary" style="margin-right:0;" onclick="window.location.href='/returnrequest/history'">
+
+            <button class="btn btn_green" style="margin-right:0;" onclick="window.location.href = '@Url.ActionLink("Review", "ReturnRequest", new { Items = Model.SelectedItems, Quantities = Model.SelectedItemsQuantity, Reasons = Model.SelectedItemsReturnReason, Actions = Model.SelectedItemsReturnAction, TotalPrice = Model.SelectedItemsPrice })' + '&ShippingLabel=' + $('#shiplbl').val() + '&Email1=' + $('#email1').val() + '&Email2=' + $('#email2').val()">Continue to Next Step</button>
+        </div>
+        <br>
+        <div class="page-body">
+            <br />
+            <div>
+                <div class="rowTitle dontprint" style="overflow:auto;">
+                    <table width="100%">
+                        <tbody>
+                            <tr>
+                                <td>
+
+
+                                    <div style="font-size:16px;color:#ddd;">
+                                        <span class="bold" style="color:#f60;">Create Return Request</span>
+
+                                        &nbsp;&nbsp;
+                                        <span id="retDef" class="return-def bold">
+                                            Items: <span id="lineCount"> @Model.SelectedItems.Count</span>
+                                            <span style="margin-left:20px;">
+                                                Product Value&nbsp;<b id="totalCredit" style="color: green;">$ @Model.SelectedItemsPrice</b>
+                                            </span>
+                                        </span>
+                                        <p style="color: #000;">Enter your email address to receive a Return Authorization.</p>
+                                    </div>
+                                </td>
+                                <td align="right"><h3 style="color:#888;">Step 3 of 5: Shipping & Authorization Preferences</h3></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; margin-right: 70%;">
+        <p>Enter the number of shipping labels needed (1 shipping label per shipping container)</p>
+        <input type="number" class="form-control" name="name" min="1" required id="shiplbl"/>
+        <p>Provide at least one email address for your Return Authorization.</p>
+        <input class="form-control" type="email" id="email1" required />
+        <input class="form-control" style="margin-top: 10px;" type="email" id="email2"/>
+    </div>
+    @Html.Resource(@<script type="text/javascript">
+
+    </script>, "js")
+*@
+
+@await Component.InvokeAsync("DashboardBlueBand")
+@*@await Html.PartialAsync("_DashboardBlueBand")*@
+
+<section class="container-fluid orderstatus-area">
+    <div class="row">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="dashboard-area">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="sidebar_menu font_lato">
+                                    <h3>Inovatiqa Dashboard</h3>
+                                    @await Html.PartialAsync("_DashboardSideBar", "inovatiqa-returns")
+                                </div>
+                            </div>
+
+                            <div class="col-md-9">
+                                <div class="order-deatil-area s submitrequest step-one">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="tabs font_lato">
+                                                <ul>
+                                                    <li><a href="#" class="previous-check active">Step One</a></li>
+                                                    <li><a href="#" class="previous-check active">Step Two</a></li>
+                                                    <li><a href="#" class="active">Step Three</a></li>
+                                                    <li><a href="#">Step Four</a></li>
+                                                    <li><a href="#">Step Five</a></li>
+
+                                                </ul>
+
+                                                <hr>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="order-content">
+
+                                                <div class="tab-content">
+                                                    <div class="return-invoiceitem font_lato">
+                                                        <div class="row">
+                                                            <div class="col-md-4 col-sm-4">
+                                                                <div class="return-invoice-itemnum" style="justify-content: flex-start;">
+                                                                    <p style="color: black;">Items: @Model.SelectedItems.Count</p>
+                                                                    <p style="color: black;">Product Value $ @Model.SelectedItemsPrice.ToString("0.00")</p>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-12 col-sm-12">
+                                                                <h4 style="color: #46760A; margin-top: 5vh;">Shipping & Authorization Preferences</h4>
+                                                                <p>Enter your email address to receive a Return Authorization.</p>
+                                                            </div>
+                                                            <div class="col-md-6 form-group" style="margin-top: 5vh;">
+                                                                <p>Enter the number of shipping labels needed (1 shipping label per shipping container)</p>
+                                                                <input type="number" min="1" id="shiplbl" required value="1" class="form-control" style="width: 20%; margin-top: 3vh;">
+                                                                <p style="margin-top: 3vh;">Provide at least one email address for your Return Authorization.</p>
+                                                                <input type="email" id="email1" required class="form-control" style="margin-top: 3vh; width: 70%;">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="cancel-req-btns font_roboto text-right" style="margin-top: 0px; width: 80%;">
+                                                        <a href="/Return/History" class="btn cancel-btn">Cancel Request</a>
+                                                        <a onclick="window.location.href = '@Url.ActionLink("Review", "ReturnRequest", new { Items = Model.SelectedItems, Quantities = Model.SelectedItemsQuantity, Reasons = Model.SelectedItemsReturnReason, Actions = Model.SelectedItemsReturnAction, TotalPrice = Model.SelectedItemsPrice })' + '&ShippingLabel=' + $('#shiplbl').val() + '&Email1=' + $('#email1').val() + '&Email2=' + $('#email2').val()" class="btn continue-btn" data-toggle="modal" data-target="#step-returnpopup" data-backdrop="false">Continue</a>
+                                                    </div>
+                                                    <div class="tabs font_lato">
+                                                        <hr>
+                                                    </div>
+                                                    <div>
+                                                        <p></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</section>

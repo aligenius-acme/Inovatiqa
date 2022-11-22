@@ -1,0 +1,32 @@
+﻿<nav class="top-menu">
+    <div class="headerlinks" style="margin-top:4%;">
+        @*@await Component.InvokeAsync("HeaderLinks")*@
+    </div>
+</nav>
+<div class="header">
+    <div class="row">
+        <div class="col-sm-5 col-md-5" style="margin-bottom:20px">
+            <div class="header-logo">
+                <a href="@Url.RouteUrl("Homepage")">
+                    <img style=" width: 270px; height: 99px;margin-top: -40px;" title="" alt="inovatiqa" src="\Themes\CoreTheme\Content\images\InovatiqaLogo1.png">
+                </a>
+            </div>
+        </div>
+        <div class="col-sm-7 col-md-7">
+            <div class="header-selectors-wrapper">
+                <div class="search-box store-search-box pull-right">
+                    @*@await Component.InvokeAsync("SearchBox")*@
+                </div>
+                <div class="header-selectors">
+                    <div class="taxtype-selector">
+                    </div>
+                    <div class="currency-selector">
+                    </div>
+                    <div class="language-selector">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

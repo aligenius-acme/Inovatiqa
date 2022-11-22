@@ -1,0 +1,17 @@
+﻿@model ProductDetailsModel.AddToCartModel
+@using Inovatiqa.Core
+@if (!Model.DisableWishlistButton)
+{
+    var addToWishlistText = "";
+    if (Model.UpdatedShoppingCartItemId > 0 && Model.UpdateShoppingCartItemTypeId == (int)ShoppingCartType.Wishlist)
+    {
+        addToWishlistText = "Update";
+    }
+    else
+    {
+        addToWishlistText = "Add to wishlist";
+    }
+    <div class="add-to-wishlist">
+        <input type="button"data-toggle="modal" id="add-to-wishlist-button-@Model.ProductId" class="btn btn-default add-to-wishlist-button" value="@addToWishlistText" data-productid="@Model.ProductId" onclick="AjaxCart.addproducttocart_details('@Url.RouteUrl("AddProductToCart-Details", new {productId = Model.ProductId, shoppingCartTypeId = (int)ShoppingCartType.Wishlist, wishListId = 0})', '#product-details-form', @((int)ShoppingCartType.Wishlist));return false;" />
+    </div>
+}

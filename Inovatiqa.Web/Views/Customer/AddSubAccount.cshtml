@@ -1,0 +1,245 @@
+﻿@model ChildAccountModel
+@{
+    Layout = "_ColumnsOne";
+}
+@{
+    ViewBag.Title = "Orders";
+}
+<style>
+    .upperbody {
+        display: flex;
+        justify-content: space-between;
+    }
+    .password{
+        width: 45%;
+    }
+    .information{
+        width: 45%;
+    }
+    .body{
+        display: flex;
+        flex-direction: column;
+    }
+    .permissions{
+        width: 45%;
+    }
+    .additional-info{
+        width: 45%;
+    }
+    .lowerbody {
+        display: flex;
+        justify-content: space-between;
+    }
+    label{
+        font-weight: normal;
+        margin-top: 2%;
+    }
+    .addresses{
+        width: 45%;
+    }
+</style>
+<h3>Add Sub-Accounts</h3>
+<div class="page account-page address-list-page">
+
+    <form asp-controller="customer" asp-action="Addsubaccount" method="post">
+        @if (Model.Messages.Count > 0)
+        {
+            foreach (var message in Model.Messages)
+            {
+                <div class="alert alert-@message.Key" role="alert" id="passwordMatch">
+                    @message.Value
+                </div>
+            }
+        }
+        <div class="body">
+            <div class="upperbody">
+                <div class="form-group information">
+                    <h4>Account Information</h4>
+                    <hr />
+                    <label for="firstName">First Name</label>
+                    <input id="firstName" type="text" name="firstName" class="form-control" required value="@(Model.firstName != "" ? Model.firstName : "")" />
+                    <label for="lastName">Last Name</label>
+                    <input id="lastName" type="text" name="lastName" class="form-control" required value="@(Model.lastName != "" ? Model.lastName : "")" />
+                    <label for="email">Email</label>
+                    <input id="email" type="text" name="email" class="form-control" required value="@(Model.email != "" ? Model.email : "")" />
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="gridCheck" name="isActive" @(Model.isEditing ? (Model.isActive ? "checked" : "") : "checked")>
+                        <label class="form-check-label" for="gridCheck">
+                            Is Active
+                        </label>
+                    </div>
+                </div>
+                <div class="password form-group">
+                    <h4>Password</h4>
+                    <hr />
+                    <label for="password1">Password</label>
+                    <input type="password" id="password1" name="password1" class="form-control" @(Model.isEditing ? "" : "required") />
+                    <label for="password2">Confirm Password</label>
+                    <input type="password" id="password2" name="password2" class="form-control" @(Model.isEditing ? "" : "required") />
+                    @if (Model.isEditing)
+                    {
+                        <small class="form-text text-muted">If Password Field is left blank, There will be no changes in Password</small>
+                    }
+                </div>
+            </div>
+            <div class="lowerbody">
+                <div class="form-group permissions">
+                    <h4>Permissions</h4>
+                    <hr />
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="ModifyAccountData" name="Subaccount_MAD" @(Model.isEditing ? (Model.Subaccount_MAD ? "checked" : "") : "")>
+                        <label class="form-check-label" for="ModifyAccountData">
+                            Can Modify Account Data
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="ManageAddressBook" name="Subaccount_MAB" @(Model.isEditing ? (Model.Subaccount_MAB ? "checked" : "") : "")>
+                        <label class="form-check-label" for="ManageAddressBook">
+                            Can Manage Address Book
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="DisplayOrderHistory" name="Subaccount_DAOH" @(Model.isEditing ? (Model.Subaccount_DAOH ? "checked" : "") : "")>
+                        <label class="form-check-label" for="DisplayOrderHistory">
+                            Can Display All order history
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" onclick="HandleApoprovalRequirement()" type="checkbox" id="RequireApproval" name="Subaccount_RABCO" @(Model.isEditing ? (Model.Subaccount_RABCO ? "checked" : "") : "")>
+                        <label class="form-check-label" for="RequireApproval">
+                            Require Approval Before Creating an Order
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="GoToCheckOut" name="Subaccount_GTCC" @(Model.isEditing ? (Model.Subaccount_GTCC ? "checked" : "") : "")>
+                        <label class="form-check-label" for="GoToCheckOut">
+                            Can Go to Checkout Cart
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="RecieveNotification" name="Subaccount_OPN" @(Model.isEditing ? (Model.Subaccount_OPN ? "checked" : "") : "")>
+                        <label class="form-check-label" for="RecieveNotification">
+                            Will Recieve Order Placed Notification
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="useParentAddress" name="Subaccount_FUPA" @(Model.isEditing ? (Model.Subaccount_FUPA ? "checked" : "") : "")>
+                        <label class="form-check-label" for="useParentAddress">
+                            Force Usage Parent Addresses
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="ApproveOrders" name="Subaccount_CAO" @(Model.isEditing ? (Model.Subaccount_CAO ? "checked" : "") : "")>
+                        <label class="form-check-label" for="ApproveOrders">
+                            Can Approve Orders
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="ManageSubAccounts" name="Subaccount_CMS" @(Model.isEditing ? (Model.Subaccount_CMS ? "checked" : "") : "")>
+                        <label class="form-check-label" for="ManageSubAccounts">
+                            Can Manage Subaccounts
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group additional-info">
+                    <h4>Addtional Information</h4>
+                    <hr />
+                    <label>Order Approval Permission Amount</label>
+                    <input type="number" name="OrderApprovalValue" class="form-control" value="@(Model.isEditing ? Model.MaxOrderApprovalValue : "")" />
+                    <small id="orderValueHelp" class="form-text text-muted">Sub-Account will be allowed to approve orders no bigger than above amount. No value or 0 is equal to no limit. "Can Approve Orders" Permission has to be set.</small>
+                    <label>Require Order Approval Minimum Amount</label>
+                    <input type="number" name="OrderPlacementValue" class="form-control" value="@(Model.isEditing ? Model.MinValueToRequestApproval : "")" />
+                    <small id="orderValueHelp" class="form-text text-muted">Sub Account will be Allowed to Purchase Orders less than above amount. Any order greater than given amount will be requested for approval. No value or 0 is equal to no limit. "Require Approval Before Creating Order" Permission has to be set.</small>
+                </div>
+            </div>
+            <div class="addresses">
+                <h4>Address</h4>
+                <hr />
+                <label for="address1">Address 1</label>
+                <input type="text" id="address1" name="address1" class="form-control" required value="@(Model.isEditing ? Model.Address1 : "")" />
+                <label for="address2">Address 2</label>
+                <input type="text" id="address2" name="address2" class="form-control" value="@(Model.isEditing ? Model.Address2 : "")" />
+                <label for="City">City</label>
+                <input type="text" id="City" name="city" class="form-control" required value="@(Model.isEditing ? Model.City : "")" />
+                <label for="Country">Country</label>
+                <div class="form-group">
+                    <select class="form-control valid" id="Country" name="countryId"
+                            data-trigger="country-select"
+                            data-url="@(Url.RouteUrl("GetStatesByCountryId"))"
+                            data-stateprovince="#StateProvinceDropDown"
+                            data-loading="#states-loading-progress">
+                        @if (Model.isEditing)
+                        {
+                            <option value="@(Model.isEditing ? Model.Country: "")">Please Select Country</option>
+                            @foreach (var country in Model.AvailableCountries)
+                            {
+                                <option value="@(country.Value == "0" ? "" : country.Value)" selected="@(country.Text == Model.Country)" disabled="@country.Disabled">@country.Text</option>
+                            }
+                        }
+                        else
+                        {
+                            <option value="@(Model.isEditing ? Model.Country: "")">Please Select Country</option>
+                            @foreach (var country in Model.AvailableCountries)
+                            {
+                                <option value="@(country.Value == "0" ? "" : country.Value)" selected="@country.Selected" disabled="@country.Disabled">@country.Text</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <label for="StateProvince">Regin/State</label>
+                <div class="form-group">
+                    <select class="form-control valid" id="StateProvinceDropDown" name="stateProvinceId">
+                    @if (Model.isEditing)
+                    {
+                            @foreach(var state in Model.AvailableStates)
+                            {
+                                <option selected="@(state.Text == Model.State)" value="@(state.Value)" disabled="@state.Disabled">@state.Text</option>
+                            }
+                    }
+                    else
+                    {
+                        <option selected="" value="">Select state</option>
+                    }
+                    </select>
+                    <span id="states-loading-progress" style="display: none;" class="please-wait">Wait...</span>
+</div>
+                <label for="address2">Company</label>
+                <input type="text" id="company" name="company" class="form-control" value="@(Model.isEditing ? Model.Company : "")" @(Model.isEditing ? (Model.Subaccount_FUPCN ? "disabled" : "") : "") />
+                <label for="zip">ZIP Code</label>
+                <input type="text" id="Zip" name="zip" class="form-control" required value="@(Model.isEditing ? Model.Zip : "")" />
+                <label for="phone">Phone Number</label>
+                <input type="text" id="phone" name="phone" class="form-control" style="margin-bottom: 10px;" value="@(Model.isEditing ? Model.Phone : "")" required />
+            </div>
+            @if (Model.isEditing)
+            {
+                <input type="hidden" data-val="true" name="ChildId" value="@Model.Id">
+                <input type="hidden" data-val="true" name="isEditing" value="true">
+                <input type="hidden" data-val="true" name="isSaving" value="true">
+                <input type="submit" value="Update" class="btn btn-success" style="width:10%;" />
+            }
+            else
+            {
+                <input type="submit" value="Save" class="btn btn-success" style="width:10%;" />
+            }
+            <a href="@Url.ActionLink("ManageSubAccounts", "Customer")" class="btn btn-danger" style="margin-top: 10px; width: 10%;">Cancel</a>
+        </div>
+
+    </form>
+
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script>
+    $(document).ready(function () {
+        if (!isUserLoggedIn()) {
+            window.location.href = '/';
+        }
+    });
+    function HandleCompanyName() {
+        if ($('#useParentCompName').is(':checked')) {
+            $('#company').attr('disabled', 'disabled');
+        }
+        else {
+            $('#company').removeAttr('disabled');
+        }
+    }
+</script>

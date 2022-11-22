@@ -1,0 +1,40 @@
+﻿@model String
+
+<ul>
+    <li><a href="@Url.RouteUrl("AccountInformation")" class="@(Model == "my-account" ? "active": "")">My Account</a></li>
+    <li><a href="@Url.RouteUrl("CustomerOrders")" class="@(Model == "inovatiqa-orders" ? "active": "")">Inovatiqa Orders</a></li>
+    <li><a href="@Url.RouteUrl("ViewWishLists")" class="@(Model == "my-lists" ? "active": "")">My Lists</a></li>
+    <li><a href="@Url.RouteUrl("CustomerReturnRequests")" class="@(Model == "inovatiqa-returns" ? "active": "")">Inovatiqa Returns</a></li>
+    <li><a href="@Url.RouteUrl("PaymentPortal")" class="@(Model == "payment-portal" ? "active": "")">Payment Portal</a></li>
+    <li><a href="@Url.RouteUrl("ManageSubAccounts")" class="@(Model == "manage-sub-accounts" ? "active": "")">Manage Sub-Accounts</a></li>
+    <li><a href="@Url.RouteUrl("ApproveOrders")" class="@(Model == "waiting-for-approval" ? "active": "")">Waiting for Approval</a></li>
+    <li @*id="DashboardSlideBarLoggin"*@><a href="@Url.RouteUrl("Logout")">Sign Out</a></li>
+    @*<li hidden id="DashboardSlideBarLoggout"><a href="@Url.RouteUrl("Login")">Sign In</a></li>*@
+</ul>
+
+@*
+<script>
+    $(document).ready(function () {
+        if (isUserLoggedIn()) {
+            $("#DashboardSlideBarLoggin").show();
+            $("#DashboardSlideBarLoggout").hide();
+        }
+        else {
+            $("#DashboardSlideBarLoggin").hide();
+            $("#DashboardSlideBarLoggout").show();
+        }
+    });
+</script>*@
+
+
+<!--
+
+
+    my-account              =>      My Account
+    inovatiqa-orders        =>      Inovatiqa Orders
+    my-lists                =>      My Lists
+    inovatiqa-returns       =>      Inovatiqa Returns
+    payment-portal          =>      Payment Portal
+    manage-sub-accounts     =>      Manage Sub Accounts
+    waiting-for-approval    =>      Waiting For Approval
+-->

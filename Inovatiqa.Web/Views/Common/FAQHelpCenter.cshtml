@@ -1,0 +1,466 @@
+﻿
+@{
+    Layout = "_ColumnsOne";
+    ViewBag.Title = "FAQ Help Center";
+}
+@*
+    <style>
+        .table td, table th, table tbody tr td {
+            padding: 10px 20px;
+            font-size: 13px;
+        }
+        .accordion {
+            background-color: #eee;
+            color: #444;
+            cursor: pointer;
+            padding: 10px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 15px;
+            transition: 0.4s;
+        }
+
+        .active, .accordion:hover {
+            background-color: #ccc;
+        }
+
+        .panel {
+            padding: 0 18px;
+            display: none;
+            background-color: white;
+            overflow: hidden;
+        }
+    </style>
+    <div class="page  thumbnail">
+        <div class="page-title panel-heading">
+            <h1>FAQ’s Help Center</h1>
+        </div>
+        <div style="margin:10px">
+            <div class="">
+
+                <p>Frequently Asked Questions            </p>
+
+                <button class="accordion"> How can I contact Inovatiqa.com?  </button>
+                <div class="panel">
+                    <br>
+                    <p>  Contact us:  </p>
+                    <p>      Phone: 346-229-4142  </p>
+                    <p>           Fax: 281-220-1350 </p>
+                    <p>            Email: customerservice@inovatiqa.com </p>
+                    <p>       Inovatiqa Corporation </p>
+                    <p>     12815 Capricorn St,  </p>
+                    <p>    Stafford, Texas 77477 </p>
+                    <br>
+                </div>
+
+                <br>
+
+                <button class="accordion">  Can I order by fax or email? </button>
+                <div class="panel">
+                    <br>
+                    <p> Our secure online process is the preferred and most expedient method of ordering from Inovatiqa. However, we understand that there may be times when you would prefer to order by fax or mail. When you have completed the order form, mail or fax it to:  </p>
+                    <br>
+                    <p> Inovatiqa Corporation  </p>
+                    <p> 12815 Capricorn St, Stafford Texas 77477  </p>
+                    <p>  Fax: 281-220-1350 </p>
+                    <br>
+                </div>
+                <br>
+
+
+                <button class="accordion"> What forms of payment does Inovatiqa accept? </button>
+                <div class="panel">
+                    <br>
+                    <p> We accept the following credit cards: MasterCard, Visa, American Express, and Discover. We do not allow multiple credit card payments for web orders. Split credit card payments are accepted for orders placed over the phone.  </p>
+                    <br>
+                </div>
+                <br>
+
+                <button class="accordion"> Purchase Orders: </button>
+                <div class="panel">
+                    <br>
+                    <p>  Inovatiqa Solutions offers open accounts, net 30-day terms to government entities, public school systems, universities, and colleges. Please allow 2-5 days for your terms account application to be processes. </p>
+                    <br>
+                    <p><b> Public Sector: </b> (Federal, States and Local Governments & Education Institutions) </p>
+                    <p> <b> Medical Facilities: </b> (Nursing Homes, Hospitals, Assisted Living and Other medical facilities) </p>
+                    <p><b> W9 Form: </b> signed Inovatiqa Medical W9.   </p>
+                    <br>
+                </div>
+                <br>
+
+
+                <button class="accordion">Do you sell other products not listed on 4mdmedical.com?  </button>
+                <div class="panel">
+                    <br>
+                    <p> Yes, we do, and our customer service team can help. We'll track down the item for you; and give over the information. There's no obligation to purchase.  </p>
+                    <br>
+                </div>
+                <br>
+
+
+                <button class="accordion"> Do you accept Medicare/Medicaid/Insurance? </button>
+                <div class="panel">
+                    <br>
+                    <p>  We don't directly bill any 3rd party insurance payer (Medicare/Medicaid). </p>
+                    <br>
+                </div>
+
+                <button class="accordion">Do you ship internationally?  </button>
+                <div class="panel">
+                    <br>
+                    <p> International customers are responsible for paying any taxes, duties, or customs fees charged by their local government. If you have any questions, email us at <b> customerservice@inovatiqa.com</b>. Please include your name, and where applicable, your order number.  </p>
+                    <br>
+                </div>
+                <br>
+
+
+                <button class="accordion"> How Do I return an Item?  </button>
+                <div class="panel">
+                    <br>
+                    <p> If you receive a product and it doesn't fit, or it is not what you expected it to be, most products can be returned. Products must be in their original packaging with all instruction/warranty paperwork. Product must be unused. A 25% restocking fee will apply.  </p>
+                    <p>To return a product please request an RMA (Return Merchandise Authorization) by calling 346-229-4142 or fill out an online Return Authorization Request. You must request an RMA within 10 days of receiving the product. All returns must be completed within 30 days. Orders returned without an RMA number will not be recognized as a return and will be charged a 30% restocking fee in addition to the shipping charges, once processed.</p>
+                    <br>
+                </div>
+                <br>
+
+                <button class="accordion">Do you ship to PO Boxes?  </button>
+                <div class="panel">
+                    <br>
+                    <p>  Due to the shipping carriers we use, we are only able to ship to physical addresses. </p>
+                    <br>
+                </div>
+
+                <button class="accordion"> Feedback: </button>
+                <div class="panel">
+                    <br>
+                    <p>  Please feel free to leave us feedback by visiting our <a href="/contactus">contact us </a> page </p>
+                    <br>
+                </div>
+
+
+
+
+                <br>
+                <br>
+                <br>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+    var acc = document.getElementsByClassName("accordion");
+    var i;
+
+    for (i = 0; i < acc.length; i++) {
+      acc[i].addEventListener("click", function() {
+        this.classList.toggle("active");
+        var panel = this.nextElementSibling;
+        if (panel.style.display === "block") {
+          panel.style.display = "none";
+        } else {
+          panel.style.display = "block";
+        }
+      });
+    }
+    </script>*@
+
+@model Inovatiqa.Web.Models.Common.EmailModel
+@{
+    Layout = "_ColumnsOne";
+}
+@*
+    <div class="page  from-panel" style="height:800px !important">
+        <div class="page-title panel-heading">
+            <h1>Contract Pricing</h1>
+        </div>
+        <div style="margin:10px">
+            <div class="">
+                <h3>Have a list of contracted items?</h3>
+                <h4>
+                    Complete & submit the form to have a sales specialists contact you within 24 - 48 hours.
+                </h4>
+
+
+                <div class="col-lg-12">
+
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-10">
+                        <form action="/FooterSendEmails" method="post">
+
+                            <input type="text" hidden name="EmailSubject" value="Contact Pricing" asp-for="EmailSubject" />
+
+                            <div class="form-group col-lg-12">
+                                <label asp-for="Company"></label>
+                                <input type="text" name="Company" data-val="true" autocomplete="off" data-val-required="The Company field is required." asp-for="Company" class="form-control input-sm" placeholder="Company Name" />
+                                <span asp-validation-for="Company" style="min-width: 100%;" class="text-danger"></span>
+                            </div>
+
+                            @*<nop-editor asp-for="SendEmail.Body" asp-template="RichEditor" />@
+
+
+
+                            <div class="form-group col-lg-12">
+                                <label asp-for="CustomerFirstName"></label>
+                                <input type="text" name="CustomerFirstName" data-val="true" autocomplete="off" data-val-required="The First Name field is required." asp-for="CustomerFirstName" asp-template="RichEditor" class="form-control input-sm" placeholder="First Name" />
+
+                                <span asp-validation-for="CustomerFirstName" style="min-width: 100%;" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group col-lg-12">
+                                <label asp-for="CustomerLastName"></label>
+                                <input type="text" name="CustomerLastName" data-val="true" autocomplete="off" data-val-required="The Last Name field is required." asp-for="CustomerLastName" class="form-control input-sm" placeholder="Last Name" />
+                                <span asp-validation-for="CustomerLastName" style="min-width: 100%;" class="text-danger"></span>
+                            </div>
+
+
+                            <div class="form-group col-lg-12">
+                                <label asp-for="PhoneNumber"></label>
+                                <input type="text" name="PhoneNumber" data-val="true" autocomplete="off" data-val-required="The Phone Number field is required." asp-for="PhoneNumber" class="form-control input-sm" placeholder="PhoneNumber" />
+                                <span asp-validation-for="PhoneNumber" style="min-width: 100%;" class="text-danger"></span>
+                            </div>
+
+
+                            <div class="form-group col-lg-12">
+                                <label asp-for="CustomerEmail"></label>
+                                <input type="email" name="CustomerEmail" data-val="true" autocomplete="off" data-val-required="The Email field is required." asp-for="CustomerEmail" class="form-control input-sm" placeholder="Email Address" />
+                                <span asp-validation-for="CustomerEmail" style="min-width: 100%;" class="text-danger"></span>
+                            </div>
+
+
+
+
+                            <div class="form-group col-lg-12">
+                                <label> Comments</label>
+                                <textarea type="text" name="Message" data-val="true" autocomplete="off" data-val-required="The Comment field is required." asp-for="Message" class="form-control input-sm" style="height:125px" placeholder="Type a message"></textarea>
+
+                                <span asp-validation-for="Message" style="min-width: 100%;" class="text-danger"></span>
+                            </div>
+
+
+
+                            <div class="form-group  col-lg-12" style="margin-top:20px">
+                                <button type="submit" class="btn btn-primary  col-lg-2" style="text-align:center;"> Submit Form  </button>
+                            </div>
+
+
+                        </form>
+
+
+
+
+
+
+                    </div>
+                    <div class="col-lg-1"></div>
+
+
+
+                </div>
+
+
+                <br>
+                <br>
+                <br>
+
+            </div>
+        </div>
+    </div>
+*@
+
+<style>
+    .become-customer-box {
+        box-shadow: none !important;
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+        padding-top: 10px !important;
+    }
+
+    .newcustomer-area {
+        padding: 0px !important;
+        background: #FFF !important;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        font-weight: 500 !important;
+    }
+
+    .segment-line {
+        border: 0.1px solid #DADADA !important;
+        margin-top: 20px !important;
+        margin-bottom: 25px !important;
+    }
+
+    .price-match-helper-text-bold {
+        font-weight: 600 !important;
+        font-size: 16px !important;
+    }
+
+    .unmuted-list li::before {
+        position: relative;
+        top: -3px;
+    }
+
+    .subheading {
+        font-family: Lato;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 20px;
+        line-height: 24px;
+        color: #000000;
+    }
+
+    .top {
+        margin-left: -30px;
+    }
+
+
+    .mb80 {
+        margin-bottom: 80px !important;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+    .muted-text {
+        font-family: Lato;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 18px;
+        line-height: 22px;
+        /* identical to box height */
+
+
+        color: #636363;
+    }
+</style>
+
+<section class="container-fluid newcustomer-area">
+    <div class="container-fluid" style="background: #F1F3F6; padding: 10px;">
+        <div class="container breadcrumb-bar">
+            <a style="color: #A9A9A9;" class="muted" href="@Url.RouteUrl("HomePage")">Inovatiqa / </a> About Us
+        </div>
+    </div>
+    <div class="row">
+        <div class="container">
+            <div class="row mt10">
+                <div class="col-md-12">
+                    <div class="become-customer-box">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="font_lato">
+                                    <div class="customer-select">
+                                        <h4 class="heading-price-match">Frequently Asked Questions</h4>
+                                        <hr class="segment-line">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12" style="padding-left: 0px;">
+                                    <div class="accountform-area font_lato" style="display: block;">
+                                        <ul class="unmuted-list">
+                                            <li class="mt16"><a href="#contact">How can I contact Inovatiqa Corporation?</a></li>
+                                            <li class="mt16"><a href="#payment">What forms of payment does Inovatiqa Corporation accept?</a></li>
+                                            <li class="mt16"><a href="#unlisted">Do you sell other products not listed on inovatiqa.com?</a></li>
+                                            <li class="mt16"><a href="#return">How do I return a product?</a></li>
+                                            <li class="mt16"><a href="#salestax">Does Inovatiqa Corporation charge a sales tax?</a></li>
+                                            <li class="mt16"><a href="#internationalshipping">Does Inovatiqa Corporation ship internationally?</a></li>
+                                            <li class="mt16"><a href="#poshipping">Do you ship to PO Boxes?</a></li>
+                                            <li class="mt16"><a href="#siteerror">Site errors</a></li>
+                                            <li class="mt16"><a href="#feedback">Feedback available?</a></li>
+                                        </ul>
+                                        <hr class="segment-line">
+                                        <div class="mt42" id="contact">
+                                            <h4 class="subheading">How can I contact Inovatiqa Corporation?</h4>
+                                            <p class="muted-text"><span style="color: #000; padding-right: 15px;">Contact</span> Inovatiqa Corporation</p>
+                                            <p class="muted-text"><span style="color: #000; padding-right: 15px;">Phone</span> 346-229-4142</p>
+                                            <p class="muted-text"><span style="color: #000; padding-right: 15px;">Fax</span> 281-220-1350</p>
+                                            <p class="muted-text"><span style="color: #000; padding-right: 15px;">Email</span> <a href="mailto:customerservice@inovatiqa.com" class="blue">customerservice@inovatiqa.com</a></p>
+                                            <p class="muted-text mb80"><span style="color: #000; padding-right: 15px;">Address</span> 12815 Capricorn St, Stafford, TX, 77477</p>
+                                            <a href="#" class="top contact" hidden><img src="~/images/UIComponents/go_to_top.svg"></a>
+                                        </div>
+                                        <div class="mt74" id="payment">
+                                            <h4 class="subheading">What forms of payment does Inovatiqa Corporation accept?</h4>
+                                            <p class="muted-text">We accept the following:</p>
+                                            <ul class="unmuted-list">
+                                                <li class="muted-text mt16">Visa</li>
+                                                <li class="muted-text mt16">MasterCard</li>
+                                                <li class="muted-text mt16">American Express</li>
+                                                <li class="muted-text mt16">Discover</li>
+                                                <li class="muted-text mt16">Apple Pay</li>
+                                            </ul>
+                                            <p class="muted-text mt20 mb80">We do not allow multiple credit card payments for online orders. Card payments are accepted for orders placed over the phone.</p>
+                                            <a href="#" class="top payment" hidden><img src="~/images/UIComponents/go_to_top.svg"></a>
+                                        </div>
+                                        <div class="mt74" id="unlisted">
+                                            <h4 class="subheading">Do you sell other products not listed on inovatiqa.com?</h4>
+                                            <p class="muted-text mb80">Yes, we do. If you have any questions about a specific product, we can help you. If you feel a need to purchase something right away, don’t worry! Inovatiqa is there for you. </p>
+                                            <a href="#" class="top unlisted" hidden><img src="~/images/UIComponents/go_to_top.svg"></a>
+                                        </div>
+                                        <div class="mt74" id="return">
+                                            <h4 class="subheading">How do I return a product?</h4>
+                                            <p class="muted-text">
+                                                If you receive a product and it doesn't fit, or it is not what you expected it to be, most products can be returned. Products must be unused and come in their original packaging. The instruction and warranty paperwork should be included.
+                                            </p>
+                                            <p class="muted-text mt20 mb80">To return a product, please call <a class="blue" href="callto:346-229-4142">346-229-4142</a> or send an email to <a class="blue" href="mailto:customerservice@inovatiqa.com">customerservice@inovatiqa.com</a>. All returns must be completed within 30 days. </p>
+                                            <a href="#" class="top return" hidden><img src="~/images/UIComponents/go_to_top.svg"></a>
+                                        </div>
+                                        <div class="mt74" id="salestax">
+                                            <h4 class="subheading">Does Inovatiqa Corporation charge a sales tax?</h4>
+                                            <p class="muted-text">Yes, we do. The amount of sales tax charged is based on current local tax rates. Sales tax will be refunded for returned items.</p>
+                                            <p class="muted-text mt20 mb80">State and local sales tax rates can change at any time.</p>
+                                            <a href="#" class="top salestax" hidden><img src="~/images/UIComponents/go_to_top.svg"></a>
+                                        </div>
+                                        <div class="mt74" id="internationalshipping">
+                                            <h4 class="subheading">Does Inovatiqa Corporation ship internationally?</h4>
+                                            <p class="muted-text mb80">International customers and businesses are responsible for paying any taxes or fees charged by their local government. If you have any questions, email us at <a href="mailto:customerservice@inovatiqa.com" class="blue">customerservice@inovatiqa.com</a>. Please include your name and order number.</p>
+                                            <a href="#" class="top internationalshipping" hidden><img src="~/images/UIComponents/go_to_top.svg"></a>
+                                        </div>
+                                        <div class="mt74" id="poshipping">
+                                            <h4 class="subheading">Do you ship to PO Boxes?</h4>
+                                            <p class="muted-text mb80">Unfortunately, we do not ship to PO Boxes. We are only able to ship to physical addresses.</p>
+                                            <a href="#" class="top poshipping" hidden><img src="~/images/UIComponents/go_to_top.svg"></a>
+                                        </div>
+                                        <div class="mt74" id="siteerror">
+                                            <h4 class="subheading">Site errors</h4>
+                                            <p class="muted-text mb80">Inovatiqa reserves the right to revise prices, limit quantities, correct printing and price errors & product descriptions found on our website or any other advertising website. We are not responsible for misleading information from data provided by our manufacturer partners.</p>
+                                            <a href="#" class="top siteerror" hidden><img src="~/images/UIComponents/go_to_top.svg"></a>
+                                        </div>
+                                        <div class="mt74" id="feedback">
+                                            <h4 class="subheading">Feedback available?</h4>
+                                            <p class="muted-text mb80">Customer feedback is always welcomed at Inovatiqa Corporation. Please visit our <a href="@Url.RouteUrl("ContactUs")">Contact Page</a>.</p>
+                                            <a href="#" class="top feedback" hidden><img src="~/images/UIComponents/go_to_top.svg"></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid" style="background: #F1F3F6; padding: 25px;"></div>
+</section>
+
+<script>
+    $('a').click(function () {
+        setTimeout(function () {
+            const list = ['.contact', '.payment', '.unlisted', '.return', '.salestax', '.internationalshipping', '.poshipping', '.siteerror', '.feedback'];
+            const div = document.URL.split('#')[1];
+            const showDiv = '.' + div;
+
+            const index = list.indexOf(showDiv);
+            if (index > -1) {
+                list.splice(index, 1);
+            }
+
+            list.forEach(function (div) {
+                $(div).hide();
+            });
+
+            $(showDiv).show();
+        }, 100);
+    });
+</script>

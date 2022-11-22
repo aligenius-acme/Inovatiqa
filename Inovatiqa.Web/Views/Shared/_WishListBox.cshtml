@@ -1,0 +1,260 @@
+﻿@*<head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        @*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>@
+    </head>
+*@
+@*
+    <div class="container">
+        <div class="modal fade" id="wish-list-box" tabindex="-1" role="dialog" aria-labelledby="Wishlist" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content" style="position: relative; background: #FFF; padding: 15px; width: auto; max-width: 800px; margin: 0 auto;">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <div class="ship-to-title">
+                            <strong>Add item to list</strong>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <div class="shipping-address row">
+                            <div class="fieldset form-horizontal">
+                                <div class="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="form-group">
+                                        <div class="estimate-shipping-row-item address-item">
+                                            <div class="col-sm-11 col-md-11">
+                                                <p>Please select an available list or create a new list.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="shipping-address row">
+                            <div class="fieldset form-horizontal">
+                                <div class="col-12 col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                                    <div class="form-group">
+                                        <div class="estimate-shipping-row-item address-item">
+                                            <div class="col-sm-11 col-md-11">
+
+                                                <p>Available lists:</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xs-12 col-sm-8 col-md-8 col-lg-8">
+                                    <div class="form-group">
+                                        <div class="estimate-shipping-row-item address-item">
+                                            <div class="col-sm-12 col-md-12">
+                                                <select class="estimate-shipping-address-control form-control" id="wishListDDL">
+                                                    <option selected="" value="0">Select one</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="shipping-address row">
+                            <div class="fieldset form-horizontal">
+                                <div class="col-12 col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                                    <div class="form-group">
+                                        <div class="estimate-shipping-row-item address-item">
+                                            <div class="col-sm-11 col-md-11">
+                                                <p>New list name:</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xs-12 col-sm-8 col-md-8 col-lg-8">
+                                    <div class="form-group">
+                                        <div class="estimate-shipping-row-item address-item">
+                                            <div class="col-sm-12 col-md-12">
+                                                <input class="estimate-shipping-address-control form-control" type="text" id="newListName" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="shipping-address row">
+                            <div class="fieldset form-horizontal">
+                                <div class="col-12 col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                                    <div class="form-group">
+                                        <div class="estimate-shipping-row-item address-item">
+                                            <div class="col-sm-11 col-md-11">
+                                                <p style="width:175px">This list can be used by:</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xs-12 col-sm-8 col-md-8 col-lg-8">
+                                    <div class="form-group">
+                                        <div class="estimate-shipping-row-item address-item">
+                                            <div class="col-sm-12 col-md-12">
+                                                <input type="radio" id="everyone" name="wishListType" />&nbsp;Everyone
+                                                <input style=" margin-left: 5px" type="radio" id="justMe" name="wishListType" />&nbsp;Just me
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="common-buttons" style="float:right;width:150px;">
+                                <div style="float:left;">
+                                    <input type="button" id="saveList" name="saveList" value="Save" class="btn btn-primary">
+                                </div>
+                                <div style="float:right;">
+                                    <input type="button" id="cancelList" name="cancelList" value="Cancel" class="btn btn-primary">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+*@
+
+
+
+<div id="wish-list-box" class="modal fade filling_details" style="padding-top:unset" tabindex="-1" role="dialog">
+    <!-- Modal content -->
+    <div class="modal-dialog  modal-dialog-centered">
+
+    <div class="modal-content font_lato">
+        <div class="modal-header">
+            <h2>Add Product To Wishlist</h2>
+        </div>
+        <div class="modal-body" style="padding-bottom: 0px;">
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
+                    <div class="pop_up_data">
+                        <div class="form-group">
+                            <label for="name">Please Select your list</label>
+                            <select class="form-control" id="wishListDDL">
+                                <option selected="" value="0">Select one</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 col-sm-12">
+                    <div class="pop_up_data">
+                        <div class="form-group">
+                            <label for="name">List Name</label>
+                            <input type="text" class="form-control" maxlength="25" onkeyup="countChars(this)" placeholder="Enter Your List Name" id="newListName">
+                            <p id="charNum">25 Characters left</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="steps_box step_2 payment_box" id="cosmic-shipping-method" style="border: none !important;">
+                    <div class="row flex_col m_t_20">
+                        <div class="col-md-12 col-xs-12" style="padding: 0px">
+                            <div class="shipping_list">
+                                <div class="radio_column" style="margin-bottom: 0px">
+                                    <input type="radio" id="justMe" name="wishListType">
+                                    Private List
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-xs-12" style="padding: 0px;">
+                            <div class="shipping_list">
+                                <div class="radio_column" style="margin-bottom: 0px">
+                                    <input type="radio" id="everyone" name="wishListType">
+                                    Public List
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button onclick="closeModal()" id="cancelList" name="cancelList" data-bs-dismiss="modal" class="btn primary edit font_roboto white close1">Cancel</button>
+            <a href="#" id="saveList" name="saveList" class="btn primary edit font_roboto blue">Save</a>
+        </div>
+    </div>
+</div>
+    </div>
+
+
+    <script>
+        function closeModal() {
+            $('#wish-list-box').modal('hide');
+        }
+
+        $(document).ready(function () {
+            $('#wish-list-box').on('hidden', function () {
+                console.log('Modal is fading')
+            });
+        })
+
+        function countChars(obj) {
+            var maxLength = 25;
+            var strLength = obj.value.length;
+            var charRemain = (maxLength - strLength);
+
+            if (charRemain === 0) {
+                document.getElementById("charNum").innerHTML = '<span style="color: red;">You have exceeded the limit of ' + maxLength + ' characters</span>';
+            } else {
+                document.getElementById("charNum").innerHTML = charRemain + ' characters remaining';
+            }
+        }
+
+
+        
+
+    </script>
+
+
+    @*<div class="modal fade" id="wish-list-box" tabindex="-1" role="dialog" aria-labelledby="Wishlist" aria-hidden="true">
+            <div class="modal-dialog modal-sm" style="width:550px">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" style="display:none" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title">Add item to list</h4>
+                    </div>
+                    <div class="modal-body" style="height:240px">
+                        <div style="float:left">
+                            <p>Please select an available list or create a new list.</p>
+                            <div>
+                                <p><strong>Available lists:</strong></p>
+                                <select id="wishListDDL" style="width:250px">
+                                    <option selected="" value="0">Select one</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div style="float:left;height:210px;width:1px;border-left:1px dotted #0000001c;margin-left:13px"></div>
+                        <div style="float:right">
+                            <p>&nbsp;</p>
+                            <div>
+                                <p><strong>New list name:</strong></p>
+                                <input type="text" id="newListName" />
+                            </div>
+                            <div>
+                                &nbsp;
+                            </div>
+                            <div>
+                                <p><strong>This list can be used by:</strong></p>
+                                <input type="radio" id="everyone" name="wishListType" />&nbsp;Everyone<br />
+                                <input type="radio" id="justMe" name="wishListType" />&nbsp;Just me
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="common-buttons" style="float:right;width:150px;">
+                            <div style="float:left;">
+                                <input type="button" id="saveList" name="saveList" value="Save" class="btn btn-default">
+                            </div>
+                            <div style="float:right;">
+                                <input type="button" id="cancelList" name="cancelList" value="Cancel" class="btn btn-default">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>*@

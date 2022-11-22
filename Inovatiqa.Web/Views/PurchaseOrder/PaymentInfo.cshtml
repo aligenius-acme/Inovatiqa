@@ -1,0 +1,108 @@
+﻿@{
+    Layout = "";
+}
+@model Inovatiqa.Services.Payments.PaymentInfoModel
+@*<table width="100%" cellspacing="2" cellpadding="1" border="0">
+        <tr>
+            <td width="200px">
+                <label asp-for="PurchaseOrderNumber">Purchase Order Number:</label>
+            </td>
+            <td>
+                <input type="text" asp-for="PurchaseOrderNumber" style="width:165px;" autocomplete="off" />
+                <span asp-validation-for="PurchaseOrderNumber"></span>
+            </td>
+        </tr>
+    </table>*@
+<style type="text/css">
+
+    .square-input {
+        background: #F9F9F9;
+        border: 1px solid #D1D1D1;
+        box-sizing: border-box;
+        border-radius: 5px;
+        box-shadow: none;
+        outline: none;
+        padding: 10px 20px;
+        height: 41px;
+        line-height: 1em;
+    }
+
+    .square-input--focus {
+        border-color: #ccc;
+        color: #444;
+    }
+
+    .square-input--error {
+        outline: #e4434b;
+    }
+
+    body form input {
+        color: red;
+    }
+    .purchaseOrderLabel {
+        font-family: Poppins;
+        font-size: 15px;
+        font-weight: 900;
+        line-height: 23px;
+        line-height: 100%;
+        text-align: left;
+        vertical-align: top;
+        color: #151515;
+    }
+    ::placeholder {
+        font-family: Open Sans;
+        font-style: normal;
+        font-size: 14px;
+        line-height: 19px;
+        line-height: 100%;
+        text-align: left;
+        vertical-align: top;
+        color: #000000;
+    }
+    .purchaseOrderParaghraph {
+        font-family: Open Sans;
+        font-style: normal;
+        font-size: 12px;
+        line-height: 16px;
+        line-height: 100%;
+        text-align: left;
+        vertical-align: top;
+    }
+</style>
+<div class="payment_body">
+    <div class="row">
+        <div id="square-card-details">
+            <div class="col-md-12 col-sm-12 col-xs-12 form-group">
+                <label class="purchaseOrderLabel">Enter purchase order number or name (Required)</label>
+                <input type="text" asp-for="PurchaseOrderNumber" style="border-color: #FF8B00; border-radius: 5px; background-color: #F5F5CF;" class="form-control" autocomplete="off" />
+                <label class="purchaseOrderLabel" style="margin-top:10px;">Email order confirmation to</label>
+                <input type="text" asp-for="PurchaseOrderEmail" class="form-control purchaseOrderInput" placeholder="purchasing@inovatiqa.com" autocomplete="off" />
+                <p class="purchaseOrderParaghraph" style="margin-top: 10px; color: #000000;">Separate multiple addresses with spaces, commas, or semi-colons.</p>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" style="height: 20px; width: 20px;" disabled />
+                        <span style="color: #6A983C;">Schedule this order</span> &nbsp;(Optional)
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+@*
+        <div>
+            <label>Please provide purchase order number.</label>
+            <div style="width:100%">
+                <div style="width:300px; margin-right:auto; margin-left:auto">
+                    <input type="text" asp-for="PurchaseOrderNumber" autocomplete="off" />
+                    <span asp-validation-for="PurchaseOrderNumber"></span>
+                </div>
+            </div>
+        </div>*@

@@ -1,0 +1,169 @@
+﻿
+<input type="text" hidden name="EmailSubject" value="Contact Your Account Manager" />
+<div class="s contact-mpopupform font_lato">
+    <div id="contact-mform" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="form-group">
+                        <label>Please Select the Appropriate Topic / Contact:</label>
+                        <select class="form-control" data-val="true" autocomplete="off" name="RequestType">
+                            <option selected>Contact Your Account Manager</option>
+                            <option>Contact Customer Service (Order Status)</option>
+                            <option>Contact Technical Support (Issues with Site or Devices)</option>
+                            <option>Product Information Inquiry</option>
+                            <option>Send Feedback</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="manger-info">
+                        <h4>Contact Your Account Manager</h4>
+                        <p>If you have a question for your Account Manager, please fill out the form below. If you have a question about your order status or technical issues with your account or login, please choose an alternate topic from the drop down above.</p>
+                    </div>
+                    <div class="please-call">
+                        <p>Please call <strong>(346) 229-4142</strong> for urgent, order related issues.</p>
+                    </div>
+                    <div class="contactm-form">
+                        <div class="contactperson-info">
+                            <p>Contact: <span>Hammad Iqbal</span></p>
+                            <p>Account: <span id="AccountNumber"></span></p>
+                        </div>
+                        <div class="row">
+                            <div class="form-max-width">
+                                <div class="col-md-3 col-sm-3">
+                                    <div class="form-group">
+                                        <label for="email">Email:</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-9 col-sm-9 ">
+                                    <div class="form-group">
+                                        <input id="ContactEmail" type="email" class="form-control input mb0" data-val="true" autocomplete="off" name="CustomerEmail" placeholder="Enter Email" required>
+                                        <span class="error-label" id="result"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-sm-3">
+                                    <div class="form-group">
+                                        <label style="margin-top:28px;" for="phone">Phone:</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-9 col-sm-9">
+                                    <div class="form-group">
+                                        <input id="ContactPhone" type="text" name="PhoneNumber" data-val="true" autocomplete="off" placeholder="(XXX)XXX-XXXX" class="form-control mb0 mt18" required>
+                                        <span class="error-label" id="resultPhone"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-sm-3">
+                                    <div class="form-group">
+                                        <label style="margin-top:28px;">Subject:</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-9 col-sm-9">
+                                    <div class="form-group">
+                                        <input id="ContactSubject" type="text" name="Description" placeholder="Scheduled Orders" class="form-control mb0 mt18" required>
+                                        <span class="error-label" id="resultSubject"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-xs-12">
+                                <div class="form-group">
+                                    <label style="margin-top:28px;">Comment:</label>
+                                    <textarea id="ContactComment" class="form-control mt18" name="Message" maxlength="1024" onkeyup="countCommentChars(this)" rows="5" required></textarea>
+                                    <span class="error-label" id="resultComment"></span>
+                                </div>
+                                <div class="max-charlimit">
+                                    <p id="charCommentNum">(Maximum of 1024 characters): You have 1024 characters left.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="popup-btn font_roboto">
+                        <a href="#" class="btn btn-cancelreq" data-dismiss="modal">Cancel Request</a>
+                        <input type="submit" onclick="validateForm()" value="Submit Request" class="form-control btn btn-signin">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function countCommentChars(obj) {
+        var maxLength = 1024;
+        var strLength = obj.value.length;
+        var charRemain = (maxLength - strLength);
+
+        if (charRemain === 0) {
+            document.getElementById("charCommentNum").innerHTML = '<span style="color: red;">(Maximum of 1024 characters): You have ' + charRemain + ' characters left.</span>';
+        } else {
+            document.getElementById("charCommentNum").innerHTML = '(Maximum of 1024 characters): You have ' + charRemain + ' characters left.';
+        }
+    }
+    const validateEmail = (email) => {
+        return email.match(/^[\w-\.]+\x40([\w-]+\.)+[a-zA-Z]{2,4}/);
+    };
+
+    const validate = () => {
+        const result = $('#result');
+        const email = $('#ContactEmail').val();
+        result.text('');
+
+        if (!validateEmail(email)) {
+            result.text('Please enter a valid email address.');
+        }
+        return false;
+    }
+    $('#ContactEmail').on('input', validate);
+
+    const validatePhone = (phone) => {
+        return phone.match(/\({0,1}[\d+]{3}\){0,1}(\-){0,1}[\d+]{3}(\-){0,1}[\d+]{4}$/);
+    };
+
+    const validatePhoneNumber = () => {
+        const resultPhone = $('#resultPhone');
+        const phone = $('#ContactPhone').val();
+        resultPhone.text('');
+
+        if (!validatePhone(phone)) {
+            resultPhone.text('XXX-XXX-XXXX OR (XXX)-XXX-XXXX Expected.');
+        }
+        return false;
+    }
+    $('#ContactPhone').on('input', validatePhoneNumber);
+
+    function validateForm() {
+        var Email = $('#ContactEmail').val();
+        if (!Email) {
+            $('#result').text("This field is required.");
+        }
+        var phoneNumber = $('#ContactPhone').val();
+        if (!phoneNumber) {
+            $('#resultPhone').text("This field is required.");
+        }
+        var subject = $('#ContactSubject').val();
+        if (!subject) {
+            $('#resultSubject').text("This field is required.");
+        }
+        var Comment = $('#ContactComment').val();
+        if (!Comment) {
+            $('#resultComment').text("This field is required.");
+        }
+    }
+    $(document).ready(function () {
+        $('#AccountNumber').text($('#acct_id').text());
+        $('#ContactSubject').keypress(function () {
+            if ($(this).val().length > 0) {
+                $('#resultSubject').hide();
+            }
+        });
+        $('#ContactComment').keypress(function () {
+            if ($(this).val().length > 0) {
+                $('#resultComment').hide();
+            }
+        });
+    });
+
+</script>

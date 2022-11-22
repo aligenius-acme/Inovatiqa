@@ -1,0 +1,96 @@
+===Database Production Database Changes===
+
+shrink databases
+ DBCC SHRINKDATABASE(N'sqldb-inovatiqa-prod_2022-11-14T07-52Z')
+
+
+
+==============
+ALTER TABLE dbo.Address ADD ParentAddressId int null
+
+ALTER TABLE dbo.ReturnRequest ADD CustomerReturnRequestId int null
+
+CREATE TABLE dbo.CustomerReturnRequest (
+	Id int not null identity(1,1) Primary key,
+	CustomerId int null,
+	ShippingLabel int null,
+	PrimaryContantEmail nvarchar(50) null,
+	SecondaryContactEmail nvarchar(50) null,
+	CreatedDateUtc datetime not null,
+	UpdatedDateUtc datetime not null
+);
+
+ALTER TABLE [dbo].[Shipment] ADD PaymentStatusId int null
+
+ALTER TABLE [dbo].[Shipment] ADD TotalAmount decimal(18,4) null
+
+ALTER TABLE [dbo].[Shipment] ADD AmountPaid decimal(18,4) null
+
+ALTER TABLE [dbo].[Shipment] ADD InvoiceDueDateUtc datetime2(7) null
+
+ALTER TABLE [dbo].[Shipment] ADD InvoicePayedDateUtc datetime2(7) null
+
+insert into [dbo].[ReturnRequestAction] values ('Repair', 1),('Break', 2),('Return', 3)
+
+ALTER TABLE [dbo].[SuspendedCart] ADD SuspendedCartTypeId int null
+
+ALTER TABLE [dbo].[SuspendedCart] ADD Comment nvarchar(500) null
+
+ALTER TABLE [dbo].[SuspendedCart] ADD EmailAddress nvarchar(50) null
+
+INSERT [dbo].[CustomerRole] (  [Name], [SystemName], [FreeShipping], [TaxExempt], [Active], [IsSystemRole], [EnablePasswordLifetime], [OverrideTaxDisplayType], [DefaultTaxDisplayTypeId], [PurchasedWithProductId]) VALUES (N'PO', N'PO', 0, 0, 1, 1, 0, 0, 0, 0)
+INSERT [dbo].[CustomerRole] (  [Name], [SystemName], [FreeShipping], [TaxExempt], [Active], [IsSystemRole], [EnablePasswordLifetime], [OverrideTaxDisplayType], [DefaultTaxDisplayTypeId], [PurchasedWithProductId]) VALUES (N'B2B', N'B2B', 0, 0, 1, 1, 0, 0, 0, 0)
+INSERT [dbo].[CustomerRole] (  [Name], [SystemName], [FreeShipping], [TaxExempt], [Active], [IsSystemRole], [EnablePasswordLifetime], [OverrideTaxDisplayType], [DefaultTaxDisplayTypeId], [PurchasedWithProductId]) VALUES (N'Subaccount_MAD', N'Subaccount_MAD', 0, 0, 1, 1, 0, 0, 0, 0)
+INSERT [dbo].[CustomerRole] (  [Name], [SystemName], [FreeShipping], [TaxExempt], [Active], [IsSystemRole], [EnablePasswordLifetime], [OverrideTaxDisplayType], [DefaultTaxDisplayTypeId], [PurchasedWithProductId]) VALUES (N'Subaccount_MAB', N'Subaccount_MAB', 0, 0, 1, 1, 0, 0, 0, 0)
+INSERT [dbo].[CustomerRole] (  [Name], [SystemName], [FreeShipping], [TaxExempt], [Active], [IsSystemRole], [EnablePasswordLifetime], [OverrideTaxDisplayType], [DefaultTaxDisplayTypeId], [PurchasedWithProductId]) VALUES (N'Subaccount_DAOH', N'Subaccount_DAOH', 0, 0, 1, 1, 0, 0, 0, 0)
+INSERT [dbo].[CustomerRole] (  [Name], [SystemName], [FreeShipping], [TaxExempt], [Active], [IsSystemRole], [EnablePasswordLifetime], [OverrideTaxDisplayType], [DefaultTaxDisplayTypeId], [PurchasedWithProductId]) VALUES (N'Subaccount_CO', N'Subaccount_CO', 0, 0, 1, 1, 0, 0, 0, 0)
+INSERT [dbo].[CustomerRole] (  [Name], [SystemName], [FreeShipping], [TaxExempt], [Active], [IsSystemRole], [EnablePasswordLifetime], [OverrideTaxDisplayType], [DefaultTaxDisplayTypeId], [PurchasedWithProductId]) VALUES (N'Subaccount_RABCO', N'Subaccount_RABCO', 0, 0, 1, 1, 0, 0, 0, 0)
+INSERT [dbo].[CustomerRole] (  [Name], [SystemName], [FreeShipping], [TaxExempt], [Active], [IsSystemRole], [EnablePasswordLifetime], [OverrideTaxDisplayType], [DefaultTaxDisplayTypeId], [PurchasedWithProductId]) VALUES (N'Subaccount_GTCC', N'Subaccount_GTCC', 0, 0, 1, 1, 0, 0, 0, 0)
+INSERT [dbo].[CustomerRole] (  [Name], [SystemName], [FreeShipping], [TaxExempt], [Active], [IsSystemRole], [EnablePasswordLifetime], [OverrideTaxDisplayType], [DefaultTaxDisplayTypeId], [PurchasedWithProductId]) VALUES (N'Subaccount_GTC', N'Subaccount_GTC', 0, 0, 1, 1, 0, 0, 0, 0)
+INSERT [dbo].[CustomerRole] (  [Name], [SystemName], [FreeShipping], [TaxExempt], [Active], [IsSystemRole], [EnablePasswordLifetime], [OverrideTaxDisplayType], [DefaultTaxDisplayTypeId], [PurchasedWithProductId]) VALUES (N'Subaccount_OPN', N'Subaccount_OPN', 0, 0, 1, 1, 0, 0, 0, 0)
+INSERT [dbo].[CustomerRole] (  [Name], [SystemName], [FreeShipping], [TaxExempt], [Active], [IsSystemRole], [EnablePasswordLifetime], [OverrideTaxDisplayType], [DefaultTaxDisplayTypeId], [PurchasedWithProductId]) VALUES (N'Subaccount_FUPCN', N'Subaccount_FUPCN', 0, 0, 1, 1, 0, 0, 0, 0)
+INSERT [dbo].[CustomerRole] (  [Name], [SystemName], [FreeShipping], [TaxExempt], [Active], [IsSystemRole], [EnablePasswordLifetime], [OverrideTaxDisplayType], [DefaultTaxDisplayTypeId], [PurchasedWithProductId]) VALUES (N'Subaccount_FUPCVAT', N'Subaccount_FUPCVAT', 0, 0, 1, 1, 0, 0, 0, 0)
+INSERT [dbo].[CustomerRole] (  [Name], [SystemName], [FreeShipping], [TaxExempt], [Active], [IsSystemRole], [EnablePasswordLifetime], [OverrideTaxDisplayType], [DefaultTaxDisplayTypeId], [PurchasedWithProductId]) VALUES (N'Subaccount_FUPA', N'Subaccount_FUPA', 0, 0, 1, 1, 0, 0, 0, 0)
+INSERT [dbo].[CustomerRole] (  [Name], [SystemName], [FreeShipping], [TaxExempt], [Active], [IsSystemRole], [EnablePasswordLifetime], [OverrideTaxDisplayType], [DefaultTaxDisplayTypeId], [PurchasedWithProductId]) VALUES (N'Subaccount_CAO', N'Subaccount_CAO', 0, 0, 1, 1, 0, 0, 0, 0)
+INSERT [dbo].[CustomerRole] (  [Name], [SystemName], [FreeShipping], [TaxExempt], [Active], [IsSystemRole], [EnablePasswordLifetime], [OverrideTaxDisplayType], [DefaultTaxDisplayTypeId], [PurchasedWithProductId]) VALUES (N'Subaccount_CMS', N'Subaccount_CMS', 0, 0, 1, 1, 0, 0, 0, 0)
+
+
+update dbo.Product set ShowOnHomepage = 1 where id = 38
+update dbo.Product set ShowOnHomepage = 1 where id = 2441
+update dbo.Product set ShowOnHomepage = 1 where id = 6698
+update dbo.Product set ShowOnHomepage = 1 where id = 122472
+
+update dbo.Product set IsCovid19Product = 1 where id = 5836
+update dbo.Product set IsCovid19Product = 1 where id = 54106
+update dbo.Product set IsCovid19Product = 1 where id = 102301
+update dbo.Product set IsCovid19Product = 1 where id = 109462
+
+update dbo.Product set ShowCovid19OnHomepage = 1 where id = 5836 
+update dbo.Product set ShowCovid19OnHomepage = 1 where id = 54106 
+update dbo.Product set ShowCovid19OnHomepage = 1 where id = 102301
+update dbo.Product set ShowCovid19OnHomepage = 1 where id = 109462
+
+update dbo.Manufacturer set ShowOnHomepage = 1 where id = 1
+update dbo.Manufacturer set ShowOnHomepage = 1 where id = 4
+update dbo.Manufacturer set ShowOnHomepage = 1 where id = 22
+update dbo.Manufacturer set ShowOnHomepage = 1 where id = 23
+update dbo.Manufacturer set ShowOnHomepage = 1 where id = 55
+update dbo.Manufacturer set ShowOnHomepage = 1 where id = 81
+update dbo.Manufacturer set ShowOnHomepage = 1 where id = 185
+update dbo.Manufacturer set ShowOnHomepage = 1 where id = 1484
+
+update dbo.Category set PictureId = 2609 where id = 1
+update dbo.Category set PictureId = 69807 where id = 2047
+update dbo.Category set PictureId = 13304 where id = 3221
+update dbo.Category set PictureId = 50232 where id = 11745
+update dbo.Category set PictureId = 52858 where id = 12987
+update dbo.Category set PictureId = 65408 where id = 14897
+
+update dbo.Category set ShowOnHomepage = 1 where id = 1
+update dbo.Category set ShowOnHomepage = 1 where id = 2047
+update dbo.Category set ShowOnHomepage = 1 where id = 3221
+update dbo.Category set ShowOnHomepage = 1 where id = 11745
+update dbo.Category set ShowOnHomepage = 1 where id = 12987
+update dbo.Category set ShowOnHomepage = 1 where id = 14897
+
+update dbo.UrlRecord set IsActive = 1

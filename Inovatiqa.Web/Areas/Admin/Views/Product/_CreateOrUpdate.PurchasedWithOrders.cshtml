@@ -1,0 +1,66 @@
+@model ProductModel
+
+<div class="panel-body">
+    <p>
+        Here you can see a list of orders in which this product was purchased.
+    </p>
+    <div class="sub-panel">
+        @{ 
+            var table = new DataTablesModel
+            {
+                Name = "purchased-with-orders-grid",
+                UrlRead = new DataUrl("PurchasedWithOrders", "Product", new RouteValueDictionary { [nameof(Model.ProductOrderSearchModel.ProductId)] = Model.ProductOrderSearchModel.ProductId }),
+                Length = Model.ProductPictureSearchModel.PageSize,
+                LengthMenu = Model.ProductPictureSearchModel.AvailablePageSizes
+            };
+
+            var columns = new List<ColumnProperty>();
+            columns.Add(new ColumnProperty(nameof(OrderModel.CustomOrderNumber))
+            {
+                Title = "Order #",
+                Width = "200"
+            });
+            columns.Add(new ColumnProperty(nameof(OrderModel.CustomerEmail))
+            {
+                Title = "Email",
+                Width = "200"
+            });
+            if (!Model.IsLoggedInAsVendor)
+            {
+                columns.Add(new ColumnProperty(nameof(OrderModel.OrderStatus))
+                {
+                    Title = "Order status",
+                    Width = "100"
+                });
+                columns.Add(new ColumnProperty(nameof(OrderModel.PaymentStatus))
+                {
+                    Title = "Payment status",
+                    Width = "100"
+                });
+                columns.Add(new ColumnProperty(nameof(OrderModel.ShippingStatus))
+                {
+                    Title = "Shipping status",
+                    Width = "100"
+                });
+            }
+            columns.Add(new ColumnProperty(nameof(OrderModel.CreatedOn))
+            {
+                Title = "Created on",
+                Width = "200",
+                Render = new RenderDate(),
+                ClassName = InovatiqaColumnClassDefaults.CenterAll
+            });
+            columns.Add(new ColumnProperty(nameof(OrderModel.Id))
+            {
+                Title = "View",
+                Width = "100",
+                ClassName = InovatiqaColumnClassDefaults.Button,
+                Render = new RenderButtonView(new DataUrl("~/Admin/Order/Edit/"))
+            });
+
+            table.ColumnCollection = columns;
+        }
+
+        @await Html.PartialAsync("Table", table)
+    </div>
+</div>

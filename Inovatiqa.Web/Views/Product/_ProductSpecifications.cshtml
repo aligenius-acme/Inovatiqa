@@ -1,0 +1,86 @@
+﻿@model IList<ProductSpecificationModel>
+@using Inovatiqa.Core;
+@*if (Model.Count > 0)
+    {
+        <div class="product-specs-box">
+            @*<div class="title panel-heading">
+                    <h2>@T("Products.Specs")</h2>
+                </div>@
+            <div class="panel panel-default">
+                <table class="data-table table table-bordered table-condensed table-striped">
+                    <thead>
+                        <tr class="hidden-row">
+                            <th width="25%"><span>Attribute name</span></th>
+                            <th><span>Attribute value</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (var i = 0; i < Model.Count; i++)
+                        {
+                            var item = Model[i];
+                            <tr @(i % 2 == 0 ? Html.Raw(" class=\"odd\"") : Html.Raw(" class=\"even\""))>
+                                <td class="a-left spec-name">
+                                    @item.SpecificationAttributeName
+                                </td>
+                                <td class="a-left spec-value">
+                                    @if (!string.IsNullOrEmpty(item.ColorSquaresRgb) && (item.AttributeTypeId == (int)SpecificationAttributeType.Option))
+                                    {
+                                        <div class="attribute-squares color-squares">
+                                            <span class="attribute-squares-container" title="@Html.Raw(item.ValueRaw)">
+                                                <span class="attribute-squares" style="background-color: @(item.ColorSquaresRgb);">&nbsp;</span>
+                                            </span>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        @Html.Raw(item.ValueRaw)
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+*@
+@if (Model.Count > 0)
+{
+    <div class="tab_body active t1">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Attribute Name</th>
+                        <th>Attribute Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (var i = 0; i < Model.Count; i++)
+                    {
+                        var item = Model[i];
+                        <tr>
+                            <td>
+                                @item.SpecificationAttributeName
+                            </td>
+                            <td>
+                                @if (!string.IsNullOrEmpty(item.ColorSquaresRgb) && (item.AttributeTypeId == (int)SpecificationAttributeType.Option))
+                                {
+                                    <div>
+                                        <span title="@Html.Raw(item.ValueRaw)">
+                                            <span>&nbsp;</span>
+                                        </span>
+                                    </div>
+                                }
+                                else
+                                {
+                                    @Html.Raw(item.ValueRaw)
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}

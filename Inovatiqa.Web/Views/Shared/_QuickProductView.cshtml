@@ -1,0 +1,210 @@
+﻿@model ProductDetailsModel
+@using Inovatiqa.Core
+@using System.Text
+<style>
+    #quick-box-form td {
+        padding-top: 5px;
+    }
+
+    .maintable h5 {
+        padding: 7px;
+    }
+
+    .tblForm td {
+        padding: 7px;
+    }
+
+    .sec-attr input, select {
+        width: 90%;
+    }
+
+    .sec-attr label {
+        padding: 5px;
+    }
+</style>
+<div class="modal" id="quick-product-view" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-sm" style="width:700px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" style="display:none" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"><span style="color: #ef8200">Add item #@Model.Sku</span> @Model.Name</h4>
+            </div>
+            <div class="modal-body">
+                <form asp-route="Product" asp-route-sename="@Model.SeName" method="post" id="product-details-form">
+                    <div data-productid="@Model.Id">
+                        <input name="@(string.Format("{0}{1}", "addtocart_Id", ".UpdatedShoppingCartItemId"))" value = "@Model.updatecartitem?.Id.ToString()" id="product_cartId" type="hidden"/>
+                        <div class="row">
+                            <table style="width: 100%;clear:both;" class="maintable">
+                                <tbody>
+                                    <tr>
+                                        <td width="40%" valign="top">
+                                            <h5>@Model.ProductManufacturers.FirstOrDefault().Name # @Model.ManufacturerPartNumber.Replace("Mfr#", "")</h5>
+                                            <div style="height:300px;overflow:auto;">
+                                                <div class="sec-attr">
+                                                    <div class="attributes">
+                                                        <dl class="row" style="margin-bottom: 5px;">
+                                                            <dt class="col-sm-4 col-md-4">
+                                                                <label asp-for="@Model.AddToCart.EnteredQuantity" class="text-prompt">
+                                                                    Quantity
+                                                                </label>
+                                                            </dt>
+                                                            <dt class="col-sm-8 col-md-8">
+                                                                <input asp-for="@Model.AddToCart.EnteredQuantity" name="@(string.Format("{0}{1}{2}", "addtocart_", Model.Id, ".EnteredQuantity"))" id="product_enteredQuantity_@Model.Id" style="margin: 0px;" class="qty-input form-control" type="text" value="@(Model.editing ? Model.cartQuantity: 1)" aria-label="Enter a quantity" />
+                                                            </dt>
+                                                        </dl>
+                                                    </div>
+                                                    @*@{
+                                                        var dataDictAttributes = new ViewDataDictionary(ViewData);
+                                                        dataDictAttributes.TemplateInfo.HtmlFieldPrefix = $"attributes_{Model.Id}";
+                                                            @await Html.PartialAsync("../Product/_ProductAttributes", Model.ProductAttributes, dataDictAttributes)
+                                                    }*@
+                                                    <div class="uom_box m_t_30">
+                                                                            <label>UOM</label>
+                                                                            <img src="/images/UIComponents/downarrow.svg" class="options_pane_down_arrow">
+                                                                            @{
+                                                                                var uomModel = Model.ProductAttributes.Where(x => x.Name == "UOM").FirstOrDefault();
+
+                                                                                var controlId = $"{InovatiqaDefaults.ProductAttributePrefix}{uomModel.Id}";
+                                                                                var textPrompt = !string.IsNullOrEmpty(uomModel.TextPrompt) ? uomModel.TextPrompt : uomModel.Name;
+                                                                                                <select name="@(controlId)" id="@(controlId)" class="form-control" onchange="checkBoxChange(this.options[this.selectedIndex].getAttribute('change-val'), @Model.Id)" @(uomModel.Values.Any(value => value.CustomerEntersQty) ? Html.Raw(string.Format("onchange=\"showHideDropdownQuantity('{0}')\"", controlId)) : null)>
+                                                                                                    @foreach (var attributeValue in uomModel.Values)
+                                                                                    {
+                                                                                        var attributeName = string.IsNullOrEmpty(attributeValue.PriceAdjustment) ?
+                                                                                        attributeValue.Name :
+                                                                                        string.Format("{0} [{1}{2}]", attributeValue.Name, attributeValue.PriceAdjustment,
+                                                                                            attributeValue.CustomerEntersQty ? " per item" : string.Empty);
+                                                                                        if (attributeValue == uomModel.Values.First())
+                                                                                        {
+                                                                                                            <option selected="@attributeValue.IsPreSelected" change-val="@Model.ProductPrice.Price" value="@attributeValue.Id" msku="@attributeValue.MSku">@attributeName</option>
+                                                                                        }
+                                                                                        else
+                                                                                        {
+                                                                                                            <option selected="@attributeValue.IsPreSelected" change-val="$@Decimal.Round(Convert.ToDecimal(Model.ProductPrice.PriceValue) + Convert.ToDecimal(attributeValue.PriceAdjustmentValue), 2)" value="@attributeValue.Id" msku="@attributeValue.MSku">@attributeValue.Name</option>
+                                                                                        }
+                                                                                    }
+                                                                                                </select>
+                                                                            }
+                                                                        </div>
+                                                    <div class="attributes">
+                                                        <dl class="row" style="margin-bottom: 5px; margin-top:50px;">
+                                                            <dt class="col-sm-4 col-md-4">
+                                                            </dt>
+                                                            <dt class="col-sm-8 col-md-8" style="font-size:large">
+                                                                <span style="color:#909090;" id="priceChange_@Model.Id">@(Model.editing ? "$" + Model.unitPrice : Model.ProductPrice.Price)</span> 
+                                                               @* @{
+                                                                    var dataDictPrice = new ViewDataDictionary(ViewData);
+                                                                    dataDictPrice.TemplateInfo.HtmlFieldPrefix = $"price_{Model.Id}";
+                                                                        @await Html.PartialAsync("../Product/_ProductPrice", Model.ProductPrice, dataDictPrice)
+                                                                }*@
+                                                            </dt>
+                                                        </dl>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td width="60%" valign="top" style="padding-left: 5px;">
+                                            <div id="dlgDetail" style="width: 99%; float:left;">
+                                                <ul class="nav nav-tabs">
+                                                    <li class="active"><a href="#picture" data-toggle="tab">Image</a></li>
+                                                    @if (!string.IsNullOrEmpty(Model.FullDescription))
+                                                    {
+                                                        <li><a href="#pdescription" data-toggle="tab">Description</a></li>
+                                                    }
+                                                    @if (!string.IsNullOrEmpty(Model.ProductSpecifications.ToString()))
+                                                    {
+                                                        <li><a href="#specification" data-toggle="tab">Products specifications</a></li>
+                                                    }
+                                                </ul>
+                                                <div class="tab-content" style="height: 300px; overflow-y: scroll; overflow-x: hidden;">
+                                                    <div class="full-description fade tab-pane in active" id="picture" style="padding: 10px 22px 10px 10px;padding: 10px;text-align: center;">
+                                                        @await Html.PartialAsync("../Product/_ProductDetailsPictures", Model)
+                                                    </div>
+                                                    @if (!string.IsNullOrEmpty(Model.FullDescription))
+                                                    {
+                                                        <div class="full-description fade tab-pane" id="pdescription" style="padding: 10px 22px 10px 10px;">
+                                                            @Html.Raw(Model.FullDescription)
+                                                        </div>
+                                                    }
+                                                    <div class="product-specification fade tab-pane" id="specification" style="padding: 10px 22px 10px 10px;">
+                                                        @await Html.PartialAsync("../Product/_ProductSpecifications", Model.ProductSpecifications)
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="common-buttons" style="float:right;width:250px;">
+                    
+                    @if (Model.editing)
+                    {
+                        <div>
+                            <div style="float:left;" id="btns_create">
+                                <input type="button" style="background-color: #0068A3; color: #FFF;" class="btn btn-secondary" id="saveList" name="saveList" value="EDIT" onclick="AjaxCart.updateproducttocart_details('@Url.RouteUrl("UpdateProductToCart-Details", new { productId = Model.Id, shoppingCartTypeId = (int)ShoppingCartType.ShoppingCart, wishListId = 0 })', '#product-details-form', @((int)ShoppingCartType.ShoppingCart));return false;" class="btn btn-primary add-to-cart-button">
+                            </div>   
+                        </div>
+                    }
+                    else
+                    {
+                         <div>
+                            <div style="float:left;" id="btns_create">
+                                <input type="button" id="saveList" style="background-color: #0068A3; color: #FFF;" class="btn btn-secondary" name="saveList" value="ADD" onclick="AjaxCart.addproducttocart_details('@Url.RouteUrl("AddProductToCart-Details", new { productId = Model.Id, shoppingCartTypeId = (int)ShoppingCartType.ShoppingCart, wishListId = 0 })', '#product-details-form', @((int)ShoppingCartType.ShoppingCart));return false;" class="btn btn-primary add-to-cart-button">
+
+                                @*<input type="button" id="saveList" name="saveList" value="Add ITEM TO CART" onclick="AjaxCart.updateproducttocart_details('@Url.RouteUrl("UpdateProductToCart-Details", new { productId = Model.Id, shoppingCartTypeId = (int)ShoppingCartType.ShoppingCart, wishListId = 0 })', '#product-details-form', @((int)ShoppingCartType.ShoppingCart));return false;" class="btn btn-primary add-to-cart-button">*@
+                            </div>   
+                        </div>   
+                    }
+                    <div style="display:none" id="btns_update">
+                        <div style="float:left;">
+                            <input type="button" id="updateList" style="background-color: #0068A3; color: #FFF;" class="btn btn-secondary" name="saveList" value="SAVE CHANGES" onclick="AjaxCart.updateproducttocart_details('@Url.RouteUrl("UpdateProductToCart-Details", new { productId = Model.Id, shoppingCartTypeId = (int)ShoppingCartType.ShoppingCart, wishListId = 0 })', '#product-details-form', @((int)ShoppingCartType.ShoppingCart));return false;" class="btn btn-primary add-to-cart-button">
+                        </div>
+                    </div>
+                    <div style="float:right;">
+                        <input type="button" data-dismiss="modal" id="cancelList" value="CANCEL" class="btn btn-secondary">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function checkBoxChange(changedPrice, id) {
+        $(`#priceChange_${id}`).html(changedPrice);
+    }
+</script>
+<script type="text/javascript">
+                                                                //when a customer clicks 'Enter' button we submit the "add to cart" button (if visible)
+    $(document).ready(function () {
+        var childrens = $('dl.row').children();
+        for (var i = 0; i < childrens.length; i++) {
+            if ($(childrens[i]).text().trim() == "UOM" || $(childrens[i]).text().trim() == "Quantity" || $(childrens[i]).text().trim() == "") {
+                i = i + 1;
+            }
+            else
+                $(childrens[i]).hide();
+        }
+        $('dl.row select').css("width", "110%");
+        $('dl.row').css("width", "100%");
+        $("#@Html.IdFor(model => model.AddToCart.EnteredQuantity)").on("keydown", function(event) {
+            if (event.keyCode == 13) {
+                console.log("Hello");
+                $("#add-to-cart-button-@Model.Id").trigger("click");
+                return false;
+                }
+            });
+        $("#product_enteredQuantity_@Model.Id").on("input propertychange paste", function () {
+            console.log("Hi");
+            var data = {
+            productId: @Model.AddToCart.ProductId,
+            quantity: $('#product_enteredQuantity_@Model.Id').val()
+        };
+        $(document).trigger({ type: "product_quantity_changed", changedData: data });
+        });
+    });
+
+</script>

@@ -1,0 +1,17 @@
+﻿@{
+    Layout = "_ColumnsTwo";
+}
+@{
+    ViewBag.Title = "Inovatiqa - Products";
+}
+@section additionalMeta {
+    <meta name="title" content="title..." />
+    <meta name="keywords" content="Products page keywords..." />
+    <meta name="description" content="Products page description..." />
+}
+<div class="page home-page">
+    <div class="page-body">
+        @await Component.InvokeAsync("ProductspageCategories")
+        @await Component.InvokeAsync("ProductspageProducts")
+    </div>
+</div>

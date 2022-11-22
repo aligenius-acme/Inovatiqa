@@ -1,0 +1,1069 @@
+﻿@using Inovatiqa.Web.Models.Order
+@using Inovatiqa.Core;
+@model OrderDetailsModel
+@{
+    Layout = "_ColumnsOne";
+}
+@{
+    ViewBag.Title = "Order Details";
+}
+@*@Html.Resource(@<link href="@Url.Content("https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css")" rel="stylesheet" type="text/css" />, "css")
+    @Html.Resource(@<script src="@Url.Content("https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js")" type="text/javascript"></script>, "js")
+    @Html.Resource(@<script src="@Url.Content("https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js")" type="text/javascript"></script>, "js")
+    @Html.Resource(@<script src="@Url.Content("https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js")" type="text/javascript"></script>, "js")
+    @Html.Resource(@<link href="@Url.Content("https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css")" rel="stylesheet" type="text/css" />, "css")
+    @Html.Resource(@<script src="@Url.Content("https://cdnjs.cloudflare.com/ajax/libs/jquery.tipsy/1.0.3/jquery.tipsy.min.js")" type="text/javascript"></script>, "js")
+    @Html.Resource(@<link href="@Url.Content("https://cdnjs.cloudflare.com/ajax/libs/jquery.tipsy/1.0.3/jquery.tipsy.min.css")" rel="stylesheet" type="text/css" />, "css")
+    @Html.Resource(@<script src="@Url.Content("https://cdn.datatables.net/rowreorder/1.2.7/js/dataTables.rowReorder.min.js")" type="text/javascript"></script>, "js")
+    @Html.Resource(@<script src="@Url.Content("https://cdn.datatables.net/responsive/2.2.6/js/dataTables.responsive.min.js")" type="text/javascript"></script>, "js")
+    @Html.Resource(@<link href="@Url.Content("https://cdn.datatables.net/rowreorder/1.2.7/css/rowReorder.dataTables.min.css")" rel="stylesheet" type="text/css" />, "css")
+    @Html.Resource(@<link href="@Url.Content("https://cdn.datatables.net/responsive/2.2.6/css/responsive.dataTables.min.css")" rel="stylesheet" type="text/css" />, "css")
+*@
+@*
+    <style>
+        #TotalsRow:hover {
+            cursor: pointer;
+            background-color: #ECF2F4;
+        }
+    </style>
+
+
+    <div style="display:flex; justify-content: space-between;">
+        <p style="color: #808080;">Order Details #@Model.CustomOrderNumber</p>
+    </div>
+    <hr />
+    <div style="display: flex; justify-content: flex-end;">
+        @*<a style="margin-left: 10px; margin-bottom: 5px;  color: #FFF; background-color: #6FAF2A; border: none;" href="@Url.RouteUrl("PrintOrderDetails", new { orderId = Model.Id })" target="_blank" class="btn btn-default print-order-button">Print</a>*@
+@*<button style="margin-left: 10px; margin-bottom: 5px;  color: #FFF; background-color: #6FAF2A; border: none;" onclick="setLocation('@Url.RouteUrl("OrderShipments", new { orderId = Model.Id })')">TRACK ORDER</button>*@
+@*<a href="#" style="padding: 5px; margin-top: 7px;" onclick="setLocation('@Url.RouteUrl("OrderShipments", new { orderId = Model.Id })')">TRACK</a>*@
+@*<button style="margin-left: 10px; margin-bottom: 5px;  color: #FFF; background-color: #3185CD; border: none;">CONTACT CUSTOMER SERVICE</button>@
+        <a style="margin-left: 10px; margin-bottom: 5px;  color: #FFF; background-color: #6FAF2A; border: none;" href="#" target="_blank" class="btn btn-default print-order-button" onclick="setLocation('@Url.RouteUrl("OrderShipments", new { orderId = Model.Id })')">Track</a>
+    </div>
+    <hr />
+    <div style="display: flex; justify-content: space-between;">
+        <div>
+            <p style="color: #808080;font-size:larger;font-size:larger;">PO</p>
+            <p style="font-weight: bold;">@Model.PONumber</p>
+        </div>
+        <div>
+            <p style="color: #808080;font-size:larger;">Order #</p>
+            <p style="font-weight: bold;">@Model.CustomOrderNumber</p>
+        </div>
+        <div>
+            <p style="color: #808080;font-size:larger;">Date</p>
+            <p style="font-weight: bold;">@Model.CreatedOn.ToString("MM/dd/yyyy")</p>
+        </div>
+        <div>
+            <p style="color: #808080;font-size:larger;">Payment</p>
+            <p style="font-weight: bold;">@Model.PaymentMethod</p>
+        </div>
+        <div>
+            <p style="color: #808080;font-size:larger;">Status</p>
+            <p style="font-weight: bold;">@Model.OrderStatus</p>
+        </div>
+        <div>
+            <p style="color: #808080;font-size:larger;">Invoiced Total</p>
+            <p style="font-weight: bold;">@Model.OrderTotal</p>
+        </div>
+    </div>
+    <hr />
+    <div style="display: flex; background-color: #ECF2F4; margin-bottom: 10px;">
+        <div div style="margin-right: 25%; margin-left: 5px; margin-top: 5px;">
+            <p style="font-weight: bold;">Account</p>
+            <p>@Model.ShippingAddress.Id @Model.BillingAddress.Company @Model.BillingAddress.Address1 @Model.BillingAddress.City @Model.BillingAddress.StateProvinceName @Model.BillingAddress.ZipPostalCode</p>
+        </div>
+        <div style="margin-right: 25%; margin-left: 5px; margin-top: 5px;">
+            <p style="font-weight: bold;">Ship To</p>
+            <p>@Model.ShippingAddress.Id @Model.ShippingAddress.Company @Model.ShippingAddress.Address1 @Model.ShippingAddress.City @Model.ShippingAddress.StateProvinceName @Model.ShippingAddress.ZipPostalCode</p>
+        </div>
+    </div>
+    <div class="page account-page reorder-guide-page from-panel">
+
+        <div class="page-body">
+            @{
+                var backOrderItems = Model.Items.Where(x => x.IsShipped == false).ToList();
+                var shippedOrderItems = Model.Items.Where(x => x.IsShipped == true).ToList();
+            }
+            <div class="order-list">
+                <div class="col-md-12 product-details-tabs" style="margin-top: 10px;" id="tabbed-description">
+                    <ul class="nav nav-tabs">
+                        <li class="litab litabitems"><a href="#AllItems" data-toggle="tab" onclick="showAddToCart();">All Items (@Model.Items.Count)</a></li>
+                        <li class="litab litabitems"><a href="#BackorderedItems" data-toggle="tab" onclick="showAddToCart();">Backordered Items (@backOrderItems.Count)</a></li>
+                        <li class="litab litabitems"><a href="#ShippedItems" data-toggle="tab" onclick="showAddToCart();">Shipped Items (@shippedOrderItems.Count)</a></li>
+                        <li class="litab litabitems"><a href="#InvoiceSummary" onclick="hideAddToCart();" data-toggle="tab">Invoice Summary (@shippedOrderItems.Count)</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <input type="button" id="addToCartList" name="addToCartList" disabled="disabled" value="Add Item To Cart" style="margin-bottom:20px" onclick="AjaxCart.addbulkproducttocart_details('@Url.RouteUrl("AddbulkProductToCart_Details")');return false;" class="btn add-to-cart-button btn_green">
+                        <br />
+                        <div class="fade tab-pane in active" id="AllItems" style="font-family:Helvetica Neue,Helvetica,Arial,sans-serif;">
+                            <br />
+                            <table id="tblAllItems" class="table table-bordered table-condensed table-striped" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th><input type="checkbox"></th>
+                                        <th style="text-align:center;white-space:nowrap">
+                                            L#
+                                        </th>
+                                        <th style="text-align:center;white-space:nowrap">
+                                            Item #
+                                        </th>
+                                        <th style="text-align:center;white-space:nowrap">
+                                            Description
+                                        </th>
+                                        <th style="text-align:center;white-space:nowrap">
+                                            Mfr
+                                        </th>
+                                        <th style="text-align:center;white-space:nowrap">
+                                            Mfr #
+                                        </th>
+                                        <th style="text-align:center;white-space:nowrap">
+                                            UOM
+                                        </th>
+                                        <th style="text-align:center;white-space:nowrap">
+                                            Ordered
+                                        </th>
+                                        <th style="text-align:center;white-space:nowrap">
+                                            B/O
+                                        </th>
+                                        <th style="text-align:center;white-space:nowrap">
+                                            Ship
+                                        </th>
+                                        <th style="text-align:center;white-space:nowrap">
+                                            Price
+                                        </th>
+                                        <th style="text-align:center;white-space:nowrap">
+                                            Total
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody class="all backorder" style="display: table-row-group;">
+                                    @if (Model.Items.Count > 0)
+                                    {
+                                        var count = 0;
+                                        @foreach (var item in Model.Items)
+                                        {
+                                            count = count + 1;
+                                            <tr>
+                                                <td class="dontprint orange lineBackorder">
+                                                    <input name="line" value="1" type="checkbox" data="@item.Id" orderId="@Model.Id" orderItemId="@item.Id" class="checkbox" onclick="addtocartCount(this)">
+                                                </td>
+                                                <td>@count</td>
+                                                <td>
+                                                    @item.Id
+                                                </td>
+                                                <td>
+                                                    <a href="@Url.RouteUrl("Product", new { SeName = item.ProductSeName })">@item.ProductName</a>
+                                                </td>
+                                                <td>@item.ManufacturerPartNumber</td>
+                                                <td>@item.ProductManufacturers.FirstOrDefault().Name</td>
+                                                <td class="alignLeft">@item.AttributeInfo</td>
+                                                <td class="alignRight qty">@item.Quantity</td>
+                                                <td class="alignRight bold orange">@item.Bo</td>
+                                                <td class="alignRight disabledGray">@item.Shipped</td>
+                                                <td class="alignRight">@item.UnitPrice</td>
+                                                <td class="alignRight">@item.SubTotal</td>
+                                            </tr>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <tr id="emptyRow">
+                                            <td colspan="12">
+                                                <div class="no-data">
+                                                    no items found.
+                                                </div>
+                                            </td>
+                                            <td style="display: none;"></td>
+                                            <td style="display: none;"></td>
+                                            <td style="display: none;"></td>
+                                            <td style="display: none;"></td>
+                                            <td style="display: none;"></td>
+                                            <td style="display: none;"></td>
+                                            <td style="display: none;"></td>
+                                            <td style="display: none;"></td>
+                                            <td style="display: none;"></td>
+                                            <td style="display: none;"></td>
+                                            <td style="display: none;"></td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="fade tab-pane" id="BackorderedItems" style="font-family:Helvetica Neue,Helvetica,Arial,sans-serif;">
+                            <br />
+                            <table id="tblBackorderedItems" class="table table-bordered table-condensed table-striped" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th><input type="checkbox"></th>
+                                        <th style="text-align:center;white-space:nowrap">
+                                            L#
+                                        </th>
+                                        <th style="text-align:center;white-space:nowrap">
+                                            Item #
+                                        </th>
+                                        <th style="text-align:center;white-space:nowrap">
+                                            Description
+                                        </th>
+                                        <th style="text-align:center;white-space:nowrap">
+                                            Mfr
+                                        </th>
+                                        <th style="text-align:center;white-space:nowrap">
+                                            Mfr #
+                                        </th>
+                                        <th style="text-align:center;white-space:nowrap">
+                                            UOM
+                                        </th>
+                                        <th style="text-align:center;white-space:nowrap">
+                                            Ordered
+                                        </th>
+                                        <th style="text-align:center;white-space:nowrap">
+                                            B/O
+                                        </th>
+                                        <th style="text-align:center;white-space:nowrap">
+                                            Ship
+                                        </th>
+                                        <th style="text-align:center;white-space:nowrap">
+                                            Price
+                                        </th>
+                                        <th style="text-align:center;white-space:nowrap">
+                                            Total
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody class="all backorder" style="display: table-row-group;">
+                                    @if (backOrderItems.Count > 0)
+                                    {
+                                        var count = 0;
+                                        @foreach (var item in backOrderItems)
+                                        {
+                                            count = count + 1;
+                                            <tr>
+                                                <td class="dontprint orange lineBackorder">
+                                                    <input name="line" value="1" type="checkbox" data="@item.Id" class="checkbox" onclick="addtocartCount(this)">
+                                                </td>
+                                                <td>@count</td>
+                                                <td>
+                                                    @item.Id
+                                                </td>
+                                                <td>
+                                                    <a href="@Url.RouteUrl("Product", new { SeName = item.ProductSeName })">@item.ProductName</a>
+                                                </td>
+                                                <td>@item.ManufacturerPartNumber</td>
+                                                <td>@item.ProductManufacturers.FirstOrDefault().Name</td>
+                                                <td class="alignLeft">@item.AttributeInfo</td>
+                                                <td class="alignRight">@item.Quantity</td>
+                                                <td class="alignRight bold orange">@item.Bo</td>
+                                                <td class="alignRight disabledGray">@item.Shipped</td>
+                                                <td class="alignRight">@item.UnitPrice</td>
+                                                <td class="alignRight">@item.SubTotal</td>
+                                            </tr>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <tr id="emptyRow">
+                                            <td colspan="12">
+                                                <div class="no-data">
+                                                    no items found.
+                                                </div>
+                                            </td>
+                                            <td style="display: none;"></td>
+                                            <td style="display: none;"></td>
+                                            <td style="display: none;"></td>
+                                            <td style="display: none;"></td>
+                                            <td style="display: none;"></td>
+                                            <td style="display: none;"></td>
+                                            <td style="display: none;"></td>
+                                            <td style="display: none;"></td>
+                                            <td style="display: none;"></td>
+                                            <td style="display: none;"></td>
+                                            <td style="display: none;"></td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="fade tab-pane" id="ShippedItems" style="font-family:Helvetica Neue,Helvetica,Arial,sans-serif;">
+                            <br />
+                            <table id="tblShippedItems" class="table table-bordered table-condensed table-striped" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th><input type="checkbox"></th>
+                                        <th style="text-align:center;white-space:nowrap">
+                                            L#
+                                        </th>
+                                        <th style="text-align:center;white-space:nowrap">
+                                            Item #
+                                        </th>
+                                        <th style="text-align:center;white-space:nowrap">
+                                            Description
+                                        </th>
+                                        <th style="text-align:center;white-space:nowrap">
+                                            Mfr
+                                        </th>
+                                        <th style="text-align:center;white-space:nowrap">
+                                            Mfr #
+                                        </th>
+                                        <th style="text-align:center;white-space:nowrap">
+                                            UOM
+                                        </th>
+                                        <th style="text-align:center;white-space:nowrap">
+                                            Ordered
+                                        </th>
+                                        <th style="text-align:center;white-space:nowrap">
+                                            B/O
+                                        </th>
+                                        <th style="text-align:center;white-space:nowrap">
+                                            Ship
+                                        </th>
+                                        <th style="text-align:center;white-space:nowrap">
+                                            Price
+                                        </th>
+                                        <th style="text-align:center;white-space:nowrap">
+                                            Total
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody class="all shippedorder" style="display: table-row-group;">
+                                    @if (shippedOrderItems.Count > 0)
+                                    {
+                                        var count = 0;
+                                        @foreach (var item in shippedOrderItems)
+                                        {
+                                            <tr>
+                                                <td class="dontprint orange lineBackorder">
+                                                    <input name="line" value="1" type="checkbox" class="checkbox" data="@item.Id" onclick="addtocartCount(this)">
+                                                </td>
+                                                <td>@count</td>
+                                                <td>
+                                                    @item.Id
+                                                </td>
+                                                <td>
+                                                    <a href="@Url.RouteUrl("Product", new { SeName = item.ProductSeName })">@item.ProductName</a>
+                                                </td>
+                                                <td>@item.ManufacturerPartNumber</td>
+                                                <td>@item.ProductManufacturers.FirstOrDefault().Name</td>
+                                                <td class="alignLeft">@item.AttributeInfo</td>
+                                                <td class="alignRight">@item.Quantity</td>
+                                                <td class="alignRight bold orange">@item.Bo</td>
+                                                <td class="alignRight disabledGray">@item.Shipped</td>
+                                                <td class="alignRight">@item.UnitPrice</td>
+                                                <td class="alignRight">@item.SubTotal</td>
+                                            </tr>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <tr id="emptyRow">
+                                            <td colspan="12">
+                                                <div class="no-data">
+                                                    no items found.
+                                                </div>
+                                            </td>
+                                            <td style="display: none;"></td>
+                                            <td style="display: none;"></td>
+                                            <td style="display: none;"></td>
+                                            <td style="display: none;"></td>
+                                            <td style="display: none;"></td>
+                                            <td style="display: none;"></td>
+                                            <td style="display: none;"></td>
+                                            <td style="display: none;"></td>
+                                            <td style="display: none;"></td>
+                                            <td style="display: none;"></td>
+                                            <td style="display: none;"></td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="fade tab-pane" id="InvoiceSummary" style="font-family:Helvetica Neue,Helvetica,Arial,sans-serif;">
+                            <br />
+                            <table id="tblInvoiceSummary" class="table table-condensed table-striped" style="width:100% ">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align:left;white-space:nowrap">
+                                            Invoice
+                                        </th>
+                                        <th style="text-align:left;white-space:nowrap">
+                                            Date
+                                        </th>
+                                        <th style="text-align:left;white-space:nowrap">
+                                            Payment
+                                        </th>
+                                        <th style="text-align:left;white-space:nowrap">
+                                            Subtotal
+                                        </th>
+                                        <th style="text-align:left;white-space:nowrap">
+                                                Freight
+                                            </th>
+                                        @*<th style="text-align:left;white-space:nowrap">
+                                                Tax
+                                            </th>@
+                                        <th style="text-align:left;white-space:nowrap">
+                                            Total
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody class="all shipped track" style="display: table-row-group;">
+                                    @if (Model.Shipments.Count > 0)
+                                    {
+                                        var unitPriceTotal = 0.0m;
+                                        var shipmentTotal = 0.0m;
+                                        for (int i = 0; i < shippedOrderItems.Count; i++)
+                                        {
+                                            unitPriceTotal += decimal.Parse(@shippedOrderItems[i].UnitPrice.Replace("$", ""));
+                                        }
+                                        @for (int i = 0; i < Model.Shipments.Count; i++)
+                                        {
+                                            @*ALI unitPriceTotal += decimal.Parse(@shippedOrders[i].UnitPrice.Replace("$", ""));@
+                                            shipmentTotal += decimal.Parse(Model.Shipments[i].ShipmentTotalPartialInclTax.Replace("$", "").Replace("(", "").Replace(")", ""));
+                                            <tr class="">
+                                                <td>@Model.Shipments[i].Id</td>
+                                                <td>@Model.Shipments[i].ShippedDate?.ToString("MM/dd/yyyy")</td>
+                                                <td>@Model.PaymentMethod</td>
+                                                @*<td class="alignRight">@shippedOrderItems[0].UnitPrice</td>@
+                                                <td class="alignRight">@Model.OrderShipping</td>
+                                                @*<td class="alignRight">?</td>@
+                                                <td class="alignRight">@Model.Shipments[i].ShipmentTotalPartialInclTax</td>
+                                            </tr>
+                                            if (i == shippedOrderItems.Count - 1)
+                                            {
+                                                <tr class="">
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td class="alignRight"><b>Total:</b> $@unitPriceTotal</td>
+                                                    @*<td class="alignRight">@Model.OrderShipping</td>*@
+@*<td class="alignRight">?</td>@
+                                                    <td class="alignRight"><b>Freight:</b> @Model.OrderShipping&nbsp; &nbsp; &nbsp;<b>Total: $@(shipmentTotal + decimal.Parse(Model.OrderShipping.Replace("$","")))</b></td>
+                                                </tr>
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <tr id="emptyRow">
+                                            <td colspan="7">
+                                                <div class="no-data">
+                                                    no items found.
+                                                </div>
+                                            </td>
+                                            <td style="display: none;"></td>
+                                            <td style="display: none;"></td>
+                                            <td style="display: none;"></td>
+                                            <td style="display: none;"></td>
+                                            <td style="display: none;"></td>
+                                            <td style="display: none;"></td>
+                                        </tr>
+                                    }
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @Html.Resource(@<script type="text/javascript">
+                        $(document).ready(function () {
+                            $('#tblAllItems').DataTable();
+                            $('#tblBackorderedItems').DataTable();
+                            $('#tblShippedItems').DataTable();
+                        });
+                        var items = 0;
+                        function addtocartCount(selector) {
+                            var id = $(selector).attr('data');
+                            if (items == 0) {
+                                $('#addToCartList').attr('disabled');
+                            }
+                            if (selector.checked) {
+                                $('#addToCartList').removeAttr('disabled');
+                                $('#addToCartList').val(`Add ITEM TO CART (${++items})`);
+                                $('[data=' + id + ']').attr('checked', true);
+                            }
+                            else {
+                                $('#addToCartList').removeAttr('disabled');
+                                $('#addToCartList').val(`Add ITEM TO CART (${--items})`);
+                                $('[data=' + id + ']').attr('checked', false);
+                            }
+                        }
+                        function hideAddToCart() {
+                            $('#addToCartList').hide();
+                        }
+                        function showAddToCart() {
+                            $('#addToCartList').show();
+                        }
+    </script>, "js")
+*@
+
+<style>
+    .jqueryPagination {
+        display: @(Model.Items.Count > 0 ? "flex" : "none");
+        justify-content: space-between;
+        margin: 8px 12px;
+
+    }
+    .paging_numbers span a {
+        margin-right: 5px;
+        cursor: pointer;
+        color: #636363;
+    }
+    .paging_numbers span .current {
+        color: #000;
+    }
+    .active{
+        color: #000 !important;
+    }
+    .jqueryPagination p {
+        font-family: Lato;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 13.5px;
+        letter-spacing: 0.05em;
+        color: #636363;
+        margin-bottom:unset;
+    }
+    .orderstatus-area .items-table-area .table tbody tr {
+        border-bottom: 1px solid #E2E8F0 !important;
+    }
+
+</style>
+
+@await Component.InvokeAsync("DashboardBlueBand")
+@*@await Html.PartialAsync("_DashboardBlueBand")*@
+<section class="container-fluid orderstatus-area">
+    <div class="row">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="dashboard-area">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="sidebar_menu font_lato">
+                                    <h3>Inovatiqa Dashboard</h3>
+                                    @await Html.PartialAsync("_DashboardSideBar", "inovatiqa-orders")
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="order-deatil-area sorder-staus">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="tabs font_lato">
+                                                @await Html.PartialAsync("_OrderNewTopBar", "order-status")
+                                                <hr>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="order-content">
+                                                <div class="tab-content" style="border: none !important;">
+                                                    <div class="sorder-num font_lato">
+                                                        <p>Order Details #@Model.CustomOrderNumber</p>
+                                                        <hr>
+                                                    </div>
+                                                    <div class="srecent-orders font_roboto">
+                                                        <div class="form-group">
+                                                            <label><a style="color: #337ab7;" href="@Url.RouteUrl("CustomerOrders")">View All Recent Orders</a></label>
+                                                            <select class="form-control">
+                                                                <option>Option</option>
+                                                                <option>Option</option>
+                                                                <option>Option</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="srecent-order-btn font_roboto">
+                                                            <a href="javascript:void(0)" class="btn recent-btn" onclick="setLocation('@Url.RouteUrl("OrderShipments", new { orderId = Model.Id })')">Track Order</a>
+                                                            <a href="@Url.RouteUrl("ContactUs")" class="btn recent-btn recent-btn2">Contact Customer Service</a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="spayorder-detail font_roboto">
+                                                        <hr>
+                                                        <div class="spaystatus-area">
+                                                            <div class="order-pay-info">
+                                                                <h5>Order Number</h5>
+                                                                <p>@Model.CustomOrderNumber</p>
+                                                            </div>
+                                                            <div class="order-pay-info">
+                                                                <h5>PO</h5>
+                                                                <p>@(Model.PONumber ?? "N/A")</p>
+                                                            </div>
+                                                            <div class="order-pay-info">
+                                                                <h5>Date</h5>
+                                                                <p>@Model.CreatedOn.ToString("MM/dd/yyyy")</p>
+                                                            </div>
+                                                            <div class="order-pay-info">
+                                                                <h5>Payment</h5>
+                                                                <p>@(Model.PaymentMethod != "" ? Model.PaymentMethod : "N/A")</p>
+                                                            </div>
+                                                            <div class="order-pay-info">
+                                                                <h5>Status</h5>
+                                                                <p>@(Model.OrderStatus != "" ? Model.OrderStatus : "N/A") </p>
+                                                            </div>
+                                                            <div class="order-pay-info">
+                                                                <h5>Total</h5>
+                                                                <p>@Model.OrderTotal</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="saddress-area font_lato">
+                                                        <div class="row">
+                                                            <div class="col-md-4 col-sm-4">
+                                                                <div class="acc-info">
+                                                                    <h5>Account</h5>
+                                                                    <p>#@Model.ShippingAddress.Id @Model.BillingAddress.Company</p>
+                                                                    <p>@Model.BillingAddress.Address1 <br>@Model.BillingAddress.City, @Model.BillingAddress.StateProvinceName, @Model.BillingAddress.ZipPostalCode</p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-8 col-sm-8">
+                                                                <div class="acc-info adds-info">
+                                                                    <h5>Ship To</h5>
+                                                                    <p>#@Model.ShippingAddress.Id @Model.ShippingAddress.Company</p>
+                                                                    <p> @Model.ShippingAddress.Address1<br> @Model.ShippingAddress.City, @Model.ShippingAddress.StateProvinceName, @Model.ShippingAddress.ZipPostalCode</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="sallitem-btns">
+                                                        @{
+                                                            var backOrderItems = Model.Items.Where(x => x.IsShipped == false).ToList();
+                                                            var shippedOrderItems = Model.Items.Where(x => x.IsShipped == true).ToList();
+                                                        }
+                                                        <div class="item-btns font_lato product-details-tabs" id="tabbed-description">
+                                                            <a href="#AllItems" data-toggle="tab" class="btn btn-items active" onclick="showAddToCart(this);">All Items <span>[@Model.Items.Count]</span></a>
+                                                            <a href="#ShippedItems" data-toggle="tab" class="btn btn-items" onclick="showAddToCart(this);">Shipped Items <span>[@shippedOrderItems.Count]</span></a>
+                                                            <a href="#BackorderedItems" data-toggle="tab" class="btn btn-items" onclick="showAddToCart(this);">Backordered Items <span>[@backOrderItems.Count]</span></a>
+                                                            <a href="#InvoiceSummary" onclick="hideAddToCart(this);" class="btn btn-items " data-toggle="tab">Invoice Summary</a>
+                                                        </div>
+                                                        <div class="add-cart-btn text-right">
+                                                            <a href="#" style="color:#fff;" id="addToCartList" name="addToCartList" class="btn recent-btn add-to-cart-button" onclick="AjaxCart.addbulkproducttocart_details('@Url.RouteUrl("AddbulkProductToCart_Details")');return false;">Add to Cart</a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="fade tab-pane in active items-table-area sorder-infotable table-responsive font_roboto" id="AllItems">
+                                                        <table class="table table-condensed" id="tblAllItems" style="padding: 0px;">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>L#<span><i class="fa fa-caret-up" aria-hidden="true"></i></span></th>
+                                                                    <th>Item Number</th>
+                                                                    <th>Description</th>
+                                                                    <th>Manufacturer / #</th>
+                                                                    <th>UOM</th>
+                                                                    <th>Ordered</th>
+                                                                    <th>Ship</th>
+                                                                    <th>B/O</th>
+                                                                    <th>Price</th>
+                                                                    <th>Total</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @if (Model.Items.Count > 0)
+                                                                {
+                                                                    var count = 0;
+                                                                    @foreach (var item in Model.Items)
+                                                                    {
+                                                                        count = count + 1;
+                                                                        <tr>
+                                                                            <td>
+                                                                                <div class="custom-control custom-checkbox">
+                                                                                    <input name="line" value="1" type="checkbox" data="@item.Id" orderId="@Model.Id" orderItemId="@item.Id" class="custom-control-input" id="customCheck1" onclick="addtocartCount(this)">
+                                                                                    <label class="custom-control-label" for="customCheck1">@count</label>
+                                                                                </div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <a href="@Url.RouteUrl("Manufacturer", new { SeName = item.ProductSeName})"><p class="num-green">@item.Sku</p></a>
+                                                                            </td>
+                                                                            <td style="width: 30%;">
+                                                                                <a href="@Url.RouteUrl("Manufacturer", new { SeName = item.ProductSeName} )" style="color:unset;">
+                                                                                    <p class="des-padding">@item.ProductName</p>
+                                                                                </a><p class="des-orange">[DC Houston, TX] Item being packaged, Delivery expected on 6/14/2021</p>
+                                                                            </td>
+                                                                            <td>
+                                                                                <p>@item.ProductManufacturers.FirstOrDefault().Name / @item.ManufacturerPartNumber </p>
+                                                                            </td>
+                                                                            <td>
+                                                                                <p>@item.AttributeInfo</p>
+                                                                            </td>
+                                                                            <td>
+                                                                                <p class="qty">@item.Quantity</p>
+                                                                            </td>
+                                                                            <td>
+                                                                                <p class="num-green">@item.Shipped</p>
+                                                                            </td>
+                                                                            <td>
+                                                                                <p class="num-green">@item.Bo</p>
+                                                                            </td>
+                                                                            <td>
+                                                                                <p>@item.UnitPrice</p>
+                                                                            </td>
+                                                                            <td>
+                                                                                <p>@item.SubTotal</p>
+                                                                            </td>
+                                                                        </tr>
+                                                                    }
+                                                                }
+                                                                else
+                                                                {
+                                                                    <tr>
+                                                                        <td>No item available yet.</td>
+                                                                    </tr>
+                                                                }
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+
+                                                    <div class="fade tab-pane items-table-area sorder-infotable table-responsive font_roboto" id="ShippedItems">
+                                                        <table class="table mb0 table-condensed" id="tblShippedItems" style="padding: 0px;">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>L#<span><i class="fa fa-caret-up" aria-hidden="true"></i></span></th>
+                                                                    <th>Item Number</th>
+                                                                    <th>Description</th>
+                                                                    <th>Manufacturer / #</th>
+                                                                    <th>UOM</th>
+                                                                    <th>Ordered</th>
+                                                                    <th>Ship</th>
+                                                                    <th>B/O</th>
+                                                                    <th>Price</th>
+                                                                    <th>Total</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @if (shippedOrderItems.Count > 0)
+                                                                {
+                                                                    var count = 0;
+                                                                    @foreach (var item in shippedOrderItems)
+                                                                    {
+                                                                        count = count + 1;
+                                                                        <tr>
+                                                                            <td>
+                                                                                <div class="custom-control custom-checkbox">
+                                                                                    <input name="line" value="1" type="checkbox" data="@item.Id" @*orderId="@Model.Id" orderItemId="@item.Id"*@ onclick="addtocartCount(this)" class="custom-control-input" id="customCheck1">
+                                                                                    <label class="custom-control-label" for="customCheck1">@count</label>
+                                                                                </div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <a href="@Url.RouteUrl("Manufacturer", new { SeName = item.ProductSeName})"><p class="num-green">@item.Sku</p></a>
+                                                                            </td>
+                                                                            <td style="width: 30%;">
+                                                                                <a href="@Url.RouteUrl("Manufacturer", new { SeName = item.ProductSeName} )" style="color:unset;">
+                                                                                    <p class="des-padding">@item.ProductName</p>
+                                                                                </a>
+                                                                                <p class="des-orange">[DC Houston, TX] Item being packaged, Delivery expected on 6/14/2021</p>
+                                                                            </td>
+                                                                            <td>
+                                                                                <p>@item.ProductManufacturers.FirstOrDefault().Name / @item.ManufacturerPartNumber </p>
+                                                                            </td>
+                                                                            <td>
+                                                                                <p>@item.AttributeInfo</p>
+                                                                            </td>
+                                                                            <td>
+                                                                                <p class="qty">@item.Quantity</p>
+                                                                            </td>
+                                                                            <td>
+                                                                                <p class="num-green">@item.Shipped</p>
+                                                                            </td>
+                                                                            <td>
+                                                                                <p class="num-green">@item.Bo</p>
+                                                                            </td>
+                                                                            <td>
+                                                                                <p>@item.UnitPrice</p>
+                                                                            </td>
+                                                                            <td>
+                                                                                <p>@item.SubTotal</p>
+                                                                            </td>
+                                                                        </tr>
+                                                                    }
+                                                                }
+                                                                else
+                                                                {
+                                                                    <tr>
+                                                                        <td>No item shipped yet.</td>
+                                                                    </tr>
+                                                                }
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+
+                                                    <div class="fade tab-pane items-table-area sorder-infotable table-responsive font_roboto" id="BackorderedItems">
+
+                                                        <table class="table mb0 table-condensed" style="padding: 0px;" id="BackOrderDetailsTbl">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>L#<span><i class="fa fa-caret-up" aria-hidden="true"></i></span></th>
+                                                                    <th>Item Number</th>
+                                                                    <th>Description</th>
+                                                                    <th>Manufacturer / #</th>
+                                                                    <th>UOM</th>
+                                                                    <th>Ordered</th>
+                                                                    <th>Ship</th>
+                                                                    <th>B/O</th>
+                                                                    <th>Price</th>
+                                                                    <th>Total</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @if (backOrderItems.Count > 0)
+                                                                {
+                                                                    var count = 0;
+                                                                    @foreach (var item in backOrderItems)
+                                                                    {
+                                                                        count = count + 1;
+                                                                        <tr>
+                                                                            <td>
+                                                                                <div class="custom-control custom-checkbox">
+                                                                                    <input name="line" value="1" type="checkbox" data="@item.Id" orderId="@Model.Id" orderItemId="@item.Id" class="custom-control-input" id="customCheck1" onclick="addtocartCount(this)">
+                                                                                    <label class="custom-control-label" for="customCheck1">@count</label>
+                                                                                </div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <a href="@Url.RouteUrl("Manufacturer", new { SeName = item.ProductSeName})"><p class="num-green">@item.Sku</p></a>
+                                                                            </td>
+                                                                            <td style="width: 30%;">
+                                                                                <a href="@Url.RouteUrl("Manufacturer", new { SeName = item.ProductSeName} )" style="color:unset;">
+                                                                                    <p class="des-padding">@item.ProductName</p>
+                                                                                </a>
+                                                                                <p class="des-orange">[DC Houston, TX] Item being packaged, Delivery expected on 6/14/2021</p>
+                                                                            </td>
+                                                                            <td>
+                                                                                <p>@item.ProductManufacturers.FirstOrDefault().Name /</p>
+                                                                                <p>@item.ManufacturerPartNumber</p>
+                                                                            </td>
+                                                                            <td>
+                                                                                <p>@item.AttributeInfo</p>
+                                                                            </td>
+                                                                            <td>
+                                                                                <p class="qty">@item.Quantity</p>
+                                                                            </td>
+                                                                            <td>
+                                                                                <p class="num-green">@item.Shipped</p>
+                                                                            </td>
+                                                                            <td>
+                                                                                <p class="num-green">@item.Bo</p>
+                                                                            </td>
+                                                                            <td>
+                                                                                <p>@item.UnitPrice</p>
+                                                                            </td>
+                                                                            <td>
+                                                                                <p>@item.SubTotal</p>
+                                                                            </td>
+                                                                        </tr>
+                                                                    }
+                                                                }
+                                                                else
+                                                                {
+                                                                    <tr>
+                                                                        <td>No backorder item available yet.</td>
+                                                                    </tr>
+                                                                }
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div class="fade tab-pane items-table-area sorder-infotable table-responsive font_roboto" id="InvoiceSummary">
+
+                                                        <table class="table table-condensed" id="tblInvoiceSummary" style="padding: 0px;">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>L#<span><i class="fa fa-caret-up" aria-hidden="true"></i></span></th>
+                                                                    <th>Invoice Number</th>
+                                                                    <th>Order Number</th>
+                                                                    <th>Shipment Date</th>
+                                                                    <th>Shipment Amount</th>
+                                                                    <th>Order Total</th>
+                                                                    <th>Items</th>
+                                                                    <th>Track</th>
+                                                                    <th>Invoice</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @if (Model.ShipmentDetails.Count > 0)
+                                                                {
+                                                                    var count = 0;
+                                                                    foreach (var shipment in Model.ShipmentDetails)
+                                                                    {
+                                                                        count = count + 1;
+                                                                        var shipmentItems = shipment.Items.ToList();
+                                                                        var oi = shipment.Order.Items.ToList();
+                                                                        var price = shipmentItems.Sum(shipItem => shipItem.QuantityShipped * Convert.ToDecimal(oi.Where(orderItem => orderItem.ProductId == shipItem.ProductId).FirstOrDefault().UnitPrice.Replace("$", "").Replace(" ", "").Replace(",", "")));
+                                                                        <tr>
+                                                                            <td>
+                                                                                <p>@count</p>
+                                                                            </td>
+                                                                            <td>
+                                                                                <p>@shipment.Id</p>
+                                                                            </td>
+                                                                            <td>
+                                                                                <p class="num-green">@shipment.Order.CustomOrderNumber</p>
+                                                                            </td>
+                                                                            <td>
+                                                                                <p>@shipment.ShippedDate</p>
+                                                                            </td>
+                                                                            <td>
+                                                                                <p>$@price</p>
+                                                                            </td>
+                                                                            <td>
+                                                                                <p>@shipment.Order.OrderTotal</p>
+                                                                            </td>
+                                                                            <td>
+                                                                                <a data-toggle="modal" href="#myModal-@(shipment.Id)"><p class="track-blue">View</p></a>
+                                                                            </td>
+                                                                            <td>
+                                                                                <a href="@shipment.TrackingNumberUrl" style="cursor:pointer;"><p class="num-green">Track</p></a>
+                                                                            </td>
+                                                                            <td>
+                                                                                <a target="_blank" href="@Url.Action("PdfInvoice", "Order")?orderId=@(Model.Id)&shipmentId=@shipment.Id"><p style="color: #0068A3;">Download</p></a>
+                                                                            </td>
+                                                                        </tr>
+
+                                                                    }
+                                                                    <tr>
+                                                                        <td colspan="7">
+                                                                            <div class="subtotal font_lato" style="float:right;">
+                                                                                <h5>Subtotal @Model.OrderSubtotal</h5>
+                                                                                <h5>Sales Tax %  $00.00</h5>
+                                                                                <h5>Shipping and Handling @Model.OrderShipping</h5>
+                                                                                <hr>
+                                                                                <h5>Total Amount @Model.OrderTotal</h5>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <tr>
+                                                                        <td>No invoice available yet.</td>
+                                                                    </tr>
+                                                                }
+                                                            </tbody>
+                                                        </table>
+                                                        
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@foreach (var shipment in Model.ShipmentDetails)
+{
+    var si = shipment.Items.ToList();
+   <div class="modal fade" id="myModal-@(shipment.Id)">
+        <div class="modal-dialog" style="width:60vw;" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #0068A3;">
+                    <h4 class="modal-title" style="color:white;">Invoice Summary</h4>
+                    <h5 class="modal-title" style="color:white;">Invoice# @shipment.Id</h5>
+                </div>
+                <div class="modal-body" style="border-bottom:0px solid white;">
+
+                    <table class="table-condensed">
+                        <thead>
+                            <tr>
+                                <th>Item Number</th>
+                                <th>Description</th>
+                                <th>QTY Oredered</th>
+                                <th>QTY Shipped</th>
+                                <th>Unit Price</th>
+                                <th>Shipped Price</th>
+                            </tr>
+                        </thead>
+                        <tbody class="table">
+                            @foreach (var item in si)
+                            {
+                                var unitPrice = shipment.Order.Items.ToList().Find(oi => oi.ProductId == item.ProductId).UnitPrice;
+                                var shippedPrice = Convert.ToDecimal(unitPrice.Replace("$", "").Replace(" ", "").Replace(",", "")) * item.QuantityShipped;
+                                <tr style="border-top:1px solid grey;">
+                                    <td><a href="@Url.RouteUrl("Product", new { SeName = item.ProductSeName})"><p>@item.Sku</p></a></td>
+                                    <td><a href="@Url.RouteUrl("Product", new { SeName = item.ProductSeName})" style="color:unset;"><p>@item.ProductName</p></a></td>
+                                    <td><p>@item.QuantityOrdered</p></td>
+                                    <td><p>@item.QuantityShipped</p></td>
+                                    <td><p>@unitPrice</p></td>
+                                    <td><p>$@shippedPrice</p></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" style="color: white; background-color: #0068A3;" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+}
+<script>
+    $(document).ready(function () {
+        try {
+            $('#tblAllItems').DataTable({
+                "language": {
+                    "info": '<div class="tpage-num"><p>Showing _START_ to _END_ of _TOTAL_ Items</p></div>'
+                },
+                "pageLength": 5,
+                "dom": 't<"jqueryPagination"ip>',
+                'pagingType': 'numbers',
+                'ordering': false
+            });
+        }
+        catch (err) {}
+        try {
+            $('#tblShippedItems').DataTable({
+                "language": {
+                    "info": '<div class="tpage-num"><p>Showing _START_ to _END_ of _TOTAL_ Items</p></div>'
+                },
+                "pageLength": 5,
+                "dom": 't<"jqueryPagination"ip>',
+                'pagingType': 'numbers',
+                'ordering': false
+            });
+        }
+        catch (err) { }
+        try {
+            $('#BackOrderDetailsTbl').DataTable({
+                "language": {
+                    "info": '<div class="tpage-num"><p>Showing _START_ to _END_ of _TOTAL_ Items</p></div>'
+                },
+                "pageLength": 5,
+                "dom": 't<"jqueryPagination"ip>',
+                'pagingType': 'numbers',
+                'ordering': false
+            });
+        }
+        catch (err) {}
+    });
+</script>
+@Html.Resource(@<script type="text/javascript">
+                    var items = 0;
+                    function addtocartCount(selector) {
+                        var id = $(selector).attr('data');
+                        if (items == 0) {
+                            $('#addToCartList').attr('disabled');
+                        }
+                        if (selector.checked) {
+                            $('#addToCartList').removeAttr('disabled');
+                            $('#addToCartList').val(`Add ITEM TO CART (${++items})`);
+                            $('[data=' + id + ']').attr('checked', true);
+                            $('#addToCartList').removeClass('btn_disable');
+                        }
+                        else {
+                            $('#addToCartList').removeAttr('disabled');
+                            $('#addToCartList').val(`Add ITEM TO CART (${--items})`);
+                            $('[data=' + id + ']').attr('checked', false);
+                        }
+                    }
+                    function hideAddToCart(elem) {
+                        $('.btn.btn-items').removeClass('active');
+                        elem.classList.add('active')
+                        $('#addToCartList').hide();
+    }
+    function showAddToCart(elem) {
+        $('.btn.btn-items').removeClass('active');
+        elem.classList.add('active')
+        $('#addToCartList').show();
+    }
+</script>, "js")

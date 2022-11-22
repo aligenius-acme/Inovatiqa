@@ -1,0 +1,365 @@
+﻿@using Inovatiqa.Core 
+@model Inovatiqa.Web.Models.Common.EmailModel
+@{
+    Layout = "_ColumnsOne";
+    ViewBag.Title = "RX Prescription";
+}
+@*
+<style>
+    .table td, table th, table tbody tr td {
+        padding: 10px 20px;
+        font-size: 13px;
+    }
+
+    .accordion {
+        background-color: #eee;
+        color: #444;
+        cursor: pointer;
+        padding: 10px;
+        width: 100%;
+        border: none;
+        text-align: left;
+        outline: none;
+        font-size: 15px;
+        transition: 0.4s;
+    }
+
+        .active, .accordion:hover {
+            background-color: #ccc;
+        }
+
+    .panel {
+        padding: 0 18px;
+        display: none;
+        background-color: white;
+        overflow: hidden;
+    }
+</style>
+
+<div class="page  thumbnail" style="height:850px">
+    <div class="page-title panel-heading">
+        <h1>  RX Prescription Drug Authorization Form    </h1>
+    </div>
+    <div style="margin:10px">
+        <div class="">
+
+            <p>
+                Inovatiqa offers physician’s prescription pharmaceutical. Please allow 2 to 5 days for your application to be processes.
+            </p>
+            <p>
+                In order to sell and ship prescription pharmaceuticals to you, we must receive authorization from the responsible physician at your place of business or service.
+            </p>
+            <p>
+                Please have the authorizing physician complete <b>Prescription Drug Authorization Form </b> and return it to us, along with a copy of his/her DEA registration or state license. We can only ship to within the state the physician is licensed in. If your facility does not have a Medical Director, but is licensed to purchase prescription products, please send us a copy of the license along with this letter for identification.
+            </p>
+            <ol>
+                <li>
+                    Complete the short form below and upload your prescription directly to us
+                </li>
+                <li>
+                    A prescription can be faxed to us at 281-220-1350
+                </li>
+                <li>
+                    You can also email your prescription to: customerservice@inovatiqa.com. Please use "Prescription for Inovatiqa" as the subject line
+                </li>
+                <li>
+                    You can Download our Prescription Form and email or fax it in with your doctor's signature
+                </li>
+            </ol>
+            <p><b>Prescription Drug Authorization Form</b></p>
+            <p>In order to sell and ship prescription pharmaceuticals to you, we must receive authorization from the responsible physician at your place of business or service.</p>
+
+            <br>
+            <div class="">
+
+                <div class="jumbotron">
+                    <h2 style="text-align:center">
+                        RX Prescription Registration
+                    </h2>
+                </div>
+
+                <form action="/FooterSendEmails" method="post" enctype="multipart/form-data" >
+
+                    <input type="text" hidden name="EmailSubject" value="RX Prescription" asp-for="EmailSubject" />
+
+                    <div class="form-group col-lg-6">
+                        <label asp-for="CustomerFirstName"></label>
+                        <input type="text" name="CustomerFirstName" data-val="true" autocomplete="off" data-val-required="The First Name field is required." asp-for="CustomerFirstName" class="form-control input-sm" placeholder="First Name" />
+                        <span asp-validation-for="CustomerFirstName" style="min-width: 100%;" class="text-danger"></span>
+                    </div>
+
+
+                    <div class="form-group col-lg-6">
+                        <label asp-for="CustomerLastName"></label>
+                        <input type="text" name="CustomerLastName" data-val="true" autocomplete="off" data-val-required="The Last Name field is required." asp-for="CustomerLastName" class="form-control input-sm" placeholder="Last Name" />
+                        <span asp-validation-for="CustomerLastName" style="min-width: 100%;" class="text-danger"></span>
+                    </div>
+
+
+
+                    <div class="form-group col-lg-12">
+                        <label asp-for="CustomerEmail"></label>
+                        <input type="email" name="CustomerEmail" data-val="true" autocomplete="off" data-val-required="The Email field is required." asp-for="CustomerEmail" class="form-control input-sm" placeholder="Email Address" />
+                        <span asp-validation-for="CustomerEmail" style="min-width: 100%;" class="text-danger"></span>
+                    </div>
+
+
+                    <div class="form-group col-lg-4">
+                        <label asp-for="PhoneNumber"></label>
+                        <input type="text" name="PhoneNumber" data-val="true" autocomplete="off" data-val-required="The Phone number field is required." asp-for="PhoneNumber" class="form-control input-sm" placeholder="Phone Number" />
+                        <span asp-validation-for="PhoneNumber" style="min-width: 100%;" class="text-danger"></span>
+                    </div>
+
+
+                    <div class="form-group col-lg-4">
+                        <label asp-for="OrderNumber"></label>
+                        <input type="text" name="OrderNumber" data-val="true" autocomplete="off" data-val-required="The Order Number field is required." asp-for="OrderNumber" class="form-control input-sm" placeholder="Enter your order number" />
+                        <span asp-validation-for="OrderNumber" style="min-width: 100%;" class="text-danger"></span>
+                    </div>
+
+
+
+
+                    @*<div class="form-group">
+            <label asp-for="Message"></label>
+            <textarea type="text" name="Message" data-val="true" autocomplete="off" data-val-required="The Message field is required." asp-for="Message" class="form-control input-sm" style="height:125px" placeholder="Type a message"></textarea>
+
+            <span asp-validation-for="Message" style="min-width: 100%;" class="text-danger"></span>
+        </div>@
+
+                    <div class="form-group  col-lg-4">
+                        <label>Choose File</label>
+                        <input type="file" id="File" name="File" class="form-control input-sm" placeholder="" />
+
+                        <button type="button" onclick="RemoveFile()">Remove File</button>
+                    </div>
+
+
+
+                    <div class="form-group  col-lg-12" style="margin-top:20px">
+                        <button type="submit" class="btn btn-primary  col-lg-12" style="text-align:center;"> Submit Form  </button>
+                    </div>
+
+
+                </form>
+
+
+
+
+            </div>
+            </div>
+        </div>
+</div>
+
+<script>
+
+    function RemoveFile() {
+
+        document.getElementById("Filefield").value = null;
+    }       
+
+</script>
+    *@
+
+<style>
+
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+    .become-customer-box{
+        box-shadow : none !important;
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+    .newcustomer-area{
+        padding: 0px !important;
+        background: #FFF !important;
+    }
+    h1, h2, h3, h4, h5, h6{
+        font-weight: 500 !important;
+    }
+    .segment-line{
+        border: 0.1px solid #DADADA !important;
+    }
+    .small-heading{
+        font-weight: 500 !important;
+    }
+    .price-match-helper-text{
+        font-size: 17px !important;
+    }
+    .heading-price-match{
+        font-size: 21px !important;
+    }
+    .unmuted-list li{
+        font-size: 17px !important;
+    }
+    input[type=button], input[type=submit]{
+        font-family: Roboto !important;
+    }
+</style>
+<section class="container-fluid newcustomer-area">
+    <div class="container-fluid" style="background: #F1F3F6; padding: 10px;">
+        <div class="container breadcrumb-bar">
+            <span class="muted"><a style="color: #A9A9A9;" href="@Url.RouteUrl("Homepage")">Inovatiqa</a> / </span> RX Prescription Drug Authorization Form
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="container">
+            <div class="row mt10">
+                <div class="col-md-12">
+                    <div class="become-customer-box" style="padding-top: 0px;">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="font_lato">
+                                    <div class="customer-select">
+                                        <h4 class="heading-price-match mt25">RX Prescription Drug Authorization Form</h4>
+                                        <hr class="segment-line">
+                                        <p class="price-match-helper-text">Inovatiqa offers physicians prescription pharmaceutical. Please allow 2 to 5 days for your application to be processed.</p>
+
+                                        <p class="mt25 price-match-helper-text">In order to sell and ship prescription pharmaceuticals to you, we must receive authorization from the responsible physician at your place of business or service.</p>
+
+                                        <p class="mt25 price-match-helper-text">Please have the authorizing physician complete <a href="~/files/forms/Prescription Drug Authorization Form.pdf">Prescription Drug Authorization Form</a> and return it to us, along with a copy of his/her DEA registration or state license. We can only ship to within the state the physician is licensed in. If your facility does not have a Medical Director, but is licensed to purchase prescription products, please send us a copy of the license along with this letter for identification.</p>
+                                    </div>
+                                </div>
+                                <div class="flex-col">
+                                    <div>
+                                        <h5 class="heading-rx-prescription mt42">Prescriptions can be filed in the following ways</h5>
+                                       
+                                        <ul class="unmuted-list">
+                                            <li class="mt20 small-heading">Complete the short form below and upload your prescription directly to us</li>
+                                            <li class="mt10 small-heading">A prescription can be faxed to us at <span class="blue">281-220-1350</span></li>
+                                            <li class="mt10 small-heading">You can Download our Prescription Form and email or fax it in with your doctor's signature</li>
+                                            <li class="mt10 small-heading">You can also email your prescription to: rx@inovatiqa.com. Please use "Prescription for Inovatiqa" as the subject line</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h5 class="heading-rx-prescription mt5">Contact Us</h5>
+                                    <p class="price-match-helper-text mb0 mt16">To pay by check or COD, please place your order by phone at 346-229-4142. (US customers only).</p>
+                                    <p class="price-match-helper-text mb0 mt16" style="color: black;">Phone: <a href="callto:346-229-4142" class="blue">346-229-4142</a></p>
+                                    <p class="price-match-helper-text mb0 mt16" style="color:black;">Fax: <a class="blue">281-220-1350</a></p>
+                                    <p class="price-match-helper-text mb10 mt16" style="color:black;">Email: <a href="mailto:customerservice@inovatiqa.com" class="blue">customerservice@inovatiqa.com</a></p>
+                                    <a href="~/files/forms/Prescription Drug Authorization Form.pdf" class="price-match-helper-text mt20" style="color: #46760A;"><img src="~/images/UIComponents/pdf.png" style="transform: translateY(-3px);"/>Prescription Drug Authorization Form</a>
+                                </div>
+
+                                <div class="col-md-12 col-xs-12 col-sm-12 pl0">
+                                    <h5 class="heading-price-match mt5">RX Prescription Registration Form</h5>
+                                    <hr class="segment-line">
+                                    <div class="accountform-area font_lato" style="display: block;">
+                                        <form class="createaccount-form unchecked-hidefrom_a" action="/FooterSendEmails" method="post" enctype="multipart/form-data">
+                                            @if (TempData["message"] != null && TempData["message"].ToString() != "")
+                                            {
+                                                <div class="alert alert-success" role="alert" style="width: 40%;">
+                                                    @TempData["message"]
+                                                </div>
+                                            }
+                                            <input type="text" asp-for="EmailSubject" value="RX Prescription" hidden />
+                                            <input type="text" name="Method" value="@Url.RouteUrl("RXPrescription")" asp-for="Method" hidden />
+                                            @*<form class="createaccount-form unchecked-hidefrom_a">*@
+                                            <div class="col-md-10 col-sm-12 col-xs-12 pl0" style="width: 13%;">
+                                                <div class="form-group">
+                                                    <label class="required">Contact Name</label>
+                                                </div>
+                                            </div>
+                                            @*<div class="col-md-12 col-sm-12 col-xs-12" style="transform: translateY(10px)">
+            <div class="form-group flex-row">
+                <div class="flex-col">
+                    <input type="text" class="form-control" name="CustomerFirstName" data-val="true" autocomplete="off" data-val-required="First Name is required." asp-for="CustomerFirstName" />
+                    <label class="label-small">First Name</label>
+                    <span asp-validation-for="CustomerFirstName" class="error-label"></span>
+                </div>
+                <div style="width: 50%; display: none;" class="flex-col">
+                    <input type="text" class="form-control ml10" name="CustomerLastName" data-val="true" autocomplete="off" data-val-required="Last Name is required." asp-for="CustomerLastName" />
+                    <label class="label-small ml10">Last Name</label>
+                    <span asp-validation-for="CustomerLastName" class="error-label ml10"></span>
+                </div>
+            </div>
+        </div>*@
+                                            <div class="col-md-10 col-sm-12 col-xs-12">
+                                                <div class="form-group flex-col" style="margin-bottom: 20px;">
+                                                    <input type="text" class="form-control ml10" name="CustomerFirstName" data-val="true" autocomplete="off" data-val-required="Contact Name is required." asp-for="CustomerFirstName" />
+                                                    @*<label class="label-small ml10" style="margin-bottom: -10px;">First & Last Name</label>*@
+                                                    <span asp-validation-for="CustomerFirstName" class="error-label ml10 mt10"></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-10 col-sm-12 col-xs-12 pl0" style="width: 13%;">
+                                                <div class="form-group">
+                                                    <label class="required">Email Address</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-10 col-sm-12 col-xs-12">
+                                                <div class="form-group flex-col">
+                                                    <input type="email" class="form-control ml10" name="CustomerEmail" data-val="true" autocomplete="off" data-val-required="Email is required." asp-for="CustomerEmail" />
+                                                    <span asp-validation-for="CustomerEmail" class="error-label ml10 mt10"></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-10 col-sm-12 col-xs-12 pl0" style="width: 13%;">
+                                                <div class="form-group">
+                                                    <label class="required">Phone Number</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-10 col-sm-12 col-xs-12">
+                                                <div class="form-group flex-col">
+                                                    <input type="tel" id="phoneNumber" class="form-control ml10" name="PhoneNumber" data-val="true" autocomplete="off" data-val-required="Phone Number is required." asp-for="PhoneNumber" />
+                                                    <span asp-validation-for="PhoneNumber" class="error-label ml10 mt10"></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-10 col-sm-12 col-xs-12 pl0" style="width: 13%;">
+                                                <div class="form-group">
+                                                    <label class="required">Order Number</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-10 col-sm-12 col-xs-12">
+                                                <div class="form-group flex-col">
+                                                    <input type="number" class="form-control ml10" name="OrderNumber" data-val="true" autocomplete="off" data-val-required="The Order Number field is required." asp-for="OrderNumber" />
+                                                    <span asp-validation-for="OrderNumber" class="error-label ml10 mt10"></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 col-sm-12 col-xs-12 pl0">
+                                                <div class="form-group mb10">
+                                                    <label>File</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2 col-sm-12 col-xs-12 form-group flex-row pl0">
+                                                <input type="file" id="File" name="File" style="display: none;" />
+                                                <input type="button" class="form-control custom-file-input" value="Upload File" onclick="uploadFile()">
+                                                <input type="button" class="form-control custom-file-input ml10" value="Remove File" onclick="RemoveFile()">
+                                                <p class="file-text" id="FileName">No File Selected</p>
+                                            </div>
+                                            <div class="col-md-12 col-sm-12 col-xs-12 pl0">
+                                                <div class="form-group mb10 col-md-2 pl0" style="width: 11%;">
+                                                    <input type="submit" value="Submit Form" class="btn btn-signin" style="width: 82%;">
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid" style="background: #F1F3F6; padding: 20px;"></div> 
+    </div>
+</section>
+<script>
+ 
+    function uploadFile() {
+        $('#File').click();
+    }
+    $('#File').change(function () {
+        const fileName = $(this).val().split('\\').pop();
+        $('#FileName').html(fileName != '' ? fileName : 'No File Selected');
+    });
+    function RemoveFile() {
+        //document.getElementById("Filefield").value = null;
+        $('#File').val(null);
+        const fileName = $('#File').val().split('\\').pop();
+        $('#FileName').html(fileName != '' ? fileName : 'No File Selected');
+    }
+
+</script>

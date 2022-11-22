@@ -1,0 +1,82 @@
+@model ProductModel
+
+<div class="panel-body">
+    <p>
+        Here you can see a history of the product stock quantity changes
+    </p>
+    @*hide the entire search block if no elements are displayed*@
+    <div class="sub-panel" @(Model.StockQuantityHistorySearchModel.AvailableWarehouses.SelectionIsNotPossible() ? Html.Raw("style=\"display:none\"") : null)>
+        <div class="form-group" @(Model.StockQuantityHistorySearchModel.AvailableWarehouses.SelectionIsNotPossible() ? Html.Raw("style=\"display:none\"") : null)>
+            <div class="col-md-3">
+                <nop-label asp-for="StockQuantityHistorySearchModel.WarehouseId" />
+            </div>
+            <div class="col-md-9">
+                <nop-select asp-for="StockQuantityHistorySearchModel.WarehouseId" asp-items="Model.StockQuantityHistorySearchModel.AvailableWarehouses" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-9 col-md-offset-3">
+                <button type="button" id="search-stock-quantity-history" class="btn btn-primary btn-search">
+                    <i class="fa fa-search"></i>
+                    Search
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="sub-panel">
+        
+        @await Html.PartialAsync("Table", new DataTablesModel
+   {
+       Name = "stock-quantity-history-grid",
+       UrlRead = new DataUrl("StockQuantityHistory", "Product", new RouteValueDictionary { [nameof(Model.StockQuantityHistorySearchModel.ProductId)] = Model.StockQuantityHistorySearchModel.ProductId }),
+       SearchButtonId = "search-stock-quantity-history",
+       Length = Model.StockQuantityHistorySearchModel.PageSize,
+       LengthMenu = Model.StockQuantityHistorySearchModel.AvailablePageSizes,
+       Filters = new List<FilterParameter>
+            {
+                new FilterParameter(nameof(StockQuantityHistorySearchModel.WarehouseId), nameof(StockQuantityHistorySearchModel))
+            },
+       ColumnCollection = new List<ColumnProperty>
+            {
+                new ColumnProperty(nameof(StockQuantityHistoryModel.WarehouseName))
+                {
+                    Title = "Warehouse",
+                    Width = "150"
+                },
+                new ColumnProperty(nameof(StockQuantityHistoryModel.AttributeCombination))
+                {
+                    Title = "Attribute combination",
+                    Width = "180",
+                    Encode = false
+                },
+                new ColumnProperty(nameof(StockQuantityHistoryModel.QuantityAdjustment))
+                {
+                    Title = "Quantity adjustment",
+                    Width = "150",
+                    Render = new RenderCustom("renderStockQuantityHistoryQuantityAdjustment")
+                },
+                new ColumnProperty(nameof(StockQuantityHistoryModel.StockQuantity))
+                {
+                    Title = "Stock quantity",
+                    Width = "130"
+                },
+                new ColumnProperty(nameof(StockQuantityHistoryModel.Message))
+                {
+                    Title = "Message"
+                },
+                new ColumnProperty(nameof(StockQuantityHistoryModel.CreatedOn))
+                {
+                    Title = "Created On",
+                    Width = "170",
+                    Render = new RenderDate()
+                }
+            }
+   })
+        <script>
+            function renderStockQuantityHistoryQuantityAdjustment(data, type, row, meta) {
+                return (data > 0 ? '+' : '') + data;
+            }
+        </script>
+    </div>
+</div>

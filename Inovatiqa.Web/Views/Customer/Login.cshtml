@@ -1,0 +1,230 @@
+﻿@model LoginModel
+@using Inovatiqa.Core
+@using Inovatiqa.Core.Interfaces
+@inject IWebHelper webHelper
+@{
+    Layout = "_ColumnsOne";
+
+    //register URL with return URL (if specified)
+    var registerUrl = Url.RouteUrl("Register", new { returnUrl = this.Context.Request.Query["returnUrl"] }, webHelper.CurrentRequestProtocol);
+}
+@{
+    ViewBag.Title = "Login";
+}
+@* <div class="page login-page from-panel">
+        <div class="page-title panel-heading">
+            <h1>Welcome, Please Sign In!</h1>
+        </div>
+        @await Html.PartialAsync("_ExternalAuthentication.Errors")
+        <div class="page-body panel-body">
+            <div class="customer-blocks">
+                <div class="row">
+                    <div class="col-sm-6 col-md-6">
+                        <div class="new-wrapper register-block">
+                            <fieldset>
+                                <legend>New Customer</legend>
+                                <div class="text">
+                                    By creating an account on our website, you will be able to shop faster, be up to date on an orders status, and keep track of the orders you have previously made.
+                                    <div class="form-group">
+                                        <label class="control-label"></label>
+                                        <div class="controls">
+                                            <input type="button" class="btn btn-primary register-button" onclick="location.href='@registerUrl'" value="Register" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6">
+                        <div class="returning-wrapper">
+                            <fieldset>
+                                <legend>Returning Customer</legend>
+                                <div class="form-fields form-horizontal">
+                                    <form asp-route="Login" asp-route-returnurl="@Context.Request.Query["ReturnUrl"]" method="post" autocomplete="off">
+                                        @if (ViewData.ModelState.Values.Count() > 0)
+                                        {
+                                            <div asp-validation-summary="ModelOnly" class="message-error validation-summary-errors alert alert-danger">Login was unsuccessful. Please correct the errors and try again.</div>
+                                            @foreach (var modelState in ViewData.ModelState.Values)
+                                            {
+                                                @if (modelState.Errors.Count > 0)
+                                                {
+                                                    <ul>
+                                                        @foreach (var error in modelState.Errors)
+                                                        {
+                                                            <li>@error.ErrorMessage</li>
+                                                        }
+                                                    </ul>
+                                                }
+                                            }
+                                        }
+                                        @if(Convert.ToString(TempData["Active"]) != "")
+                                        {
+                                                <div class="alert alert-success" role="alert">
+                                                    Your Account Has been activated. Please Login Below.
+                                                </div>
+                                            TempData.Remove("Active");
+                                        }
+                                        <div class="form-group">
+                                            <label class="col-xs-12 col-sm-2 col-md-2 control-label">Email:</label>
+                                            <div class="col-xs-12 col-sm-12 col-md-9">
+                                                <input class="email form-control" autofocus="" type="email" data-val="true" data-val-email="Wrong email" data-val-required="Please enter your email" id="Email" name="Email">
+                                                <span class="field-validation-valid" data-valmsg-for="Email" data-valmsg-replace="true"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-xs-12 col-sm-2 col-md-2 control-label">Password:</label>
+                                            <div class="col-xs-12 col-sm-12 col-md-9">
+                                                <input class="password form-control" type="password" id="Password" name="Password">
+                                                <span class="field-validation-valid" data-valmsg-for="Password" data-valmsg-replace="true"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-12 remember-me col-sm-offset-0 col-md-offset-2 col-md-9">
+                                                <div class="checkbox">
+                                                    <label for="accept-privacy-policy">
+                                                        <input class="checkbox" type="checkbox" data-val="true" data-val-required="The Remember me? field is required." id="RememberMe" name="RememberMe" value="true">
+                                                        <label for="RememberMe">Remember me?</label>
+                                                        <span class="forgot-password">
+                                                            @*<a asp-route="PasswordRecovery">Forgot password?</a>@
+                                                            <a href="customer/PasswordRecovery">Forgot Password</a>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @if (Model.DisplayCaptcha)
+                                        {
+                                            <div class="form-group">
+                                                <div class="login-captcha-box col-sm-offset-0 col-md-offset-2 col-md-9">
+                                                    <nop-captcha />
+                                                </div>
+                                            </div>
+                                        }
+                                        <div class="form-group col-sm-offset-0 col-md-offset-2">
+                                            <div class="controls col-xs-offset-0 col-sm-offset-0 col-md-offset-2 col-md-9 login-button-wrapper">
+                                                <input class="btn btn-primary login-button" type="submit" value="Log in" />
+                                            </div>
+                                        </div>
+                                        @Html.AntiForgeryToken()
+                                    </form>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
+                @*<div class="row">
+                    <div class="external-authentication col-sm-12 col-md-12">
+                        @await Component.InvokeAsync("ExternalMethods", "ExternalAuthentication")
+                    </div>
+                </div>@
+            </div>
+        </div>
+    </div>*@
+
+<style>
+    @@media only screen and (min-width:1000px){
+        .col_lg{
+            max-width:400px;
+        }
+    }
+</style>
+
+<section class="container-fluid signin-page-area">
+    <div class="row">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="signin-page-rowarea">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="return-customer">
+                                    <div class="signin-title text-center font_lato">
+                                        <h4>Returning Customer</h4>
+                                        <hr>
+                                        @*await Html.PartialAsync("_ExternalAuthentication.Errors")*@
+                                    </div>
+                                    <form class="form-signin font_lato" asp-route="Login" asp-route-returnurl="@Context.Request.Query["ReturnUrl"]" method="post" autocomplete="off">
+                                        <div class="col_lg col-md-12 p0">
+                                            <div class="form-group">
+                                                @if (Convert.ToString(TempData["RegisteredSuccess"]) == "1")
+                                                {
+                                                    <div class="alert alert-info form-control" style="max-height:30px; min-height:30px;">
+                                                        Account created successfully. Confirm your email and Login.
+                                                    </div>
+                                                    TempData.Remove("RegisteredSuccess");
+                                                }
+                                                @if (ViewData.ModelState.Values.Count() > 0)
+                                                {
+                                                    @foreach (var modelState in ViewData.ModelState.Values)
+                                                    {
+                                                        @if (modelState.Errors.Count > 0)
+                                                        {
+                                                            @foreach (var error in modelState.Errors)
+                                                            {
+                                                                <div class="alert alert-danger form-control">@error.ErrorMessage</div>
+                                                            }
+                                                        }
+                                                    }
+                                                }
+
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label for="email">Email</label>
+                                                    <input type="text" id="Email" name="Email" style="margin-bottom:0px;" class="form-control" asp-for="Email" autocomplete="off" data-val="true" data-val-email="Wrong email" data-val-required="Email is required." />
+                                                    <span class="error-label m0" asp-validation-for="Email"></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label for="pwd">Password</label>
+                                                    <input type="password" class="form-control" id="Password" name="Password">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="checkbox">
+                                                    <label><input type="checkbox" data-val="true" data-val-required="The Remember me? field is required." id="RememberMe" name="RememberMe" value="true"> Remember me ?</label>
+                                                    <a href="customer/PasswordRecovery">Forgot Password?</a>
+                                                </div>
+                                                <hr>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="signin-btn font_roboto">
+                                                    <input type="submit" value="Sign In" class="btn btn-signin" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @Html.AntiForgeryToken()
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="new-customer">
+                                    <div class="signin-title text-center font_lato">
+                                        <h4>New Customer</h4>
+                                        <hr>
+                                    </div>
+                                    <div class="new-customer-info font_lato">
+                                        <p>By creating an account on our website, you will be able to shop faster, be up to date on an orders status, and keep track of the orders you have previously made.</p>
+                                        <div class="return-btn font_roboto">
+                                            <a href="@registerUrl" class="btn btn-signin">Register</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+@*<div class="row">
+        <div class="col-sm-12 col-md-12">
+            @await Component.InvokeAsync("TopicBlock", new { systemName = "LoginRegistrationInfo" })
+        </div>
+    </div>*@

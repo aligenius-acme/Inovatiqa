@@ -1,0 +1,26 @@
+@model TierPriceModel
+
+@{
+    Layout = "_AdminPopupLayout";
+
+    //page title
+    ViewBag.PageTitle = "Add new tier price";
+}
+
+<form asp-controller="Product" asp-action="TierPriceCreatePopup"
+      asp-route-productId="@Context.Request.Query["productId"]"
+      asp-route-btnId="@Context.Request.Query["btnId"]"
+      asp-route-formId="@Context.Request.Query["formId"]">
+    <div class="content-header clearfix">
+        <h1 class="pull-left">
+            Add new tier price
+        </h1>
+        <div class="pull-right">
+            <button type="submit" name="save" class="btn bg-blue">
+                <i class="fa fa-floppy-o"></i>
+                Save
+            </button>
+        </div>
+    </div>
+    @await Html.PartialAsync("_CreateOrUpdateTierPrice", Model)
+</form>

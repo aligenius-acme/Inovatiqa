@@ -1,0 +1,70 @@
+﻿.offer-img {
+    width: 600px;
+    height: 300px;
+}
+.offer-left{float:left;width:49%; margin-left:2px}
+.offer-right{float:right;width:49%;}
+
+.offers-banners .offer {
+    display: block;
+    float: left;
+    margin-bottom: 20px
+}
+    .offers-banners .offer-img {
+        width: 100%
+    }
+
+    .offers-banners .offer:nth-child(2n+1) {
+        clear: left;
+        margin-right: 20px
+    }
+
+    .offers-banners .offer iframe, .offers-banners .offer.full {
+        width: 100%
+    }
+
+    .offers-banners .offer.offer3 {
+        position: relative
+    }
+
+        .offers-banners .offer.offer3 .img-responsive {
+            position: absolute;
+            left: 0;
+            top: 0;
+            z-index: 5
+        }
+
+@media only screen and (max-width:979px) {
+    .offers-banners {
+        padding-bottom: 10px
+    }
+
+        .offers-banners .offer {
+            margin-bottom: 10px
+        }
+
+            .offers-banners .offer:nth-child(2n+1) {
+                margin-right: 10px
+            }
+}
+
+@media only screen and (max-width:599px) {
+    .offers-banners {
+        width: 100%;
+        margin-right: 0 !important
+    }
+    .offer-img {
+        width: 500px !important;
+        height: 300px;
+    }
+}
+ .offers-banners {
+    margin-bottom: -15px
+}
+
+    .offers-banners iframe {
+        height: 206px
+    }
+.offers-banners{
+    overflow: hidden
+}

@@ -1,0 +1,73 @@
+﻿@inject Inovatiqa.Services.Common.Interfaces.IGenericAttributeService genericAttributeService
+@inject Inovatiqa.Services.WorkContext.Interfaces.IWorkContextService workContextService
+@{
+    const string panelId = "order-average-report-box";
+    const string hidePanelAttributeName = "Reports.HideOrderAverageReportPanel";
+    var hidePanel = genericAttributeService.GetAttribute<bool>(workContextService.CurrentCustomer, hidePanelAttributeName, workContextService.CurrentCustomer.Id);
+}
+
+<div class="box box-info @if(hidePanel){<text>collapsed-box</text>}" id="@panelId">
+    <div class="box-header with-border">
+        <h3 class="box-title">
+            <i class="fa fa-money"></i>
+            Order totals
+        </h3>
+        <div class="box-tools pull-right">
+            <button class="btn btn-box-tool" data-widget="collapse">
+                @if (hidePanel)
+                {
+                    <text><i class="fa fa-plus"></i></text>
+                }
+                else
+                {
+                    <text><i class="fa fa-minus"></i></text>
+                }
+            </button>
+        </div>
+    </div>
+    @Html.Resource(@<script type="text/javascript">
+        $(document).ready(function () {
+            $('#@panelId').on('click', 'button[data-widget="collapse"]', function () {
+                var collapsed = !$('#@panelId').hasClass('collapsed-box');
+                saveUserPreferences('@(Url.Action("SavePreference", "Preferences"))', '@hidePanelAttributeName', collapsed);
+            });
+        });
+    </script>, "js")
+    <div class="box-body" style="padding-bottom: 22px;">
+        @await Html.PartialAsync("Table", new DataTablesModel
+        {
+            Name = "average-order-report-grid",
+            UrlRead = new DataUrl("OrderAverageReportList", "Order", null),
+            Length = int.MaxValue,
+            Paging = false,
+            Info = false,
+            ColumnCollection = new List<ColumnProperty>
+            {
+                new ColumnProperty(nameof(OrderAverageReportModel.OrderStatus))
+                {
+                    Title = "Order Status"
+                },
+                new ColumnProperty(nameof(OrderAverageReportModel.SumTodayOrders))
+                {
+                    Title = "Today"
+                },
+                new ColumnProperty(nameof(OrderAverageReportModel.SumThisWeekOrders))
+                {
+                    Title = "This week"
+                },
+                new ColumnProperty(nameof(OrderAverageReportModel.SumThisMonthOrders))
+                {
+                    Title = "This Month"
+                },
+                new ColumnProperty(nameof(OrderAverageReportModel.SumThisYearOrders))
+                {
+                    Title = "This Year"
+                },
+                new ColumnProperty(nameof(OrderAverageReportModel.SumAllTimeOrders))
+                {
+                    Title = "All time"
+                }
+            }
+        })
+    </div>
+</div>

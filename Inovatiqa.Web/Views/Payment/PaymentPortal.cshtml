@@ -1,0 +1,344 @@
+﻿@model Inovatiqa.Web.Models.Payment.PaymentShipmentModel
+@{
+    Layout = "_ColumnsOne";
+}
+@{
+    ViewBag.Title = "Payment Portal";
+}
+@*
+    @Html.Resource(@<link href="@Url.Content("https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css")" rel="stylesheet" type="text/css" />, "css")
+    @Html.Resource(@<script src="@Url.Content("https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js")" type="text/javascript"></script>, "js")
+    @Html.Resource(@<script src="@Url.Content("https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js")" type="text/javascript"></script>, "js")
+    @Html.Resource(@<script src="@Url.Content("https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js")" type="text/javascript"></script>, "js")
+    @Html.Resource(@<link href="@Url.Content("https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css")" rel="stylesheet" type="text/css" />, "css")
+    @Html.Resource(@<script src="@Url.Content("https://cdnjs.cloudflare.com/ajax/libs/jquery.tipsy/1.0.3/jquery.tipsy.min.js")" type="text/javascript"></script>, "js")
+    @Html.Resource(@<link href="@Url.Content("https://cdnjs.cloudflare.com/ajax/libs/jquery.tipsy/1.0.3/jquery.tipsy.min.css")" rel="stylesheet" type="text/css" />, "css")
+    @Html.Resource(@<script src="@Url.Content("https://cdn.datatables.net/rowreorder/1.2.7/js/dataTables.rowReorder.min.js")" type="text/javascript"></script>, "js")
+    @Html.Resource(@<script src="@Url.Content("https://cdn.datatables.net/responsive/2.2.6/js/dataTables.responsive.min.js")" type="text/javascript"></script>, "js")
+    @Html.Resource(@<link href="@Url.Content("https://cdn.datatables.net/rowreorder/1.2.7/css/rowReorder.dataTables.min.css")" rel="stylesheet" type="text/css" />, "css")
+    @Html.Resource(@<link href="@Url.Content("https://cdn.datatables.net/responsive/2.2.6/css/responsive.dataTables.min.css")" rel="stylesheet" type="text/css" />, "css")
+
+
+    <style>
+        #TotalsRow:hover {
+            cursor: pointer;
+            background-color: #ECF2F4;
+        }
+
+        .bgcolor {
+            background: #f0f6fb;
+            background-color: #f0f6fb;
+            padding: 1%;
+        }
+
+        .borderclr {
+            border-right: 1px solid #ddd;
+            padding-right: 12px;
+        }
+    </style>
+
+    <div class="page account-page order-list-page">
+        <div class="page-title panel-heading">
+            <h1 id="pageTitle">Payment Portal</h1>
+        </div>
+
+
+
+
+        <div id="v" class="col-lg-12 bgcolor col-md-12">
+            <div class="borderclr bgcolor col-lg-2 col-md-2">
+                <p>
+                    Total Open Amt
+                </p>
+
+                <h4>
+                    @Model.CustomerTotalOpenAmount
+
+                </h4>
+            </div>
+            <div class="borderclr bgcolor col-lg-2 col-md-2">
+                <p>
+                    Total Current Amt
+                </p>
+                <h4>
+
+                    @Model.CustomerTotalAmount
+                </h4>
+            </div>
+            <div class="borderclr bgcolor col-lg-2 col-md-2">
+                <p>
+                    Total Past Due
+                </p>
+                <h4>
+                    $ 0.00
+                </h4>
+            </div>
+
+            <div class="borderclr bgcolor col-lg-2 col-md-2">
+                <p>
+                    Total 1-30 Past Due
+                </p>
+                <h4>
+                    $ 0.00
+                </h4>
+            </div>
+
+            <div class="borderclr bgcolor col-lg-2 col-md-2">
+                <p>
+                    Total 31-60 Past Due
+                </p>
+                <h4>
+                    $ 0.00
+                </h4>
+            </div>  <div class=" bgcolor col-lg-2 col-md-2">
+                <p>
+                    Total Over 60 Past Due
+                </p>
+                <h4>
+                    $ 0.00
+                </h4>
+            </div>
+
+
+
+        </div>
+
+    </div>
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <div id="v" class="col-lg-12 bgcolor col-md-12">
+        <div class=" bgcolor col-lg-12 col-md-12">
+            <h4>Account Balances</h4>
+            <p>
+                This is a list of Aging Details for the accounts connected to your user profile. All balances shown are calculated as of 6:00 AM 04/13/2021
+            </p>
+
+        </div>
+    </div>
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <div class="row page-body" style="margin-top:25px">
+        <div class="shipment-list k-overflow-container">
+            <div class="col-md-12 product-details-tabs" id="tabbed-description">
+                <table id="tblShipment" class="table table-bordered table-condensed table-striped" style="width: 96%;margin-left:2%;">
+                    <thead>
+                        <tr>
+                            <th style="text-align:center;white-space:nowrap">
+                                Account #
+                            </th>
+                            <th style="text-align:center;white-space:nowrap">
+                                Account Name
+                            </th>
+                            <th style="text-align:center;white-space:nowrap">
+                                Open Amount
+                            </th>
+                            <th style="text-align:center;white-space:nowrap">
+                                Current Amount
+                            </th>
+                            <th style="text-align:center;white-space:nowrap">
+                                Past Due
+                            </th>
+                            <th style="text-align:center;white-space:nowrap">
+                                1-30 Days Past Due
+                            </th>
+                            <th style="text-align:center;white-space:nowrap">
+                                31-60 Days Past Due
+                            </th>
+                            <th style="text-align:center;white-space:nowrap">
+                                61 and Over Days Past Due
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="all shippedorder" style="display: table-row-group;">
+                        @@if (Model != null)
+                            {
+                                @foreach (var item in Model)
+                                {@
+                        <tr>
+                            <td>
+                                <a target="_blank" href="@Url.RouteUrl("OpenInvoices")">@Model.BillingAddress.Id</a>
+                            </td>
+                            <td>
+                                @Model.BillingAddress.FirstName  @Model.BillingAddress.LastName
+                            </td>
+                            <td>
+                               @Model.CustomerTotalOpenAmount
+                            </td>
+                            <td>
+                               @Model.CustomerTotalAmount
+                            </td>
+                            <td>@Model.PastDue</td>
+                            <td>@Model.DaysPastDue30</td>
+                            <td>@Model.DaysPastDue60</td>
+                            <td>@Model.DaysPastDue90</td>
+
+
+
+
+                        </tr>
+                        @*}
+                            }
+                            else
+                            {
+                                <tr id="emptyRow">
+                                    <td colspan="8">
+                                        <div class="no-data">
+                                            no items found.
+                                        </div>
+                                    </td>
+                                    <td style="display: none;"></td>
+                                    <td style="display: none;"></td>
+                                    <td style="display: none;"></td>
+                                    <td style="display: none;"></td>
+                                    <td style="display: none;"></td>
+                                    <td style="display: none;"></td>
+                                    <td style="display: none;"></td>
+                                    <td style="display: none;"></td>
+                                </tr>
+                            }@
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+*@
+
+
+<style>
+    .jqueryPagination{
+        display: flex;
+        justify-content: space-between;
+        margin:  12px;
+    }
+    .paging_numbers span a {
+        margin-right: 5px;
+        cursor: pointer;
+        color: #636363;
+    }
+    .paging_numbers span .current{
+        color: #000;
+    }
+    .jqueryPagination p {
+        font-family: Lato;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 13.5px;
+        letter-spacing: 0.05em;
+        color: #636363;
+        margin-bottom:unset;
+    }
+
+</style>
+
+@await Component.InvokeAsync("DashboardBlueBand")
+@*@await Html.PartialAsync("_DashboardBlueBand")*@
+<section class="container-fluid deshboard_section k">
+    <div class="row">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="sidebar_menu font_lato">
+                        <h3>Inovatiqa Dashboard</h3>
+                        @await Html.PartialAsync("_DashboardSideBar", "payment-portal")
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="payment_portal_top">
+                        <div class="payment_type_list">
+                            <ul>
+                                <li><a href="@Url.RouteUrl("PaymentPortal")" class="active">Home</a></li>
+                                <li><a href="@Url.RouteUrl("OpenInvoices")">Open Invoices</a></li>
+                                <li><a href="@Url.RouteUrl("UnappliedCash")">Unapplied Cash</a></li>
+                                <li><a href="@Url.RouteUrl("PaidInvoices")">Paid Invoices</a></li>
+                            </ul>
+                        </div>
+                        <hr class="line">
+                        <div class="details_off_amount text-center">
+                            <div class="boxss">
+                                <h4>Total Open Amount</h4>
+                                <p>@Model.CustomerTotalOpenAmount</p>
+                            </div>
+                            <div class="boxss">
+                                <h4>Total Current Amount</h4>
+                                <p>@Model.CustomerTotalAmount</p>
+                            </div>
+                            <div class="boxss">
+                                <h4>Total Past Due</h4>
+                                <p>$0.00</p>
+                            </div>
+                            <div class="boxss">
+                                <h4>Total 1-30 Past Due</h4>
+                                <p>@Model.DaysPastDue30</p>
+                            </div>
+                            <div class="boxss">
+                                <h4>Total 31-60 Past Due</h4>
+                                <p>@Model.DaysPastDue60</p>
+                            </div>
+                            <div class="boxss">
+                                <h4>Total Over 60 Past Due</h4>
+                                <p>@Model.DaysPastDue90</p>
+                            </div>
+                        </div>
+                        <div class="account_balances">
+                            <h4>Account Balances</h4>
+                            <p>This is a list of Aging Details for the accounts connected to your user profile. All balances shown are calculated as of 6:00 AM 06/23/2021</p>
+                        </div>
+                    </div>
+                    <div class="payment_portal_bottom font_roboto table-responsive">
+                        <table class="table border-collapse mb0" id="paymentPortalTable">
+                             
+                                <thead>
+                                    <tr>
+                                        <th>Account Number</th>
+                                        <th>Account Name</th>
+                                        <th>Open Amount</th>
+                                        <th>Current Amount</th>
+                                        <th>Past Due</th>
+                                        <th>1-30 Days Past Due</th>
+                                        <th>31-60 Days Past Due</th>
+                                        <th>61 and Over Past Due</th>
+                                    </tr>
+                                </thead>
+                                <tr>
+                                    <td><a href="@Url.RouteUrl("OpenInvoices")">@Model.BillingAddress.Id</a></td>
+                                    <td>@Model.BillingAddress.FirstName @Model.BillingAddress.LastName</td>
+                                    <td>@Model.CustomerTotalOpenAmount</td>
+                                    <td>@Model.CustomerTotalAmount</td>
+                                    <td>@Model.PastDue</td>
+                                    <td>@Model.DaysPastDue30</td>
+                                    <td>@Model.DaysPastDue60</td>
+                                    <td>@Model.DaysPastDue90</td>
+                                </tr>
+                            </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    $(document).ready(function () {
+        const dt = $('#paymentPortalTable').DataTable({
+            "language": {
+                "info": '<div class="tpage-num"><p>Showing _START_ to _END_ of _TOTAL_ Items</p></div>'
+            },
+            "pageLength": 5,
+            "dom": 't<"jqueryPagination"ip>',
+            'pagingType': 'numbers'
+        });
+    });
+</script>

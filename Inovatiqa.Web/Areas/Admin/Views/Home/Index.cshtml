@@ -1,0 +1,100 @@
+﻿@model DashboardModel
+@inject Inovatiqa.Services.Security.Interfaces.IPermissionService permissionService
+@using Inovatiqa.Services.Security
+@{
+    @Html.Resource(@<link href="@Url.Content("~/lib/ionicons/css/ionicons-2.0.1.min.css")" rel="stylesheet" type="text/css" />, "css")
+
+    //page title
+    ViewBag.PageTitle = "Dashboard";
+
+    var canManageOrders = permissionService.Authorize(StandardPermissionProvider.ManageOrders);
+    var canManageCustomers = permissionService.Authorize(StandardPermissionProvider.ManageCustomers);
+    var canManageProducts = permissionService.Authorize(StandardPermissionProvider.ManageProducts);
+    var canManageReturnRequests = permissionService.Authorize(StandardPermissionProvider.ManageReturnRequests);
+}
+
+<div class="content-header">
+    <h1>
+        Dashboard
+    </h1>
+</div>
+<div class="content">
+    <div class="row">
+        <div class="col-md-12">
+            @*@if (!Model.IsLoggedInAsVendor)
+            {
+                <div class="row">
+                    <div class="col-md-12">
+                        @await Component.InvokeAsync("InovatiqaNews")
+                    </div>
+                </div>
+            }*@
+            @if (!Model.IsLoggedInAsVendor && canManageOrders && canManageCustomers && canManageProducts && canManageReturnRequests)
+            {
+                <div class="row">
+                    <div class="col-md-12">
+                        @await Component.InvokeAsync("CommonStatistics")
+                    </div>
+                </div>
+            }
+            @if (!Model.IsLoggedInAsVendor && (canManageOrders || canManageCustomers))
+            {
+                <div class="row">
+                    @if (!Model.IsLoggedInAsVendor && canManageOrders)
+                    {
+                        <div class="col-md-6">
+                            @await Html.PartialAsync("_OrderStatistics")
+                        </div>
+                    }
+                    @if (!Model.IsLoggedInAsVendor && canManageCustomers)
+                    {
+                        <div class="col-md-6">
+                            @await Html.PartialAsync("_CustomerStatistics")
+                        </div>
+                    }
+                </div>
+            }
+            @if (!Model.IsLoggedInAsVendor && canManageOrders)
+            {
+                <div class="row">
+                    <div class="col-md-8">
+                        @await Html.PartialAsync("_OrderAverageReport")
+                    </div>
+                    <div class="col-md-4">
+                        @await Html.PartialAsync("_OrderIncompleteReport")
+                    </div>
+                </div>
+            }
+            @if (!Model.IsLoggedInAsVendor && (canManageOrders || canManageProducts))
+            {
+                <div class="row">
+                    @if (canManageOrders)
+                    {
+                        <div class="col-md-8">
+                            @await Html.PartialAsync("_LatestOrders")
+                        </div>
+                    }
+                    <div class="col-md-4">
+                        @if (canManageProducts)
+                        {
+                            @await Html.PartialAsync("_PopularSearchTermsReport", Model.PopularSearchTerms)
+                        }
+                    </div>
+                </div>
+            }
+            @if (canManageOrders)
+            {
+                <div class="row">
+                    <div class="col-md-6">
+                        @await Html.PartialAsync("_BestsellersBriefReportByQuantity", Model.BestsellersByQuantity)
+                    </div>
+                    <div class="col-md-6">
+                        @await Html.PartialAsync("_BestsellersBriefReportByAmount", Model.BestsellersByAmount)
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<nop-alert asp-alert-id="loadOrderStatisticsAlert" asp-alert-message="Failed to load statistics." />
+<nop-alert asp-alert-id="loadCustomerStatisticsAlert" asp-alert-message="Failed to load statistics." />

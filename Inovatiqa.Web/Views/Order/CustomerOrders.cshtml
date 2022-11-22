@@ -1,0 +1,831 @@
+﻿@using Inovatiqa.Web.Models.Order
+@model CustomerOrderListModel
+@{
+    Layout = "_ColumnsOne";
+}
+@{
+    ViewBag.Title = "Orders";
+}
+
+
+@*
+    @Html.Resource(@<link href="@Url.Content("https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css")" rel="stylesheet" type="text/css" />, "css")
+    @Html.Resource(@<script src="@Url.Content("https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js")" type="text/javascript"></script>, "js")
+    @Html.Resource(@<script src="@Url.Content("https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js")" type="text/javascript"></script>, "js")
+    @Html.Resource(@<script src="@Url.Content("https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js")" type="text/javascript"></script>, "js")
+    @Html.Resource(@<link href="@Url.Content("https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css")" rel="stylesheet" type="text/css" />, "css")
+    @Html.Resource(@<script src="@Url.Content("https://cdnjs.cloudflare.com/ajax/libs/jquery.tipsy/1.0.3/jquery.tipsy.min.js")" type="text/javascript"></script>, "js")
+    @Html.Resource(@<link href="@Url.Content("https://cdnjs.cloudflare.com/ajax/libs/jquery.tipsy/1.0.3/jquery.tipsy.min.css")" rel="stylesheet" type="text/css" />, "css")
+    @Html.Resource(@<script src="@Url.Content("https://cdn.datatables.net/rowreorder/1.2.7/js/dataTables.rowReorder.min.js")" type="text/javascript"></script>, "js")
+    @Html.Resource(@<script src="@Url.Content("https://cdn.datatables.net/responsive/2.2.6/js/dataTables.responsive.min.js")" type="text/javascript"></script>, "js")
+    @Html.Resource(@<link href="@Url.Content("https://cdn.datatables.net/rowreorder/1.2.7/css/rowReorder.dataTables.min.css")" rel="stylesheet" type="text/css" />, "css")
+    @Html.Resource(@<link href="@Url.Content("https://cdn.datatables.net/responsive/2.2.6/css/responsive.dataTables.min.css")" rel="stylesheet" type="text/css" />, "css")
+    <style>
+        .shaddedleft {
+            border-left: 5px solid #5f9732 !important;
+            padding-right: 3px !important;
+            color: #5f9732 !important;
+            font-size: 0.8em !important;
+            text-transform: uppercase !important;
+        }
+
+        #filter-bar {
+            margin-left: 240px;
+            margin-bottom: -35px;
+        }
+
+        #pageTitle {
+            font-size: 1.3em;
+        }
+    </style>
+    <div class="page account-page order-list-page from-panel">
+        <div class="page-title panel-heading">
+            <h1 id="pageTitle">Submitted Order Status</h1>
+        </div>
+        <div class="page-body">
+            @@if (Model.RecurringOrders.Count > 0)
+            {
+                <form asp-route="CustomerOrders" method="post">
+                    @{
+                        var canRetryRecurringOrders = Model.RecurringOrders.Any(recurring => recurring.CanRetryLastPayment);
+                    }
+                    @Html.AntiForgeryToken()
+                    <div class="section recurring-payments">
+                        <div class="title">
+                            <strong>Recurring payments</strong>
+                        </div>
+                        <div class="recurring-payments-box">
+                            <div class="panel panel-default">
+                                <table class="table table-bordered">
+                                    <colgroup>
+                                        <col />
+                                        <col />
+                                        <col />
+                                        <col />
+                                        <col />
+                                        <col />
+                                        @if (canRetryRecurringOrders)
+                                        {
+                                            <col />
+                                        }
+                                        <col />
+                                    </colgroup>
+                                    <thead>
+                                        <tr>
+                                            <th class="a-center start-date">
+                                                Start date
+                                            </th>
+                                            <th class="a-center cycle-info">
+                                                Cycle info
+                                            </th>
+                                            <th class="a-center next-payment">
+                                                Next payment
+                                            </th>
+                                            <th class="a-center total-cycles">
+                                                Total cycles
+                                            </th>
+                                            <th class="a-center cycles-remaining">
+                                                Cycles remaining
+                                            </th>
+                                            <th class="a-center initial-order">
+                                                Initial order
+                                            </th>
+                                            <th class="a-center cancel">
+                                                Cancel payment
+                                            </th>
+                                            @if (canRetryRecurringOrders)
+                                            {
+                                                <th class="retry">
+                                                    Retry last payment
+                                                </th>
+                                            }
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.RecurringOrders)
+                                        {
+                                            <tr>
+                                                <td class="a-center start-date">
+                                                    @item.StartDate
+                                                </td>
+                                                <td class="a-center cycle-info">
+                                                    @item.CycleInfo
+                                                </td>
+                                                <td class="a-center next-payment">
+                                                    @item.NextPayment
+                                                </td>
+                                                <td class="a-center total-cycles">
+                                                    @item.TotalCycles
+                                                </td>
+                                                <td class="a-center cycles-remaining">
+                                                    @item.CyclesRemaining
+                                                </td>
+                                                <td class="a-center initial-order">
+                                                    <a href="@Url.RouteUrl("OrderDetails", new { orderId = item.InitialOrderId })">@string.Format("View order (Order number - {0})", item.InitialOrderId)</a>
+                                                </td>
+                                                @if (canRetryRecurringOrders)
+                                                {
+                                                    <td class="retry">
+                                                        @if (item.CanRetryLastPayment)
+                                                        {
+                                                            <input type="submit" name="retryLastPayment_@(item.Id)" value="Retry last payment" class="btn btn-default retry-recurring-order-button" />
+                                                        }
+                                                    </td>
+                                                }
+                                                <td class="a-center cancel">
+                                                    @if (item.CanCancel)
+                                                    {
+                                                        <input type="submit" name="cancelRecurringPayment@(item.Id)" value="Cancel payment" class="btn btn-default cancel-recurring-order-button" />
+                                                    }
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                if (Model.RecurringPaymentErrors.Any())
+                {
+                    <div class="message-error">
+                        <ul>
+                            @foreach (var error in Model.RecurringPaymentErrors)
+                            {
+                                <li>@error</li>
+                            }
+                        </ul>
+                    </div>
+                }
+            }@
+            <div class="order-list">
+                <div class="order-list">
+                    <div class="col-md-12 product-details-tabs" id="tabbed-description">
+                        <ul class="nav nav-tabs">
+                            <li class="active ordertabs" value="0"><a href="#AllOrders" value="0" data-toggle="tab">All Orders</a></li>
+                            <li class="ordertabs" value="10"><a href="#OpenOrders" value="10" data-toggle="tab">Open Orders @*(@Model.Orders.Where(x => x.OrderStatus == "Pending" || x.OrderStatus == "Processing").Count())@</a></li>
+                            <li class="ordertabs" value="50"><a href="#BackOrders" value="50" data-toggle="tab">Back Ordered @*(@Model.Orders.Where(x => x.OrderStatus == "Pending" || x.OrderStatus == "Processing").Count())@</a></li>
+                            <li class="ordertabs" value="30"><a href="#ShippedOrders" value="30" data-toggle="tab">Shipped Orders @*(@Model.Orders.Where(x => x.OrderStatus == "Complete").Count())@</a></li>
+                            <li class="ordertabs" value="40"><a href="#RejectedOrders" value="40" data-toggle="tab">Rejected Orders</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="fade tab-pane in active" id="AllOrders" style="font-family:Helvetica Neue,Helvetica,Arial,sans-serif;">
+
+                            </div>
+                            <div id="filter-bar">
+                                @if (!Model.IsReturnView)
+                                {
+                                    @*<label for="view">View</label>
+                                        <select id="order-status-ddl" class="btn-dropdown form-control" style="width:200px;display:inline">
+                                            <option value="0" selected="selected">All Orders</option>
+                                            <option value="10">Pending</option>
+                                            <option value="20">Processing</option>
+                                            <option value="30">Complete</option>
+                                            <option value="40">Cancelled</option>
+                                        </select>*@
+@*<b>Find</b>
+    <input type="text" size="12" class="form-control" value="" style="width:200px;display:inline"> in
+    <select class="btn-dropdown form-control" style="width: 200px;display:inline">
+        <option value="po">PO</option>
+        <option value="originalOrderId">Order #</option>
+        <option value="returnOrderId">Return #</option>
+        <option value="itemIdMck">Item #</option>
+        <option value="description">Description</option>
+        <option value="manufacturer">Manufacturer</option>
+        <option value="itemIdMfr">Mfr #</option>
+    </select>*@
+@*<div id="newSearchPlace" style="float:right"></div>@
+        <label for="fromDate">From</label>
+        <input type="text" id="fromDate" value="@DateTime.Today.AddDays(-35).ToString("MM/dd/yyyy")" class="form-control date-picker" style="width:110px;display:inline">
+        <label for="toDate">To</label>
+        <input type="text" id="toDate" value="@DateTime.Today.ToString("MM/dd/yyyy")" class="form-control date-picker" style="width:110px;display:inline">
+        <a type="button" id="customer-orders-filter" title="Filters records for the last 35 days" href="#" class="btn btn-primary">Find</a>
+        <a type="button" id="customer-orders-clear" href="#" class="btn btn-primary">Clear</a>
+    </div>
+    <table id="order" class="table table-bordered table-condensed table-striped">
+        <thead>
+            <tr>
+                <th style="text-align:center;white-space:nowrap">
+                    Status
+                </th>
+                <th style="text-align:center;white-space:nowrap">
+                    PO
+                </th>
+                <th style="text-align:center;white-space:nowrap">
+                    Order #
+                </th>
+                <th style="text-align:center;white-space:nowrap">
+                    Order Date
+                </th>
+                <th style="text-align:center;white-space:nowrap">
+                    Ship To #
+                </th>
+                <th style="text-align:center;white-space:nowrap">
+                    Ship To
+                </th>
+                <th style="text-align:center;white-space:nowrap">
+                    City
+                </th>
+                <th style="text-align:center;white-space:nowrap">
+                    State
+                </th>
+                <th style="text-align:center;white-space:nowrap">
+                    Lines
+                </th>
+                <th style="text-align:center;white-space:nowrap">
+                    B/O
+                </th>
+                <th style="text-align:center;white-space:nowrap">
+                    Track
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Orders.Count > 0)
+            {
+                @foreach (var order in Model.Orders)
+                {
+                    <tr onclick="setLocation('@Url.RouteUrl("OrderDetails", new { orderId = order.Id })')" style="cursor:pointer;">
+                        <td class="shaddedleft">
+                            @order.OrderStatus
+                        </td>
+                        <td>
+                            @order.PONumber
+                        </td>
+                        <td>
+                            <a href="#" onclick="setLocation('@Url.RouteUrl("OrderDetails", new { orderId = order.Id })')">@order.CustomOrderNumber</a>
+                        </td>
+                        <td>
+                            @order.CreatedOn.ToString("MM/dd/yyyy")
+                        </td>
+                        <td>
+                            @order.ShipToId
+                        </td>
+                        <td>
+                            @order.ShipTo
+                        </td>
+                        <td>
+                            @order.ShipToCity
+                        </td>
+                        <td>
+                            @order.ShipToState
+                        </td>
+                        <td>
+                            @order.TotalItems
+                        </td>
+                        <td>
+                            @order.Bo
+                        </td>
+                        <td>
+                            @if (order.IsReturnRequestAllowed)
+                            {
+                                if (Model.IsReturnView)
+                                {
+                                    <input type="button" value="Return Item(s)" class="btn btn-default return-items-button" onclick="setLocation('@Url.RouteUrl("ReturnRequest", new { orderId = order.Id })')" />
+                                }
+                                @*<text>&nbsp;&nbsp;&nbsp;</text>
+                                }*@
+@*<input type="button" value="Details" class="btn btn-default order-details-button" onclick="setLocation('@Url.RouteUrl("OrderDetails", new { orderId = order.Id })')" />@
+                                                    @if (order.OrderStatusId != 40)
+                                                    {
+                                                        @*<input type="button" value="Track" class="btn btn-default order-track-button" orderId="@order.Id" />@
+                                                        <i class="fa fa-truck order-track-button pointer" title="Track order" orderId="@order.Id"></i>
+                                                    }
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <tr id="emptyRow">
+                                            <td colspan="11">
+                                                <div class="no-data">
+                                                    Search returned no Orders from StartDate to EndDate.
+                                                </div>
+                                            </td>
+                                            <td style="display: none;"></td>
+                                            <td style="display: none;"></td>
+                                            <td style="display: none;"></td>
+                                            <td style="display: none;"></td>
+                                            <td style="display: none;"></td>
+                                            <td style="display: none;"></td>
+                                            <td style="display: none;"></td>
+                                            <td style="display: none;"></td>
+                                            <td style="display: none;"></td>
+                                            <td style="display: none;"></td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @Html.Resource(@<script type="text/javascript">
+                                    $(document).ready(function () {
+                                        //$('#order').DataTable({
+                                        //    //"bPaginate": true,
+                                        //    "bLengthChange": false,
+                                        //    //"bFilter": true,
+                                        //    //"bInfo": true,
+                                        //    //"bAutoWidth": true,
+                                        //    language: {
+                                        //        search: "Find",
+                                        //        //searchPlaceholder: "Filter records..."
+                                        //    },
+                                        //    //"order": [[3, "desc"]],
+                                        //    //rowReorder: {
+                                        //    //    selector: 'td:nth-child(2)'
+                                        //    //},
+                                        //    "dom": '<"pull-left"f><"pull-right"l>tip',
+                                        //    responsive: true
+                                        //});
+                                        $('#order').DataTable({
+                                            "dom": '<"pull-left"f><"pull-right"l>t<"pull-left"i><"pull-right"p>',
+                                            language: {
+                                                search: "Find",
+                                                //searchPlaceholder: "Filter records..."
+                                            },
+                                            "bLengthChange": false
+                                        });
+                                        //$('#order').DataTable();
+                                        let searchParams = new URLSearchParams(window.location.search);
+                                        var orderStatusId = 0;
+                                        if (searchParams.has('orderStatusId')) {
+                                            $('.order-list li').removeClass("active");
+                                            $('.order-list li[value="' + searchParams.get('orderStatusId') + '"]').addClass("active");
+                                            //if (searchParams.get('orderStatusId') != 10)
+                                            //    $('.order-list li[value="' + searchParams.get('orderStatusId') + '"]').css("display", "none");
+                                            //else
+                                            //    $('.order-list li[value="' + searchParams.get('orderStatusId') + '"]').addClass("active");
+                                        }
+                                        //else {
+                                        //    $('.order-list li[value="10"]').css("display", "none");
+                                        //}
+                                        var isReturnview = @Model.IsReturnView.ToString().ToLower();
+
+                                        if(!isReturnview)
+                                            orderStatusId = $('.ordertabs').val();
+
+                                        $('#customer-orders-filter').tipsy();
+
+                                        //$("#newSearchPlace").html($(".dataTables_filter"));
+                                        //$('#order_filter').find('input').css({ "font-weight": "100" })
+
+                                        $('#fromDate').datepicker({
+                                            minDate: '-35D',
+                                            maxDate: '+0',
+                                        }).datepicker("setDate", -35);
+
+                                        $('#toDate').datepicker({
+                                            minDate: '-35D',
+                                            maxDate: '+0',
+                                        }).datepicker("setDate", new Date());
+
+
+                                        $('.ui-datepicker').css('font-size', '11px');
+                                        $("#customer-orders-filter").click(function () {
+                                            reloadwithParams();
+                                        });
+                                        $(".ordertabs").click(function () {
+                                            reloadwithParams();
+                                        });
+                                        function reloadwithParams() {
+                                            var startDateValue = $("#fromDate").val();
+                                            var endDateValue = $("#toDate").val();
+
+                                            if (startDateValue == '' || endDateValue == '') {
+                                                alert("Please select date range first!");
+                                                return;
+                                            }
+
+                                            if ($.datepicker.parseDate("mm/dd/yy", endDateValue) < $.datepicker.parseDate("mm/dd/yy", startDateValue)) {
+                                                alert("End date must be greater than start date!");
+                                                return;
+                                            }
+                                            if ($(event.currentTarget).attr('class').search("ordertabs") != -1) {
+                                                orderStatusId = $(event.currentTarget).attr('value');
+                                            }
+                                            else if (searchParams.has('orderStatusId')){
+                                                orderStatusId = searchParams.get('orderStatusId');
+                                            }
+                                            if (isReturnview)
+                                                setLocation('@Url.RouteUrl("CustomerOrders")?startDateValue=' + startDateValue + '&endDateValue=' + endDateValue + '&orderStatusId=' + orderStatusId + '&returnView=true');
+                                            else {
+                                                //orderStatusId = $('li.active a').attr("value");
+                                                setLocation('@Url.RouteUrl("CustomerOrders")?startDateValue=' + startDateValue + '&endDateValue=' + endDateValue + '&orderStatusId=' + orderStatusId);
+                                            }
+                                        }
+
+                                        $("#customer-orders-clear").click(function () {
+                                            debugger;
+                                            if (isReturnview)
+                                                setLocation('@Url.RouteUrl("CustomerOrders")?returnView=true');
+                                            else {
+                                                setLocation('@Url.RouteUrl("CustomerOrders")');
+                                            }
+                                        });
+
+                                        if (searchParams.has('startDateValue') && searchParams.has('endDateValue')) {
+                                            $("#fromDate").val(searchParams.get('startDateValue'));
+                                            $("#toDate").val(searchParams.get('endDateValue'));
+                                            $('#pageTitle').append(" " + searchParams.get('startDateValue') + " to " + searchParams.get('endDateValue'));
+                                            $('#emptyRow td').eq(0).text($('#emptyRow td').eq(0).text().replace("StartDate", searchParams.get('startDateValue')));
+                                            $('#emptyRow td').eq(0).text($('#emptyRow td').eq(0).text().replace("EndDate", searchParams.get('endDateValue')));
+                                        }
+                                        else {
+                                            var dateOffset = (24 * 60 * 60 * 1000) * 35; //5 days
+                                            var myDate = new Date();
+                                            myDate.setTime(myDate.getTime() - dateOffset);
+                                            $('#pageTitle').append(" " + formatDate(myDate) + " to " + formatDate(new Date()));
+                                        }
+
+                                        $(".order-track-button").click(function () {
+                                            var orderId = $(this).attr("orderId");
+                                            var url = "/orderdetails/" + orderId + "?trackView=true";
+                                            window.location.href = url;
+                                        });
+                                        function formatDate(date) {
+                                            var d = new Date(date),
+                                                month = '' + (d.getMonth() + 1),
+                                                day = '' + d.getDate(),
+                                                year = d.getFullYear();
+
+                                            if (month.length < 2)
+                                                month = '0' + month;
+                                            if (day.length < 2)
+                                                day = '0' + day;
+
+                                            return [month, day, year].join('/');
+                                        }
+                                    });
+    </script>, "js")
+*@
+
+<style>
+    .jqueryPagination{
+        display: @(Model.Orders.Count > 0 ? "flex" : "none");
+        justify-content: space-between;
+        margin: 8px 12px;
+    }
+    .paging_numbers span a {
+        margin-right: 5px;
+        cursor: pointer;
+        color: #636363;
+    }
+    .paging_numbers span .current{
+        color: #000;
+    }
+    .jqueryPagination p {
+        font-family: Lato;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 13.5px;
+        letter-spacing: 0.05em;
+        margin-bottom:unset;
+        color: #636363;
+    }
+
+
+    #filter-bar {
+        margin-left: 240px;
+        margin-bottom: -35px;
+    }
+
+    #pageTitle {
+        font-size: 1.3em;
+    }
+</style>
+
+
+@await Component.InvokeAsync("DashboardBlueBand")
+@*@await Html.PartialAsync("_DashboardBlueBand")*@
+
+<section class="container-fluid orderstatus-area">
+    <div class="row">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="dashboard-area">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="sidebar_menu font_lato">
+                                    <h3>Inovatiqa Dashboard</h3>
+                                    @await Html.PartialAsync("_DashboardSideBar", "inovatiqa-orders")
+                                </div>
+                            </div>
+
+                            <div class="col-md-9">
+                                <div class="order-deatil-area">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="tabs font_lato">
+                                                @await Html.PartialAsync("_OrderNewTopBar", "order-status")
+
+                                                <hr>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="order-content order-list">
+
+                                                <div class="tab-content order-list" style="border: none !important">
+                                                    <div class="contact-manager text-right font_roboto">
+                                                        <a href="#" class="btn conatct-btnpopup" data-toggle="modal" data-target="#contact-mform">Contact Your Account Manager</a>
+                                                    </div>
+                                                    <div style="display: flex; justify-content: space-between; width: 40%; margin-bottom: 5vh;">
+                                                        <a href="#"><h4 style="color: #000000;">Current Order Status</h4></a>
+                                                        <a href="@Url.RouteUrl("ScheduledOrders")"><h4 style="color: #767676;">Scheduled Order</h4></a>
+                                                    </div>
+                                                    <div class="item-btns font_lato product-details-tabs" id="tabbed-description">
+                                                        <a class="@(Model.CurrentActive == 0 ? "active" : "") btn btn-items ordertabs" href="#AllOrders" value="0" data-toggle="tab" onclick="reloadwithParams()">All Orders <span>[@Model.AllOrdersCount]</span></a>
+                                                        <a class="@(Model.CurrentActive == 10 ? "active" : "") btn btn-items ordertabs" href="#OpenOrders" value="10" data-toggle="tab" onclick="reloadwithParams()">Open Orders <span>[@Model.OpenOrdersCount]</span></a>
+                                                        <a class="@(Model.CurrentActive == 50 ? "active" : "") btn btn-items ordertabs" href="#BackOrders" value="50" data-toggle="tab" onclick="reloadwithParams()">Backordered <span>[@Model.BackOrderedCount]</span></a>
+                                                        <a class="@(Model.CurrentActive == 30 ? "active" : "") btn btn-items ordertabs" href="#ShippedOrders" value="30" data-toggle="tab" onclick="reloadwithParams()">Shipped Orders <span>[@Model.ShippedOrdersCount]</span></a>
+
+                                                    </div>
+
+                                                    <div class="order-find-area">
+                                                        <div class="find-fields font_lato">
+                                                            <div class="form-group">
+                                                                <label>Find</label>
+                                                                <input type="text" class="form-control" id="searchFromTable">
+                                                            </div>
+
+                                                           @* <div class="form-group">
+                                                                <label>In</label>
+                                                                <select class="form-control" id="columnSelector">
+                                                                    <option value="-1">All Fields</option>
+                                                                    <option value="1">Ship to</option>
+                                                                    <option value="2">City</option>
+                                                                    <option value="3">State</option>
+                                                                    <option value="4">Ship to Number</option>
+                                                                    <option value="5">Order Total</option>
+                                                                    <option value="6">Order Number</option>
+                                                                    <option value="7">PO</option>
+                                                                </select>
+                                                            </div>*@
+                                                        </div>
+
+                                                        <div class="date-fileds font_lato">
+                                                            <div class="form-group">
+                                                                <label>From</label>
+                                                                <input type="text" id="fromDate" value="@DateTime.Today.AddDays(-35).ToString("MM/dd/yyyy")" class="form-control date-picker" placeholder="7/2/2021">
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label>To</label>
+                                                                <input type="text" id="toDate" value="@DateTime.Today.ToString("MM/dd/yyyy")" class="form-control date-picker" placeholder="7/2/2021">
+                                                            </div>
+
+                                                            <div class="find-btn font_roboto">
+                                                                <input type="submit" id="customer-orders-filter" value="Find" class="btn btn-signin" />
+                                                                <input type="submit" id="customer-orders-clear" value="Clear" class="btn btn-signin" />
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="print-fileds font_lato">
+                                                            <div class="print-button font_roboto">
+                                                                <a href="#" class="btn btn-print"><img src="~/images/UIComponents/print-btn-img.svg">Print</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="items-table-area table-responsive font_roboto">
+
+                                                        <table class="table border-collapse mb0" id="orderHistoryTable">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Date</th>
+                                                                    <th>Ship to</th>
+                                                                    <th>City</th>
+                                                                    <th>State</th>
+                                                                    <th>Ship to Number</th>
+                                                                    <th>Order Total</th>
+                                                                    <th>Order Number</th>
+                                                                    <th>PO</th>
+                                                                    <th>Total Items</th>
+                                                                    <th>B/O</th>
+                                                                    <th>Status</th>
+                                                                    <th>View</th>
+                                                                </tr>
+                                                            </thead>
+
+                                                            <tbody>
+                                                                @if (Model.Orders.Count > 0)
+                                                                {
+                                                                    foreach (var order in Model.Orders)
+                                                                    {
+                                                                        <tr>
+                                                                            <td><p>@order.CreatedOn.ToString("MM/dd/yyyy")</p></td>
+                                                                            <td><p>@order.ShipTo</p></td>
+                                                                            <td><p>@order.ShipToCity</p></td>
+                                                                            <td><p>@order.ShipToState</p></td>
+                                                                            <td><p class="num-green">@order.ShipToId</p></td>
+                                                                            <td><p>@order.OrderTotal</p></td>
+                                                                            <td><p>@order.Id</p></td>
+                                                                            <td><p>@order.PONumber</p></td>
+                                                                            <td><p>@order.TotalItems</p></td>
+                                                                            <td><p>@order.Bo</p></td>
+                                                                            <td><a href="#"><p style="color: #0068A3;">@order.OrderStatus</p></a></td>
+                                                                            <td><a href="/orderdetails/@order.Id?trackView=true"><p class="track-blue">View</p></a></td>
+                                                                        </tr>
+                                                                    }
+                                                                }
+
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<form action="/FooterSendEmails" method="post" id="form">
+    <input type="text" hidden name="Method" value="@Url.RouteUrl("CustomerOrders")" />
+    @await Html.PartialAsync("_ContactAccountManagerModal")
+</form>
+
+@Html.Resource(@<script type="text/javascript">
+
+
+    $(document).ready(function () {
+        const table = $('#orderHistoryTable').DataTable({
+            "language": {
+                "info": '<div class="tpage-num"><p>Showing _START_ to _END_ of _TOTAL_ Items</p></div>'
+            },
+            "pageLength": 5,
+            "dom": 't<"jqueryPagination"ip>',
+            'pagingType': 'numbers',
+            'ordering': false
+        });
+        function filterByColumn() {
+            table
+                    .search(this.value)
+                    .draw();
+            //var columnNumber = Number($('#columnSelector').val());
+            //if (columnNumber != -1) {
+            //    table
+            //        .column(columnNumber)
+            //        .search(this.value)
+            //        .draw();
+            //}
+            //else {
+            //    table
+            //        .search(this.value)
+            //        .draw();
+            //}
+        }
+        $('#searchFromTable').keyup(filterByColumn);
+                //$('#order').DataTable({
+                //    //"bPaginate": true,
+                //    "bLengthChange": false,
+                //    //"bFilter": true,
+                //    //"bInfo": true,
+                //    //"bAutoWidth": true,
+                //    language: {
+                //        search: "Find",
+                //        //searchPlaceholder: "Filter records..."
+                //    },
+                //    //"order": [[3, "desc"]],
+                //    //rowReorder: {
+                //    //    selector: 'td:nth-child(2)'
+                //    //},
+                //    "dom": '<"pull-left"f><"pull-right"l>tip',
+                //    responsive: true
+                //});
+                /* $('#order').DataTable({
+                    "dom": '<"pull-left"f><"pull-right"l>t<"pull-left"i><"pull-right"p>',
+                    language: {
+                        search: "Find",
+                        //searchPlaceholder: "Filter records..."
+                    },
+                    "bLengthChange": false
+                });*/
+                //$('#order').DataTable();
+
+                let searchParams = new URLSearchParams(window.location.search);
+                var orderStatusId = 0;
+                if (searchParams.has('orderStatusId')) {
+                    $('.order-list li').removeClass("active");
+                    $('.order-list li[value="' + searchParams.get('orderStatusId') + '"]').addClass("active");
+                    //if (searchParams.get('orderStatusId') != 10)
+                    //    $('.order-list li[value="' + searchParams.get('orderStatusId') + '"]').css("display", "none");
+                    //else
+                    //    $('.order-list li[value="' + searchParams.get('orderStatusId') + '"]').addClass("active");
+                }
+                //else {
+                //    $('.order-list li[value="10"]').css("display", "none");
+                //}
+
+                var isReturnview = @Model.IsReturnView.ToString().ToLower();
+
+                if(!isReturnview)
+                    orderStatusId = $('.ordertabs').val();
+
+
+                //$("#newSearchPlace").html($(".dataTables_filter"));
+                //$('#order_filter').find('input').css({ "font-weight": "100" })
+
+                /*$('#fromDate').datepicker({
+                    minDate: '-35D',
+                    maxDate: '+0',
+                }).datepicker("setDate", -35);
+
+                $('#toDate').datepicker({
+                    minDate: '-35D',
+                    maxDate: '+0',
+                }).datepicker("setDate", new Date());*/
+
+                //$('#customer-orders-filter').tipsy();
+                $('.date-picker').datepicker();
+                $('.ui-datepicker').css('font-size', '11px');
+                $("#customer-orders-filter").click(function () {
+                    reloadwithParams();
+                });
+                $(".ordertabs").click(function () {
+                    reloadwithParams();
+                });
+
+                $("#customer-orders-clear").click(function () {
+                    if (isReturnview)
+                        setLocation('@Url.RouteUrl("CustomerOrders")?returnView=true');
+                    else {
+                        setLocation('@Url.RouteUrl("CustomerOrders")');
+                    }
+                });
+
+                if (searchParams.has('startDateValue') && searchParams.has('endDateValue')) {
+                    $("#fromDate").val(searchParams.get('startDateValue'));
+                    $("#toDate").val(searchParams.get('endDateValue'));
+                    $('#pageTitle').append(" " + searchParams.get('startDateValue') + " to " + searchParams.get('endDateValue'));
+                    $('#emptyRow td').eq(0).text($('#emptyRow td').eq(0).text().replace("StartDate", searchParams.get('startDateValue')));
+                    $('#emptyRow td').eq(0).text($('#emptyRow td').eq(0).text().replace("EndDate", searchParams.get('endDateValue')));
+                }
+                else {
+                    var dateOffset = (24 * 60 * 60 * 1000) * 35; //5 days
+                    var myDate = new Date();
+                    myDate.setTime(myDate.getTime() - dateOffset);
+                    $('#pageTitle').append(" " + formatDate(myDate) + " to " + formatDate(new Date()));
+                }
+
+                $(".order-track-button").click(function () {
+                    var orderId = $(this).attr("orderId");
+                    var url = "/orderdetails/" + orderId + "?trackView=true";
+                    window.location.href = url;
+                });
+                function formatDate(date) {
+                    var d = new Date(date),
+                        month = '' + (d.getMonth() + 1),
+                        day = '' + d.getDate(),
+                        year = d.getFullYear();
+
+                    if (month.length < 2)
+                        month = '0' + month;
+                    if (day.length < 2)
+                        day = '0' + day;
+
+                    return [month, day, year].join('/');
+                }
+            function reloadwithParams() {
+                var startDateValue = $("#fromDate").val();
+                var endDateValue = $("#toDate").val();
+
+                if (startDateValue == '' || endDateValue == '') {
+                    alert("Please select date range first!");
+                    return;
+                }
+
+                if ($.datepicker.parseDate("mm/dd/yy", endDateValue) < $.datepicker.parseDate("mm/dd/yy", startDateValue)) {
+                    alert("End date must be greater than start date!");
+                    return;
+                }
+                if ($(event.currentTarget).attr('class').search("ordertabs") != -1) {
+                    orderStatusId = $(event.currentTarget).attr('value');
+                }
+                else if (searchParams.has('orderStatusId')){
+                    orderStatusId = searchParams.get('orderStatusId');
+                }
+                if (isReturnview)
+                    setLocation('@Url.RouteUrl("CustomerOrders")?startDateValue=' + startDateValue + '&endDateValue=' + endDateValue + '&orderStatusId=' + orderStatusId + '&returnView=true');
+                else {
+                    //orderStatusId = $('li.active a').attr("value");
+                    setLocation('@Url.RouteUrl("CustomerOrders")?startDateValue=' + startDateValue + '&endDateValue=' + endDateValue + '&orderStatusId=' + orderStatusId);
+                }
+            }
+     });
+
+</script>, "js")

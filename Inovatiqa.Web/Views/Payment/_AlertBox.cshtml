@@ -1,0 +1,28 @@
+﻿
+@if (TempData["success"] != null)
+{
+    <div class="container" style=" margin: 15px; max-width: 1100px; ">
+
+        <div class="alert alert-success alert-dismissible">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Success!</strong>    @TempData["success"]
+        </div>
+    </div>
+
+}
+@if (TempData["error"] != null)
+{
+    <div class="container" style=" margin: 15px; max-width: 1100px; " >
+        <div class="alert alert-danger alert-dismissible">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Error!</strong>  @TempData["error"]
+        </div>
+    </div>
+
+
+}
+
+
+<div style="display:none">
+    @TempData["error1"]
+</div>

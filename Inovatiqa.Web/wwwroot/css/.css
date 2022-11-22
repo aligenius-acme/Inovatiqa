@@ -1,0 +1,616 @@
+@import url('https://fonts.googleapis.com/css2?family=Teko:wght@300;400;500;600;700&display=swap');
+
+/*Signin Page CSS Start*/
+.font_teko {
+    font-family: 'Teko', sans-serif;
+}
+
+
+.signin-page-area{
+	background: #F1F3F6;
+	padding: 49px;
+}
+
+.signin-page-area .return-customer{
+	max-width: 500px;
+	width: 100%;
+}
+
+.signin-page-area .signin-title h4{
+	font-size: 22px;
+   line-height: 26px;
+   color: #000000;
+   font-weight: 400;
+   margin-top: 0px;
+   margin-bottom: 0px;
+}
+
+.signin-page-area .signin-title hr{
+	border-top: 0.5px solid #DADADA;
+	margin-bottom: 36px;
+}
+
+.signin-page-area .signin-page-rowarea{
+	padding: 19px 31px 36px 31px;
+	background: #fff;
+	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.signin-page-area .form-signin .form-group label{
+	font-size: 14.5px;
+	line-height: 17px;
+	color: #000000;
+	font-weight: 400;
+	margin-bottom: 13px;
+}
+
+.signin-page-area .form-signin .form-group input{
+	height: 35px;
+	background: #F1F3F6;
+	border: 1px solid #D1D1D1;
+	box-sizing: border-box;
+	border-radius: 1px;
+	box-shadow: none;
+	margin-bottom: 29px;
+	max-width: 400px;
+	width: 100%;
+
+}
+.signin-page-area .form-signin .form-group input[type=password]{
+	margin-bottom: 21px;
+}
+
+.signin-page-area .form-signin{
+	border: 1px solid #DADADA;
+	padding: 30px 25px 13px 25px;
+}
+
+.signin-page-area .form-signin .checkbox a{
+	color:#1F72CD;
+	font-size: 12.5px;
+	line-height: 15px;
+	font-weight: 400;
+	margin-left: 13px;
+}
+
+.signin-page-area .form-signin .checkbox {
+	margin-bottom: 0px;
+	margin-top: 0px;
+}
+
+
+
+.signin-page-area .form-signin .checkbox label{
+	font-size: 12.5px;
+	color: #000000;
+	font-weight: 400;
+}
+
+.signin-page-area .form-signin .checkbox label input[type=checkbox] {
+    width: 15px;
+    height: 15px;
+    margin-top: 6px;
+    margin-right: 8px;
+    outline: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: url(../images/new-customer-check.png) center center / 100% 100% no-repeat;
+
+   
+}
+
+.signin-page-area .form-signin .checkbox label input[type=checkbox]:checked {
+    background: url(../images/new-cus-form-checked.svg) center center / 100% 100% no-repeat;
+     border: 1px solid #C4C4C4;
+}
+
+.btn-signin{
+	font-weight: 400;
+	font-size: 12px;
+	line-height: 14px;
+	color: #FFFFFF;
+	border-radius: 1px!important;
+	background: #0068A3!important;
+	padding: 8px 13.5px;
+
+}
+
+.signin-page-area .btn.active.focus, .btn.active:focus, .btn.focus, .btn:active.focus, .btn:active:focus, .btn:focus {
+    outline: none;
+    outline-offset: -2px;
+}
+
+.signin-page-area .btn.focus, .btn:focus, .btn:hover {
+    color: #fff;
+    text-decoration: none;
+}
+
+.signin-page-area .form-signin hr{
+	max-width: 350px;
+	width: 100%;
+	border-top: 0.5px solid #DADADA;
+	margin-top: 45px;
+	margin-bottom: 19px;
+}
+
+.signin-page-area .new-customer .new-customer-info{
+	padding: 30px 24px 43px 24px;
+	border: 1px solid #DADADA;
+}
+
+.signin-page-area .new-customer .new-customer-info p{
+	font-weight: 400;
+	font-size: 14.5px;
+	line-height: 17px;
+	color: #000000;
+	margin-bottom: 45px;
+}
+
+a.btn-1{
+	padding: 8px 13.5px;
+	background: #0068A3;
+	border-radius: 1px;
+	color: #fff;
+	font-size: 12px;
+	line-height: 14px;
+	font-weight: 400;
+}
+
+
+/*Signin Page CSS End*/
+
+
+/*Become New member Section CSS Start*/
+
+.newcustomer-area{
+	background: #F1F3F6;
+	padding: 35px;
+}
+
+.newcustomer-area .become-customer-box{
+	background: #FFFFFF;
+	padding: 42px 63px 114px 63px;
+	box-shadow: 0px 4px 4px rgb(0 0 0 / 25%);
+}
+
+.newcustomer-area .become-customer-box .yourself-area .customer-select h4{
+	font-size: 25px;
+	line-height: 30px;
+	color: #000000;
+	margin-top: 0px;
+	margin-bottom: 29px;
+	font-weight: 400;
+
+}
+
+.newcustomer-area .become-customer-box .yourself-area .customer-select .form-group label{
+	font-size: 12.5px;
+	line-height: 15px;
+	color: #000000;
+	font-weight: 400;
+	margin-bottom: 8px;
+}
+
+.newcustomer-area .become-customer-box .yourself-area .customer-select .form-group select{
+	height: auto;
+	border: 1px solid #D1D1D1;
+	box-sizing: border-box;
+	border-radius: 1px;
+	box-shadow: none;
+	/*max-width: 438px;
+	width: 100%;*/
+	padding: 9px 14px;
+	background: #fff url(../images/arrow_up_down.svg) center right 20px / auto no-repeat;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.newcustomer-area .become-customer-box .yourself-area .customer-select .form-group select option{
+	font-size: 14px;
+	line-height: 17px;
+	color: #636363;
+	font-weight: 400;
+	padding: 13px 14px!important;
+	height: auto;
+}
+
+
+.newcustomer-area .inovatiqa-detail .inovatiqa-offers h4{
+	font-size: 18.71px;
+	line-height: 22px;
+	color: #54B4D7;
+	margin-bottom: 7px;
+	margin-top: 0px;
+	font-weight: 700;
+}
+
+.newcustomer-area .inovatiqaway-area .inovatiqa-title h4{
+	font-weight: 500;
+	font-size: 43px;
+	line-height: 62px;
+	color: #000000;
+	margin-top: 0px;
+}
+
+.newcustomer-area .inovatiqa-detail .inovatiqa-offers p{
+	font-size: 12.71px;
+	line-height: 15px;
+	color: #000000;
+	font-weight: 400;
+	margin-bottom: 21px;
+}
+
+.newcustomer-area .inovatiqa-detail .inovatiqa-offers p span{
+	color: #6A983C;
+	margin-left: 5px;
+}
+
+.newcustomer-area .inovatiqa-detail .inovatiqa-img img{
+	float: right;
+}
+
+.newcustomer-area .inovatiqaway-area .account-detail h5{
+	margin-top: 30px;
+	font-size: 22px;
+	line-height: 26px;
+	color: #000000;
+	font-weight: 400;
+	margin-bottom: 19px;
+}
+
+.newcustomer-area .inovatiqaway-area .account-detail p{
+	font-size: 14px;
+	line-height: 17px;
+	color: #000000;
+	font-weight: 400;
+	max-width: 428px;
+	width: 100%;
+	margin-bottom: 27px;
+}
+
+.newcustomer-area .inovatiqaway-area .account-detail ul{
+	list-style-type: none;
+}
+
+.newcustomer-area .inovatiqaway-area .account-detail ul li{
+	font-size: 14px;
+	line-height: 17px;
+	color: #000000;
+	font-weight: 400;
+	margin-bottom: 12px;
+	position: relative;
+	padding-left: 33px;
+	display: flex;
+	align-items: center;
+}
+
+.newcustomer-area .inovatiqaway-area .account-detail ul li:before{
+	content: "";
+	background: url("../images/new-customer-checked.png")no-repeat;
+	width: 16px;
+	height: 12.49px;
+	position: absolute;
+	left: 0;
+}
+
+.newcustomer-area .inovatiqaway-area .business-account h5{
+	margin-top: 49px;
+	margin-bottom: 32px;
+}
+
+.newcustomer-area .inovatiqaway-area .business-account a{
+	color: #0068A3;
+}
+
+.newcustomer-area .inovatiqaway-area .business-account ul li.pdf-img{
+	margin-top: 14px;
+}
+
+.newcustomer-area .inovatiqaway-area .business-account ul li.pdf-img:before{
+	background: url("../images/new-customer-pdf.png")no-repeat;
+	height: 20px;
+}
+
+.newcustomer-area .yourself-area{
+	max-width: 438px;
+	width: 100%;
+}
+
+/*Form Section CSS Start*/
+
+.newcustomer-area .accountform-area .form-title h5{
+	font-size: 22px;
+	line-height: 26px;
+	color: #000000;
+	font-weight: 400;
+	margin-top: 49px;
+	margin-bottom: 58px;
+}
+
+.newcustomer-area .accountform-area .form-group input, .accountform-area .form-group select{
+	max-width: 302px;
+	width: 100%;
+}
+
+.newcustomer-area .accountform-area .form-group select{
+	height: auto;
+	border: 1px solid #D1D1D1;
+	box-sizing: border-box;
+	border-radius: 1px;
+	box-shadow: none;
+	/*max-width: 438px;
+	width: 100%;*/
+	padding: 9px 14px;
+	background: #fff url(../images/arrow_up_down.svg) center right 20px / auto no-repeat;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+
+.newcustomer-area .accountform-area .form-group label{
+	font-size: 14.5px;
+	line-height: 17px;
+	color: #000000;
+	font-weight: 400;
+}
+
+.newcustomer-area .accountform-area .form-group input{
+	background: #FFFFFF;
+	border: 1px solid #D1D1D1;
+	box-sizing: border-box;
+	border-radius: 1px;
+	box-shadow: none;
+	height: 35px;
+}
+
+.newcustomer-area .accountform-area .form-group{
+	margin-bottom: 34px;
+}
+
+.newcustomer-area .accountform-area .form-group label.required:after {
+    content:" *";
+    color: #D50029;
+    font-size: 12.5px;
+	line-height: 15px;
+	font-weight: 400;
+  }
+
+ .newcustomer-area .accountform-area .checkbox label{
+ 	
+ 	font-size: 14px;
+	line-height: 17px;
+	color: #000000;
+	font-weight: 400;
+	display: flex;
+	align-items: center;
+	padding: 0px;
+ }
+
+.newcustomer-area .accountform-area .checkbox label input[type=checkbox] {
+    width: 15px;
+    height: 15px;
+    margin: 0px;
+    margin-right: 14px;
+    outline: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: url(../images/new-customer-check.png) center center / 100% 100% no-repeat;
+    position: relative;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+}
+
+.newcustomer-area .accountform-area .checkbox{
+	margin-bottom: 58px;
+
+}
+
+.newcustomer-area .accountform-area .checkbox label input[type=checkbox]:checked {
+    background: url(../images/new-cus-form-checked.svg) center center / 100% 100% no-repeat;
+    border: 1px solid #C4C4C4;
+}
+
+.newcustomer-area .change-pwd-area .form-title h5{
+	margin-top: 61px;
+	margin-bottom: 19px;
+}
+
+.newcustomer-area .change-pwd-area .form-deatil p{
+	font-size: 14px;
+	line-height: 17px;
+	color: #000000;
+	font-weight: 400;
+	margin-bottom: 50px;
+}
+
+
+.newcustomer-area .change-pwd-area .pwd-checkbox label{
+	  display: flex;
+	  align-items: center;
+	  margin-bottom: 34px;
+	  font-size: 14px;
+	line-height: 17px;
+	color: #000000;
+	font-weight: 400;
+	padding: 0px;
+}
+
+.newcustomer-area .change-pwd-area .pwd-checkbox label span{
+	font-weight: 600;
+}
+
+
+.newcustomer-area .change-pwd-area .pwd-checkbox label input[type=checkbox] {
+    width: 15px;
+    height: 15px;
+    margin: 0px;
+    margin-right: 14px;
+    outline: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: url(../images/new-customer-check.png) center center / 100% 100% no-repeat;
+    position: relative;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+}
+
+
+.newcustomer-area .change-pwd-area .pwd-checkbox label input[type=checkbox]:checked {
+    background: url(../images/new-cus-form-checked.svg) center center / 100% 100% no-repeat;
+    border: 1px solid #C4C4C4;
+}
+
+.newcustomer-area .change-pwd-area .notrobot-check p{
+	font-size: 12px;
+	line-height: 14px;
+	color: #000000;
+	font-weight: 400;
+}
+
+.newcustomer-area .change-pwd-area .robot-captcha{
+	margin-bottom: 23px;
+	margin-top: 10px;
+}
+
+.newcustomer-area .change-pwd-gray .form-title h5{
+	color: rgba(118, 118, 118, 0.85);
+	margin-top: 6px;
+}
+
+.newcustomer-area .change-pwd-gray .form-deatil p{
+	color: rgba(118, 118, 118, 0.85);
+}
+.newcustomer-area .change-pwd-gray .form-group label{
+	color: rgba(118, 118, 118, 0.85);
+}
+
+.newcustomer-area .change-pwd-gray .notrobot-check p{
+	color: rgba(118, 118, 118, 0.85);
+}
+
+.newcustomer-area .change-pwd-gray .pwd-checkbox label {
+    color: rgba(118, 118, 118, 0.85);
+}
+
+.newcustomer-area .change-pwd-gray a.btn-1 {
+    background: #C4C4C4;
+}
+
+
+.newcustomer-area .accountform-area{
+	display: none;
+}
+
+/*Form Section CSS End*/
+
+/*Become New member Section CSS End*/
+
+
+
+
+/*Media Query*/
+
+
+@media screen and (max-width: 1200px){
+	.newcustomer-area .become-customer-box {
+    padding-left: 30px;
+    padding-right: 30px;
+  
+}
+
+.newcustomer-area .change-pwd-area .pwd-checkbox label {
+    font-size: 12px;
+}
+
+
+.newcustomer-area {
+    padding: 20px;
+}
+
+}
+
+
+@media screen and (max-width: 990px){
+
+.signin-page-area .return-customer {
+    max-width: none;
+}
+
+.signin-page-area .new-customer {
+	margin-top: 30px;
+}
+
+
+.signin-page-area .form-signin .form-group input {
+    max-width: none;
+   
+}
+
+.newcustomer-area .yourself-area {
+    max-width: none;
+}
+
+.newcustomer-area .accountform-area .form-group input, .accountform-area .form-group select {
+    max-width: none;
+   
+}
+
+.newcustomer-area .accountform-area .form-group {
+    margin-bottom: 20px;
+}
+
+.newcustomer-area .change-pwd-area .pwd-btn{
+	text-align: left;
+}
+
+.newcustomer-area .inovatiqaway-area {
+	margin-top: 30px;
+}
+
+.newcustomer-area .change-pwd-gray .form-title h5 {
+    margin-top: 20px;
+}
+
+}
+
+@media screen and (max-width: 480px){
+	.signin-page-area .form-signin .checkbox label {
+    display: flex;
+}
+
+.signin-page-area .form-signin .checkbox a {
+    margin-left: 0px;
+}
+
+.signin-page-area .signin-page-rowarea {
+    padding: 19px 18px 25px 18px;
+    
+}
+
+.signin-page-area .form-signin {
+    padding: 15px;
+}
+
+.signin-page-area .form-signin hr {
+    margin-top: 25px;
+}
+
+.signin-page-area .new-customer .new-customer-info {
+    padding: 15px;
+}
+
+.signin-page-area {
+    padding: 30px 20px;
+}
+}
+
+

@@ -1,0 +1,109 @@
+﻿@model ProductDetailsModel.AddToCartModel
+@using Inovatiqa.Database.Models
+@using Inovatiqa.Core
+@if (Model.UpdatedShoppingCartItemId > 0)
+{
+    <input asp-for="UpdatedShoppingCartItemId" type="hidden" />
+}
+@if (!Model.DisableBuyButton || Model.CustomerEntersPrice)
+{
+    <div class="add-to-cart">
+        @if (Model.CustomerEntersPrice)
+        {
+            <div class="customer-entered-price clearfix">
+                <div class="price-input">
+                    <label asp-for="CustomerEnteredPrice" asp-postfix=":" class="enter-price-label"></label>
+                    @*round price*@
+                    <input asp-for="CustomerEnteredPrice" value="@Convert.ToInt32(Math.Ceiling(Model.CustomerEnteredPrice))" class="enter-price-input form-control" />
+                </div>
+                <div class="price-range alert alert-info">
+                    @Model.CustomerEnteredPriceRange
+                </div>
+            </div>
+        }
+        @if (!string.IsNullOrEmpty(Model.MinimumQuantityNotification))
+        {
+            <div class="min-qty-notification">@Model.MinimumQuantityNotification</div>
+        }
+        @if (!Model.DisableBuyButton)
+        {
+            <div class="add-to-cart-panel">
+                <div class="form-group">
+                    <div class="quan">
+                        <label asp-for="EnteredQuantity" asp-postfix=":" class="qty-label"></label>
+                        @if (Model.AllowedQuantities.Count > 0)
+                        {
+                            <div>
+                                <select asp-for="EnteredQuantity" asp-items="Model.AllowedQuantities" id="product_enteredQuantity_@Model.ProductId" class="qty-dropdown form-control" aria-label="Enter a quantity"></select>
+                                @Html.Resource(@<script type="text/javascript">
+                                    $(document).ready(function () {
+                                        $("#product_enteredQuantity_@Model.ProductId").on("change", function () {
+                                            var data = {
+                                                productId: @Model.ProductId,
+                                                quantity: $('#product_enteredQuantity_@Model.ProductId').find(":selected").text()
+                                            };
+                                            $(document).trigger({ type: "product_quantity_changed", changedData: data });
+                                        });
+                                    });
+                                </script>, "js")
+                            </div>
+                        }
+                        else
+                        {
+                            <div>
+                                <input asp-for="EnteredQuantity" name="@(string.Format("{0}{1}{2}", "addtocart_", Model.ProductId, ".EnteredQuantity"))" id="product_enteredQuantity_@Model.ProductId" class="qty-input form-control" type="text" value="1" aria-label="Enter a quantity" />
+                            </div>
+                            @Html.Resource(@<script type="text/javascript">
+                                //when a customer clicks 'Enter' button we submit the "add to cart" button (if visible)
+        	                    $(document).ready(function() {
+                                    $("#@Html.IdFor(model => model.EnteredQuantity)").on("keydown", function(event) {
+                                        if (event.keyCode == 13) {
+                                            $("#add-to-cart-button-@Model.ProductId").trigger("click");
+                                            return false;
+                                        }
+                                    });
+                                    $("#product_enteredQuantity_@Model.ProductId").on("input propertychange paste", function () {
+                                        var data = {
+                                            productId: @Model.ProductId,
+                                            quantity: $('#product_enteredQuantity_@Model.ProductId').val()
+                                        };
+                                        $(document).trigger({ type: "product_quantity_changed", changedData: data });
+                                    });
+                                });
+                            </script>, "js")
+                        }
+                    </div>
+                    @{
+                        var addToCartText = "";
+                        if (Model.UpdatedShoppingCartItemId > 0 && Model.UpdateShoppingCartItemTypeId == (int)ShoppingCartType.ShoppingCart)
+                        {
+                            addToCartText = "Update";
+                        }
+                        else
+                        {
+                            addToCartText = "Add to cart";
+                            if (Model.IsRental)
+                            {
+                                addToCartText = "Rent";
+                            }
+                            if (Model.AvailableForPreOrder)
+                            {
+                                addToCartText = "Pre-order";
+                            }
+                        }
+                        <div class="product-add-button">
+                            <input type="button" id="add-to-cart-button-@Model.ProductId" class=" btn btn-primary add-to-cart-button" value="@addToCartText" data-productid="@Model.ProductId" onclick="AjaxCart.addproducttocart_details('@Url.RouteUrl("AddProductToCart-Details", new { productId = Model.ProductId, shoppingCartTypeId = (int)ShoppingCartType.ShoppingCart, wishListId = 0})', '#product-details-form', @((int)ShoppingCartType.ShoppingCart));return false;" />
+                        </div>
+                    }
+                </div>
+            </div>
+            if (!string.IsNullOrEmpty(Model.PreOrderAvailabilityStartDateTimeUserTime))
+            {
+                <div class="pre-order-availability-date">
+                    <label>pre-order availability:</label>
+                    @Html.Raw(Model.PreOrderAvailabilityStartDateTimeUserTime)
+                </div>
+            }
+        }
+    </div>
+}

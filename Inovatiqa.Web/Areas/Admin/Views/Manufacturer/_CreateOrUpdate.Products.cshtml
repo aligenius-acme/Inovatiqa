@@ -1,0 +1,85 @@
+﻿@model ManufacturerModel
+
+@if (Model.Id > 0)
+{
+<div class="panel-body">
+    @await Html.PartialAsync("Table", new DataTablesModel
+{
+    Name = "products-grid",
+    UrlRead = new DataUrl("ProductList", "Manufacturer", new RouteValueDictionary { [nameof(Model.ManufacturerProductSearchModel.ManufacturerId)] = Model.ManufacturerProductSearchModel.ManufacturerId }),
+    UrlDelete = new DataUrl("ProductDelete", "Manufacturer", null),
+    UrlUpdate = new DataUrl("ProductUpdate", "Manufacturer", null),
+    Length = Model.ManufacturerProductSearchModel.PageSize,
+    LengthMenu = Model.ManufacturerProductSearchModel.AvailablePageSizes,
+    ColumnCollection = new List<ColumnProperty>
+            {
+                new ColumnProperty(nameof(ManufacturerProductModel.ProductName))
+                {
+                    Title = "Product"
+                },
+                new ColumnProperty(nameof(ManufacturerProductModel.IsFeaturedProduct))
+                {
+                    Title = "Is featured product?",
+                    Width = "150",
+                    ClassName = InovatiqaColumnClassDefaults.CenterAll,
+                    Render = new RenderBoolean(),
+                    Editable = true,
+                    EditType = EditType.Checkbox
+                },
+                //new ColumnProperty(nameof(ManufacturerProductModel.DisplayOrder))
+                //{
+                //    Title = "Display order",
+                //    Width = "150",
+                //    ClassName = InovatiqaColumnClassDefaults.CenterAll,
+                //    Editable = true,
+                //    EditType = EditType.Number
+                //},
+                new ColumnProperty(nameof(ManufacturerProductModel.ProductId))
+                {
+                    Title = "View",
+                    Width = "150",
+                    ClassName = InovatiqaColumnClassDefaults.Button,
+                    Render = new RenderButtonView(new DataUrl("~/Admin/Product/Edit/", nameof(ManufacturerProductModel.ProductId)))
+                },
+                new ColumnProperty(nameof(ManufacturerProductModel.Id))
+                {
+                    Title = "Edit",
+                    Width = "200",
+                    ClassName =  InovatiqaColumnClassDefaults.Button,
+                    Render = new RenderButtonsInlineEdit()
+                },
+                new ColumnProperty(nameof(ManufacturerProductModel.Id))
+                {
+                    Title = "Delete",
+                    Width = "100",
+                    Render = new RenderButtonRemove("Delete"),
+                    ClassName = InovatiqaColumnClassDefaults.Button
+                }
+            }
+})
+</div>
+
+    @*<div class="panel-footer">
+        <button type="submit" id="btnAddNewProduct" onclick="javascript:OpenWindow('@(Url.Action("ProductAddPopup", "Manufacturer", new { manufacturerId = Model.Id, btnId = "btnRefreshProducts", formId = "manufacturer-form" }))', 800, 800, true); return false;" class="btn btn-primary">
+            Add a new product
+        </button>
+        <input type="submit" id="btnRefreshProducts" style="display: none" />
+        @Html.Resource(@<script type="text/javascript">
+            $(document).ready(function () {
+                $('#btnRefreshProducts').click(function () {
+                    //refresh grid
+                    updateTable('#products-grid');
+
+                    //return false to don't reload a page
+                    return false;
+                });
+            });
+        </script>, "js")
+    </div>*@
+}
+else
+{
+<div class="panel-body">
+    You need to save the manufacturer before you can add products for this manufacturer page.
+</div>
+}

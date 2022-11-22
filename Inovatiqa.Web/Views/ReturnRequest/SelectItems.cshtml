@@ -1,0 +1,668 @@
+﻿@using Inovatiqa.Web.Models.Order
+@model ReturnRequestItemsSelectionModel
+ 
+@{
+    Layout = "_ColumnsOne";
+}
+@{
+    ViewBag.Title = "Return requests";
+}
+@*@Html.Resource(@<script src="@Url.Content("https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js")" type="text/javascript"></script>, "js")
+    @Html.Resource(@<link href="@Url.Content("https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css")" rel="stylesheet" type="text/css" />, "css")
+    @Html.Resource(@<script src="@Url.Content("https://cdnjs.cloudflare.com/ajax/libs/jquery.tipsy/1.0.3/jquery.tipsy.min.js")" type="text/javascript"></script>, "js")
+    @Html.Resource(@<link href="@Url.Content("https://cdnjs.cloudflare.com/ajax/libs/jquery.tipsy/1.0.3/jquery.tipsy.min.css")" rel="stylesheet" type="text/css" />, "css")
+    @Html.Resource(@<link rel="stylesheet" href="@Url.Content("https://pro.fontawesome.com/releases/v5.10.0/css/all.css")" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />, "css")
+    @Html.Resource(@<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>, "js")
+    @Html.Resource(@<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />, "css")
+    <style>
+        .content-component {
+            border: 1px solid #ccc !important;
+            margin-bottom: 10px !important;
+            border-radius: 3px !important;
+            background: #fff !important;
+            color: #333 !important;
+            box-shadow: 0 2px 1px rgba(0,0,0,0.1) !important;
+            border-top: 1px solid #ddd !important;
+        }
+
+        .main-header {
+            background: #f2f2f2 !important;
+            padding: 2px !important;
+            cursor: pointer !important;
+        }
+
+            .main-header .main {
+                overflow: auto !important;
+                list-style: none !important;
+            }
+
+                .main-header .main > * {
+                    display: block !important;
+                    float: left !important;
+                    margin-right: 20px !important;
+                    font-weight: bold !important;
+                    padding: 1px 0 !important;
+                    color: #999 !important;
+                }
+
+        .po-header-detail {
+            padding: 5px 10px 5px 20px !important;
+            border: 1px solid #eee !important;
+            background: #fff !important;
+            -moz-border-radius: 5px !important;
+        }
+
+        ul.return-total li {
+            clear: both !important;
+        }
+
+        .po-header-detail ul li {
+            float: none !important;
+            margin: 0 !important;
+            font-size: 11px !important;
+            color: #333 !important;
+            font-weight: normal !important;
+        }
+
+        .component-body {
+            padding: 10px !important;
+        }
+
+        .tblSimple {
+            width: 100% !important;
+            border-spacing: 0px !important;
+            clear: both !important;
+            margin-bottom: 5px !important;
+        }
+
+            .tblSimple thead {
+                background: #fafafa !important;
+            }
+
+            .tblSimple > tbody > tr > td {
+                vertical-align: middle !important;
+            }
+
+            .tblSimple td {
+                padding: 4px 2px !important;
+                border-top: 1px solid #ddd !important;
+            }
+
+        .cursor-pointer {
+            cursor: pointer !important;
+        }
+
+        .header-component {
+            width: 120px !important;
+            display: inline !important;
+        }
+
+        .null {
+            border: 1px solid red;
+        }
+    </style>
+        <div class="page account-page return-request-list-page from-panel">
+            <div class="page-title panel-heading">
+                <h1>Return requests</h1>
+            </div>
+
+            <div style="text-align:right;float:right;">
+                <input type="button" value="Cancel" class="btn btn-primary" style="margin-right:0;" onclick="window.location.href='/returnrequest/history'">
+                <input type="button" class="btn btn_green" style="margin-right:0;" onclick="window.location.href = '@Url.ActionLink("ShippingInfo", "ReturnRequest", new { Items = Model.SelectedItems, Quantities = Model.SelectedItemsQuantity, ReturnReasons = Model.SelectedItemsReturnReason, SelectedActions = Model.SelectedItemsReturnAction, TotalPrice = Model.SelectedItemsPrice })'" value="Continue to Next Step">
+            </div>
+            <br>
+            <div class="page-body">
+                <br />
+                <div>
+                    <div class="rowTitle dontprint" style="overflow:auto;">
+                        <table width="100%">
+                            <tbody>
+                                <tr>
+                                    <td>
+
+
+                                        <div style="font-size:16px;color:#ddd;">
+                                            <span class="bold" style="color:#f60;">Create Return Request</span>
+                                            &nbsp;&nbsp;
+                                            <span id="retDef" class="return-def bold">
+                                                Items: <span id="lineCount"> @Model.TotalItems</span>
+                                                <span style="margin-left:20px;">
+                                                    Product Value&nbsp;<b id="totalCredit" style="color: green;">$ @Model.SelectedItemsPrice</b>
+                                                </span>
+                                            </span>
+                                        </div>
+                                    </td>
+                                    <td align="right"><h1 style="color:#888;">Step 2 of 5: Select Returnable Items</h1></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <br />
+                <div class="order-list">
+                    <div class="content-component">
+                        <div class="component-body">
+                            <table class="tblSimple highlight-body">
+                                <thead>
+                                    <tr>
+                                        <th>PO/Name</th>
+                                        <th>Invoice</th>
+                                        <th>Order #</th>
+                                        <th>Inv Date</th>
+                                        <th>Item #</th>
+                                        <th>Description</th>
+                                        <th align="center">UOM</th>
+                                        <th class="alignRight">Price</th>
+                                        <th class="alignRight">Qty</th>
+                                        <th>Return Qty</th>
+                                        <th>Add</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="cursor-pointer" title="Click to View Detail">
+                                    @{
+
+                                        if (Model.Items != null && Model.Items.Count > 0)
+                                        {
+                                            foreach (var item in Model.Items)
+                                            {
+                                                                <tr style="@(item.IsSelected ? "background-color: aquamarine" : "background-color: #FFF")">
+                                                                    <td>@item.PO</td>
+                                                                    <td>@item.Invoice</td>
+                                                                    <td>@item.OrderNo</td>
+                                                                    <td>@item.InvoiceDate</td>
+                                                                    <td>@item.Itemno</td>
+                                                                    <td>@item.Description</td>
+                                                                    <td>@item.UOM</td>
+                                                                    <td id="price-@item.Itemno">@item.Price</td>
+                                                                    <td>@item.Quantity</td>
+                                                                    <td><input id="quantity-@item.Itemno" type="number" value="@item.ReturnQuantity" onchange="handleQuantityChange(@item.Itemno)" min="1" max="@item.Quantity"></td>
+                                                                    @if (item.IsSelected)
+                                                                    {
+                                                                        <td><a href="@Url.ActionLink("SelectItems", "ReturnRequest", new { ItemId = item.Itemno, Selected = Model.SelectedItems, SelectedQuantity = Model.SelectedItemsQuantity, SelectedReason = Model.SelectedItemsReturnReason, SelectedAction = Model.SelectedItemsReturnAction })" style="border: none; background: transparent;" id="addBtn-@item.Itemno"><span><i id="icon-@item.Itemno" class="fa fa-minus-circle"></i></span></a></td>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <td><a href="#modal-@item.Itemno" rel="modal:open" id="addbtn" style="border: none; background: transparent;"><span><i id="icon-@item.Itemno" class="fa fa-plus-circle"></i></span></a></td>
+                                                                    }
+
+
+                                                                </tr>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <div class="component-body">
+                                                        <span class="noresults">No Items matches the criteria.</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="display: flex; flex-direction: column;">
+            @if (Model.Items.Count > 0)
+            {
+                foreach (var item in Model.Items)
+                {
+                <div id="modal-@item.Itemno" class="modal" style="width: 30%; height: 60%; margin-top: 13%; margin-left: 35%;">
+                <h4>Choose Reason of Return</h4>
+                <hr />
+                <label>Reason of Return </label>
+                <select class="form-control" id="returnReson-@item.Itemno">
+                    @foreach (var reason in Model.ReturnReasons)
+                    {
+                        <option value="@reason.Key">@reason.Value</option>
+                    }
+                </select>
+                <label>Action </label>
+                <select class="form-control" id="returnAction-@item.Itemno">
+                    @foreach (var action in Model.ReturnActions)
+                    {
+                        <option value="@action.Key">@action.Value</option>
+                    }
+
+                </select>
+                <label>Quantity </label>
+                <input type="number" class="form-control" id="modalQuantity-@item.Itemno" max="@item.Quantity" /><br />
+                <input type="button" value="ADD" class="btn btn-success" onclick="validate(@item.Itemno) || (window.location.href = '@Url.Action("SelectItems", "ReturnRequest", new { ItemId = item.Itemno, Selected = Model.SelectedItems, SelectedQuantity = Model.SelectedItemsQuantity, SelectedReason = Model.SelectedItemsReturnReason, SelectedAction = Model.SelectedItemsReturnAction})' + '&ItemQuantity=' + $('#modalQuantity-' +@item.Itemno).val() + '&ReturnReason=' + $('#returnReson-' +@item.Itemno).val() + '&ItemAction=' + $('#returnAction-' +@item.Itemno).val())" />
+
+                <a href="#modal-@item.Itemno" rel="modal:close" class="btn btn-danger">Cancel</a>
+            </div>
+                }
+
+            }
+        </div>
+        @Html.Resource(@<script type="text/javascript">
+            function validate(id) {
+            const Quantity = $('#modalQuantity-' + id).val();
+            if (Quantity == "" || Number(Quantity) < 1) {
+                $('#modalQuantity-' + id).addClass("null");
+                alert('Please Select Quantity You want to Return');
+                    return true;
+                }
+                return false;
+            }
+            function handleQuantityChange(id) {
+                $('#modalQuantity-' + id).val($('#quantity-' + id).val())
+                $('#icon-' + id).removeClass('fa-minus-circle');
+                $('#icon-' + id).addClass('fa-plus-circle');
+                $('#addBtn-' + id).removeAttr("href");
+                $('#addBtn-' + id).attr("href", "#modal-" + id);
+                $('#addBtn-' + id).attr("rel", "modal:open")
+            }
+        </script>, "js")
+*@
+
+<style>
+    .jqueryPagination{
+        display: @(Model.Items.Count > 0 ? "flex" : "none");
+        justify-content: space-between;
+        margin: 8px 12px;
+    }
+    .paging_numbers span a {
+        margin-right: 5px;
+        cursor: pointer;
+        color: #636363;
+    }
+    .paging_numbers span .current{
+        color: #000;
+    }
+    .jqueryPagination p {
+        font-family: Lato;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 13.5px;
+        letter-spacing: 0.05em;
+        color: #636363;
+        margin-bottom:unset;
+    }
+
+</style>
+
+
+@await Component.InvokeAsync("DashboardBlueBand")
+@*@await Html.PartialAsync("_DashboardBlueBand")*@
+<section class="container-fluid orderstatus-area">
+    <div class="row">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="dashboard-area">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="sidebar_menu font_lato">
+                                    <h3>Inovatiqa Dashboard</h3>
+                                    @await Html.PartialAsync("_DashboardSideBar", "inovatiqa-returns")
+                                </div>
+                            </div>
+
+                            <div class="col-md-9">
+                                <div class="order-deatil-area s submitrequest step-one">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="tabs font_lato">
+                                                <ul>
+                                                    <li><a href="#" class="previous-check active">Step One</a></li>
+                                                    <li><a href="#" class="active">Step Two</a></li>
+                                                    <li><a href="#">Step Three</a></li>
+                                                    <li><a href="#">Step Four</a></li>
+                                                    <li><a href="#">Step Five</a></li>
+
+                                                </ul>
+
+                                                <hr>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="order-content">
+
+                                                <div class="tab-content" style="border: none !important">
+                                                    <div class="return-invoiceitem font_lato">
+                                                        <div class="row">
+                                                            <div class="col-md-8 col-sm-8">
+                                                                <div class="">
+                                                                    <p>Select the invoiced items you would like to return by clicking the Add button. When you have finished adding items click Continue. Each Return is limited to one Ship To and Invoice.</p>
+                                                                </div>
+
+                                                            </div>
+
+                                                            <div class="col-md-4 col-sm-4">
+                                                                <div class="return-invoice-itemnum">
+                                                                    <p>Items: @Model.TotalItems</p>
+                                                                    <p>Product Value $ @Model.SelectedItemsPrice.ToString("0.00")</p>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-12 col-sm-12">
+                                                                <div class="cus-service-call">
+                                                                    <p>If you need assistance completing your return, please contact Customer Service at <strong>800-945-5646</strong> or <a href="#">click here.</a></p>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-12 col-sm-12">
+                                                                <div class="select-shipto">
+                                                                    <p><span>Selected Ship To</span> — 57833405 Inovatiqa Corporation</p>
+
+                                                                    <div class="switch-btn">
+                                                                        <a href="#">Switch Ship To</a>
+                                                                        <a href="#">Remove</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="cancel-req-btns font_roboto text-right">
+                                                        <a href="@Url.RouteUrl("CustomerReturnRequests")" class="btn cancel-btn">Cancel Request</a>
+                                                        <a onclick="window.location.href = '@Url.ActionLink("ShippingInfo", "ReturnRequest", new { Items = Model.SelectedItems, Quantities = Model.SelectedItemsQuantity, ReturnReasons = Model.SelectedItemsReturnReason, SelectedActions = Model.SelectedItemsReturnAction, TotalPrice = Model.SelectedItemsPrice })'" class="btn continue-btn">Continue</a>
+                                                    </div>
+
+                                                    <div class="order-find-area">
+                                                        <div class="find-fields font_lato">
+                                                            <div class="form-group">
+                                                                <label class="first-lable">PO/ Name</label>
+                                                                <input type="text" class="form-control" id="POName">
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label>Invoice</label>
+                                                                <input type="text" class="form-control" id="invoiceId">
+                                                            </div>
+                                                            
+                                                            <div class="form-group">
+                                                                <label>Order</label>
+                                                                <input type="text" class="form-control" id="orderId">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="date-fileds font_lato">
+                                                            <div class="form-group">
+                                                                <label>From</label>
+                                                                <input type="text" id="fromdate" value="@DateTime.Today.AddDays(-35).ToString("MM/dd/yyyy")" class="form-control date-picker" placeholder="7/2/2021">
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label>To</label>
+                                                                <input type="text" id="todate" value="@DateTime.Today.ToString("MM/dd/yyyy")" class="form-control date-picker" placeholder="7/2/2021">
+
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label class="first-lable">Item / Mfr</label>
+                                                                <input type="text" class="form-control" id="itemNumber">
+                                                            </div>
+
+                                                            <div class="find-btn font_roboto">
+                                                                <input type="submit" id="returnItemFind" value="Find" class="btn btn-signin" />
+                                                                <input type="submit" id="returnItemClear" value="Clear" class="btn btn-signin" />
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div class="items-table-area table-responsive font_roboto">
+                                                        <table class="table border-collapse mb0" id="returnTable">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>PO / Name</th>
+                                                                    <th>Item Number</th>
+                                                                    <th>Description</th>
+                                                                    <th>Order Number</th>
+                                                                    <th>Invoice</th>
+                                                                    <th>UOM</th>
+                                                                    <th>Price</th>
+                                                                    <th>Quantity</th>
+                                                                    <th>Return Quantity</th>
+                                                                    <th>Add</th>
+                                                                </tr>
+                                                            </thead>
+
+                                                            <tbody>
+                                                                @if (Model.Items != null && Model.Items.Count > 0)
+                                                                {
+                                                                    foreach (var item in Model.Items)
+                                                                    {
+                                                                        <tr style="background: @(item.IsSelected ? "#F0FFDD" : "")">
+                                                                            <td><p class="des-padding">@item.PO</p></td>
+
+                                                                            <td>
+                                                                                <p class="num-blue des-padding">@item.Itemno</p>
+                                                                            </td>
+
+                                                                            <td>
+                                                                                <p>@item.Description</p>
+                                                                                <p class="des-fontsize des-blue">Manufacturer / Manufacturer #</p>
+                                                                                <p class="des-fontsize">Dummy / Mfr #00001 </p>
+                                                                            </td>
+
+                                                                            <td>
+                                                                                <p class="num-green des-padding">@item.OrderNo</p>
+                                                                            </td>
+
+                                                                            <td>
+                                                                                <p class="des-padding">@item.Invoice</p>
+                                                                                <p class="des-orange">Invoice Date</p>
+                                                                                <p class="des-orange">@item.InvoiceDate.Split(" ")[0]</p>
+                                                                            </td>
+
+                                                                            <td>
+
+                                                                                <p class="des-padding">@item.UOM</p>
+                                                                            </td>
+
+                                                                            <td>
+                                                                                <p class="des-padding">$ @item.Price.ToString("#.##")</p>
+                                                                            </td>
+
+                                                                            <td>
+                                                                                <p class="des-padding">@item.Quantity</p>
+                                                                            </td>
+
+                                                                            <td>
+                                                                                <input type="text" size="2" id="returnQuantity" value="@item.ReturnQuantity" class="eainput-td" onkeyup="validateQuantityInput(this, @item.Quantity)" onchange="UpdateQty('modalQuantity-@item.Itemno', $(this).val())"/>
+                                                                            </td>
+
+                                                                            <td>
+                                                                                @if (item.IsSelected)
+                                                                                {
+                                                                                    <p class="des-padding" style="margin-left: 30%;"><a href="@Url.ActionLink("SelectItems", "ReturnRequest", new { ItemId = item.Itemno, Selected = Model.SelectedItems, SelectedQuantity = Model.SelectedItemsQuantity, SelectedReason = Model.SelectedItemsReturnReason, SelectedAction = Model.SelectedItemsReturnAction })"><img src="~/images/UIComponents/Layer_minas.svg"></a></p>
+
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    <p class="des-padding"><a href="#" class="btn continue-btn" data-toggle="modal" data-target="#step-returnpopup-@item.Itemno" data-backdrop="false"><img src="~/images/UIComponents/addicon-td.svg"></a></p>
+
+                                                                                }
+                                                                            </td>
+
+                                                                        </tr>
+                                                                    }
+                                                                }
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@if (Model.Items.Count > 0)
+{
+    foreach (var item in Model.Items)
+    {
+        <div class="s returnt-steparea font_lato">
+            <div id="step-returnpopup-@item.Itemno" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <div class="header-title">
+                                <h5>Confirm Reason for Return</h5>
+
+                            </div>
+                            <hr>
+                        </div>
+
+                        <div class="modal-body">
+                            <div class="reason-area">
+                                <div class="form-group reason-select">
+                                    <label>Reason for Return</label>
+                                    <select class="form-control" id="returnReson-@item.Itemno">
+                                        @foreach (var reason in Model.ReturnReasons)
+
+                                        {
+                                            <option value="@reason.Key">@reason.Value</option>
+                                        }
+                                    </select>
+                                </div>
+
+                                <div class="form-group reason-select">
+                                    <label>Action</label>
+                                    <select class="form-control" id="returnAction-@item.Itemno">
+                                        @foreach (var action in Model.ReturnActions)
+                                        {
+                                            <option value="@action.Key">@action.Value</option>
+                                        }
+
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Quantity Returning</label>
+                                    <input type="text" class="form-control" id="modalQuantity-@item.Itemno" onkeyup="validateQuantityInput(this, @item.Quantity)">
+                                </div>
+
+
+                            </div>
+
+
+
+                        </div>
+
+                        <div class="modal-footer">
+                            <hr>
+                            <div class="popup-btn font_lato">
+                                <a href="#" class="btn btn-cancel" data-dismiss="modal">Cancel</a>
+                                <a onclick="validate(@item.Itemno) || (window.location.href = '@Url.Action("SelectItems", "ReturnRequest", new { ItemId = item.Itemno, Selected = Model.SelectedItems, SelectedQuantity = Model.SelectedItemsQuantity, SelectedReason = Model.SelectedItemsReturnReason, SelectedAction = Model.SelectedItemsReturnAction})' + '&ItemQuantity=' + $('#modalQuantity-' +@item.Itemno).val() + '&ReturnReason=' + $('#returnReson-' +@item.Itemno).val() + '&ItemAction=' + $('#returnAction-' +@item.Itemno).val())" class="btn btn-ok">OK</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    }
+}
+
+
+<script>
+    function UpdateQty(id, value) {
+        $(`#${id}`).val(value);
+    }
+
+    function validateQuantityInput(component, quantity) {
+        const val = component.value;
+        if (isNaN(val)) {
+            component.value = quantity;
+        }
+        if (parseInt(val) > quantity) {
+            component.value = quantity;
+        }
+    }
+    function validate() {
+        return false;
+    }
+
+    $(document).ready(function () {
+        const dt = $('#returnTable').DataTable({
+            "language": {
+                "info": '<div class="tpage-num"><p>Showing _START_ to _END_ of _TOTAL_ Items</p></div>'
+            },
+            "pageLength": 5,
+            "dom": 't<"jqueryPagination"ip>',
+            'pagingType': 'numbers'
+        });
+        function filterByColumn() {
+            dt
+                .search(this.value)
+                .draw();
+        }
+        $('#POName').keyup(filterByColumn);
+        $('#invoiceId').keyup(filterByColumn);
+        $('#orderId').keyup(filterByColumn);
+        $('#itemNumber').keyup(filterByColumn);
+
+        let searchParams = new URLSearchParams(window.location.search);
+                        $('.date-picker').datepicker();
+                        $('.ui-datepicker').css('font-size', '11px');
+                        $('#returnItemFind').click(function() {
+                            reloadWithParams();
+                        });
+                        $('#returnItemClear').click(function() {
+                            setLocation('@Url.RouteUrl("ReturnRequest/SelectItems")');
+                        });
+                        if (searchParams.has('startDateValue') && searchParams.has('endDateValue')) {
+                            $("#fromdate").val(searchParams.get('startDateValue'));
+                            $("#todate").val(searchParams.get('endDateValue'));
+                            $('#pageTitle').append(" " + searchParams.get('startDateValue') + " to " + searchParams.get('endDateValue'));
+                            $('#emptyRow td').eq(0).text($('#emptyRow td').eq(0).text().replace("StartDate", searchParams.get('startDateValue')));
+                            $('#emptyRow td').eq(0).text($('#emptyRow td').eq(0).text().replace("EndDate", searchParams.get('endDateValue')));
+                        }
+                        else {
+                            var dateOffset = (24 * 60 * 60 * 1000) * 35;
+                            var myDate = new Date();
+                            myDate.setTime(myDate.getTime() - dateOffset);
+                            $('#pageTitle').append(" " + formatDate(myDate) + " to " + formatDate(new Date()));
+                        }
+                            function formatDate(date) {
+                            var d = new Date(date),
+                                month = '' + (d.getMonth() + 1),
+                                day = '' + d.getDate(),
+                                year = d.getFullYear();
+
+                            if (month.length < 2)
+                                month = '0' + month;
+                            if (day.length < 2)
+                                day = '0' + day;
+
+                            return [month, day, year].join('/');
+                        }
+        function reloadWithParams() {
+            var startDateValue = $('#fromdate').val();
+            var endDateValue = $('#todate').val();
+                if (startDateValue == '' || endDateValue == '') {
+                alert("Please select date range first!");
+            return;
+            }
+            if ($.datepicker.parseDate("mm/dd/yy", endDateValue) < $.datepicker.parseDate("mm/dd/yy", startDateValue)) {
+                alert("End date must be greater than start date!");
+                return;
+            }
+            setLocation('@Url.RouteUrl("ReturnRequest/SelectItems")?startDateValue=' + startDateValue + '&endDateValue=' + endDateValue);
+        }
+    });
+</script>

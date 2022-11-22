@@ -1,0 +1,120 @@
+﻿
+@{
+    Layout = "_ColumnsOne";
+    ViewBag.Title = "Reorder Guide";
+}
+@*
+<style>
+    .table td, table th, table tbody tr td {
+        padding: 10px 20px;
+        font-size: 13px;
+    }
+</style>
+<div class="page  from-panel">
+    <div class="page-title panel-heading">
+        <h1>Re-Order Management</h1>
+    </div>
+    <div style="margin:10px">
+        <div class="">
+
+            <p> For quick re-ordering, use our Easy Reorder feature. It's the fastest way to re-order items you previously purchased at Inovatiqa Corporation. Click here to give it a try. </p>
+
+            <h4 style="font-weight:bold"> 3 Simple Steps:</h4>
+
+            <ul>
+                <li> Choose from thousands of items you use very day</li>
+                <li> Set a delivery schedule that's right for you.</li>
+                <li> Checkout as you normally do, and your first order will be placed today and you next order will be automatically sent at the frequency you choose.</li>
+            </ul>
+            <br>
+
+
+
+            <br>
+
+            <p>Questions? Call our dedicated customer service team at (346) 229-4142.</p>
+            <br>
+            <br>
+
+        </div>
+    </div>
+</div>
+    *@
+<style>
+    .become-customer-box{
+        box-shadow : none !important;
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+    .newcustomer-area{
+        padding: 0px !important;
+        background: #FFF !important;
+    }
+    h1, h2, h3, h4, h5, h6{
+        font-weight: 500 !important;
+    }
+    .segment-line{
+        border: 0.1px solid #DADADA !important;
+    }
+    .heading-reorder-help{
+        font-size: 19px !important;
+    }
+    .reorder-help-p, reorder-help-p li{
+        font-size: 15px !important;
+    }
+    .reorder-help-main-heading{
+        font-size: 21px !important;
+    }
+</style>
+<section class="container-fluid newcustomer-area">
+    <div class="container-fluid" style="background: #F1F3F6; padding: 10px;">
+        <div class="container">
+            
+            <a style="color: #A9A9A9;" class="muted" href="@Url.RouteUrl("Homepage")">Inovatiqa / </a> Reorder Guide
+        </div>
+        </div>
+    <div class="row">
+        <div class="container">
+            <div class="row mt10">
+                <div class="col-md-12">
+                    <div class="become-customer-box">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="font_lato">
+                                    <div class="customer-select">
+                                        <h4 class="reorder-help-main-heading">Reorder Guide</h4>
+                                        <hr class="segment-line">
+                                        <div class="col-md-5 pl0">
+                                            <h4 class="heading-reorder-help">Using Reorder Guide</h4>
+                                            <p class="reorder-help-p mt16">You can use reorder suggestions to order supplies. </p>
+                                            <p class="mt20 reorder-help-p mt42">When signed in to your Inovatiqa account, the Reorder Guide page will take you to the Inovatiqa Dashboard.  </p>
+                                            <img src="~/images/UIComponents/reorder_helper_image3.svg" class="helper-image mt57">
+                                            <p class="mt20 reorder-help-p mt53">The reorder guide is similar to ordering from a list and will show the last date of purchase.</p>
+                                            <ul class="reorder-help-p ml10 mt35" style="list-style: square;">
+                                                <li class="mt19">Change quantity and unit of measure (UOM).</li>
+                                                <li class="mt10">Click the “Add selected to Cart” button to add item to cart.</li>
+                                                <li class="mt10">Select multiple items by placing a check mark in box next to desired item.</li>
+                                            </ul>
+                                        </div>
+                                        <div style="justify-content: right;">
+                                            <img src="~/images/UIComponents/reorder_1.svg" class="mt36" style=" margin-left: 30px; width: 55%;">
+                                            <img src="~/images/UIComponents/reorder_2.svg" style="margin-top: 10%; margin-left: 30px; width: 55%;">
+                                        </div>
+                                        <h4 class="heading-reorder-help mt20">Searching The Catalog</h4>
+                                        <p class="mt20 reorder-help-p">You may create an order by searching the catalog. To do so, please:</p>
+                                        <ul class="ml10 reorder-help-p mt19" style="list-style: square;">
+                                            <li style="margin-top: 19px;">Type a search term in the “Search” box. You may search, using a brand name, Inovatiqa item number, descriptive term, manufacturer’s name or manufacturer’s number.</li>
+                                            <li style="margin-top: 19px;">Click “Find.”</li>
+                                            <li style="margin-top: 19px;">Learn more about an item by clicking on its description, which appears in blue text next to its picture.</li>
+                                            <li style="margin-top: 19px;">Add an item to your cart by entering a quantity and clicking “Add to cart +” button. </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid" style="background: #F1F3F6; padding: 25px;"></div> 
+</section>

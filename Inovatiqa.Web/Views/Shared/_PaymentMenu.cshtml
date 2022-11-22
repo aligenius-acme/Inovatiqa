@@ -1,0 +1,99 @@
+﻿@Html.Resource(@<link href="@Url.Content("~/lib/menus/menu.css")" rel="stylesheet" type="text/css" />, "css")
+<div class="header-bottom">
+    <div class="header-menu">
+        <nav class="navbar navbar-inverse category-menu">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button aria-expanded="false" data-target="#mobile-menu" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div id="mobile-menu" class="collapse navbar-collapse">
+                <ul id="logged-in-user-menu" class="nav navbar-nav">
+
+                    <li><a href="@Url.RouteUrl("PaymentPortal")">Home</a></li>
+                    <li><a href="@Url.RouteUrl("OpenInvoices")">Open Invoices</a></li>
+                    <li><a href="@Url.RouteUrl("UnappliedCash")">Unapplied Cash</a></li>
+                    <li><a href="@Url.RouteUrl("PaidInvoices")">Paid Invoices</a></li>
+                    @*<li><a href="@Url.RouteUrl("Products")">Products</a></li>*@
+                    @*<li><a href="@Url.RouteUrl("ShopProducts")">Products</a></li>*@
+                    @*<li><a href="@Url.RouteUrl("ManufacturerList")">Brands</a></li>*@
+                    @*<li><a href="@Url.RouteUrl("NewProducts")">New Products</a></li>*@
+                    @*<li><a href="@Url.RouteUrl("ShopProducts")">Shop Products</a></li>*@
+                    @*<li><a href="@Url.RouteUrl("ContactUs")">Contact Us</a></li>
+        <li><a href="@Url.RouteUrl("Company")">Company</a></li>*@
+                </ul>
+                <div id="welcome-customer" style="float:right;color:#9d9d9d;margin-top:15px"> Welcome  @ViewBag.logedinusers</div>
+            </div><!-- /.navbar-collapse -->
+        </nav>
+    </div>
+</div>
+
+
+
+@*            $.ajax({
+                    cache: false,
+                    type: "GET",
+                    url: "/ShoppingCart/PopulateWishList",
+                    success: function (data, textStatus, jqXHR) {
+                        if (data != null) {
+                            var personallists = data.filter(x => x.isSharedList == false);
+                            var personalmenu1 = "";
+                            for (i = 0; i < 10 && i < personallists.length; i++) {
+                                personalmenu1 += '<li><a href="/wishlistbyname/' + personallists[i].id + '">' + personallists[i].listName + '</a></li>';
+                            }
+                            $('#_personalListsone').append(personalmenu1);
+                            var sharedlists = data.filter(x => x.isSharedList == true);
+                            var sharedmenu1 = "";
+                            for (i = 0; i < 10 && i < sharedlists.length; i++) {
+                                sharedmenu1 += '<li><a href="/wishlistbyname/' + sharedlists[i].id + '">' + sharedlists[i].listName + '</a></li>';
+                            }
+                            $('#_sharedListsone').append(sharedmenu1);
+                            var sharedmenu2 = "";
+                            for (i = 11; i < 20 && i < sharedlists.length; i++) {
+                                sharedmenu2 += '<li><a href="/wishlistbyname/' + sharedlists[i].id + '">' + sharedlists[i].listName + '</a></li>';
+                            }
+                            $('#_sharedListstwo').append(sharedmenu2);
+                        }
+                    }
+                });
+                $.ajax({
+                    cache: false,
+                    type: "GET",
+                    url: "/Catalog/PopulateCategories",
+                    success: function (data, textStatus, jqXHR) {
+                        if (data != null) {
+                            var catsectionI = "";
+                            for (i = 0; i < 16 && i < data.categories.length; i++) {
+                                catsectionI += '<li style="margin-top;0px"><a href="/' + data.categories[i].seName + '">' + data.categories[i].name + '</a></li>';
+                            }
+                            $('.categoriesI').append(catsectionI);
+                            var catsectionII = "<li class='header'><a href='#'></a></li>";
+                            for (i = 17; i < 32 && i < data.categories.length; i++) {
+                                catsectionII += '<li><a href="/' + data.categories[i].seName + '">' + data.categories[i].name + '</a></li>';
+                            }
+                            $('.categoriesII').append(catsectionII);
+                            //var catsectionIII = "<li class='header'><a href='#'></a></li>";
+                            //for (i = 21; i < 30 && i < data.categories.length; i++) {
+                            //    catsectionIII += '<li><a href="/' + data.categories[i].seName + '">' + data.categories[i].name + '</a></li>';
+                            //}
+                            //$('.categoriesIII').append(catsectionIII);
+                        }
+                    }
+                });
+                //$("#logged-in-user-menu").append('<li class="dropdown r_menu"><a href="#">My Orders<span class="caret hidden-xs"></span></a></li>');
+                //$("#logged-in-user-menu").append('<li class="dropdown r_menu"><a href="#">My Lists<span class="caret hidden-xs"></span></a></li>');
+                $("#logged-in-user-menu").append('<li class="dropdown r_menu"><a id="products" href="@Url.RouteUrl("ShopProducts")">Products<span class="caret hidden-xs"></span></a><div class="drop dropdown-menu multi-column columns-3" style="background-color:#222"><div class="col-sm-6"><ul class="multi-column-dropdown categoriesI"><li class="header">Product Categories</li></ul></div><div class="col-sm-6"><ul class="multi-column-dropdown categoriesII"></ul></div></div></li>');
+                if (isUserLoggedIn() === true) {
+                        $("#logged-in-user-menu").append('<li class="dropdown r_menu"><a id="order" href="#">Orders<span class="caret hidden-xs"></span></a><div class="drop dropdown-menu multi-column columns-3" style="background-color:#222"><div class="col-sm-4"><ul class="multi-column-dropdown"><li class="header">Getting Started</li><li><a href="@Url.RouteUrl("ShoppingCart")">Start New Order</a></li><li><a href="@Url.RouteUrl("ReorderGuide")">Reorder Guide</a></li><li><a href="@Url.RouteUrl("CustomerSuspendedCarts")">Resume Suspended Cart</a></li><li><a href="@Url.RouteUrl("CreateReturnRequest")">Create Return Request</a></li></ul></div><div class="col-sm-4"><ul class="multi-column-dropdown l-border"><li class=header>Order Status</li><li><a href="@Url.RouteUrl("CustomerOrders")">Check Order Status</a></li><li><a href="@Url.RouteUrl("CustomerOrderItems")">Check Item Status</a></li><li><a href="@Url.RouteUrl("CustomerInvoicedOrders")">Invoiced Orders</a></li><li><a href="@Url.RouteUrl("CustomerOrders")">Backordered Items</a></li><li><a href="@Url.RouteUrl("CustomerOrders")?orderStatusId=10">Open Orders</a></li><li><a href="@Url.RouteUrl("CustomerReturnRequests")">Return Requests</a></li></ul></div><div class="col-sm-4"><ul class="multi-column-dropdown"><li class="header">Manage Orders</li><li><a href="@Url.RouteUrl("CustomerSuspendedCarts")">Suspended Carts</a></li></ul> <ul class="multi-column-dropdown"><li class="header">Payment</li><li><a href="@Url.RouteUrl("PaymentPortal")">Payment Portal</a></li></ul>    </div></div></li>');
+                        $("#logged-in-user-menu").append('<li class="dropdown r_menu"><a id="list" href="#">Lists<span class="caret hidden-xs"></span></a><div class="drop dropdown-menu multi-column columns-3" style="background-color:#222"><div class="col-sm-4"><ul class="multi-column-dropdown"><li class="header">Lists</li><li><a href="@Url.RouteUrl("ViewWishLists")">View All Lists</a></li><li><a href="@Url.RouteUrl("ReorderGuide")">Reorder Guide</a></li><li><a href="@Url.RouteUrl("Wishlist")">View All Items</a></li></ul><ul class="multi-column-dropdown"><li class="header">Maintenance</li><li><a href="@Url.RouteUrl("CreateWishList")">Create New List</a></li></ul></div><div class="col-sm-4"><ul class="multi-column-dropdown l-border" id="_personalListsone"><li class=header>Personal Lists</li></ul></div><div class="col-sm-4"><ul class="multi-column-dropdown l-border" id="_sharedListsone"><li class=header>Shared Lists</li></ul></div><div class="col-sm-4"><ul class="multi-column-dropdown l-border" id="_sharedListstwo"></ul></div></div></div></li>');
+                        $("#logged-in-user-menu").append('<li class="dropdown r_menu"><a id="list" href="#">My Account<span class="caret hidden-xs"></span></a><div class="drop dropdown-menu multi-column columns-3" style="background-color:#222"><div class="col-sm-4"><ul class="multi-column-dropdown"><li class="header">Account</li><li><a href="@Url.RouteUrl("CustomerAddresses")">Addresses</a></li><li><a href="@Url.RouteUrl("CustomerChangePassword")">Change Password</a></li></ul></div></div></div></li>');
+                        $("#welcome-customer").html("Welcome " + $("#registered-customer-name").val())
+                    }
+                });
+
+    </script>, "js")*@

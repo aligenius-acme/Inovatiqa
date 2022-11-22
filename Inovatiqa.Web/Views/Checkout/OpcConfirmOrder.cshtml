@@ -1,0 +1,169 @@
+﻿@model CheckoutConfirmModel
+
+
+@*
+<div class="checkout-data" style="float:left; text-align:left !important; width:100%">
+    @if (!string.IsNullOrEmpty(Model.MinOrderTotalWarning) || Model.Warnings.Count > 0)
+    {
+        <div class="section confirm-order">
+            <div>
+                @if (!string.IsNullOrEmpty(Model.MinOrderTotalWarning))
+                {
+                    <div>
+                        <span class="min-order-warning">@Model.MinOrderTotalWarning</span>
+                    </div>
+                }
+            </div>
+            @if (Model.Warnings.Count > 0)
+            {
+                <div class="message-error">
+                    <ul>
+                        @foreach (var warning in Model.Warnings)
+                        {
+                            <li>@warning</li>
+                        }
+                    </ul>
+                </div>
+            }
+        </div>
+    }
+    <div class="order-summary-body">
+        @await Component.InvokeAsync("OrderSummaryCheckout", new { prepareAndDisplayOrderReviewData = true })
+    </div>
+    @if (string.IsNullOrEmpty(Model.MinOrderTotalWarning) && Model.TermsOfServiceOnOrderConfirmPage)
+    {
+        <div id="terms-of-service-warning-box" title="Terms of service" style="display:none;">
+            <p>Please accept the terms of service before the next step.</p>
+        </div>
+        <div class="row termsofservice-wrapper">
+            <div class="col-md-offset-6 col-sm-offset-6 col-sm-6 col-md-6">
+                <div class="terms-of-service">
+                    <input id="termsofservice" type="checkbox" name="termsofservice" />
+                    <label for="termsofservice">
+                        I agree with the terms of service and I adhere to them unconditionally
+                        @if (Model.TermsOfServicePopup)
+                        {
+                        <a class="read" id="read-terms">(read)</a>
+                        <script>
+                                $(document).ready(function() {
+                                    $('#read-terms').on('click', function(e) {
+                                        e.preventDefault();
+                                        displayPopupContentFromUrl('@Url.RouteUrl("TopicPopup", new {SystemName = "conditionsofuse"})', 'Terms of service');
+                                    });
+                                });
+                        </script>
+                        }
+                        else
+                        {
+                            @*<a class="read" id="read-terms" href="@Url.RouteUrl("Topic", new {SeName = Html.GetTopicSeName("conditionsofuse") })">(read)</a>@
+                        }
+                    </label>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+    *@
+@if (Model.Warnings.Count > 0)
+{
+    <div class="message-error">
+
+        @foreach (var warning in Model.Warnings)
+        {
+            if (warning == "Authorization error: 'CVV_FAILURE'")
+            {
+                <div class="alert alert-danger mt20" role="alert">
+                    There is something wrong with your CVV.
+                </div>
+            }
+            else if (warning == "Authorization error: 'ADDRESS_VERIFICATION_FAILURE'")
+            {
+                <div class="alert alert-danger mt20" role="alert">
+                    There is something wrong with your Postal Code.
+                </div>
+            }
+            else if (warning == "Authorization error: 'INVALID_EXPIRATION'")
+            {
+                <div class="alert alert-danger mt20" role="alert">
+                    Expiry Date entered is incorrect.
+                </div>
+            }
+            else if (warning == "Authorization error: 'GENERIC_DECLINE'")
+            {
+                <div class="alert alert-danger mt20" role="alert">
+                    Card Number is invalid.
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-danger mt20" role="alert">
+                    @warning
+                </div>
+            }
+        }
+
+    </div>
+}
+@if (!string.IsNullOrEmpty(Model.MinOrderTotalWarning))
+{
+    <div>
+        <span class="min-order-warning">@Model.MinOrderTotalWarning</span>
+    </div>
+}
+<div class="steps_box step_4 m_t_50">
+    <div class="row flex_col align_center">
+        <div class="col-md-8">
+            <h2>Additional information</h2>
+            <p>Need something else? We will make it for you!</p>
+        </div>
+        <div class="col-md-4 text-right">
+            <p>Step 4 of 5</p>
+        </div>
+    </div>
+    <div class="row flex_col m_t_10">
+        <div class="col-md-12 col-sm-12 col-xs-12 form-group">
+            <label>Order notes</label>
+            <textarea class="form-control" id="AddOrderNoteMessage" name="message" placeholder="Need a specific delivery day? Sending a gitf? Let’s say ..."></textarea>
+        </div>
+    </div>
+</div>
+<div class="steps_box step_5 m_t_50">
+    <div class="row flex_col align_center">
+        <div class="col-md-8">
+            <h2>Confirmation</h2>
+            <p>We are getting to the end. Just few clicks and your order is ready!</p>
+        </div>
+        <div class="col-md-4 text-right">
+            <p>Step 5 of 5</p>
+        </div>
+    </div>
+    <div class="row flex_col m_t_30">
+        <div class="col-md-12 col-sm-12 col-xs-12 form-group">
+            <div class="checkbox" id="checkbox-border">
+                <label><input type="checkbox" id="PrivatePolicy" value="check" 
+                              onclick="checkboxonclick()" />
+                I agree with sending marketing and newsletter emails. No spam promised!</label>
+            </div>
+            <div>
+                <span hidden id="checkbox-error" class="error-label">Checkbox is required.</span>
+            </div>
+            <div class="checkbox m_t_10" id="checkbox-border1">
+                <label><input type="checkbox" id="terms-Condition" value="check" onclick="checkboxonclick1()" /> I agree with our &nbsp;<a href=""> terms and conditions </a>&nbsp; and &nbsp;<a href=""> privacy policy.</a></label>
+            </div>
+            <div>
+                <span hidden id="checkbox-error1" class="error-label">Checkbox is required.</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function checkboxonclick() {
+        $('#checkbox-border').css('border', '1px solid #D1D1D1');
+        $('#checkbox-error').hide();
+    }
+    function checkboxonclick1() {
+        $('#checkbox-border1').css('border', '1px solid #D1D1D1');
+        $('#checkbox-error1').hide();
+    }
+</script>

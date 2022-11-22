@@ -1,0 +1,45 @@
+﻿@model CheckoutPaymentInfoModel
+
+@*
+<div class="checkout-data">
+    <div class="section payment-info">
+        <div class="info">
+            @await Component.InvokeAsync(Model.PaymentViewComponentName)
+        </div>
+        <div asp-validation-summary="ModelOnly" class="message-error"></div>
+    </div>
+    @if (Model.DisplayOrderTotals)
+    {
+        <div class="order-summary-body">
+            @await Component.InvokeAsync("OrderSummary")
+        </div>
+    }
+</div>*@
+
+
+<div class="steps_box step_3 m_t_50">
+    <div class="row flex_col align_center">
+        <div class="col-md-8">
+            <h2>Payment Information</h2>
+            @if (Model.PaymentViewComponentName == "PaymentPurchaseOrder")
+            {
+                <p>Please enter your purchase order number or name</p>
+            }
+            else
+            {
+                <p>Please enter your Payment details</p>
+            }
+        </div>
+        <div class="col-md-4 text-right">
+            <p>Step 3 of 5</p>
+        </div>
+    </div>
+    <div class="row flex_col m_t_20">
+        <div class="col-md-12">
+            <div class="payment_box" style="margin-bottom: 5%;">
+                @await Component.InvokeAsync(Model.PaymentViewComponentName)
+            </div>
+            <div asp-validation-summary="ModelOnly" class="message-error"></div>
+        </div>
+    </div>
+</div>

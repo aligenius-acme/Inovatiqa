@@ -1,0 +1,256 @@
+﻿@inject IWebHelper webHelper
+@inject IInovatiqaFileProvider fileProvider;
+@inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment WebHostEnvironment
+@inject IPermissionService permissionService
+@inject IWorkContextService workContextService
+@inject ICustomerService customerService
+@inject IDateTimeHelperService dateTimeHelperService
+
+@{
+    var returnUrl = webHelper.GetRawUrl(Context.Request);
+
+    var currentKendoCulture = InovatiqaDefaults.LanguageCulture;
+
+    var supportRtl = InovatiqaDefaults.Rtl;
+
+    //page title
+    string adminPageTitle = !string.IsNullOrWhiteSpace(ViewBag.PageTitle) ? ViewBag.PageTitle + " / " : "";
+    adminPageTitle += "Inovtiqa administration";
+
+    //has "Manage Maintenance" permission?
+    var canManageMaintenance = permissionService.Authorize(StandardPermissionProvider.ManageMaintenance);
+
+    //avatar
+    var currentCustomer = workContextService.CurrentCustomer;
+
+    //event
+    //eventPublisher.Publish(new PageRenderingEvent(this.Html));
+
+    //info: we specify "Admin" area for actions and widgets here for cases when we use this layout in a plugin that is running in a different area than "admin"
+}
+<!DOCTYPE html>
+<html lang="@InovatiqaDefaults.DefaultLocalePattern">
+<head>
+    <title>Dashboard / Inovtiqa administration</title>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <script>var rootAppPath = "/"</script>
+    <link href="/lib/adminLTE/css/skins/_all-skins.min.css" rel="stylesheet">
+    <link href="/lib/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css" rel="stylesheet">
+    <link href="/lib/typeahead/typeahead.css" rel="stylesheet">
+    <link href="/lib/fontAwesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/lib/jquery-ui/jquery-ui-1.10.3/jquery-ui-themes/smoothness/jquery-ui-1.10.3.custom.min.css" rel="stylesheet">
+    <link href="/lib/kendo/2020.1.406/styles/web/kendo.common.min.css" rel="stylesheet">
+    <link href="/lib/kendo/2020.1.406/styles/web/kendo.default.min.css" rel="stylesheet">
+    <link href="/lib/kendo/2020.1.406/styles/web/kendo.rtl.min.css" rel="stylesheet">
+    <link href="/lib/datatables/css/dataTables.bootstrap.css" rel="stylesheet">
+    <link href="/lib/datatables/datatables.min.css" rel="stylesheet">
+    <link href="/lib/datatables/buttons.dataTables.min.css" rel="stylesheet">
+    <link href="/lib/datatables/buttons.bootstrap.min.css" rel="stylesheet">
+    <link href="/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/lib/adminLTE/css/AdminLTE.min.css" rel="stylesheet">
+    <link href="/css/admin/styles.css" rel="stylesheet">
+    <link href="/lib/ionicons/css/ionicons-2.0.1.min.css" rel="stylesheet">
+    <script src="/lib/jquery/jquery-3.4.1.min.js"></script>
+    <script src="/lib/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js"></script>
+    <script src="/lib/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/lib/adminLTE/js/adminlte.min.js"></script>
+    <script src="/lib/jquery-validate/jquery.validate-v1.19.1/jquery.validate.min.js"></script>
+    <script src="/lib/jquery-validate/jquery.validate.unobtrusive-v3.2.11/jquery.validate.unobtrusive.min.js"></script>
+    <script src="/lib/cldr/dist/cldr.min.js"></script>
+    <script src="/lib/cldr/dist/cldr/event.min.js"></script>
+    <script src="/lib/cldr/dist/cldr/supplemental.min.js"></script>
+    <script src="/lib/globalize/dist/globalize.min.js"></script>
+    <script src="/lib/globalize/dist/globalize/number.min.js"></script>
+    <script src="/lib/globalize/dist/globalize/date.min.js"></script>
+    <script src="/lib/globalize/dist/globalize/currency.min.js"></script>
+    <script src="/lib/jquery-validate/jquery.validate.globalize-1.0.0.min.js"></script>
+    <script src="/lib/jquery-ui/jquery-ui-1.10.3/jquery-ui-1.10.3.custom.min.js"></script>
+    <script src="/lib/jquery-migrate/jquery-migrate-3.1.0.min.js"></script>
+    <script src="/lib/typeahead/typeahead.bundle.min.js"></script>
+    <script src="/js/admin.common.js"></script>
+    <script src="/js/admin.navigation.js"></script>
+    <script src="/js/admin.search.js"></script>
+    <script src="/lib/kendo/2020.1.406/js/kendo.ui.core.min.js"></script>
+    <script src="/lib/kendo/2020.1.406/js/messages/kendo.messages.en-US.min.js"></script>
+    <script src="/lib/kendo/2020.1.406/js/cultures/kendo.culture.en-US.min.js"></script>
+    <script src="/lib/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="/lib/datatables/js/dataTables.bootstrap.min.js"></script>
+    <script src="/lib/datatables/datatables.min.js"></script>
+    <script src="/lib/datatables/moment-with-locales-2.22.2.min.js"></script>
+    <script src="/lib/datatables/dataTables.buttons.min.js"></script>
+    <script src="/lib/datatables/buttons.bootstrap.min.js"></script>
+    <script src="/lib/chartjs/Chart.min.js"></script>
+    @*<link rel="apple-touch-icon" sizes="180x180" href="/icons/icons_0/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/icons/icons_0/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="192x192" href="/icons/icons_0/android-chrome-192x192.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/icons/icons_0/favicon-16x16.png">*@
+    @*<link rel="manifest" href="/icons/icons_0/site.webmanifest">*@
+    @*<link rel="mask-icon" href="/icons/icons_0/safari-pinned-tab.svg" color="#5bbad5">*@
+    <link rel="shortcut icon" href="/icons/icons_0/favicon.ico">
+    <meta name="msapplication-TileColor" content="#2d89ef">
+    @*<meta name="msapplication-TileImage" content="/icons/icons_0/mstile-144x144.png">*@
+    <meta name="msapplication-config" content="/icons/icons_0/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+    <script>var culture = "en"; $.when($.get("/lib/cldr-data/supplemental/likelySubtags.json"), $.get("/lib/cldr-data/main/" + culture + "/numbers.json"), $.get("/lib/cldr-data/main/" + culture + "/currencies.json"), $.get("/lib/cldr-data/supplemental/numberingSystems.json"), $.get("/lib/cldr-data/main/" + culture + "/ca-gregorian.json"), $.get("/lib/cldr-data/main/" + culture + "/timeZoneNames.json"), $.get("/lib/cldr-data/supplemental/timeData.json"), $.get("/lib/cldr-data/supplemental/weekData.json")).then(function () { return [].slice.apply(arguments, [0]).map(function (n) { return n[0] }) }).then(Globalize.load).then(function () { Globalize.locale(culture) })</script>
+    <script>kendo.culture("en-US")</script>
+    <div class="throbber">
+        <div class="curtain">
+        </div>
+        <div class="curtain-content">
+            <div>
+                <h1 class="throbber-header">Wait...</h1>
+                <p>
+                    <img src="@Url.Content("~/css/admin/images/throbber-synchronizing.gif")" alt="" />
+                </p>
+            </div>
+        </div>
+    </div>
+    <div id="ajaxBusy">
+        <span>&nbsp;</span>
+    </div>
+    <div class="wrapper">
+        @if (IsSectionDefined("header"))
+        {
+            @RenderSection("header")
+        }
+        else
+        {
+            <div class="main-header">
+                <a href="@Url.Content("~/Admin")" class="logo">
+                    <!-- mini logo for sidebar mini 50x50 pixels -->
+                    <span class="logo-mini"></span>
+                    <!-- logo for regular state and mobile devices -->
+                    <span class="logo-lg"></span>
+                </a>
+                <div class="navbar navbar-static-top" role="navigation">
+                    <a href="#" id="nopSideBarPusher" class="sidebar-toggle" data-toggle="push-menu" role="button">
+                        <span class="sr-only">&nbsp;</span>
+                    </a>
+                    <div class="navbar-custom-menu">
+                        <ul class="nav navbar-nav">
+                            @if (customerService.IsRegistered(currentCustomer))
+                            {
+                                <li class="account-info">
+                                    @customerService.GetCustomerFullName(currentCustomer)
+                                </li>
+                                <li>
+                                    <a asp-controller="Customer" asp-action="Logout" asp-area="">Logout</a>
+                                </li>
+                            }
+                            <li>
+
+                            </li>
+                            <li>
+
+                            </li>
+                            @if (canManageMaintenance)
+                            {
+                                <li class="dropdown" style="visibility:hidden">
+                                    <a href="#" data-toggle="dropdown"><i class="fa fa-gears"></i></a>
+                                    <ul class="maintenance-menu dropdown-menu bg-dark" role="menu">
+                                        <li>
+                                            <form asp-controller="Common" asp-action="ClearCache" asp-area="@InovatiqaDefaults.Admin">
+                                                <input name="returnurl" type="hidden" value="@returnUrl">
+                                                @*<button type="submit" class="bg-dark">
+                                                        <span>@T("Admin.Header.ClearCache")</span>
+                                                    </button>*@
+                                            </form>
+                                        </li>
+                                        <li>
+                                            <form asp-controller="Common" asp-action="RestartApplication" asp-area="@InovatiqaDefaults.Admin">
+                                                <input name="returnurl" type="hidden" value="@returnUrl">
+                                                @*<button id="restart-application" type="submit" class="bg-dark">
+                                                        <span>@T("Admin.Header.RestartApplication")</span>
+                                                    </button>*@
+                                                @*<script>
+                                                            $(document).ready(function () {
+                                                                $("#restart-application").click(function (e) {
+                                                                    showThrobber('@Html.Raw(JavaScriptEncoder.Default.Encode(T("Admin.Header.RestartApplication.Progress").Text))');
+                                                                });
+                                                            });
+                                                    </script>*@
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        }
+        @if (IsSectionDefined("headermenu"))
+        {
+            @RenderSection("headermenu")
+        }
+        else
+        {
+            <div class="main-sidebar" style="margin-top:5%">
+                <div class="sidebar">
+                    @*<div class="sidebar-form">
+                            <div id="search-box">
+                                <input type="text" class="form-control admin-search-box typeahead" placeholder="Search">
+                            </div>
+                        </div>
+                        <script>
+                            $(document).ready(function () {
+                                Admin.Search.init();
+                            });
+                        </script>*@
+                    @await Html.PartialAsync("Menu")
+                </div>
+            </div>
+        }
+        <div class="content-wrapper">
+            @*@await Html.PartialAsync("Notifications")*@
+            <div>
+                <nop-antiforgery-token />
+                @RenderBody()
+            </div>
+        </div>
+        <div class="main-footer clearfix">
+            <div class="pull-right hidden-xs">
+            </div>
+            <div class="text-center">
+                @dateTimeHelperService.ConvertToUserTime(DateTime.Now).ToString("dddd, dd MMMM, yyyy")
+            </div>
+        </div>
+    </div>
+    <script>
+        var AdminLTEOptions = {
+            boxWidgetOptions: {
+                boxWidgetIcons: {
+                    collapse: 'fa-minus',
+                    open: 'fa-plus'
+                }
+            }
+        };
+    </script>
+    @{
+        //scroll to a selected panel (if specified)
+        var selectedPanelName = this.Html.GetSelectedPanelName();
+        if (!String.IsNullOrEmpty(selectedPanelName))
+        {
+            <script>
+                    location.hash = '#@(selectedPanelName)';
+            </script>
+        }
+    }
+    <a id="backTop" class="btn btn-back-top bg-teal"></a>
+    <script>
+        $(document).ready(function () {
+            //enable "back top" arrow
+            $('#backTop').backTop();
+
+            //enable tooltips
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
+</body>
+@Html.RenderResources("js")
+@Html.RenderResources("css")
+</html>

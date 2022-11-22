@@ -1,0 +1,461 @@
+﻿@model OrderModel
+
+<div class="panel-body">
+    <div class="form-group">
+        <div class="col-md-12" style="overflow-x: auto;">
+            @foreach (var item in Model.Items)
+            {
+                <script>
+                    $(document).ready(function () {
+                        toggleOrderItemEdit@(item.Id)(false);
+                    });
+                </script>
+
+                <script>
+                    function toggleOrderItemEdit@(item.Id)(editMode) {
+                        if (editMode) {
+                            $('#pnlEditPvUnitPrice@(item.Id)').show();
+                            $('#pnlEditPvQuantity@(item.Id)').show();
+                            $('#pnlEditPvDiscount@(item.Id)').show();
+                            $('#pnlEditPvPrice@(item.Id)').show();
+                            $('#btnEditOrderItem@(item.Id)').hide();
+                            $('#btnDeleteOrderItem@(item.Id)').hide();
+                            $('#btnSaveOrderItem@(item.Id)').show();
+                            $('#btnCancelOrderItem@(item.Id)').show();
+                        } else {
+                            $('#pnlEditPvUnitPrice@(item.Id)').hide();
+                            $('#pnlEditPvQuantity@(item.Id)').hide();
+                            $('#pnlEditPvDiscount@(item.Id)').hide();
+                            $('#pnlEditPvPrice@(item.Id)').hide();
+                            $('#btnEditOrderItem@(item.Id)').show();
+                            $('#btnDeleteOrderItem@(item.Id)').show();
+                            $('#btnSaveOrderItem@(item.Id)').hide();
+                            $('#btnCancelOrderItem@(item.Id)').hide();
+                        }
+                    }
+                </script>
+            }
+
+            <table class="table table-hover table-bordered">
+                <col />
+                <col />
+                @if (Model.HasDownloadableProducts)
+                {
+                    <col />
+                }
+                <col />
+                <col />
+                <col />
+                <col />
+                @if (!Model.IsLoggedInAsVendor)
+                {
+                    <col />
+                }
+                <thead>
+                    <tr>
+                        <th>
+                            Picture
+                        </th>
+                        <th>
+                            Product name
+                        </th>
+                        @if (Model.HasDownloadableProducts)
+                        {
+                            <th>
+                                Downloadable product
+                            </th>
+                        }
+                        <th>
+                            Price
+                        </th>
+                        <th>
+                            Quantity
+                        </th>
+                        @*<th>
+                                Discount
+                            </th>*@
+                        <th>
+                            Total
+                        </th>
+                        @if (!Model.IsLoggedInAsVendor)
+                        {
+                            <th>
+                                Edit
+                            </th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Items)
+                    {
+                        <tr>
+                            <td class="text-center">
+                                <img src="@item.PictureThumbnailUrl" alt="" title="" />
+                            </td>
+                            <td style="width: 15%;" class="text-left">
+                                <em><a asp-controller="Product" asp-action="Edit" asp-route-id="@item.ProductId">@item.ProductName</a></em>
+                                @if (!string.IsNullOrEmpty(item.AttributeInfo))
+                                {
+                                    <p>
+                                        @Html.Raw(item.AttributeInfo)
+                                    </p>
+                                }
+                                @if (!string.IsNullOrEmpty(item.RecurringInfo))
+                                {
+                                    <p>
+                                        @Html.Raw(item.RecurringInfo)
+                                    </p>
+                                }
+                                @if (!string.IsNullOrEmpty(item.RentalInfo))
+                                {
+                                    <p>
+                                        @Html.Raw(item.RentalInfo)
+                                    </p>
+                                }
+                                @if (!string.IsNullOrEmpty(item.Sku))
+                                {
+                                    <p>
+                                        <strong>SKU</strong><text>:</text>
+                                        @item.Sku
+                                    </p>
+                                }
+                                @if (!string.IsNullOrEmpty(item.VendorName))
+                                {
+                                    <p>
+                                        <strong>Vendor</strong><text>:</text>
+                                        @item.VendorName
+                                    </p>
+                                }
+                                @if (item.ReturnRequests.Count > 0)
+                                {
+                                    <p>
+                                        Return request(s)<text>:</text>
+                                        @for (var i = 0; i < item.ReturnRequests.Count; i++)
+                                        {
+                                            <a asp-controller="ReturnRequest" asp-action="Edit" asp-route-id="@item.ReturnRequests[i].Id">@item.ReturnRequests[i].CustomNumber</a>
+                                            if (i != item.ReturnRequests.Count - 1)
+                                            {
+                                                <text>,</text>
+                                            }
+                                        }
+                                    </p>
+                                }
+                            </td>
+                            <td style="width: 15%;" class="text-center">
+                                @if (Model.AllowCustomersToSelectTaxDisplayType)
+                                {
+                                    <div>@item.UnitPriceInclTax</div>
+                                    <div>@item.UnitPriceExclTax</div>
+                                }
+                                else
+                                {
+                                    switch (Model.TaxDisplayType)
+                                    {
+                                        case TaxDisplayType.ExcludingTax:
+                                            {
+                                                @item.UnitPriceExclTax
+                                            }
+                                            break;
+                                        case TaxDisplayType.IncludingTax:
+                                            {
+                                                @item.UnitPriceInclTax
+                                            }
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                }
+                                <div id="pnlEditPvUnitPrice@(item.Id)">
+                                    <div class="form-group">
+                                        <div class="col-md-5" style="display:none">
+                                            Incl tax:
+                                        </div>
+                                        <div class="col-md-7">
+                                            <input name="pvUnitPriceInclTax@(item.Id)" type="text" value="@item.UnitPriceInclTaxValue" id="pvUnitPriceInclTax@(item.Id)" class="form-control input-sm" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group" style="display:none">
+                                        <div class="col-md-5">
+                                            Excl tax:
+                                        </div>
+                                        <div class="col-md-7">
+                                            <input name="pvUnitPriceExclTax@(item.Id)" type="text" value="@item.UnitPriceExclTaxValue" id="pvUnitPriceExclTax@(item.Id)" class="form-control input-sm" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="width: 10%;" class="text-center">
+                                @if(item.StockQuantity < 0)
+                                {
+                                    <div style="color:red;" >@item.Quantity <br />This Product is short by @(item.StockQuantity * -1) units in stock.</div>
+                                }
+                                else
+                                {
+                                    <div>@item.Quantity</div>
+                                }
+                                <div id="pnlEditPvQuantity@(item.Id)">
+                                    <div class="form-group">
+                                        <div class="col-md-8 col-md-offset-2">
+                                            <input name="pvQuantity@(item.Id)" type="text" value="@item.Quantity" id="pvQuantity@(item.Id)" class="form-control input-sm" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            @*<td style="width: 15%;" class="text-center">
+                                    @if (Model.AllowCustomersToSelectTaxDisplayType)
+                                    {
+                                        <div>@item.DiscountInclTax</div>
+                                        <div>@item.DiscountExclTax</div>
+                                    }
+                                    else
+                                    {
+                                        switch (Model.TaxDisplayType)
+                                        {
+                                            case TaxDisplayType.ExcludingTax:
+                                                {
+                                                @item.DiscountExclTax
+                                            }
+                                                break;
+                                            case TaxDisplayType.IncludingTax:
+                                            {
+                                                @item.DiscountInclTax
+                                            }
+                                                break;
+                                            default:
+                                                break;
+                                        }
+                                    }
+                                    <div id="pnlEditPvDiscount@(item.Id)">
+                                        <div class="form-group">
+                                            <div class="col-md-5" style="display:none">
+                                                Incl tax:
+                                            </div>
+                                            <div class="col-md-7">
+                                                <input name="pvDiscountInclTax@(item.Id)" type="text" value="@item.DiscountInclTaxValue" id="pvDiscountInclTax@(item.Id)" class="form-control input-sm"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="display:none">
+                                            <div class="col-md-5">
+                                                Excl tax:
+                                            </div>
+                                            <div class="col-md-7">
+                                                <input name="pvDiscountExclTax@(item.Id)" type="text" value="@item.DiscountExclTaxValue" id="pvDiscountExclTax@(item.Id)" class="form-control input-sm"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>*@
+                            <td style="width: 15%;" class="text-center">
+                                @if (Model.AllowCustomersToSelectTaxDisplayType)
+                                {
+                                    <div>@item.SubTotalInclTax</div>
+                                    <div>@item.SubTotalExclTax</div>
+                                }
+                                else
+                                {
+                                    switch (Model.TaxDisplayType)
+                                    {
+                                        case TaxDisplayType.ExcludingTax:
+                                            {
+                                                @item.SubTotalExclTax
+                                            }
+                                            break;
+                                        case TaxDisplayType.IncludingTax:
+                                            {
+                                                @item.SubTotalInclTax
+                                            }
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                }
+                                <div id="pnlEditPvPrice@(item.Id)">
+                                    <div class="form-group">
+                                        <div class="col-md-5" style="display:none">
+                                            Incl tax:
+                                        </div>
+                                        <div class="col-md-7">
+                                            <input name="pvPriceInclTax@(item.Id)" type="text" value="@item.SubTotalInclTaxValue" id="pvPriceInclTax@(item.Id)" class="form-control input-sm" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group" style="display:none">
+                                        <div class="col-md-5">
+                                            Excl tax:
+                                        </div>
+                                        <div class="col-md-7">
+                                            <input name="pvPriceExclTax@(item.Id)" type="text" value="@item.SubTotalExclTaxValue" id="pvPriceExclTax@(item.Id)" class="form-control input-sm" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            @if (!Model.IsLoggedInAsVendor)
+                            {
+                                <td style="width: 15%;" class="text-center">
+                                    <button type="submit" class="btn btn-default" name="btnEditOrderItem@(item.Id)" onclick="toggleOrderItemEdit@(item.Id)(true);return false;" id="btnEditOrderItem@(item.Id)">
+                                        <i class="fa fa-pencil"></i>
+                                        Edit
+                                    </button>
+                                    @{
+                                        var itemStatus = item.Quantity - item.ShippedQuantity;
+                                    }
+                                    @if (itemStatus == item.Quantity)
+                                    {
+                                        <button type="button" class="btn btn-default" data-toggle="modal" data-target="#confirmModal-@(item.Id)">
+                                            <i class="fa fa-trash"></i>
+                                            Delete
+                                        </button>
+                                    }
+                                    <button type="submit" class="btn btn-default" name="btnSaveOrderItem@(item.Id)" id="btnSaveOrderItem@(item.Id)" style="display: none;">
+                                        <i class="fa fa-floppy-o"></i>
+                                        Save
+                                    </button>
+                                    <nop-action-confirmation asp-button-id="@("btnSaveOrderItem" + item.Id)" />
+
+                                    <button type="submit" class="btn btn-default" name="btnCancelOrderItem@(item.Id)" onclick="toggleOrderItemEdit@(item.Id)(false);return false;" id="btnCancelOrderItem@(item.Id)" style="display: none;">
+                                        <i class="fa fa-close"></i>
+                                        Cancel
+                                    </button>
+                                </td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    @if (!string.IsNullOrEmpty(Model.CheckoutAttributeInfo) && !Model.IsLoggedInAsVendor)
+    {
+        <div class="form-group">
+            <div class="col-md-12">
+                @Html.Raw(Model.CheckoutAttributeInfo)
+            </div>
+        </div>
+    }
+    @if (!Model.IsLoggedInAsVendor)
+    {
+        <div class="form-group">
+            <div class="col-md-12">
+                <button type="button" data-toggle="modal" data-target="#exampleModal" id="btnAddNewProduct" name="btnAddNewProduct" class="btn btn-primary">
+                    Add product
+                </button>
+            </div>
+        </div>
+    }
+</div>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #0068A3; color:white;">
+                <h3 class="modal-title" id="exampleModalLabel">Add Product</h3>
+            </div>
+            <div>
+                <div class="modal-body">
+
+                    <div class="form-group" style="margin:5px;">
+                        <label>Sku#</label>
+                        <input type="text" name="sku" placeholder="Enter Product Sku" class="form-control" id="sku">
+                        <label>QYT#</label>
+                        <input type="number" name="quantity" placeholder="Enter Product Quantity" class="form-control" id="qyt">
+                        <input type="hidden" name="orderId" value="@Model.Id" />
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button"  class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" id="addProductToCart" onclick="addProductToOrder()" class="btn btn-primary">
+                        Add Product To Cart
+                    </button>
+                    <button class="btn btn-primary" id="loadingButton" style="display:none;" type="button" disabled>
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Loading...
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@foreach (var item in Model.Items)
+{
+<div class="modal fade" id="confirmModal-@(item.Id)">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Are you sure?</h4>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to perform this action?
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="deleteConfirm_@(item.Id)" onclick="DeleteOrderItem(@(item.Id))" class="btn btn-primary pull-right">
+                    Yes
+                </button>
+                <button class="btn btn-primary pull-right" id="loadingButtonDel_@(item.Id)" style="display:none;" type="button" disabled>
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    Loading...
+                </button>
+                <span class="btn btn-default pull-right margin-r-5" data-dismiss="modal">No, cancel</span>
+            </div>
+        </div>
+    </div>
+</div>
+}
+<script type="text/javascript">
+        function addProductToOrder(e) {
+                $('#addProductToCart').hide();
+                $('#loadingButton').removeAttr('style');
+        addProductAjax();
+    }
+    function addProductAjax() {
+         $.ajax({
+                url: '/Admin/Order/AddProductToOrder',
+                data: {
+                    orderId: @Model.Id,
+                    Sku: $('#sku').val(),
+                    Qyt: $('#qyt').val()
+                },
+                async: true,
+                cache: false,
+                success: function (res) {
+                    if (res.success) {
+                        alert('Product added successfully.');
+                        window.location.reload();
+                    }
+                    else {
+                        alert('Something Went Wrong! with your request.');
+                        window.location.reload();
+                    }
+                },
+                error: function (err) {
+                    alert('Something Went Wrong! with your request.');
+                    window.location.reload();
+                }
+            });
+    }
+    function DeleteOrderItem(itemId) {
+        $(`#deleteConfirm_${itemId}`).hide();
+        $(`#loadingButtonDel_${itemId}`).removeAttr('style');
+        $.ajax({
+            url: '/Admin/Order/DeleteProductToOrder',
+            data: {
+                orderId: @Model.Id,
+                itemId: itemId
+            },
+            async: true,
+            cache: false,
+            success: function (res) {
+                if (res) {
+                    alert('Product deleted successfully.');
+                    window.location.reload();
+                }
+                else {
+                    alert('Something Went Wrong! with your request.');
+                    window.location.reload();
+                }
+            },
+            error: function (err) {
+                alert('Something Went Wrong! with your request.');
+                window.location.reload();
+            }
+        });
+    }
+</script>

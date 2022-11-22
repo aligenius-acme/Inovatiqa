@@ -1,0 +1,72 @@
+﻿@*<nav class="top-menu">
+    <div class="headerlinks">
+        @await Component.InvokeAsync("HeaderLinks")
+    </div>
+</nav>
+<div class="header">
+    <div class="row">
+        <div class="col-sm-5 col-md-5" style="margin-bottom:20px">
+            <div class="header-logo">
+                <a href="@Url.RouteUrl("Homepage")">
+                    <img style=" width: 270px; height: 99px;margin-top: -40px;" title="" alt="inovatiqa" src="\Themes\CoreTheme\Content\images\InovatiqaLogo1.png">
+                </a>
+            </div>
+        </div>
+        <div class="col-sm-7 col-md-7">
+            <div class="header-selectors-wrapper">
+                <div class="search-box store-search-box pull-right">
+                    @await Component.InvokeAsync("SearchBox")
+                </div>
+                <div class="header-selectors">
+                    <div class="taxtype-selector">
+                    </div>
+                    <div class="currency-selector">
+                    </div>
+                    <div class="language-selector">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+*@
+
+
+<header class="container-fluid">
+        <div class="row pre_header">
+            <div class="container">
+                <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
+                   @await Component.InvokeAsync("HeaderLinks")
+                </div>
+            </div>
+        </div>
+        <div class="row p_t_20">
+            <nav class="navbar navbar-default">
+                <div class="container">
+                    <div class="row flex_col  ">
+                        <div class="col-md-3 col-xs-12">
+                            <div class="navbar-header">
+                                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                                    <span class="sr-only">Toggle navigation</span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                                @*<a class="navbar-brand" href="@Url.RouteUrl("Homepage")"><img src="\images\UIComponents\new-logo.svg" /></a>*@
+                                <a class="navbar-brand" href="@Url.RouteUrl("Homepage")"><img src="\images\UIComponents\new-logo.svg" /></a>
+                            </div>
+                        </div>
+                        <div class="col-md-5  col-xs-12">
+                            @await Component.InvokeAsync("SearchBox")
+                        </div>
+                        <div class="col-md-4  col-xs-12">
+                            <div class="phone_number_box">
+                                <h3>(346) 229-4142</h3>
+                                <p>* Call us at any time between 8 AM and 5 PM CST*</p>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- /.container-fluid -->
+            </nav>
+        </div>
+ </header>

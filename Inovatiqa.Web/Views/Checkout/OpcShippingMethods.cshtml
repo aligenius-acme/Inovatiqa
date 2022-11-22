@@ -1,0 +1,89 @@
+﻿@model CheckoutShippingMethodModel
+@{
+    Context.Items["inovatiqa.IgnoreScriptTagLocation"] = true;
+}
+@*
+    <div class="checkout-data">
+        @if (Model.PickupPointsModel == null || !Model.PickupPointsModel.PickupInStoreOnly)
+        {
+        <div class="section shipping-method" id="shipping-methods-form">
+            @if (Model.Warnings.Count == 0)
+            {
+                <ul class="method-list">
+                    @for (var i = 0; i < Model.ShippingMethods.Count; i++)
+                    {
+                        var shippingMethod = Model.ShippingMethods[i];
+                        <li>
+                            <div class="method-name">
+                                <label class="radio" style="display:block" for="shippingoption_@(i)">
+                                    <input id="shippingoption_@(i)" type="radio" name="shippingoption" value="@(shippingMethod.Name)___@(shippingMethod.ShippingRateComputationMethodSystemName)" checked="@shippingMethod.Selected" />
+                                    @shippingMethod.Name (@shippingMethod.Fee)
+
+                                </label>
+                                @if (!string.IsNullOrEmpty(shippingMethod.Description))
+                                {
+                                    <div class="method-description">
+                                        @Html.Raw(shippingMethod.Description)
+                                    </div>
+                                }
+                            </div>
+                        </li>
+                    }
+                </ul>
+            }
+        </div>
+        }
+    </div>
+*@
+<div class="steps_box step_2 m_t_50">
+    @if (Model.PickupPointsModel == null || !Model.PickupPointsModel.PickupInStoreOnly)
+    {
+        @if (Model.Warnings.Count == 0)
+        {
+            <div class="row flex_col align_center">
+                <div class="col-md-8">
+                    <h2>Shipping method</h2>
+                    <p>Please enter your Shipping method</p>
+                </div>
+                <div class="col-md-4 text-right">
+                    <p>Step 2 of 5</p>
+                </div>
+            </div>
+            @if (Model.NotifyCustomerAboutShippingFromMultipleLocations)
+            {
+                <div class="alert alert-info" role="alert" style="margin-top: 15px;">
+                    Please note that your order will be shipped from multiple locations.
+                </div>
+            }
+
+            <div class="row flex_col m_t_20">
+                @for (var i = 0; i < Model.ShippingMethods.Count; i++)
+                {
+                    var shippingMethod = Model.ShippingMethods[i];
+                        <div class="col-md-12 col-xs-12">
+                            <div class="shipping_list">
+                                <div class="radio_column">
+                                    <input id="shippingoption_@(i)" type="radio" name="shippingoption" value="@(shippingMethod.Name)___@(shippingMethod.ShippingRateComputationMethodSystemName)" @*checked="@shippingMethod.Selected"*@ onchange="ShippingMethod.save()" shippingFee="@shippingMethod.Fee"/>
+                                    @shippingMethod.Name
+                                </div>
+                                <div class="pricing_column">
+                                    <span>@shippingMethod.Fee USD</span>
+                                    Additional price
+                                </div>
+                                <div class="ic_column"><img src="~/images/UIComponents/footer-ic2.png" class="pay_ic"></div>
+                            </div>
+                        </div>
+                 }
+            </div>
+        }
+        else
+        {
+            @foreach (var warning in Model.Warnings)
+            {
+                <div class="alert alert-danger" role="alert">
+                    @warning
+                </div>
+            }
+        }
+    }
+</div>

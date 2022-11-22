@@ -1,0 +1,159 @@
+﻿
+@{
+    Layout = "_ColumnsOne";
+    ViewBag.Title = "Payment Options";
+}
+@*
+    <style>
+        .table td, table th, table tbody tr td {
+            padding: 10px 20px;
+            font-size: 13px;
+        }
+    </style>
+    <div class="page  from-panel">
+        <div class="page-title panel-heading">
+            <h1>Payment Options</h1>
+        </div>
+        <div style="margin:10px">
+            <div class="">
+
+
+                <h4>
+                    Inovatiqa Corporation can accept payments for orders via any of the following methods:
+                </h4>
+                <ul>
+                    <li>Major Credit Cards</li>
+                    <li>Check</li>
+                    <li>Wire Transfer or ACH Payment</li>
+                    <li>Purchase Orders/Terms to qualifying organizations</li>
+                </ul>
+                <br>
+
+
+                <p>
+                    For further details on each method, please read below.
+                </p>
+                <br>
+
+                <h4 style="font-weight:bold">  Payment by Credit Card:</h4>
+                <p>Inovatiqa accepts Visa/MasterCard, American Express, and Discover. Credit Cards will be charged in full at the time of purchase.</p>
+                <br>
+
+
+                <h4 style="font-weight:bold"> Payment by check:</h4>
+                <p>If you prefer to prepay by check rather than major credit card, simply add items to your shopping cart, print out the completed page which displays the items for purchase, and mail it to our address below with your check or money order payable to:<b> "Inovatiqa Corporation" </b>. Also you can call us at 346-229-4142.Please be sure to include contact information with your payment.</p>
+                <br>
+
+
+
+                <h4 style="font-weight:bold"> Payment by Wire Transfer or ACH:</h4>
+                <p>If you prefer to prepay by wire transfer or ACH, please call our sales team at 1-346-229-4142 to place an order.  The representative will provide you with an order reference number, as well as wire or ACH transfer instructions (also available below).</p>
+                <br>
+
+
+                <h4 style="font-weight:bold"> Purchase Orders & Net Terms:</h4>
+                <p>Inovatiqa Inc accepts purchase orders and net terms accounts to qualifying businesses, government and educational institutions and organizations.</p>
+                <p>Please email or fax your Purchase Order along with your Company's standard credit application to 346-229-4142.</p>
+                <p>If you don't have a credit application to send with your purchase order, please request one at our help center customerservice@inovatiqa.com All Corporate/Government/Municipal & Education purchase orders/payments should be emailed, addressed or faxed to:</p>
+                <br>
+
+
+                <h4 style="font-weight:bold"> Inovatiqa Corporation </h4>
+                <p>12815 Capricorn St,</p>
+                <p>Stafford, TX 77477</p>
+                <p><b>Email:</b> Customerserivce@inovatiqa.com</p>
+                <br>
+                <br>
+
+            </div>
+        </div>
+    </div>
+*@
+
+
+<style>
+    .become-customer-box {
+        box-shadow: none !important;
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+
+    .newcustomer-area {
+        padding: 0px !important;
+        background: #FFF !important;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        font-weight: 500 !important;
+    }
+
+    .segment-line {
+        border: 0.1px solid #DADADA !important;
+    }
+
+    .small-heading {
+        font-weight: 500 !important;
+    }
+    .heading {
+        font-family: Lato;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 20px;
+        line-height: 24px;
+        color: #000000;
+    }
+    .price-match-helper-text {
+        font-size: 17px !important;
+    }
+    .muted{
+        color: #636363 !important;
+        font-size: 17px !important;
+    }
+</style>
+<section class="container-fluid newcustomer-area">
+    <div class="container-fluid" style="background: #F1F3F6; padding: 10px; font-size: 18px;">
+        <div class="container breadcrumb-bar">
+            <span class="washed"><a style="color: #A9A9A9;" href="@Url.RouteUrl("Homepage")">Inovatiqa</a> / </span> Payment Options
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="container">
+            <div class="row mt10">
+                <div class="col-md-12">
+                    <div class="become-customer-box" style="padding-top: 10px;">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="font_lato">
+                                    <div class="customer-select">
+                                        <h4 class="heading-price-match">Payment Options</h4>
+                                        <hr class="segment-line">
+                                        <h4 class="heading">Credit Card Payment</h4>
+                                        <p class="price-match-helper-text ">We accept the following credit cards: MasterCard, Visa, American Express, and Discover. We do not accept Diners Club. We do not allow multiple credit card payments for web orders. Credit card authorization for the order total occurs at the time the order is placed. Credit Cards will be charged in full at the time of purchase.</p>
+                                        <h4 class="heading mt42">Purchase Order</h4>
+                                        <p class="price-match-helper-text ">Inovatiqa Corporation offers net term 30 purchase orders to public medical hospitals and businesses. Please allow 2 to 5 days for your terms account application to be processed.</p>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <p class="price-match-helper-text mb0 mt25" style="color: #000">Fax Number <span class="muted">281-220-1350</span></p>
+                                    <p class="price-match-helper-text mb0 mt25" style="color: #000">Email <a href="mailto:customerservice@inovatiqa.com" class="blue">customerservice@inovatiqa.com</a></p>
+                                    <p class="price-match-helper-text mb10 mt25" style="color: #000">Mailing Address <span class="muted">12815 Capricorn St, Stafford, TX, 77477</span></p>
+                                    <hr class="segment-line" style="margin-top: 35px !important;" />
+                                    <p><a href="~/files/forms/Credit Application_Form.pdf" class="price-match-helper-text" style="color: #46760A;"><img src="~/images/UIComponents/pdf.png" style="transform: translateY(-3px);" /> Public Sector Accounts</a></p>
+                                    <p><a href="~/files/forms/Medical_Credit_App_Medical.pdf" class="price-match-helper-text" style="color: #46760A;"><img src="~/images/UIComponents/pdf.png" style="transform: translateY(-3px);" /> For Medical Facilities (Hospitals, Nursing Homes)</a></p>
+                                    <p><a href="~/files/forms/Prescription Drug Authorization Form.pdf" class="price-match-helper-text" style="color: #46760A;"><img src="~/images/UIComponents/pdf.png" style="transform: translateY(-3px);" /> W9</a></p>
+                                    <hr class="segment-line" style="margin-top: 35px !important;" />
+                                    <h4 class="heading">Contact Us</h4>
+                                    <p class="muted">If you have any questions, visit our <a href="@Url.RouteUrl("ContactUs")">Contact Us</a> page</p>
+                                    <p class="muted mt19">To expedite your order, contact our customer service department at <a class="blue" href="mailto:customerservice@inovatiqa.com">customerservice@inovatiqa.com</a>. Extra charges may apply.</p>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid" style="background: #F1F3F6; padding: 20px;"></div>
+</section>

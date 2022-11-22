@@ -1,0 +1,656 @@
+﻿@model Inovatiqa.Web.Models.Common.EmailModel
+@{
+    Layout = "_ColumnsOne";
+    ViewBag.Title = "Group Purchasing Organization";
+}
+
+@*
+<style>
+    body, button, input, select, table, textarea {
+        font-family: MuseoSans,Verdana,Arial,sans-serif;
+        color: #212121;
+        font-size: 14px;
+        line-height: 1.5;
+    }
+
+        .table td, table th, table tbody tr td {
+            padding: 10px 20px;
+            font-size: 13px;
+        }
+
+    th {
+        background-color: #142c43;
+        color: white;
+    }
+</style>
+<div class="page  from-panel " style="height:2700px !important">
+    <div class="page-title panel-heading">
+        <h1>GPO Purchasing</h1>
+    </div>
+    <div style="margin:10px">
+        <div class="">
+
+            <div class="gpo_content">
+                <p>Inovatiqa corporation is pleased to introduce an opportunity for our customers to take advantage of GPO (Group Purchasing Organization) pricing through NuEdge Alliance. LLC.</p>
+                <p>NuEdge was created specifically for our customers who serve the healthcare market. NuEdge empowers a national network of independent distributors to provide supply savings and contracts applicable to your practice without annual fees or annual commitments.</p>
+                <p>We are excited to tell you more about this opportunity, so you can take advantage of these savings.</p>
+                <h2 id="no_risks_head">NO RISK &amp; ALL REWARD</h2>
+                <p>We work with well-known brands manufacturing and have the relationship to negotiate the best price for your organization. You benefit by having access to over 2,000 different contacts and the best pricing due to our alliance with one of the largest GPOs in healthcare</p>
+                <p>Membership is available at no charge with no going fees. Our group purchasing enrollment process is simple and can be completed quickly. NuEdge authorized distributors offer:</p>
+                <ul class="block_lists">
+                    <li>Medical supplies</li>
+                    <li>Surgical supplies</li>
+                    <li>Pharmaceuticals</li>
+                    <li>Inventory Management</li>
+                    <li>Office Supplies &amp; Cellular Services</li>
+                    <li>Products &amp; Equipment</li>
+                    <li>Office Set-Up</li>
+                    <li>Employee Discounts</li>
+                </ul>
+
+
+                <table class="data-table stacked">
+                    <thead>
+                        <tr><th>Part #</th><th>Product Name</th><th>Regular Price</th><th>GPO Price</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr class="even">
+                            <td data-header="Part #">CLSDTG-PLUS25&nbsp; &nbsp; &nbsp; &nbsp;</td>
+                            <td data-header="Product Name"><span>Clarity Diagnostic HCG Urine Test Cassettes, Box of 25</span></td>
+                            <td data-header="Regular Price">$24.56</td>
+                            <td data-header="GPO Price">$13.86</td>
+                        </tr>
+                        <tr class="even">
+                            <td data-header="Part #">MTRX13-110</td>
+                            <td data-header="Product Name"><span>Metrex Caviwipes 6" x 6.75", 160 Per Canister</span></td>
+                            <td data-header="Regular Price">$104.48</td>
+                            <td data-header="GPO Price">$75.00<br><br></td>
+                        </tr>
+                        <tr class="even">
+                            <td data-header="Part #">MTRX13-5100&nbsp; &nbsp;</td>
+                            <td data-header="Product Name"><span>Metrex Caviwipes 6" x 6 3/4", 160 Per Canister&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span></td>
+                            <td data-header="Regular Price">$124.39</td>
+                            <td data-header="GPO Price">$78.00</td>
+                        </tr>
+                        <tr class="even">
+                            <td data-header="Part #">MTRX13-1150</td>
+                            <td data-header="Product Name"><span>Metrex Caviwipes 9" x 12", 65 Per Canister</span></td>
+                            <td data-header="Regular Price">$139.00</td>
+                            <td data-header="GPO Price">$89.00</td>
+                        </tr>
+                        <tr class="even">
+                            <td data-header="Part #">MHCU670900</td>
+                            <td data-header="Product Name"><span>Molnlycke Health Care Absorbent Island Dressing, 3.6" x 4"&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span></td>
+                            <td data-header="Regular Price">$166.32</td>
+                            <td data-header="GPO Price">$124.00</td>
+                        </tr>
+                        <tr class="even">
+                            <td data-header="Part #">MHCU295400</td>
+                            <td data-header="Product Name"><span>Molnlycke Health Care Self- Adherent Absorbent Foam Dressing, Border 6" x 6"</span></td>
+                            <td data-header="Regular Price">$51.59</td>
+                            <td data-header="GPO Price">$40.74</td>
+                        </tr>
+                        <tr class="even">
+                            <td data-header="Part #">MHCU295300</td>
+                            <td data-header="Product Name"><span>Molnlycke Health Care Self- Adherent Absorbent Foam Dressing, Border 4" x 4"</span></td>
+                            <td data-header="Regular Price">$304.15</td>
+                            <td data-header="GPO Price">$240.28</td>
+                        </tr>
+                        <tr class="even">
+                            <td data-header="Part #">MHCU287100</td>
+                            <td data-header="Product Name"><span>Molnlycke Health Care Safetac Soft Silicone Wound Contact Layer Waterproof, 4" x 4"&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span></td>
+                            <td data-header="Regular Price">$70.46</td>
+                            <td data-header="GPO Price">$59.00</td>
+                        </tr>
+                        <tr class="even">
+                            <td data-header="Part #">VNTVPM102</td>
+                            <td data-header="Product Name"><span>Ventyv Polymed Exam Gloves, Small</span></td>
+                            <td data-header="Regular Price">$62.99</td>
+                            <td data-header="GPO Price">$60.00</td>
+                        </tr>
+                        <tr class="even">
+                            <td data-header="Part #">VNTVPM103</td>
+                            <td data-header="Product Name"><span>&nbsp;Ventyv Polymed Exam Gloves, Medium</span></td>
+                            <td data-header="Regular Price">$62.99</td>
+                            <td data-header="GPO Price">$60.00</td>
+                        </tr>
+                        <tr class="even">
+                            <td data-header="Part #">SMNS2161</td>
+                            <td data-header="Product Name"><span>Seimens Diagnostics Multistix 10SG Reagent Strips&nbsp;</span></td>
+                            <td data-header="Regular Price">$56.90</td>
+                            <td data-header="GPO Price">$40.00</td>
+                        </tr>
+                        <tr class="even">
+                            <td data-header="Part #">SMNS2083</td>
+                            <td data-header="Product Name"><span><span>Seimens Diagnostics Clinitek Microalbumin 2 Reagent Strips&nbsp;</span></span></td>
+                            <td data-header="Regular Price">$132.32</td>
+                            <td data-header="GPO Price">$95.00</td>
+                        </tr>
+                        <tr class="even">
+                            <td data-header="Part #">SMNS2184</td>
+                            <td data-header="Product Name"><span><span>Seimens Diagnostics Uristix Reagent Strips&nbsp;</span></span></td>
+                            <td data-header="Regular Price">$29.97</td>
+                            <td data-header="GPO Price">$21.00</td>
+                        </tr>
+                        <tr class="even">
+                            <td data-header="Part #">SMNS5035C</td>
+                            <td data-header="Product Name"><span><span><span>Seimens Diagnostics DCA2000 HbA1C Reagent Kit</span></span></span></td>
+                            <td data-header="Regular Price">$400.40</td>
+                            <td data-header="GPO Price">$332.64</td>
+                        </tr>
+                        <tr class="even">
+                            <td data-header="Part #">SEKD147</td>
+                            <td data-header="Product Name"><span><span><span>Sekisui Diagnostics OSOM Ultra Strep A Test, 25 Test&nbsp;</span></span></span></td>
+                            <td data-header="Regular Price">$68.05</td>
+                            <td data-header="GPO Price">$51.00</td>
+                        </tr>
+                        <tr class="even">
+                            <td data-header="Part #">SEKD141</td>
+                            <td data-header="Product Name"><span><span><span>Sekisui Diagnostics OSOM Strep A Test, 50 Test + 2 Test QC Kit</span></span></span></td>
+                            <td data-header="Regular Price">$103.29</td>
+                            <td data-header="GPO Price">$78.50</td>
+                        </tr>
+                        <tr class="even">
+                            <td data-header="Part #">SEKD1006</td>
+                            <td data-header="Product Name"><span><span><span>Sekisui Diagnostics OSOM A &amp; B Test&nbsp;</span></span></span></td>
+                            <td data-header="Regular Price">$297.22</td>
+                            <td data-header="GPO Price">$230.00</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+
+
+
+                <h2 id="contact_heading">Contact Us</h2>
+
+                <div class="col-lg-12">
+
+                    <form action="/FooterSendEmails" method="post">
+
+
+
+                        <input type="text" hidden name="EmailSubject" value="GPO Purchasing" asp-for="EmailSubject" />
+
+                        <div class="form-group col-lg-12">
+                            <label asp-for="CustomerFirstName"></label>
+                            <input type="text" name="CustomerFirstName" data-val="true" autocomplete="off" data-val-required="The First Name field is required." asp-for="CustomerFirstName" class="form-control input-sm" placeholder="First Name" />
+                            <span asp-validation-for="CustomerFirstName" style="min-width: 100%;" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group col-lg-12">
+                            <label asp-for="Title"></label>
+                            <input type="text" name="Title" data-val="true" autocomplete="off" data-val-required="The Title field is required." asp-for="Title" class="form-control input-sm" placeholder="Title" />
+                            <span asp-validation-for="Title" style="min-width: 100%;" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group col-lg-12">
+                            <label>Company / Facility Name</label>
+                            <input type="text" name="Company" data-val="true" autocomplete="off" data-val-required="The Facility Name field is required." asp-for="Company" class="form-control input-sm" placeholder="Facility Name" />
+                            <span asp-validation-for="Company" style="min-width: 100%;" class="text-danger"></span>
+                        </div>
+
+
+                        <div class="form-group col-lg-12">
+                            <label asp-for="CustomerEmail"></label>
+                            <input type="email" name="CustomerEmail" data-val="true" autocomplete="off" data-val-required="The Email field is required." asp-for="CustomerEmail" class="form-control input-sm" placeholder="Email Address" />
+                            <span asp-validation-for="PhoneNumber" style="min-width: 100%;" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group col-lg-12">
+                            <label asp-for="PhoneNumber"></label>
+                            <input type="text" name="PhoneNumber" data-val="true" autocomplete="off" data-val-required="The Phone Number field is required." asp-for="PhoneNumber" class="form-control input-sm" placeholder="PhoneNumber" />
+                            <span asp-validation-for="PhoneNumber" style="min-width: 100%;" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group col-lg-12">
+                            <label asp-for="Fax"></label>
+                            <input type="text" name="Fax" data-val="true" autocomplete="off" data-val-required="The Fax field is required." asp-for="Fax" class="form-control input-sm" placeholder="Fax" />
+                            <span asp-validation-for="Fax" style="min-width: 100%;" class="text-danger"></span>
+                        </div>
+
+
+                        <div class="form-group col-lg-12">
+                            <label asp-for="Address1"></label>
+                            <input type="text" name="Address1" data-val="true" autocomplete="off" data-val-required="The Address field is required." asp-for="Address1" class="form-control input-sm" placeholder="Address" />
+                            <span asp-validation-for="Address1" style="min-width: 100%;" class="text-danger"></span>
+                        </div>
+
+
+                        <div class="form-group col-lg-12">
+                            <label asp-for="City"></label>
+                            <input type="text" name="City" data-val="true" autocomplete="off" data-val-required="The City field is required." asp-for="City" class="form-control input-sm" placeholder="City" />
+                            <span asp-validation-for="City" style="min-width: 100%;" class="text-danger"></span>
+                        </div>
+
+
+                        <div class="form-group col-lg-12">
+                            <label asp-for="State"></label>
+                            <input type="text" name="State" data-val="true" autocomplete="off" data-val-required="The State field is required." asp-for="State" class="form-control input-sm" placeholder="State" />
+                            <span asp-validation-for="State" style="min-width: 100%;" class="text-danger"></span>
+                        </div>
+
+
+                        <div class="form-group col-lg-12">
+                            <label asp-for="ZipCode"></label>
+                            <input type="text" name="ZipCode" data-val="true" autocomplete="off" data-val-required="The Zip Code field is required." asp-for="ZipCode" class="form-control input-sm" placeholder="State" />
+                            <span asp-validation-for="ZipCode" style="min-width: 100%;" class="text-danger"></span>
+                        </div>
+
+
+
+
+
+
+                        <div class="form-group col-lg-12">
+                            <label asp-for="FacilityGPOId"></label>
+                            <input type="text" name="FacilityGPOId" data-val="true" autocomplete="off" data-val-required="The Facility GPO Id is required." asp-for="FacilityGPOId" class="form-control input-sm" placeholder="Facility GPO Id" />
+                            <span asp-validation-for="FacilityGPOId" style="min-width: 100%;" class="text-danger"></span>
+                        </div>
+
+
+                        <div class="form-group col-lg-12">
+                            <label asp-for="FederalTaxID"></label>
+                            <input type="number" name="FederalTaxID" data-val="true" autocomplete="off" data-val-required="The Federal Tax ID field is required." asp-for="FederalTaxID" class="form-control input-sm" placeholder="Federal Tax ID" />
+                            <span asp-validation-for="FederalTaxID" style="min-width: 100%;" class="text-danger"></span>
+                        </div>
+
+
+                        <div class="form-group col-lg-12">
+                            <label asp-for="GPOYourFacilityCanAccess"></label>
+                            <input type="text" name="GPOYourFacilityCanAccess" data-val="true" autocomplete="off" data-val-required="The GPO Your Facility Can Access field is required." asp-for="GPOYourFacilityCanAccess" class="form-control input-sm" placeholder="GPO Your Facility Can Access" />
+                            <span asp-validation-for="GPOYourFacilityCanAccess" style="min-width: 100%;" class="text-danger"></span>
+                        </div>
+
+                        @*<nop-editor asp-for="SendEmail.Body" asp-template="RichEditor" />@
+
+
+
+                        <div class="form-group">
+                            <label> Products Interested</label>
+                            <textarea type="text" name="ProductsInterested" data-val="true" autocomplete="off" data-val-required="The Products Interested field is required." asp-for="ProductsInterested" class="form-control input-sm" style="height:125px" placeholder="Type a message"></textarea>
+
+                            <span asp-validation-for="ProductsInterested" style="min-width: 100%;" class="text-danger"></span>
+                        </div>
+
+
+
+
+                        <div class="form-group">
+                            <label> Comments</label>
+                            <textarea type="text" name="AdditionalInformation" data-val="true" autocomplete="off" data-val-required="The Additional Information field is required." asp-for="AdditionalInformation" class="form-control input-sm" style="height:125px" placeholder="Type a message"></textarea>
+
+                            <span asp-validation-for="AdditionalInformation" style="min-width: 100%;" class="text-danger"></span>
+                        </div>
+
+
+
+                        <div class="form-group  col-lg-12" style="margin-top:20px">
+                            <button type="submit" class="btn btn-primary  col-lg-2" style="text-align:center;"> Submit Form  </button>
+                        </div>
+
+                    </form>
+                </div>
+
+
+
+
+
+
+
+            </div>
+            <br>
+            <br>
+            <br>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+    *@
+
+<style>
+    .become-customer-box {
+        box-shadow: none !important;
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+    .newcustomer-area{
+        padding: 0px !important;
+        background: #FFF !important;
+    }
+    /*h1, h2, h3, h4, h5, h6{
+        font-weight: 500 !important;
+    }*/
+    .segment-line{
+        border: 0.1px solid #DADADA !important;
+    }
+    .price-match-helper-text{
+        font-size: 17px !important;
+    }
+    .GPO-larger-text{
+        font-size: 18px;
+    }
+    .unmuted-list li::before{
+        position: relative;
+        top: -3px;
+    }
+    .heading-price-match{
+        font-size: 21px !important;
+    }
+    .unmuted-list li{
+        font-size: 17px !important;
+    }
+    input[type=button], input[type=submit], input[type=submit]:hover, input[type=button]:hover{
+        font-family: Roboto !important;
+        border: none !important;
+        color: #FFF;
+    }
+    .GPO-larger-text{
+        font-size: 19px !important;
+    }
+    .content {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 1s ease-out;
+    }
+</style>
+<script>
+    function Callback(token) {
+        if (token != undefined) {
+            $('#CaptchaCode').val(token);
+        }
+        else {
+            $('#CaptchaCode').val('');
+        }
+    }
+</script>
+<section class="container-fluid newcustomer-area">
+    <div class="container-fluid" style="background: #F1F3F6; padding: 10px;">
+        <div class="container breadcrumb-bar">
+            <span class="muted"><a style="color: #A9A9A9;" href="@Url.RouteUrl("Homepage")">Inovatiqa</a> / </span> Group Purchasing Organization
+        </div>
+    </div>
+    <div class="row">
+        <div class="container">
+            <div class="row mt10">
+                <div class="col-md-12">
+                    <div class="become-customer-box"  style="padding-top: 0px;">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="font_lato">
+                                    <div class="customer-select">
+                                        <h4 class="heading-price-match mt25">Group Purchasing Organization</h4>
+                                        <hr class="segment-line">
+                                        <div class="col-md-12" style="display: flex; flex-direction: column; padding: 0px;">
+                                            <div class="col-md-12" style="padding: 0px;">
+                                                <div style="display: flex; justify-content: space-between;">
+                                                    <div>
+                                                        <p class="price-match-helper-text mb0">Inovatiqa Corporation is pleased to introduce an opportunity for our customers to take advantage of GPO (Group Purchasing Organization) pricing through NuEdge Alliance, LLC. </p>
+                                                        <p class="mt10 price-match-helper-text">NuEdge was created specifically for our customers who serve the non-acute healthcare market. NuEdge empowers a national network of independent distributors to provide supply savings and contracts applicable to your practice without annual fees or annual commitments. NuEdge authorized distributors offer: </p>
+                                                    </div>
+                                                    <div class="col-md-7">
+                                                        <img src="~/images/UIComponents/GPO_image1.png" width="618">
+                                                    </div>
+
+                                                </div>
+                                                <div>
+
+                                                </div>
+                                                <ul class="unmuted-list mt63">
+                                                    <li class="mt16">Medical Supplies</li>
+                                                    <li class="mt16">Surgical Supplies</li>
+                                                    <li class="mt16">Pharmaceuticals</li>
+                                                    <li class="mt16">Inventory Management</li>
+                                                    <li class="mt16">Office Supplies & Cellular Service</li>
+                                                    <li class="mt16">Products & Equipment</li>
+                                                    <li class="mt16">Office Set-Up</li>
+                                                    <li class="mt16">Employee Discounts</li>
+                                                </ul>
+
+                                            </div>
+                                            <div style="display: flex; justify-content: space-between;" class="mt74">
+
+                                                <div>
+                                                    <p class="mt10 GPO-larger-text">We work with well-known brand manufacturers and have the relationships to negotiate the best price for your organization. You benefit by having access to over 2,000 different contracts and best pricing due to our alliance with one of the largest GPOs in healthcare. </p>
+                                                </div>
+                                                <div style="transform: translateY(-20%);">
+                                                    <img src="~/images/UIComponents/GPO_image2.png" height="166" width="474">
+                                                </div>
+                                            </div>
+                                            <p class="price-match-helper-text">Membership is available at no charge with no on-going fees. Our group purchasing enrollment process is simple and can be completed quickly. We are excited to tell you more about this opportunity so you can take advantage of these savings! </p>
+                                            <div class="form-group" style="display: flex; justify-content: space-around;">
+                                                <input type="button" value="Click Here to Enroll Now" id="expand" class="btn btn-signin mt130 collapsible">
+                                            </div>
+
+                                            <div class="accountform-area font_lato mt118" style="display: block;" >
+                                                <div class="content" id="@(TempData["message"] != null && TempData["message"].ToString() != "" ? "expanded" : "")">
+                                                    <div class="form-title">
+                                                        <h5 style="margin-bottom: 0px; margin-top: 0px; font-weight: 600;">Contact Us</h5>
+                                                    </div>
+                                                    @if (TempData["message"] != null && TempData["message"].ToString() != "")
+                                                    {
+                                                        <div class="col-md-12" style="padding: 0">
+                                                            <div class="alert alert-success col-md-6" role="alert" style="width: 51%">
+                                                                @TempData["message"]
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                    <form class="createaccount-form unchecked-hidefrom_a mt25" action="/FooterSendEmails" method="post" id="GPOForm">
+                                                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                                        <input type="text" hidden name="EmailSubject" value="GPO Purchasing" asp-for="EmailSubject" />
+                                                        <input type="text" name="Method" value="@Url.RouteUrl("GPOPurchasing")" hidden asp-for="Method" />
+                                                        <div class="row flex_col align_center">
+                                                            <div class="col-md-6 col-sm-12 col-xs-12">
+                                                                <div class="form-group flex-row mb0">
+                                                                    <div style="width: 50%;">
+
+                                                                        <label class="small-small-label required">Name</label>
+                                                                        <input type="text" class="form-control" id="customerName" name="CustomerFirstName" data-val="true" autocomplete="off" data-val-required="First & Last Name required." asp-for="CustomerFirstName" />
+                                                                        <span class="error-label" asp-validation-for="CustomerFirstName"></span>
+                                                                    </div>
+                                                                    <div style="width: 50%;">
+                                                                        <label class="small-small-label ml29 required">Title</label>
+                                                                        <input type="text" class="form-control ml29" name="Title" data-val="true" autocomplete="off" data-val-required="Title is required." asp-for="Title" />
+                                                                        <span asp-validation-for="Title" class="error-label ml29"></span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group flex-row mb0">
+                                                                    <div style="width: 50%;">
+                                                                        <label class="small-small-label required">Facility Name</label>
+                                                                        <input type="text" class="form-control" name="Company" data-val="true" autocomplete="off" data-val-required="Facility Name is required." asp-for="Company" />
+                                                                        <span asp-validation-for="Company" class=" error-label"></span>
+                                                                    </div>
+                                                                    <div style="width: 50%;">
+                                                                        <label class="small-small-label ml29 required">Email</label>
+                                                                        <input type="email" class="form-control ml29" name="CustomerEmail" data-val="true" autocomplete="off" data-val-required="Email is required." asp-for="CustomerEmail" />
+                                                                        <span asp-validation-for="CustomerEmail" class="ml29 error-label"></span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group flex-row mb0">
+                                                                    <div style="width: 50%;">
+                                                                        <label class="small-small-label required">Phone Number</label>
+                                                                        <input type="tel" id="phoneNumber" class="form-control" name="PhoneNumber" data-val="true" autocomplete="off" data-val-required="Phone Number is required." asp-for="PhoneNumber" />
+                                                                        <span class="error-label" id="PhoneNumberVal" asp-validation-for="PhoneNumber"></span>
+                                                                    </div>
+                                                                    <div style="width: 50%;">
+                                                                        <label class="small-small-label ml29 required">Fax</label>
+                                                                        <input type="tel" class="form-control ml29" name="Fax" data-val="true" autocomplete="off" data-val-required="Fax is required." asp-for="Fax" />
+                                                                        <span class="ml29 error-label" asp-validation-for="Fax"></span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group flex-row mb0">
+                                                                    <div style="width: 50%;">
+                                                                        <label class="small-small-label required">Address</label>
+                                                                        <input type="text" class="form-control" name="Address1" data-val="true" autocomplete="off" data-val-required="Address is required." asp-for="Address1" />
+                                                                        <span class="error-label" asp-validation-for="Address1"></span>
+                                                                    </div>
+                                                                    <div style="width: 50%;">
+                                                                        <label class="small-small-label ml29 required">City</label>
+                                                                        <input type="text" class="form-control ml29" name="City" data-val="true" autocomplete="off" data-val-required="City is required." asp-for="City" />
+                                                                        <span class="error-label ml29" asp-validation-for="City"></span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group flex-row mb0">
+                                                                    <div style="width: 50%;">
+                                                                        <label class="small-small-label required">State</label>
+                                                                        <input type="text" class="form-control" name="State" data-val="true" autocomplete="off" data-val-required="State is required." asp-for="State" />
+                                                                        <span class="error-label" asp-validation-for="State"></span>
+                                                                    </div>
+                                                                    <div style="width: 50%;">
+                                                                        <label class="small-small-label ml29 required">Postal Code</label>
+                                                                        <input type="text" maxlength="15" class="form-control ml29" name="ZipCode" data-val="true" autocomplete="off" data-val-required="ZIP Code is required." asp-for="ZipCode" />
+                                                                        <span class="ml29 error-label" asp-validation-for="ZipCode"></span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group flex-row mb0">
+                                                                    <div style="width: 50%;">
+                                                                        <label class="small-small-label required">Facility Group Purchasing Organization ID</label>
+                                                                        <div>
+                                                                            <input type="text" class="form-control" name="FacilityGPOId" data-val="true" autocomplete="off" data-val-required="Facility GPO ID is required." asp-for="FacilityGPOId" id="GPOID" />
+                                                                            <span class="error-label" asp-validation-for="FacilityGPOId"></span>
+                                                                        </div>
+                                                                        <label class="small-small-label required">Federal Tax ID</label>
+                                                                        <input type="text" class="form-control" name="FederalTaxID" data-val="true" autocomplete="off" data-val-required="Federal Tax ID is required." asp-for="FederalTaxID" />
+                                                                        <span class="error-label" asp-validation-for="FederalTaxID"></span>
+                                                                    </div>
+                                                                    <div style="width: 50%; padding-left: 16px;" class="checkbox ml29 mt0 mb0">
+                                                                        <label>GPO Your Facility Can Access</label>
+                                                                        <label class="mt7 small-small-label"><input type="checkbox">Amerinet</label>
+                                                                        <label class="mt17 small-small-label"><input type="checkbox">Medassets</label>
+                                                                        <label class="mt17 small-small-label"><input type="checkbox">Novation</label>
+                                                                        <label class="mt17 small-small-label"><input type="checkbox">Premier</label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group mb0 mt30">
+                                                                    <label for="" class="small-small-label required">Products Interested</label>
+
+                                                                </div>
+                                                                <div class="form-group flex-row mb0">
+                                                                    <textarea cols="30" rows="10" class="form-control custom-textarea" name="ProductsInterested" data-val="true" autocomplete="off" data-val-required="Products Intrested is required." asp-for="ProductsInterested" id="IntrestedProducts"></textarea>
+
+                                                                </div>
+                                                                <span class="error-label" asp-validation-for="ProductsInterested"></span>
+                                                                <div class="form-group mb0 mt30">
+                                                                    <label for="" class="small-small-label required">Additional Information</label>
+                                                                </div>
+                                                                <div class="form-group flex-row mb0">
+                                                                    <textarea cols="30" rows="10" class="form-control custom-textarea " name="AdditionalInformation" data-val="true" autocomplete="off" data-val-required="Additional Information is required." asp-for="AdditionalInformation"></textarea>
+                                                                </div>
+                                                                <span class="error-label" asp-validation-for="AdditionalInformation"></span>
+                                                                <div class="g-recaptcha mt25" data-expired-callback="Callback" data-callback="Callback" data-sitekey="6Le-btMdAAAAANaOQRxaopfuaf_xu5vhw1mrETdq"></div>
+                                                                <div style="width: 50%;">
+                                                                <input type="hidden" class="form-control ml29" id="CaptchaCode" name="CaptchaCode" data-val="true" autocomplete="off" data-val-required="Captcha is required." asp-for="CaptchaCode" />
+                                                                <span class="error-label" asp-validation-for="CaptchaCode"></span>
+                                                                </div>
+                                                                
+                                                                <input type="hidden" value="Something" name="GPOYourFacilityCanAccess" data-val="true" autocomplete="off" data-val-required="The GPO Your Facility Can Access field is required." asp-for="GPOYourFacilityCanAccess" class="form-control input-sm" placeholder="GPO Your Facility Can Access" />
+                                                                <span class="error-label" asp-validation-for="GPOYourFacilityCanAccess"></span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group col-md-6" style="display: flex; justify-content: flex-end;">
+                                                            @*<input type="button" value="Submit" class="btn btn-signin mt57" style="width: 14%;" onclick="SubmitForm()">
+                                                            <input type="submit" hidden id="submit" />*@
+                                                            <input type="submit" value="Submit" class="btn btn-signin" style="width: 14%;" />
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div class="col-md-12 mt85">
+                                                    <h5 class="mini-heading">Employee Benefits</h5>
+                                                    <p class="price-match-helper-text">NuEdge utilizes a national network of independently owned medical distributors, providing your practice with a high level of service and attention you need, and deserve! NuEdge also offers non-product programs and services for your office and personnel. </p>
+                                                    <div class="flex-row mt53">
+                                                        <div>
+                                                            <img src="~/images/UIComponents/fedex_large.png" height="157" width="204">
+                                                        </div>
+                                                        <div class="form-group ml10">
+                                                            <h5 class="mini-heading">FedEx Parcel Freight</h5>
+                                                            <p class="price-match-helper-text mt16">Enjoy the benefits of FedEx shipping available to all NuEdge Distributors. Easy Shipment Scheduling: Simply choose the right service for your shipment, and get the peace of mind that comes with the FedEx Money-Back Guarantee.* For delivery to every residential address in the U.S., FedEx Home Delivery® offers service upgrades, such as delivery in the evening, on a specific day or by appointment.</p>
+                                                            <input type="button" class="form-control custom-file-input mt36" value="View Details" style="width: 11%;">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="flex-row mt102">
+                                                        <div>
+                                                            <img src="~/images/UIComponents/west_buy.png" class="ml29">
+                                                        </div>
+                                                        <div class="form-group ml10" style="margin-left: 40px;">
+                                                            <h5 class="mini-heading">Best Buy for Business</h5>
+                                                            <p class="price-match-helper-text mt16">Best Buy can offer your company competitively priced contracts on the products and services you use most. We’ll work with you to create comprehensive proposals and contracts customized to your needs.</p>
+                                                            <input type="button" class="form-control custom-file-input mt36" value="View Details" style="width: 11%;">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="flex-row mt102">
+                                                        <div>
+                                                            <img class="ty50 ml30" src="~/images/UIComponents/ATNT.png" alt="">
+                                                        </div>
+                                                        <div class="form-group ml10" style="margin-left: 40px;">
+                                                            <h5 class="mini-heading">AT&T Wireless</h5>
+                                                            <p class="price-match-helper-text mt16">You can save 24% on monthly service charges for qualified plans as an employee through NuEdge. The AT&T and Vizient Employee program provides valuable benefits for member organizations and their employees. New and existing AT&T customers may take advantage of our nationally negotiated pricing with Vizient and recognize significant savings on their monthly service charges.</p>
+                                                            <input type="button" class="form-control custom-file-input mt36" value="View Details" style="width: 11%;">
+                                                        </div>
+                                                    </div>
+                                                    <p class="price-match-helper-text mt57">Ancillary Partners include the following: FedEx, Best Buy, AT&T Wireless, Insight, H&R Block, Sherwin Williams, Working Advantage, Office Depot, Office Max, Allied Van Lines, Orkin, and United Healthcare</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+         <div class="container-fluid" style="background: #F1F3F6; padding: 20px;"></div> 
+</section>
+
+<script>
+    $(document).ready(function () {
+        $.validator.setDefaults({
+            ignore: ""
+        });
+
+        // show collapsible by default if message is present
+        var myContent = document.getElementById("expanded");
+
+        if (myContent != undefined) {
+            myContent.style.maxHeight = myContent.scrollHeight + 200 + "px";
+        }
+
+
+       
+        $('#expand').click(function () {
+            document.getElementsByClassName("collapsible");
+            var content = document.getElementsByClassName("content");
+            if (content[0].style.maxHeight) {
+                content[0].style.maxHeight = null;
+            } else {
+                content[0].style.maxHeight = content[0].scrollHeight + 200 + "px";
+            }
+        });
+    });
+
+
+
+    function SubmitForm(e) {
+        if ($('#IntrestedProducts').val() == '') {
+            $('#IntrestedProducts').addClass('GPO-invalid-field').removeClass('custom-textarea');
+        }
+        else if ($('#GPOID').val() == '') {
+            $('#GPOID').removeClass('mb30');
+        }
+        else if (grecaptcha.getResponse() == '') {
+            $('#humanError').show();
+        }
+        else {
+            $('#humanError').hide();
+            $('#submit').click();
+        }
+    }
+</script>

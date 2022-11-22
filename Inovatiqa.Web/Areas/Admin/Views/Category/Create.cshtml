@@ -1,0 +1,28 @@
+@model CategoryModel
+@{
+    //page title
+    ViewBag.PageTitle = "Add a new category";
+}
+
+<form asp-controller="Category" asp-action="Create" method="post" id="category-form">
+    <div class="content-header clearfix">
+        <h1 class="pull-left">
+            Add a new category
+            <small>
+                <i class="fa fa-arrow-circle-left"></i>
+                <a asp-action="List">back to category list</a>
+            </small>
+        </h1>
+        <div class="pull-right">
+            <button type="submit" name="save" class="btn bg-blue">
+                <i class="fa fa-floppy-o"></i>
+                Save
+            </button>
+            <button type="submit" name="save-continue" class="btn bg-blue">
+                <i class="fa fa-floppy-o"></i>
+                Save and Continue Edit
+            </button>
+        </div>
+    </div>
+    @await Html.PartialAsync("_CreateOrUpdate", Model)
+</form>

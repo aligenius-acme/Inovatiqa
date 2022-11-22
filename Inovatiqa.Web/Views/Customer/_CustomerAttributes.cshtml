@@ -1,0 +1,105 @@
+﻿@model IList<CustomerAttributeModel>
+@using Inovatiqa.Core
+@using Inovatiqa.Services.Customers
+@{
+    var counter = 0;
+    var startIndex = (int)this.ViewData["startIndex"];
+    var endIndex = (int)this.ViewData["endIndex"];
+}
+@foreach (var attribute in Model)
+{
+    if (counter >= startIndex && counter <= endIndex)
+    {
+        var controlId = $"{InovatiqaDefaults.CustomerAttributePrefix}{attribute.Id}";
+        var textPrompt = attribute.Name;
+
+        <div class="inputs custom-attributes">
+            <div class="form-group row">
+                <label class="control-label col-sm-3 col-md-4 col-xs-12">@textPrompt:</label>
+                <div class="col-sm-6 col-md-4 col-xs-12">
+                    @switch (attribute.AttributeControlTypeId)
+                    {
+                        case (int)AttributeControlType.DropdownList:
+                            {
+                                <select name="@(controlId)" id="@(controlId)" class="form-control">
+                                    @if (!attribute.IsRequired)
+                                    {
+                                        <option value="0">Select one -- </option>
+                                    }
+                                    @foreach (var attributeValue in attribute.Values)
+                                    {
+                                        <option selected="@attributeValue.IsPreSelected" value="@attributeValue.Id">@attributeValue.Name</option>
+                                    }
+                                </select>
+                            }
+                            break;
+                        case (int)AttributeControlType.RadioList:
+                            {
+                                <ul class="option-list">
+                                    @foreach (var attributeValue in attribute.Values)
+                                    {
+                                        <li>
+                                            <input id="@(controlId)_@(attributeValue.Id)" type="radio" name="@(controlId)" value="@attributeValue.Id" checked="@attributeValue.IsPreSelected" />
+                                            <label for="@(controlId)_@(attributeValue.Id)">@attributeValue.Name</label>
+                                        </li>
+                                    }
+                                </ul>
+                            }
+                            break;
+                        case (int)AttributeControlType.Checkboxes:
+                        case (int)AttributeControlType.ReadonlyCheckboxes:
+                            {
+                                <ul class="option-list">
+                                    @foreach (var attributeValue in attribute.Values)
+                                    {
+                                        <li>
+                                            <input id="@(controlId)_@(attributeValue.Id)" type="checkbox" name="@(controlId)" value="@attributeValue.Id" checked="@attributeValue.IsPreSelected" @(attribute.AttributeControlTypeId == (int)AttributeControlType.ReadonlyCheckboxes ? Html.Raw(" disabled=\"disabled\"") : null) />
+                                            <label for="@(controlId)_@(attributeValue.Id)">@attributeValue.Name</label>
+                                        </li>
+                                    }
+                                </ul>
+                            }
+                            break;
+                        case (int)AttributeControlType.TextBox:
+                            {
+                                if (attribute.IsRequired)
+                                {
+                                    <input name="@(controlId)" type="text" class="form-control textbox" data-val="true" data-val-required="@(attribute.Name) is required" id="@(controlId)" @(!String.IsNullOrWhiteSpace(attribute.DefaultValue) ? " value=" + attribute.DefaultValue : null) />
+                                }
+                                else
+                                {
+                                    <input name="@(controlId)" type="text" class="form-control textbox" id="@(controlId)" @(!String.IsNullOrWhiteSpace(attribute.DefaultValue) ? " value=" + attribute.DefaultValue : null) />
+                                }
+                            }
+                            break;
+                        case (int)AttributeControlType.MultilineTextbox:
+                            {
+                                <textarea class="form-control" id="@(controlId)" name="@(controlId)">@(attribute.DefaultValue)</textarea>
+                            }
+                            break;
+                        case (int)AttributeControlType.Datepicker:
+                        case (int)AttributeControlType.FileUpload:
+                            {
+                                <input type="file" name="@(controlId)"  id="@(controlId)" />
+                            }
+                            break;
+                        case (int)AttributeControlType.ColorSquares:
+                        case (int)AttributeControlType.ImageSquares:
+                            {
+                                //not support attribute type
+                            }
+                            break;
+                    }
+                </div>
+                <div class="col-sm-3 col-md-4 col-xs-12">
+                    @if (attribute.IsRequired)
+                    {
+                        <nop-required />
+                        <span class="field-validation-valid"  data-valmsg-for="@controlId" data-valmsg-replace="true"></span>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+    counter = counter + 1;
+}

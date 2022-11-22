@@ -1,0 +1,35 @@
+﻿@model NewProductsModel
+@{
+    Layout = "_ColumnsTwo";
+}
+@{
+    ViewBag.Title = "New Products";
+}
+<div class="page recently-added-products-page from-panel">
+    <div class="page-title panel-heading">
+        <a href="@Url.RouteUrl("NewProductsRSS")" class="link-rss pull-right" title="Click here to be informed automatically when we add new items to our site."><i class="fa fa-rss-square pointer">@*@T("Products.NewProducts.RSS")*@</i></a>
+        <h1>New Products</h1>
+    </div>
+    <div class="page-body">
+        @if (Model.Products.Count > 0)
+        {
+            foreach (var product in Model.Products)
+            {
+                <div class="item-box product-grid col-xs-12 col-sm-4 col-md-4 product-align clearfix">
+                    <div class="thumbnail">
+                        @await Html.PartialAsync("_ProductBox", product)
+                    </div>
+                </div>
+            }
+        }
+        <div class="pager clearfix">
+            @{
+                var pager = Html.Pager(Model.PagingFilteringContext, Context.Request).QueryParam("pagenumber");
+            }
+            @if (!pager.IsEmpty())
+            {
+                @pager
+            }
+        </div>
+    </div>
+</div>

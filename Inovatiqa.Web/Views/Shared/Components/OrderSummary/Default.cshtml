@@ -1,0 +1,430 @@
+﻿@model ShoppingCartModel
+@using Inovatiqa.Core.Interfaces
+@using Inovatiqa.Core;
+@inject IWebHelper webHelper
+@*<style>
+
+
+        .order-summary-content .product-essential .tab-content .product-specs-box {
+            margin-top: 10px;
+        }
+
+        .order-summary-content .product-essential .tab-content .product-tags {
+            margin-top: 10px;
+        }
+
+        .totals {
+            text-align: right;
+            color: #888;
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+    </style>
+
+
+    <div class="order-summary-content">
+        @await Html.PartialAsync("_OrderReviewData", Model.OrderReviewData)
+        @if (@Model.Warnings.Count > 0)
+        {
+        <div class="message-error">
+            <ul>
+                @foreach (var warning in Model.Warnings)
+                    {
+                <li>@warning</li>
+                    }
+            </ul>
+        </div>
+        }
+        <div hidden style="margin-left: 5%; margin-right: 5%;" class="alert alert-success" id="message" role="alert">
+            Approval Request Has been submitted.
+        </div>
+    <div class="totals">
+        <div class="col-sm-6 col-md-6">
+        </div>
+        <div class="col-sm-offset-6 col-md-offset-6 col-sm-6 col-md-6">
+            <span class="product-price order-total"><strong>@Model.Items.Count items totals @await Component.InvokeAsync("OrderTotals", new { isEditable = Model.IsEditable })</strong></span>
+        </div>
+    </div>
+        <div class="col-md-12 product-details-tabs" id="tabbed-description">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#description" data-toggle="tab">All Items (@Model.Items.Count)</a></li>
+                <li><a href="@Url.RouteUrl("ReorderGuide")">Reorder Guide</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="full-description fade tab-pane in active" id="description" style="font-family:Helvetica Neue,Helvetica,Arial,sans-serif;">
+                    <form asp-route="Product" method="post" id="Quick-product-details-form">
+                        <div style="float:left;">
+                            <table>
+                                <tr>
+                                    <td><label style="padding: 10px;float:left;">#</label></td>
+                                    <td>@await Component.InvokeAsync("SearchBoxCart")</td>
+                                    <td><label style="padding: 10px;float:left;">Qty</label></td>
+                                    <td>
+                                        <div class="form-group" style="display:inline-flex">
+                                            <input type="hidden" name="selectItem" id="selectItem" value="" />
+                                            <input name="@(string.Format("{0}{1}", "addtocart_Id", ".EnteredQuantity"))" id="product_enteredQuantity_Id" style="margin: 0px;width: 60px;" class="qty-input form-control" type="text" maxlength="4" />
+                                            <input id="actionAddItem" style="margin-left: 5px;float: left;" type="button" onclick="return AjaxCart.postItemToQuickCart(@((int)ShoppingCartType.ShoppingCart));" value="Add Item" class="btn btn-default btn_green">
+                                            <input class="checkbox" type="checkbox" id="quick_addprod" name="quick_addprod" style="float:left;margin:10px" title="QuickADD" value="Quick Add" />
+                                            <label for="quick_addprod" style="margin:7px;margin-left:-5px;">Quick Add</label>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </form>
+                    <form asp-route="ShoppingCart" method="post" enctype="multipart/form-data" id="shopping-cart-form">
+                        <div>
+                            <div style="float: right;width: 40%;">
+                                <div class="buttons">
+                                    <div class="common-buttons">
+                                        <div style="display:none;" class="update-cart"><input type="submit" id="updateSingleItemCart" name="updatecart" value="DELETE" class="btn btn-default btn-primary update-cart-button" /></div>
+                                        <div class="update-cart" style="float:left"><input type="submit" name="updatecart" onclick="return AjaxCart.MarkDeleteAll();" value="DELETE" class="btn btn-default btn-primary update-cart-button" /></div>
+                                        <div class="suspend-shopping-cart" style="float:left;margin-right:10px"><input type="submit" name="suspendshoppingcart" value="SUSPEND" class="btn btn-default btn-primary" id="suspend-shopping-cart-button" onclick="AjaxCart.opensuspendshoppingcartmodal('@Url.RouteUrl("SuspendShoppingCart")', '#shopping-cart-table');return false;" /></div>
+                                        @if (Model.CanCustomerPurchase)
+                                        {
+                                        <div><input type="submit" id="checkout" name="checkout" value="PURCHASE" class="btn btn-default btn_green" /></div>
+                                        }
+                                        else
+                                        {
+                                        <div><input type="button" onclick="requestApproval()" id="checkout" name="checkout" value="Request Approval" class="btn btn-default btn_green" /></div>
+                                        }
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <table class="cart table table-bordered table-wrapper" id="shopping-cart-table">
+                                <thead>
+                                    <tr class="cart-header-row">
+                                        <th class="remove-from-cart" style="display:none;">
+                                        </th>
+                                        <th class="remove-from-cart">
+                                            Item #
+                                        </th>
+                                        <th class="product">
+                                            Description
+                                        </th>
+                                        <th class="picture product-picture">
+                                            Manufacturer
+                                        </th>
+                                        <th class="sku">
+                                            Mfr #
+                                        </th>
+                                        <th class="vendor">
+                                            UOM
+                                        </th>
+                                        <th class="unit-price">
+                                            Price
+                                        </th>
+                                        <th class="quantity">
+                                            Qty
+                                        </th>
+                                        <th class="end subtotal">
+                                            Total
+                                        </th>
+                                        <th class="end subtotal">
+                                            Delete/Edit
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model.Items.Count > 0)
+                                    {
+                                    @foreach (var item in Model.Items)
+                                        {
+                                    <tr class="cart-item-row" id="@(item.Id)">
+                                        <td style="display:none;">
+                                            <span class="visible-xs hidden-lg hidden-md hidden-sm td-title" for="removefromcart@(item.Id)">Remove</span>
+                                            <input type="checkbox" name="removefromcart" id="removefromcart@(item.Id)" value="@(item.Id)" aria-label="Remove" />
+                                        </td>
+                                        <td>@item.Sku</td>
+                                        <td class="product"><a href="@Url.RouteUrl("Product", new {SeName = item.ProductSeName})" class="product-name">@item.ProductName</a></td>
+                                        <td>@item.ProductManufacturers.FirstOrDefault().Name</td>
+                                        <td>@item.ManufacturerPartNumber.Replace("Mfr#", "")</td>
+                                        <td>@item.UOM</td>
+                                        <td>@item.UnitPrice</td>
+                                        <td>@item.Quantity</td>
+                                        <td>@item.SubTotal</td>
+                                        <td>
+                                            <i class="fa fa-trash fa-lg pointer pointer" onclick="AjaxCart.markDeleteSingle(); return false;"></i>
+                                            <i class="fa fa-edit fa-lg pointer pointer" onclick="AjaxCart.editSingleEntry(@item.ProductId); return false;"></i>
+                                        </td>
+                                    </tr>
+                                        }
+                                    }
+                                    else
+                                    {
+                                    <tr>
+                                        <td colspan="10">
+                                            <div class="no-data">
+                                                There are no items in your cart
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        @Html.Resource(@<script type="text/javascript">
+                            $(document).ready(function () {
+                                $('#shopping-cart-table').DataTable();
+                                $("#quick_addprod").change(function () {
+                                    if (this.checked) {
+                                        if ($('#product_enteredQuantity_Id').val() == '')
+                                            document.getElementById("product_enteredQuantity_Id").value = 1;
+                                    }
+                                    else {
+                                        if ($('#product_enteredQuantity_Id').val() == '')
+                                        document.getElementById("product_enteredQuantity_Id").value = "";
+                                    }
+                                });
+                            });
+            function requestApproval() {
+                $.ajax({
+                    url: 'order/RequestApproval',
+                    type: 'POST',
+                    async: false,
+                    cache: false,
+                    data: {},
+                    success: function (res) {
+                                if (res) {
+                                    alert('Approval Request Has been Sent.');
+                                    document.location.reload();
+                                }
+                                else {
+                                    alert('You Must add At least One Item in Cart');
+                                }
+                            },
+                    error: function (err) {
+                                console.log(err);
+                            }
+                });
+            }
+        </script>, "js")
+        @Html.AntiForgeryToken()
+
+    </div>
+    @await Html.PartialAsync("_SuspendedCartBox")
+*@
+
+<style>
+    .jqueryPagination{
+        display: @(Model.Items.Count > 0 ? "flex" : "none");
+        justify-content: space-between;
+        margin: 8px 12px;
+    }
+    .paging_numbers span a {
+        margin-right: 5px;
+        cursor: pointer;
+        color: #636363;
+    }
+    .paging_numbers span .current{
+        color: #000;
+    }
+    .jqueryPagination p {
+        font-family: Lato;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 13.5px;
+        letter-spacing: 0.05em;
+        color: #636363;
+        margin-bottom:unset;
+    }
+
+</style>
+<section>
+    <div class="order-content" style="margin-bottom: 5vh;">
+        <div class="add-cart-btn text-right">
+            <p>@Model.Items.Count Items Total @await Component.InvokeAsync("OrderTotals", new { isEditable = Model.IsEditable })</p>
+        </div>
+    </div>
+    <div class="tabs font_lato">
+        <hr>
+    </div>
+
+    <form asp-route="ShoppingCart" method="post" enctype="multipart/form-data" id="shopping-cart-form">
+        <div class="order-find-area" style="height: 35px;">
+            <div id="Quick-product-details-form">
+                <div class="find-fields font_lato">
+                    <div>
+                        <div class="form-group">
+                            <label>#</label>
+                            @await Component.InvokeAsync("SearchBoxCart")
+                            <div class="form-group" style="display:inline-flex; margin-left: 0px;">
+                                <label>Qty</label>
+                                <input type="hidden" name="selectItem" id="selectItem" value="" />
+                                <input name="@(string.Format("{0}{1}", "addtocart_Id", ".EnteredQuantity"))" id="product_enteredQuantity_Id" class="qty-input form-control col-md-1" type="text" maxlength="4" style="width: 20%;" />
+                                <input id="actionAddItem" type="button" onclick="return AjaxCart.postItemToQuickCart(@((int)ShoppingCartType.ShoppingCart));" value="Add Item" class="btn recent-btn" style="background-color: #6A983C;">
+                                <div class="sorder-staus">
+                                    <div class="sorder-staus">
+                                        <div class="sorder-infotable">
+                                            <div class="custom-checkbox" style="margin-top: 0px;">
+                                                <input class="checkbox" type="checkbox" id="quick_addprod" name="quick_addprod" title="QuickADD" value="Quick Add" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <label for="quick_addprod" style="white-space: nowrap; margin-right: 75px;">Quick Add</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="date-fileds font_lato">
+                <div class="form-group">
+                    @* <select name="" id="sort" class="form-control" style="width: fit-content;">
+                            <option value="">Something</option>
+                            <option value="">Something</option>
+                            <option value="">Something</option>
+                            <option value="">Something</option>
+                        </select> NO NEED CURRENTLY  *@
+                    <div style="display:none;" class="update-cart"><input type="submit" id="updateSingleItemCart" name="updatecart" value="DELETE" class="btn btn-default btn-primary update-cart-button" /></div>
+                    <input type="button" value="Delete" style="background-color: #0068A3; color: #FFF;" class="form-control" onclick="return AjaxCart.MarkDeleteAll();">
+                    <input type="submit" value="Suspend" name="suspendshoppingcart" id="suspend-shopping-cart-button" onclick="AjaxCart.opensuspendshoppingcartmodal('@Url.RouteUrl("SuspendShoppingCart")', '#shopping-cart-table');return false;" style="background-color: #0068A3; color: #FFF;" class="form-control">
+                    @if (Model.CanCustomerPurchase)
+                    {
+                        @*<input type="submit" id="checkout" name="checkout" value="PURCHASE" class="btn btn-default btn_green" />*@
+                        <input type="submit" value="Purchase" id="checkout" name="checkout" style="background-color: #C4C4C4; color: #FFF;" class="form-control">
+                    }
+                    else
+                    {
+                        <input type="button" onclick="requestApproval()" value="Request Approval" id="checkout" name="checkout" style="background-color: #C4C4C4; color: #FFF;" class="form-control">
+                    }
+                </div>
+            </div>
+            <div class="print-fileds font_lato">
+                @*<div class="form-group">
+                        <select class="form-control" style="width: fit-content;">
+                            <option>More Options</option>
+                            <option>Option</option>
+                            <option>Option</option>
+                        </select>
+                    </div>*@
+
+                <div class="print-button font_roboto">
+                    <a href="#" class="btn btn-print"><img src="~/images/UIComponents/print-btn-img.svg">Print</a>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="items-table-area  sorder-infotable  sinvoicet  table-responsive font_roboto">
+
+            <table class="table border-collapse mb0 display" id="shopping-cart-table">
+                <thead>
+                    <tr>
+                        <th style="display: none;">Checkbox</th>
+                        <th class="invoicet-blue">Item Number</th>
+                        <th class="invoicet-blue">Description</th>
+                        <th class="invoicet-blue">Manufacturer / #</th>
+                        <th>UOM</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                        <th>Delete / Edit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Items.Count > 0)
+                    {
+                        foreach (var item in Model.Items)
+                        {
+                            <tr id="@(item.Id)">
+
+                                <td style="display:none;">
+                                    <span class="visible-xs hidden-lg hidden-md hidden-sm td-title" for="removefromcart@(item.Id)">Remove</span>
+                                    <input type="checkbox" name="removefromcart" id="removefromcart@(item.Id)" value="@(item.Id)" aria-label="Remove" />
+                                </td>
+
+                                <td>
+                                    <a href="@Url.RouteUrl("Product", new { SeName = item.ProductSeName })" style="color:unset;"><p>@item.Sku</p></a>
+                                </td>
+                                <td style="width: 30%;">
+                                    <a href="@Url.RouteUrl("Product", new { SeName = item.ProductSeName })"><p class="invoicet-blue">@item.ProductName</p></a>
+                                    <p style="color: #6A983C;">In stock, ships from your local warehouse</p>
+                                </td>
+                                <td style="width: 15%;">
+                                    <p>@item.ProductManufacturers.FirstOrDefault().Name / @item.ManufacturerPartNumber</p>
+                                </td>
+                                <td>
+                                    <p>@item.UOM</p>
+                                </td>
+                                <td>
+                                    <p>@item.UnitPrice</p>
+                                </td>
+                                <td>
+                                    <p>@item.Quantity</p>
+                                </td>
+                                <td>
+                                    <p>@item.SubTotal</p>
+                                </td>
+                                <td>
+                                    @{
+                                        var unitprice = Convert.ToDecimal(@item.UnitPrice.Replace("$", ""));
+                                    }
+                                    <span style="display: flex; justify-content: space-evenly">
+                                        
+                                        <a href="#" onclick="AjaxCart.markDeleteSingle(); return false;" style="cursor: pointer;"><img src="images/UIComponents/Layer_minas.svg" alt=""></a>
+                                        <a style="margin-left: 10px; color: #0068A3; cursor: pointer;" onclick="AjaxCart.editSingleEntry(@item.Id, @unitprice, 1, true); return false;">Edit</a>
+                                    </span>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td>
+                                <div class="no-data">
+                                    There are no items in your cart
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+        @Html.AntiForgeryToken()
+    </form>
+</section>
+@*<script src="~/Scripts/jquery.dataTables.min.js" defer>*@
+@Html.Resource(@<script type="text/javascript">
+    function updatePrice(val){
+        alert(val);
+    }
+                function requestApproval() {
+                    $.ajax({
+                        url: 'order/RequestApproval',
+                        type: 'POST',
+                        async: false,
+                        cache: false,
+                        data: {},
+                        success: function (res) {
+                            if (res) {
+                                alert('Approval Request Has been Sent.');
+                                document.location.reload();
+                            }
+                            else {
+                                alert('You Must add At least One Item in Cart');
+                            }
+                        },
+                        error: function (err) {
+                            console.log(err);
+                        }
+                    });
+                }
+    </script>, "js")
+
+
+@await Html.PartialAsync("_SuspendedCartBox")
+
+
+

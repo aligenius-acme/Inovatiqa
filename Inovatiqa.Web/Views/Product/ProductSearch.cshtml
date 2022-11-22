@@ -1,0 +1,660 @@
+﻿@model ProductSearchModel
+@{
+    Layout = "~/Views/Shared/_Root.cshtml";
+    ViewBag.Title = "Search Results";
+}
+
+
+@{
+    //current category ID
+    var currentCategoryId = 0;
+    if (Url.ActionContext.RouteData.Values["controller"].ToString().Equals("catalog", StringComparison.InvariantCultureIgnoreCase) &&
+    Url.ActionContext.RouteData.Values["action"].ToString().Equals("category", StringComparison.InvariantCultureIgnoreCase))
+    {
+        currentCategoryId = Convert.ToInt32(Url.ActionContext.RouteData.Values["categoryId"].ToString());
+    }
+
+
+    //current manufacturer ID
+    var currentManufacturerId = 0;
+    if (Url.ActionContext.RouteData.Values["controller"].ToString().Equals("catalog", StringComparison.InvariantCultureIgnoreCase) &&
+    Url.ActionContext.RouteData.Values["action"].ToString().Equals("manufacturer", StringComparison.InvariantCultureIgnoreCase))
+    {
+        currentManufacturerId = Convert.ToInt32(Url.ActionContext.RouteData.Values["manufacturerId"].ToString());
+    }
+
+
+    //current product ID
+    var currentProductId = 0;
+    if (Url.ActionContext.RouteData.Values["controller"].ToString().Equals("product", StringComparison.InvariantCultureIgnoreCase) &&
+    Url.ActionContext.RouteData.Values["action"].ToString().Equals("productdetails", StringComparison.InvariantCultureIgnoreCase))
+    {
+        currentProductId = Convert.ToInt32(Url.ActionContext.RouteData.Values["productId"].ToString());
+    }
+}
+
+
+    @*await Component.InvokeAsync("NarrowSearchResults", new { currentCategoryId = currentCategoryId, currentProductId = currentProductId })*@
+    @*await Component.InvokeAsync("ManufacturerNavigation", new { currentManufacturerId = currentManufacturerId })*@
+    @*@await Component.InvokeAsync("CategoryNavigation", new { currentCategoryId = currentCategoryId, currentProductId = currentProductId })*@
+    @*@await Component.InvokeAsync("VendorNavigation")
+        @await Component.InvokeAsync("RecentlyViewedProductsBlock", new { productThumbPictureSize = 64 })
+        @await Component.InvokeAsync("PopularProductTags")*@
+@*<div id="dispCountBox2" class="controlBar dontprint" style="border-top:none;padding-top:5px;padding-left:0px;background:none;">
+    <ul>
+        <li id="" style="">
+            <a href="/compareproducts" class="comp-button compare pointer"><i class="fa fa-check-circle pointer"></i> Compare Selected Items</a>
+        </li>
+        <li id="clearCompare" style="">
+            <a href="#" onclick="AjaxCart.clearcomparelistwithoutredirect('@Url.RouteUrl("ClearCompareListWithoutRedirect")');return false;" class="clear-list pointer"><i class="fa fa-minus-circle pointer"></i> Clear list</a>
+        </li>
+    </ul>
+</div>*@
+
+
+@*<div class="col-md-9">
+
+    @if (Model.Count > 0)
+        {
+        <div style="float:left;width:100%;margin-top:15px;">
+        <div class="product-grid bestsellers row">
+        <div class="col-md-12">
+        <div class="title panel-heading">
+        <h2>@Model.Count Results Found </h2>
+        </div>
+        </div>
+        <div class="item-grid">
+        @foreach (var item in Model)
+        {
+        <div class="item-box product-grid col-xs-12 col-sm-6 col-md-4 product-align clearfix">
+        <div class="thumbnail">
+        @await Html.PartialAsync("_ProductBox", item)
+        </div>
+        </div>
+        }
+        </div>
+        </div>
+        </div>*@
+
+
+@*<h1>Second</h1>*@
+
+@*
+        @if (Model.Products != null)
+        {
+            <div class="product-grid clearfix">
+                <div class="row">
+                    @foreach (var product in Model.Products)
+                    {
+                        <div class="item-box product-list col-xs-12 col-sm-12 col-md-12 product-align">
+                            <div class="thumbnail">
+                                @await Html.PartialAsync("_CategoryProductBox", product)
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="pager clearfix">
+                @{
+                    var pager = Html.Pager(Model.PagingFilteringContext, Context.Request).QueryParam("pagenumber");
+                }
+                @if (!pager.IsEmpty())
+                {
+                    @pager
+                }
+            </div>
+
+
+        }
+        else
+        {
+            <h2>No Results Found</h2>
+        }
+
+
+    </div>
+*@
+
+
+@*if (Model.Products != null)
+    {
+        @foreach (var product in Model.Products)
+        {
+            <div class="col-md-9  col-xs-12">
+                <div class="row">
+                    @await Html.PartialAsync("_CategoryProductBox", product)
+                </div>
+            </div>
+        }
+    }*@
+
+
+@*skeleton loading*@
+<style>
+// Codepen presentation
+.container {
+  margin-top: 4em;
+  margin-bottom: 4em;
+}
+
+// Bootstrap Loading Skeleton
+%loading-skeleton {
+  color: transparent;
+  appearance: none;
+  -webkit-appearance: none;
+  background-color: #eee;
+  border-color: #eee;
+
+  &::placeholder {
+    color: transparent;
+  }
+}
+@@keyframes loading-skeleton {
+  from {
+    opacity: .4;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.loading-skeleton {
+  pointer-events: none;
+  animation: loading-skeleton 1s infinite alternate;
+  
+  .headerskeleton {
+    filter: grayscale(100) contrast(0%) brightness(1.8);
+  }
+  h1, h2, h3, h4, h5, h6,
+  p, li,
+  .btn,
+  label,
+  .form-control {
+    @@extend %loading-skeleton;
+  }
+}
+</style>
+
+
+
+<style>
+    .panel-heading .accordion-toggle:after {
+        /* symbol for "opening" panels */
+        font-family: 'Glyphicons Halflings'; /* essential for enabling glyphicon */
+        content: "\e114"; /* adjust as needed, taken from bootstrap.css */
+        float: right; /* adjust as needed */
+        color: grey; /* adjust as needed */
+    }
+    .panel-heading .accordion-toggle.collapsed:after {
+        /* symbol for "collapsed" panels */
+        content: "\e080"; /* adjust as needed, taken from bootstrap.css */
+    }
+</style>
+
+<style>
+    .selectclass{
+        height: auto;
+        border: 1px solid #D1D1D1;
+        box-sizing: border-box;
+        border-radius: 1px;
+        box-shadow: none;
+        padding: 9px 14px;
+        background: #fff url(../images/UIComponents/arrow_up_down.svg) center right 8px / auto no-repeat;
+    }
+</style>
+<img src="~/images/UIComponents/bg6.png" class="full_width_img" />
+
+<section class="container-fluid" style="background: rgba(241, 243, 246, 0.45);">
+    <div class="row">
+        <div class="container">
+            <div class="row flex_col m_t_10  m_b_50">
+                <div class="col-md-12 title_text font_lato">
+                    <div class="row flex_col m_t_70 ">
+                        <div class="col-md-4  col-xs-12" style="margin-top:34px;">
+                            <div class="list_box brands m_t_30">
+                                @*@await Component.InvokeAsync("CategoryNavigation", new { currentCategoryId = currentCategoryId, currentProductId = currentProductId, CategoryCount = Model.CategoriesCount})*@
+                                @*@if (Model.IsCatAvailable == -1)
+                                {*@
+                                @*@{
+                                    var group = Model.Categories.GroupBy(cat => cat.Name,
+                                            cat => new{ 
+                                                Id = cat.Id,
+                                                parentCatId = cat.ParentCategoryId
+                                            }).ToList();
+                                }*@
+                                @if(Model.IsCatAvailable == -1){
+                                    <h4>All Categories</h4>
+                                }
+                                else
+                                {
+                                    @*<h4>@group.Where(w => w.First().Id == Convert.ToInt32(Model.searchedCategories.Last())).Select(s => s.Key).First()</h4>*@
+                                    <h4>@Model.searchedCategoriesName.Last()</h4>
+                                }
+                                <div class="list_sec" id="category">
+                                    @*<h1>i am skeleton</h1>*@
+                                    <div class="loading-skeleton">
+                                        <div class="headerskeleton">
+                                            <hr style="height:25px; border:0px; border-radius:20px; background:#f3f0f0; margin-bottom:10px;"/>
+                                            <hr style="height:20px; border:0px; width:285px; border-radius:20px; background:#f3f0f0; margin-bottom:10px; margin-left:20px;"/>
+                                            <hr style="height:20px; border:0px; width:225px; border-radius:20px; background:#f3f0f0; margin-bottom:10px;margin-left:20px;"/>
+                                            <hr style="height:20px; border:0px; width:165px; border-radius:20px; background:#f3f0f0; margin-bottom:10px;margin-left:20px;"/>
+                                            <hr style="height:25px; border:0px; border-radius:20px; background:#f3f0f0; margin-bottom:10px;"/>
+                                            <hr style="height:20px; border:0px; width:285px; border-radius:20px; background:#f3f0f0; margin-bottom:10px;margin-left:20px;"/>
+                                            <hr style="height:20px; border:0px; width:225px; border-radius:20px; background:#f3f0f0; margin-bottom:10px;margin-left:20px;"/>
+                                            <hr style="height:20px; border:0px; width:165px; border-radius:20px; background:#f3f0f0; margin-bottom:10px;margin-left:20px;"/>
+                                        </div>
+                                    </div>
+                                    </div>
+                                        @*@foreach(var category in group)
+                                        {
+
+                                            @*<div class="list"><label> @category.Key @category.First().Id</label></div>@
+                                            @*if(category.First().parentCatId == 0)
+                                                {@
+
+                                            if (!Model.searchedCategories.Any(c => c == Convert.ToString(category.First().Id)))
+                                            {
+
+                                            <div style="cursor: pointer;" class="list" onclick="category_filter('@(Convert.ToString(category.First().Id))')">@category.Key <span>@category.Count()</span></div>
+                                            }
+                                            
+                                            @*}@
+                                        }*@
+                                    </>
+
+                                @*}
+                                else
+                                {
+                                    <h4>Current Categories</h4>
+                                    <div class="list_sec">
+                                        @@{
+                                            var group = Model.Categories.Select(s => s.ChildCategories.GroupBy(cat => cat.Name,
+                                                cat => new{ 
+                                                    Id = cat.Id
+                                                })).ToList();
+                                        }@
+                                        @{
+                                            var list = new List<KeyValuePair<string, int>>();
+                                            foreach(var cat in Model.Categories)
+                                            {
+                                                list.AddRange(cat.ChildCategories.Select(s => new KeyValuePair<string, int>(s.Name, s.Id)).ToList());
+                                            }
+                                            var group1 = list.GroupBy(gc => gc.Key,
+                                            gc => new
+                                            {
+                                                id = gc.Value
+                                            }
+                                            ).ToList();
+                                        }
+                                        @foreach(var category in group1)
+                                        {
+                                            <div style="cursor: pointer;" class="list" onclick="category_filter('@(Convert.ToString(category.First().id))')">@category.Key <span>@category.Count()</span></div>
+                                            @*<div class="list"><label> @category.Key @category.First().Id</label></div>*@
+                                            @*if(category.First().parentCatId != 0){
+                                            <div style="cursor: pointer;" class="list" onclick="category_filter('@category.First().Id')">@category.Key <span>@category.Count()</span></div>
+                                    
+                                            }@
+                                                    
+                                        }
+                                    </div>
+                                    
+                                }*@
+                            </div>
+
+                          
+                            <div class="list_box brands m_t_30">
+                                <h4>Brands</h4>
+                                <div class="list_sec" id= "manufacturer">
+                                    <div class="loading-skeleton">
+                                        <div class="headerskeleton">
+                                            <hr style="height:25px; border:0px; border-radius:20px; background:#f3f0f0; margin-bottom:10px;"/>
+                                            <hr style="height:25px; border:0px; border-radius:20px; background:#f3f0f0; margin-bottom:10px;"/>
+                                            <hr style="height:25px; border:0px; border-radius:20px; background:#f3f0f0; margin-bottom:10px;"/>
+                                            <hr style="height:25px; border:0px; border-radius:20px; background:#f3f0f0; margin-bottom:10px;"/>
+                                            <hr style="height:25px; border:0px; border-radius:20px; background:#f3f0f0; margin-bottom:10px;"/>
+                                            <hr style="height:25px; border:0px; border-radius:20px; background:#f3f0f0; margin-bottom:10px;"/>
+                                            <hr style="height:25px; border:0px; border-radius:20px; background:#f3f0f0; margin-bottom:10px;"/>
+                                            <hr style="height:25px; border:0px; border-radius:20px; background:#f3f0f0; margin-bottom:10px;"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                @*@await Component.InvokeAsync("ManufacturerNavigation", new { currentManufacturerId = currentManufacturerId, allManufacturers = Model.Manufacturers})*@
+                            </div>
+
+                                    <div class="list_box rating_sec m_t_30 p30">
+                                        <!--<h4>Rating</h4>
+        <div class="list_sec
+            <div class="list"><label><input type="checkbox"  /> <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></label></div>
+            <div class="list"><label><input type="checkbox"   /> <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i></label></div>
+            <div class="list"><label><input type="checkbox"  /> <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i></label></div>
+             <div class="list"><label><input type="checkbox"  /> <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i></label></div>
+            <div class="list"><label><input type="checkbox"  /> <i class="fa fa-star"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i></label></div>
+
+        </div>-->
+
+                                        <div class="price_section  ">
+                                            <h4>Price</h4>
+                                            <div class="row flex_col align_center">
+                                                <div class="col-xs-6 min_max_sec">
+                                                    <label>Min</label>
+                                                    <input type="number" class="form-control" placeholder="0" maxlength="5" id="priceMin" value="@Model.MinPrice"/>
+                                                </div>
+
+                                                <div class="col-xs-6">
+                                                    <label>Max</label>
+                                                    <input type="number" class="form-control" placeholder="000" id="priceMax" maxlength="5" value="@Model.MaxPrice"/>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="button_section m_t_30  ">
+                                            <input type="submit" value="Apply" class="btn btn-primary" onclick="apply_price_filter()"/>
+                                            <a href="javascript:void(0)" onclick="reset_price_filter()" class="btn_reset">Reset</a>
+                                        </div>
+                                    </div>
+                                </div>
+                        <div class="col-md-8  col-xs-12">
+                            <div class="row">
+                                <div class=" first_a  ">
+                                    <div class="col-md-10">
+                                        <a href='@Url.RouteUrl("CompareProducts")' class="compare pointer"><img src="~/images/UIComponents/ic-actions-check2.png" width="20" height="20" /> <span class="comp-button">Compare Selected Items ( @Model.Products.Where(product => product.IsInCompareList).ToList().Count )</span></a>
+                                        <a onclick="AjaxCart.clearcomparelistwithoutredirect('@Url.RouteUrl("ClearCompareListWithoutRedirect")');return false;" style="cursor: pointer;"><img src="~/images/UIComponents/ic-actions-remove.svg" /> Clear list</a>
+
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <div class="form-group ">
+                                            <select  class="form-control" id="searchPageNumber" style="border-radius: 0px; box-shadow: none; border: 1px solid #D1D1D1;">
+                                                @for(int i = 0; i < Model.PagingFilteringContext.pageSizeOptions.Length; i++)
+                                                {
+                                                    <option selected= "@(Model.PagingFilteringContext.PageSize == Convert.ToInt32(Model.PagingFilteringContext.pageSizeOptions[i]))">@Model.PagingFilteringContext.pageSizeOptions[i]</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                
+                                    @if (Model.Products.ToList().Count == 0)
+                                    {
+                                        <div class="alert alert-info mt16 ml21" role="alert">
+                                            No products found. Please search something more generic.
+                                        </div>
+                                    }
+
+                                
+                                </div>
+                                @foreach (var product in Model.Products)
+                                {
+                                    @await Html.PartialAsync("_CategoryProductBox", product)
+                                }
+                            </div>
+                    @*        <div class="pager clearfix">
+                                @{
+                                    var pager = Html.Pager(Model.PagingFilteringContext, Context.Request).QueryParam("pagenumber");
+                                }
+                                @if (!pager.IsEmpty())
+                                {
+                                    @pager
+                                }
+                            </div>*@
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+<section class="container-fluid" style="background-color: #f9fafb;">
+    @{ 
+        var pager = Html.Pager(Model.PagingFilteringContext, Context.Request).QueryParam("pagenumber");
+    }
+    <div class="row">
+        <div class="container p_t_30 p_b_30">
+            <div class="row flex_col align_center">
+                <div class="col-sm-6 col-xs-5">
+                    <div class="product_number_box">
+                        <span>@pager.model.TotalItems</span> Products
+                    </div>
+                </div>
+                <div class="col-sm-6  col-xs-7">
+                    <div class="pagination">
+                        @if (!pager.IsEmpty())
+                        { 
+                            <span>Page</span>
+                            @pager
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+function reloadWithManufacturer(e, id) {
+    var href = window.location.href;
+    if (href.includes('&pagenumber')) {
+        href = href.replace(/&pagenumber=[0-9]+&/, '');
+    }
+    if ($(e).is(':checked')) {
+        window.location.href = href + `&manufectuererFilter=${id}`;
+    }
+    else {
+        window.location.href = href.replace(`&manufectuererFilter=${encodeURI(id)}`, '');
+    }
+}
+</script>
+<script>
+$('#searchPageNumber').on('change', function() {
+    //alert(this.value);
+
+    const href = window.location.href.replace(/&pageSize=[0-9]+/, '');
+    window.location.href = href + `&pageSize=${this.value}`;
+});
+function category_filter(id) {
+   // const href = window.location.href.replace(/&catSearchFilter=[0-9]+/,'');
+    var href = window.location.href;
+    if (href.includes('&pagenumber')) {
+        href = href.replace(/&pagenumber=[0-9]+&/, '')
+    }
+    window.location.href = href + `&catSearchFilter=${id}`;
+    
+}
+function attribute_filter(id) {
+    var href = window.location.href;
+    if (href.includes('&pagenumber')) {
+        href = href.replace(/&pagenumber=[0-9]+&/, '')
+    }
+    window.location.href = href + `&attSearchFilter=${id}`;
+}
+function apply_price_filter() {
+        const minPrice = parseInt($('#priceMin').val());
+        const maxPrice = parseInt($('#priceMax').val());
+        var href = window.location.href;
+        if (href.includes('&pagenumber')) {
+            href = href.replace(/&pagenumber=[0-9]+&/, '');
+        }
+        if (minPrice > maxPrice) {
+            alert('Min price must be less than Max price');
+        }
+        else if (minPrice > 0 && maxPrice > 0) {
+            if (href.match(/(&){0,1}(\?){0,1}minprice=[0-9]+/i) && href.match(/(&){0,1}(\?){0,1}maxPrice=[0-9]+/i)) {
+                window.location.href = href.replace(/(&){0,1}(\?){0,1}minprice=[0-9]+/i, `&minPrice=${minPrice}`).replace(/(&){0,1}(\?){0,1}maxPrice=[0-9]+/i, `&maxPrice=${maxPrice}`);
+            }
+            else if (href.match(/(&){0,1}(\?){0,1}minprice=[0-9]+/i)) {
+                window.location.href = href.replace(/(&){0,1}(\?){0,1}minprice=[0-9]+/i, "") + `&minPrice=${minPrice}` + `&maxPrice=${maxPrice}`;
+            }
+            else if (href.match(/(&){0,1}(\?){0,1}maxPrice=[0-9]+/i)) {
+                window.location.href = href.replace(/(&){0,1}(\?){0,1}maxPrice=[0-9]+/i, "") + `&minPrice=${minPrice}` + `&maxPrice=${maxPrice}`;
+
+            }
+            else {
+                window.location.href = href + `&minPrice=${minPrice}` + `&maxPrice=${maxPrice}`;
+            }
+        }
+        else if (minPrice > 0) {
+            if (href.match(/(&){0,1}(\?){0,1}minprice=[0-9]+/i)) {
+                window.location.href = href.replace(/(&){0,1}(\?){0,1}minprice=[0-9]+/i, `&minPrice=${minPrice}`).replace(/(&){0,1}(\?){0,1}maxPrice=[0-9]+/i, "");
+            }
+            else {
+                window.location.href = href.replace(/(&){0,1}(\?){0,1}maxPrice=[0-9]+/i, "") + `&minPrice=${minPrice}`;
+            }
+        }
+        else if (maxPrice > 0) {
+            if (href.match(/(&){0,1}(\?){0,1}maxPrice=[0-9]+/i)) {
+                window.location.href = href.replace(/(&){0,1}(\?){0,1}minprice=[0-9]+/i, "").replace(/(&){0,1}(\?){0,1}maxPrice=[0-9]+/i, `&maxPrice=${maxPrice}`);
+            }
+            else {
+                window.location.href = href.replace(/(&){0,1}(\?){0,1}minprice=[0-9]+/i, "") + `&maxPrice=${maxPrice}`;
+            }
+        }
+    }
+    function reset_price_filter() {
+        var href = window.location.href;
+        if (href.includes('&pagenumber')) {
+            href = href.replace(/&pagenumber=[0-9]+&/,'')
+        }
+        window.location.href = href.replace(/(&){0,1}(\?){0,1}minprice=[0-9]+/i, "").replace(/(&){0,1}(\?){0,1}maxprice=[0-9]+/i, "");
+    }
+</script>
+@Html.Resource(@<script type="text/javascript">
+            $(document).ready(function() {
+                //set categories
+                fetch(`/product/ProductCategorySearch${window.location.search}`).then(resp => resp.json()).then(json => {
+                    const elem = $('#category')[0];
+                    elem.innerHTML = json;
+                    //var html = '';
+                    //var childCatHtml = '';
+                    //console.log(json)
+                    //var checkChildCategory = 1;
+                    //var childCategories = new Object();
+                    //var attributeValuesObject = new Object();
+                    //if (json.noFurtherChild == 1) {
+                    //    if (json.categoriesCount > 1) {
+                    //        json.categories.forEach(category => {
+                    //            const currentCategoryId = category.id;
+                    //            if (!(json.searchedCategories.includes(currentCategoryId)) && category.name != null) {
+                    //                html += `<div class="panel-heading" style="padding-bottom:0px; padding-top:0px;">
+                    //                        <p class="panel-title">
+                    //                            <a class="accordion-toggle" style="color:#151515" data-toggle="collapse" data-parent="#accordion" href="#collapse_${category.id}">
+                    //                                ${category.name}
+                    //                            </a>
+                    //                        </p>
+                    //                    </div>
+                    //                    <div id="collapse_${category.id}" class="panel-collapse collapse" style="padding-top:0px; padding-bottom:0px;">
+                    //                        <div class="panel-body" id= "appendChildCategory_${category.id}">
+                    //                        </div>
+                    //                    </div>
+                    //                `;
+                                                                                                                                        
+                    //            //var elemChildCat = $('#appendChildCategory_${category.id}');
+                                                                                                                                        
+                    //            category.childCategories.forEach(childCategory => {
+                    //                var currentChildCategory = childCategory.id;
+                    //                if (childCategory.name != null) {
+                    //                    childCatHtml += `
+                    //                            <div style="cursor: pointer;" class="list" onclick="category_filter('${childCategory.id}')">${childCategory.name} 
+                    //                            <span>${childCategory.childCategoriesCount}</span>
+                    //                        </div>
+                    //                    `;
+                    //                }
+                    //            });
+                    //            childCategories[category.id] = childCatHtml
+                    //            }
+                    //        });
+                    //        elem.innerHTML = html;
+                    //        Object.keys(childCategories).forEach(key => {
+                    //            const childContainer = document.getElementById(`appendChildCategory_${key}`);
+                    //            try {
+                    //                childContainer.innerHTML = childCategories[key];
+                    //            }
+                    //            catch { }
+                    //        });
+                    //    }
+                    //    else {
+                    //        json.categories.forEach(category => {
+                    //            category.childCategories.forEach(childCategory => {
+                    //                if (childCategory.name != null) {
+                    //                    childCatHtml += `
+                    //                            <div style="cursor: pointer;" class="list" onclick="category_filter('${childCategory.id}')">${childCategory.name} 
+                    //                            <span>${childCategory.childCategoriesCount}</span>
+                    //                        </div>
+                    //                    `;
+                    //                }
+                    //            });
+                    //            elem.innerHTML = childCatHtml;
+                    //        });
+                    //    }
+                    //}
+                    //else if (json.noFurtherAttribut == 1) {
+                    //    json.attributes.forEach(attribute => {
+                    //        const currentAttributeId = attribute.id;
+                    //        //change required
+                    //        //if (!(json.searchedCategories.includes(currentAttributeId)) && attribute.name != null) {
+                    //        if (attribute.name != null) {
+                    //            html += `<div class="panel-heading" style="padding-bottom:0px; padding-top:0px;">
+                    //                <p class="panel-title">
+                    //                <a class="accordion-toggle" style="color:#151515" data-toggle="collapse" data-parent="#accordion" href="#collapse_${attribute.id}">
+                    //                    ${attribute.name}
+                    //                </a>
+                    //                </p>
+                    //                </div>
+                    //                <div id="collapse_${attribute.id}" class="panel-collapse collapse" style="padding-top:0px; padding-bottom:0px;">
+                    //                    <div class="panel-body" id= "appendAttributeValue_${attribute.id}">
+                    //                    </div>
+                    //                </div>
+                    //            `;
+                    //        }
+                    //        var attValueHtml = '';
+                    //        attribute.attributesValues.forEach(attributeValues => {
+                    //            if (attributeValues.name != null) {
+                    //                attValueHtml += `
+                    //                    <div style="cursor: pointer;" class="list" onclick="attribute_filter('${attributeValues.ids}')">${attributeValues.name} 
+                    //                        <span>${attributeValues.attributesValuesCount}</span>
+                    //                    </div>
+                    //                `;
+                    //            }
+                    //        });
+                    //        attributeValuesObject[attribute.id] = attValueHtml;
+                    //    });
+                    //    elem.innerHTML = html;
+                    //    Object.keys(attributeValuesObject).forEach(key => {
+                    //        const attributeValueContainer = document.getElementById(`appendAttributeValue_${key}`);
+                    //        try {
+                    //            attributeValueContainer.innerHTML = attributeValuesObject[key];
+                    //        }
+                    //        catch { }
+                    //    });
+                    //}
+                    //else {
+                    //    html += `<div class= "alert alert-info">No More Filters Available.</div>`;
+                    //    elem.innerHTML = html;
+                    //}
+                });
+
+
+                //set manufacturers
+                fetch(`/product/ProductManufacturerSearch${window.location.search}`).then(resp => resp.json()).then(json => {
+                    const elem = $('#manufacturer')[0];
+                    elem.innerHTML = json;
+                    //var html = '';
+                    //if (json.length > 0) {
+                    //    json.forEach(manufacturer => {
+                    //        var ischecked = '';
+                    //        if (manufacturer.isSelected) {
+                    //            ischecked = 'checked= "checked"';
+                    //        }
+                    //        html += `<div class="list">
+                    //            <label><input type="checkbox" ${ischecked} onclick="reloadWithManufacturer(this,'${manufacturer.id}')"/>${manufacturer.name} 
+                    //                <span>${manufacturer.manufacturersCount}</span>
+                    //            </label>
+                    //        </div>`
+                    //    });
+                    //    elem.innerHTML = html;
+                    //}
+                    //else {
+                    //    html += `<div class= "alert alert-info">No Brands Available.</div>`;
+                    //    elem.innerHTML = html;
+                    //}
+                });
+            });
+    </script>, "js")

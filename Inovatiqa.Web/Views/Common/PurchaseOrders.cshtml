@@ -1,0 +1,142 @@
+﻿
+@{
+    Layout = "_ColumnsOne";
+    ViewBag.Title = "Purchase Orders";
+}
+@*
+    <style>
+        .table td, table th, table tbody tr td {
+            padding: 10px 20px;
+            font-size: 13px;
+        }
+    </style>
+    <div class="page  thumbnail">
+        <div class="page-title panel-heading">
+            <h1>
+                Purchase Orders
+            </h1>
+        </div>
+        <div style="margin:10px">
+
+
+            <br>
+            <h4 style="font-weight:bold">Shipping Rates</h4>
+
+            <p>Inovatiqa offers open accounts, Net 30-day terms to Government entities, public school systems, universities, colleges, Medical Professionals & not-for-profit. Please allow 2 to 5 business days for your terms account application to be processes.</p>
+            <br>
+
+            <p><b>  Fax:</b> 281-220-1350</p>
+            <p><b>  E-mail:</b>  customerservice@inovatiqa.com</p>
+            <p><b>  Mail:</b> 12815 Capricorn Street, Stafford Texas 77477</p>
+            <br>
+
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                    <a href="https://www.4mdmedical.com/media/assets/4MD%20Fed%20Credit%20Application_Form.pdf">
+                        <i class="fa fa-file-pdf-o fa-2x"style="color:red;" aria-hidden="true"> Public Sector</i>
+                    </a>
+                    <p>Federal, States and Local Governments & Education Institutions</p>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                    <a href="https://www.4mdmedical.com/media/assets/Medical_Credit_App_Medical.pdf">
+                        <i class="fa fa-file-pdf-o fa-2x"style="color:red;" aria-hidden="true"> Medical Facilities</i>
+                    </a>
+                    <p>Nursing Homes, Hospitals, Assisted Living and Other medical facilities</p>
+                </div>
+
+            </div>
+
+            <br>
+            <br>
+            <br>
+
+
+
+        </div>
+        <br>
+    </div>
+*@
+
+
+<style>
+    .become-customer-box {
+        box-shadow: none !important;
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+
+    .newcustomer-area {
+        padding: 0px !important;
+        background: #FFF !important;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        font-weight: 500 !important;
+    }
+
+    .segment-line {
+        border: 0.1px solid #DADADA !important;
+    }
+
+    .small-heading {
+        font-weight: 500 !important;
+    }
+
+    .heading {
+        font-family: Lato;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 20px;
+        line-height: 24px;
+        color: #000000;
+    }
+    .price-match-helper-text{
+
+        line-height: 24px;
+    }
+    .muted {
+        color: #636363 !important;
+        font-size: 18px !important;
+    }
+</style>
+<section class="container-fluid newcustomer-area">
+    <div class="container-fluid" style="background: #F1F3F6; padding: 10px; font-size: 18px;">
+        <div class="container breadcrumb-bar">
+            <span class="washed" ><a style="color: #A9A9A9;" href="@Url.RouteUrl("Homepage")">Inovatiqa</a> / </span> Purchase Orders
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="container">
+            <div class="row mt10">
+                <div class="col-md-12">
+                    <div class="become-customer-box" style="padding-bottom: 35px;">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="font_lato">
+                                    <div class="customer-select">
+                                        <h4 class="heading-price-match">Purchase Orders</h4>
+                                        <hr class="segment-line">
+                                        <p class="price-match-helper-text ">Inovatiqa Corporation offers net term 30 purchase orders to public medical hospitals and businesses. Please allow 2 to 5 days for your terms account application to be processed.</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <p class="price-match-helper-text mb0 mt25" style="color: #000">Fax Number <a href="#" class="muted">281-220-1350</a></p>
+                                    <p class="price-match-helper-text mb0 mt25" style="color: #000">Email <a href="mailto:customerservice@inovatiqa.com" class="blue">customerservice@inovatiqa.com</a></p>
+                                    <p class="price-match-helper-text mb10 mt25" style="color: #000">Mailing Address <span class="muted">12815 Capricorn St, Stafford, TX, 77477</span></p>
+                                    <hr class="segment-line" style="margin-top: 35px !important;" />
+                                    <p><a href="~/files/forms/Purchase Order_Form.pdf" class="price-match-helper-text" style="color: #46760A;"><img src="~/images/UIComponents/pdf.png" style="transform: translateY(-3px);" /> Public Sector Accounts</a></p>
+                                    <p><a href="~/files/forms/Purchase Order_Form.pdf" class="price-match-helper-text" style="color: #46760A;"><img src="~/images/UIComponents/pdf.png" style="transform: translateY(-3px);" /> For Medical Facilities (Hospitals, Nursing Homes)</a></p>
+                                    
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid" style="background: #F1F3F6; padding: 20px;"></div>
+    </div>
+</section>

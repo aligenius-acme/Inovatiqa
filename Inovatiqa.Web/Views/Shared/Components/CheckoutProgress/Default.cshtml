@@ -1,0 +1,23 @@
+﻿@model CheckoutProgressModel
+<div class="order-progress">
+    <ul class="nav nav-pills">
+        <li class="active-step">
+            <a @(Model.CheckoutProgressStep != CheckoutProgressStep.Complete ? @Html.Raw($" href=\"{Url.RouteUrl("ShoppingCart")}\"") : null)>Cart</a>
+        </li>
+        <li @(Model.CheckoutProgressStep == CheckoutProgressStep.Address || Model.CheckoutProgressStep == CheckoutProgressStep.Shipping || Model.CheckoutProgressStep == CheckoutProgressStep.Payment || Model.CheckoutProgressStep == CheckoutProgressStep.Confirm || Model.CheckoutProgressStep == CheckoutProgressStep.Complete ? @Html.Raw(" class=\"active-step\"") : @Html.Raw(" class=\"inactive-step\""))>
+            <a @(Model.CheckoutProgressStep != CheckoutProgressStep.Cart && Model.CheckoutProgressStep != CheckoutProgressStep.Complete ? @Html.Raw($" href=\"{Url.RouteUrl("CheckoutBillingAddress")}\"") : null)>Address</a>
+        </li>
+        <li @(Model.CheckoutProgressStep == CheckoutProgressStep.Shipping || Model.CheckoutProgressStep == CheckoutProgressStep.Payment || Model.CheckoutProgressStep == CheckoutProgressStep.Confirm || Model.CheckoutProgressStep == CheckoutProgressStep.Complete ? @Html.Raw(" class=\"active-step\"") : @Html.Raw(" class=\"inactive-step\""))>
+            <a @(Model.CheckoutProgressStep != CheckoutProgressStep.Cart && Model.CheckoutProgressStep != CheckoutProgressStep.Address && Model.CheckoutProgressStep != CheckoutProgressStep.Complete ? @Html.Raw($" href=\"{Url.RouteUrl("CheckoutShippingMethod")}\"") : null)>Shipping</a>
+        </li>
+        <li @(Model.CheckoutProgressStep == CheckoutProgressStep.Payment || Model.CheckoutProgressStep == CheckoutProgressStep.Confirm || Model.CheckoutProgressStep == CheckoutProgressStep.Complete ? @Html.Raw(" class=\"active-step\"") : @Html.Raw(" class=\"inactive-step\""))>
+            <a @(Model.CheckoutProgressStep != CheckoutProgressStep.Cart && Model.CheckoutProgressStep != CheckoutProgressStep.Address && Model.CheckoutProgressStep != CheckoutProgressStep.Shipping && Model.CheckoutProgressStep != CheckoutProgressStep.Complete ? @Html.Raw($" href=\"{Url.RouteUrl("CheckoutPaymentMethod")}\"") : null)>Payment</a>
+        </li>
+        <li @(Model.CheckoutProgressStep == CheckoutProgressStep.Confirm || Model.CheckoutProgressStep == CheckoutProgressStep.Complete ? @Html.Raw(" class=\"active-step\"") : @Html.Raw(" class=\"inactive-step\""))>
+            <a @(Model.CheckoutProgressStep != CheckoutProgressStep.Cart && Model.CheckoutProgressStep != CheckoutProgressStep.Address && Model.CheckoutProgressStep != CheckoutProgressStep.Shipping && Model.CheckoutProgressStep != CheckoutProgressStep.Payment && Model.CheckoutProgressStep != CheckoutProgressStep.Complete ? @Html.Raw($" href=\"{Url.RouteUrl("CheckoutConfirm")}\"") : null)>Confirm</a>
+        </li>
+        <li @(Model.CheckoutProgressStep == CheckoutProgressStep.Complete ? @Html.Raw(" class=\"active-step\"") : @Html.Raw(" class=\"inactive-step\""))>
+            <a>Complete</a>
+        </li>
+    </ul>
+</div>

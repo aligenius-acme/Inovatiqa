@@ -1,0 +1,379 @@
+﻿@using Inovatiqa.Web.Models.Order
+@using Inovatiqa.Core;
+@model List<CustomerSuspendedCartModel>
+@{
+    Layout = "_ColumnsOne";
+}
+@{
+    ViewBag.Title = "Suspended carts";
+}
+@*
+    @Html.Resource(@<link href="@Url.Content("https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css")" rel="stylesheet" type="text/css" />, "css")
+    @Html.Resource(@<script src="@Url.Content("https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js")" type="text/javascript"></script>, "js")
+    @Html.Resource(@<script src="@Url.Content("https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js")" type="text/javascript"></script>, "js")
+    @Html.Resource(@<script src="@Url.Content("https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js")" type="text/javascript"></script>, "js")
+    @Html.Resource(@<link href="@Url.Content("https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css")" rel="stylesheet" type="text/css" />, "css")
+    @Html.Resource(@<script src="@Url.Content("https://cdnjs.cloudflare.com/ajax/libs/jquery.tipsy/1.0.3/jquery.tipsy.min.js")" type="text/javascript"></script>, "js")
+    @Html.Resource(@<link href="@Url.Content("https://cdnjs.cloudflare.com/ajax/libs/jquery.tipsy/1.0.3/jquery.tipsy.min.css")" rel="stylesheet" type="text/css" />, "css")
+    @Html.Resource(@<script src="@Url.Content("https://cdn.datatables.net/rowreorder/1.2.7/js/dataTables.rowReorder.min.js")" type="text/javascript"></script>, "js")
+    @Html.Resource(@<script src="@Url.Content("https://cdn.datatables.net/responsive/2.2.6/js/dataTables.responsive.min.js")" type="text/javascript"></script>, "js")
+    @Html.Resource(@<link href="@Url.Content("https://cdn.datatables.net/rowreorder/1.2.7/css/rowReorder.dataTables.min.css")" rel="stylesheet" type="text/css" />, "css")
+    @Html.Resource(@<link href="@Url.Content("https://cdn.datatables.net/responsive/2.2.6/css/responsive.dataTables.min.css")" rel="stylesheet" type="text/css" />, "css")
+
+    <div class="page account-page suspended-cart-page from-panel">
+        <div class="page-title panel-heading">
+            <h1>Suspended Carts</h1>
+        </div>
+        <div class="page-body">
+            <h6 style="margin-left: 15px">To Resume a Suspended Cart click on a cart from the list below. Carts will be deleted after 60 days of inactivity.</h6>
+            <br />
+            <div class="cart-list">
+                <div style="float:right;">
+                    <input type="button" id="addToCartList" name="addToCartList" value="MERGE TO CURRENT CART" style="margin-bottom:20px" class="btn btn_blue suspended-add-to-cart">
+                    <input type="button" id="delete" name="delete" value="DELETE" style="margin-bottom:20px" class="btn btn_blue delete-suspended-cart-button">
+                </div>
+                <br />
+                <br />
+                <br />
+                <table id="suspended-cart" class="table table-bordered table-condensed table-striped" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th style="text-align:center;white-space:nowrap">
+                                Cart #
+                            </th>
+                            <th style="text-align:center;white-space:nowrap">
+                                PO/Cart Name
+                            </th>
+                            <th style="text-align:center;white-space:nowrap">
+                                Ship To
+                            </th>
+                            <th style="text-align:center;white-space:nowrap">
+                                Ship To Name
+                            </th>
+                            <th style="text-align:center;white-space:nowrap">
+                                Cart Owner
+                            </th>
+                            <th style="text-align:center;white-space:nowrap">
+                                Total Lines
+                            </th>
+                            <th style="text-align:center;white-space:nowrap">
+                                Last Modified Date
+                            </th>
+                            <th style="text-align:center;white-space:nowrap">
+
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.Count > 0)
+                        {
+                            @foreach (var suspendedCartModel in Model)
+                            {
+                                <tr id="@suspendedCartModel.Id">
+                                    <td>
+                                        <a href="@Url.Action("SuspendedCartItems", new {SuspendedCartId = suspendedCartModel.Id })" id="@suspendedCartModel.Id">@suspendedCartModel.Id.ToString().PadLeft(9, '0')</a>
+                                    </td>
+                                    <td>
+                                        @suspendedCartModel.POName
+                                    </td>
+                                    <td>
+                                        @suspendedCartModel.ShipToAddressId
+                                    </td>
+                                    <td>
+                                        @suspendedCartModel.ShipToCompanyName
+                                    </td>
+                                    <td style="font-weight:bold;color:#393">
+                                        @(String.Format("{0} {1}", suspendedCartModel.ShipToFirstName, suspendedCartModel.ShipToLastName))
+                                    </td>
+                                    <td>
+                                        @suspendedCartModel.TotalLines
+                                    </td>
+                                    <td>
+                                        @if (suspendedCartModel.LastModifiedDate != null)
+                                            @DateTime.Parse(@suspendedCartModel.LastModifiedDate.ToString()).ToString("MM/dd/yyyy")
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" class="btn btn-default" id="@suspendedCartModel.Id" />
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="8">
+                                    <div class="no-data">
+                                        No suspended carts
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+    @Html.Resource(@<script type="text/javascript">
+                        $(document).ready(function () {
+                            $('#suspended-cart').DataTable({
+                                //"bPaginate": true,
+                                //"bLengthChange": false,
+                                //"bFilter": false,
+                                //"bInfo": true,
+                                "bAutoWidth": true,
+                                "order": [[4, "desc"]],
+                                rowReorder: {
+                                    selector: 'td:nth-child(2)'
+                                },
+                                responsive: true
+                            });
+                        });
+    </script>, "js")
+*@
+
+
+<style>
+    .jqueryPagination{
+        display: @(Model.Count > 0 ? "flex" : "none");
+        justify-content: space-between;
+        margin: 8px 12px;
+    }
+    .paging_numbers span a {
+        margin-right: 5px;
+        cursor: pointer;
+        color: #636363;
+    }
+    .paging_numbers span .current{
+        color: #000;
+    }
+    .jqueryPagination p {
+        font-family: Lato;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 13.5px;
+        letter-spacing: 0.05em;
+        color: #636363;
+        margin-bottom:unset;
+    }
+</style>
+
+@await Component.InvokeAsync("DashboardBlueBand")
+@*@await Html.PartialAsync("_DashboardBlueBand")*@
+<section class="container-fluid orderstatus-area">
+    <div class="row">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="dashboard-area">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="sidebar_menu font_lato">
+                                    <h3>Inovatiqa Dashboard</h3>
+                                    @await Html.PartialAsync("_DashboardSideBar", "inovatiqa-orders")
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="order-deatil-area sorder-staus">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="tabs font_lato">
+                                                @await Html.PartialAsync("_OrderNewTopBar", "suspended-carts")
+                                                <hr style="margin-bottom: 10px;">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="order-content">
+                                                <div class="tab-content" style="border: none !important;">
+                                                    <div class="contact-manager text-right font_roboto">
+                                                        <a href="#" class="btn conatct-btnpopup" data-toggle="modal" data-target="#contact-mform">Contact Your Account Manager</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="order-content">
+                                                <div class="tab-content" style="border: none !important;">
+                                                    <div class="form-title" style="margin-bottom: 70px;">
+                                                        <p>To resume a suspended cart, click on a cart from the list below. Carts will be deleted after 60 days of inactivity.</p>
+                                                    </div>
+
+                                                    <div class="order-find-area">
+                                                        <div class="find-fields font_lato">
+                                                            <div class="form-group">
+                                                                <label>Find</label>
+                                                                <input type="text" id="Find" class="form-control" style="min-width: 70%; width: 100%; max-width: 150%;">
+                                                            </div>
+                                                            @*<form>
+                                                                <div class="form-group">
+                                                                    <label>In</label>
+                                                                    <select class="form-control" style="width: 20vh;" id="columnSelector">
+                                                                        <option value="-1">All Fields</option>
+                                                                        <option value="0">Cart Number</option>
+                                                                        <option value="1">PO</option>
+                                                                        <option value="2">Ship To</option>
+                                                                        <option value="3">Ship To Name</option>
+                                                                        <option value="4">Cart Owner</option>
+                                                                    </select>
+                                                                    <input type="button" value="Find" class="form-control" style="background-color: #6A983C; color: #FFF;">
+                                                                    <input type="button" value="Clear" class="form-control" style="background-color: #6A983C; color: #FFF;" id="clear">
+                                                                </div>
+                                                            </form>*@
+                                                        </div>
+
+
+
+                                                        <div class="print-fileds font_lato">
+                                                            <div class="form-group">
+                                                                <input id="addToCartList" name="addToCartList" type="button" value="Merge to Current Cart" class="form-control suspended-add-to-cart" style="background-color: #0068A3; color: #FFF;">
+                                                                <input type="button" value="Delete" id="delete" name="delete" class="form-control delete-suspended-cart-button" style="background-color: #0068A3; color: #FFF;">
+                                                            </div>
+
+                                                            <div class="print-button font_roboto">
+                                                                <a href="#" class="btn btn-print"><img src="~/images/UIComponents/print-btn-img.svg">Print</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="items-table-area sorder-infotable table-responsive font_roboto">
+                                                        <table class="table border-collapse mb0" id="suspended-cart" style="border-bottom: 1px solid #E2E8F0;">
+                                                             <thead>
+                                                                    <tr>
+                                                                        <th>Cart Number</th>
+                                                                        <th>PO / Cart Name</th>
+                                                                        <th>Ship to</th>
+                                                                        <th>Ship to Name</th>
+                                                                        <th>Cart Owner</th>
+                                                                        <th>Total Lines</th>
+                                                                        <th>Last Modified Date <img src="~/images/UIComponents/Arrow_down_orange.svg" alt="Alternate Text" /> </th>
+                                                                        <th>
+                                                                            <div class="custom-control custom-checkbox" style="margin-top: 0px;">
+                                                                                <input type="checkbox" class="check_all" />
+                                                                            </div>
+                                                                        </th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @if (Model.Count > 0)
+                                                                    {
+                                                                        foreach (var suspendedCartModel in Model)
+                                                                        {
+                                                                            <tr id="@suspendedCartModel.Id">
+                                                                                <td>
+                                                                                    <a href="@Url.Action("SuspendedCartItems", new {SuspendedCartId = suspendedCartModel.Id })" id="@suspendedCartModel.Id"><p class="blue">@suspendedCartModel.Id.ToString().PadLeft(9, '0')</p></a>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <p>@suspendedCartModel.POName</p>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <p>@suspendedCartModel.ShipToAddressId</p>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <p>@suspendedCartModel.ShipToCompanyName</p>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <p class="num-green">@(String.Format("{0} {1}", suspendedCartModel.ShipToFirstName, suspendedCartModel.ShipToLastName))</p>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <p>@suspendedCartModel.TotalLines</p>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <p>
+                                                                                        @if (suspendedCartModel.LastModifiedDate != null)
+                                                                                            @DateTime.Parse(@suspendedCartModel.LastModifiedDate.ToString()).ToString("MM/dd/yyyy")
+                                                                                    </p>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <div class="custom-control custom-checkbox">
+                                                                                        <input type="checkbox" id="@suspendedCartModel.Id" class="custom-control-input">
+                                                                                    </div>
+                                                                                </td>
+                                                                            </tr>
+                                                                        }
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <tr>
+                                                                            <td colspan="10">There are no suspended carts found.</td>
+                                                                        </tr>
+                                                                    }
+
+                                                                </tbody>
+                                                            </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<form action="/FooterSendEmails" method="post" id="form">
+    <input type="text" hidden name="Method" value="@Url.RouteUrl("CustomerSuspendedCarts")" />
+    @await Html.PartialAsync("_ContactAccountManagerModal")
+</form>
+<script>
+    $(document).ready(function () {
+        const table = $('#suspended-cart').DataTable({
+            "language": {
+                "info": '<div class="tpage-num"><p>Showing _START_ to _END_ of _TOTAL_ Items</p></div>'
+            },
+            "pageLength": 5,
+            "dom": 't<"jqueryPagination"ip>',
+            'pagingType': 'numbers',
+            'ordering':false
+        });
+        function filterByColumn() {
+            table
+                .search(this.value)
+                .draw();
+            @*var columnNumber = Number($('#columnSelector').val());
+            if (columnNumber != -1) {
+                table
+                    .column(columnNumber)
+                    .search(this.value)
+                    .draw();
+            }
+            else {
+                table
+                    .search(this.value)
+                    .draw();
+            }*@
+        }
+        $('#Find').keyup(filterByColumn);
+    });
+    $(document).ready(function () {
+
+        /*const DT = $('#suspended-cart').DataTable({
+            dom: 'lrtp',
+            "paging": false,
+            "ordering": false,
+        });
+        */
+        $('#Find').keyup(function () {
+            DT.search($(this).val()).draw();
+        });
+
+        $('.check_all').click(function (event) {
+            if (this.checked) {
+                // Iterate each checkbox
+                $(':checkbox').each(function () {
+                    this.checked = true;
+                });
+            } else {
+                $(':checkbox').each(function () {
+                    this.checked = false;
+                });
+            }
+        });
+        $('#clear').click(function () {
+            $('#Find').val('');
+            $('#Find').keyup();
+        });
+    });
+</script>

@@ -1,0 +1,279 @@
+﻿@model Inovatiqa.Web.Models.Common.EmailModel
+@{
+    Layout = "_ColumnsOne";
+    ViewBag.Title = "Price Match Policy";
+}
+@*
+<div class="page  from-panel">
+    <div class="page-title panel-heading">
+        <h1>Price Match Policy</h1>
+    </div>
+    <div style="margin:10px">
+        <div class="">
+            <div class="col-main">
+                <div class="std">
+                    <h2>Found a Lower Price Somewhere Else? No problem!</h2>
+                    <p>4MD Medical will match any online price, for an exact-same product. Our price match policy considers the total order price versus our competition.</p>
+                    <p><strong><em>Our price matching policy does not include eBay, Amazon, online medical suppliers with no phone number and/or physical address listed, or any other third-party selling services. We will match authentic U.S. websites by authorized U.S. medical supply dealers.</em></strong></p>
+                    <div><img alt="" height="200" src="https://www.4mdmedical.com/media/wysiwyg/pricematch_1.jpg" style="float: right;" width="229"></div>
+                    <div>
+                        <p>Price matching must be requested at the time the order is placed. No price matching will occur after an order has been placed. In cases where the actual charge from the competitor is less than the actual charge from 4MD Medical, we will match the competitor's actual charge. Price match items must be in stock and be the identical items. Price match requests must be received before your order is placed to be honored.&nbsp;4MD Medical will not match prices on used, refurbished, and clearance equipment or prices from online auction websites.&nbsp;4MD Medical also reserves the right to refuse any price match if we believe that the item may violate any of these aforementioned conditions.&nbsp;4MD Medical is also not responsible for and may not honor orders with pricing, typographical, or photographic error.</p>
+                    </div>
+                    <div>
+                        <h2>Price Matching does not apply to:</h2>
+                        <ul>
+                            <li>Discontinued Items, free promotional products</li>
+                            <li>Loyalty Programs, rewards, cash back, or affiliate programs</li>
+                            <li>Membership cooperatives</li>
+                            <li>Mail-in rebates, gift cards, or gift checks</li>
+                            <li>Products excluded by manufacturer</li>
+                        </ul>
+                        <p><strong><em>4MD Medical price matching policy is not a guarantee. It is our promise to make every effort to match a competitor's price, but in rare cases, a price match may not be possible.</em></strong></p>
+                        <p><strong><em>4MD Medical reserves the right to change or discontinue its price matching policy at any time.</em></strong></p>
+                        <p></p>
+                        <p>Please complete the below form to submit a price match request</p>
+                        <br>
+
+                    </div>
+                </div>
+                <div class="nosto_element" id="nosto-page-footer"></div>
+            </div>
+
+
+
+            <div>
+
+                <form action="/FooterSendEmails" method="post">
+
+                    <input type="text" hidden name="EmailSubject" value="Price match" asp-for="EmailSubject" />
+
+                    <div class="form-group col-lg-12">
+                        <label asp-for="CustomerFirstName"></label>
+                        <input type="text" name="CustomerFirstName" data-val="true" autocomplete="off" data-val-required="The First Name field is required." asp-for="CustomerFirstName" class="form-control input-sm" placeholder="First Name" />
+                        <span asp-validation-for="CustomerFirstName" style="min-width: 100%;" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-lg-12">
+                        <label asp-for="CustomerLastName"></label>
+                        <input type="text" name="CustomerLastName" data-val="true" autocomplete="off" data-val-required="The Last Name field is required." asp-for="CustomerLastName" class="form-control input-sm" placeholder="Last Name" />
+                        <span asp-validation-for="CustomerLastName" style="min-width: 100%;" class="text-danger"></span>
+                    </div>
+
+
+
+                    <div class="form-group col-lg-12">
+                        <label asp-for="CustomerEmail"></label>
+                        <input type="email" name="CustomerEmail" data-val="true" autocomplete="off" data-val-required="The Email field is required." asp-for="CustomerEmail" class="form-control input-sm" placeholder="Email Address" />
+                        <span asp-validation-for="CustomerEmail" style="min-width: 100%;" class="text-danger"></span>
+                    </div>
+
+
+
+                    <div class="form-group col-lg-12">
+                        <label asp-for="URL"></label>
+                        <input type="text" name="URL" data-val="true" autocomplete="off" data-val-required="The URL field is required." asp-for="URL" class="form-control input-sm" placeholder="Url Address" />
+                        <span asp-validation-for="URL" style="min-width: 100%;" class="text-danger"></span>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <label asp-for="Message"></label>
+                        <textarea type="text" name="Message" data-val="true" autocomplete="off" data-val-required="The Message field is required." asp-for="Message" class="form-control input-sm" style="height:125px" placeholder="Type a message"></textarea>
+
+                        <span asp-validation-for="Message" style="min-width: 100%;" class="text-danger"></span>
+                    </div>
+
+
+
+                    <div class="form-group  col-lg-12" style="margin-top:20px">
+                        <button type="submit" class="btn btn-primary  col-lg-2" style="text-align:center;"> Submit Form  </button>
+                    </div>
+
+
+                </form>
+
+
+
+
+            </div>
+
+            <br>
+            <br>
+            <br>
+
+        </div>
+    </div>
+</div>
+    *@
+
+<style>
+    .become-customer-box{
+        box-shadow : none !important;
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+    .newcustomer-area{
+        padding: 0px !important;
+        background: #FFF !important;
+    }
+    h1, h2, h3, h4, h5, h6{
+        font-weight: 500 !important;
+    }
+    .segment-line{
+        border: 0.1px solid #DADADA !important;
+    }
+    .price-match-helper-text-bold{
+        font-weight: 600 !important;
+
+        font-size: 17px !important;
+    }
+    .sub-heading-price-match{
+        font-size: 19px !important;
+    }
+    .heading-price-match{
+        font-size: 21px !important;
+    }
+    .segment-line{
+        margin-bottom: 25px !important;
+    }
+    .price-match-helper-text{
+        font-size: 17px !important;
+    }
+    .list li{
+        font-size: 17px !important;
+    }
+    input[type=submit], .cancel-link {
+        font-family: Roboto !important;
+    }
+</style>
+
+<section class="container-fluid newcustomer-area">
+     <div class="container-fluid" style="background: #F1F3F6; padding: 10px;">
+         <div class="container breadcrumb-bar">
+
+             <span class="muted"><a style="color: #A9A9A9;" href="@Url.RouteUrl("Homepage")">Inovatiqa</a> / </span> Price Match Policy
+         </div>
+         </div>
+    <div class="row">
+        <div class="container">
+            <div class="row mt10">
+                <div class="col-md-12">
+                    <div class="become-customer-box" style="padding-top: 0px;">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="font_lato">
+                                    <div class="customer-select">
+                                        <h4 class="heading-price-match mt25">Price Match Policy</h4>
+                                        <hr class="segment-line">
+                                        <h5 class="sub-heading-price-match">Can’t find a lower price somewhere else? Don’t worry!</h5>
+                                        <p class="price-match-helper-text mt16">Inovatiqa will match any online price, for an exact-same product. Our price match policy considers the total order price versus our competition. </p>
+                                        <p class="price-match-helper-text-bold mt16">Our price matching policy does not include eBay, Amazon, online medical suppliers with no phone number and/or physical address listed, or any other third-party selling services. We will match authentic U.S. websites by authorized U.S. medical supply dealers.</p>
+                                    </div>
+                                </div>
+                                <div class="flex-row">
+                                    <div>
+                                        <h5 class="mt5 sub-heading-price-match">Requirement</h5>
+                                        <p class="price-match-helper-text">Price matching must be requested at the time the order is placed. No price matching will occur after an order has been placed. In cases where the actual charge from the competitor is less than the actual charge from Inovatiqa, we will match the competitor's actual charge. Price match items must be in stock and be the identical items. Price match requests must be received before your order is placed to be honored. Inovatiqa will not match prices on used, refurbished, and clearance equipment or prices from online auction websites. Inovatiqa Corporation also reserves the right to refuse any price match if we believe that the item may violate any of these aforementioned conditions. </p>
+                                    </div>
+                                    <img class="mt5" src="~/images/UIComponents/price_match_guarentee.png" alt="" width="400" height="100" style="transform: translateY(50%);">
+                                </div>
+                                <div>
+                                    <h5 class="sub-heading-price-match mt5">Price Matching does not apply to:</h5>
+                                    <ul class="list">
+                                        <li class="mt10">Discontinued Items</li>
+                                        <li class="mt10">Loyalty Programs, rewards, cash back, or affiliate programs</li>
+                                        <li class="mt10">Membership cooperatives</li>
+                                        <li class="mt10">Products excluded by manufacturer</li>
+                                    </ul>
+                                    <p class="mt20 price-match-helper-text-bold">Inovatiqa’s price matching policy is not a guarantee. It is our promise to make every effort to match a competitor's price, but in rare cases, a price match may not be possible. We reserve the right to change or discontinue its price matching policy at any time.</p>
+                                    <h5 class="mt63 small-heading-price-match">Please complete the below form to submit a price match request</h5>
+
+                                </div>
+                                @{
+                                    var msg = TempData["message"];
+                                }
+                                <div class="col-md-6">
+                                    <div class="accountform-area font_lato" style="display: block;">
+                                        <form class="createaccount-form" action="/FooterSendEmails" method="post">
+                                            <input type="text" hidden name="EmailSubject" value="Price match" asp-for="EmailSubject" />
+                                            <input type="text" name="Method" value="@Url.RouteUrl("PriceMatch")" asp-for="Method" hidden />
+                                            <div class="row align_center mt53">
+                                                @if (TempData["message"] != null && TempData["message"].ToString() != "")
+                                                {
+                                                    <div class="col-md-12" style="padding: 0">
+                                                        <div class="alert @TempData["messageClass"]" role="alert">
+                                                            @TempData["message"]
+                                                        </div>
+                                                    </div>
+                                                }
+                                                <div class="col-md-4 col-sm-12 col-xs-12 pl0">
+                                                    <div class="form-group">
+                                                        <label class="required">Contact Name</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8 col-sm-12 col-xs-12">
+                                                    <div class="form-group flex-col">
+                                                        <input type="text" class=" form-control" name="CustomerFirstName" data-val="true" autocomplete="off" data-val-required="Contact Name is required." asp-for="CustomerFirstName" />
+                                                        <span asp-validation-for="CustomerFirstName" class="error-label mt10"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row align_center">
+                                                <div class="col-md-4 col-sm-12 col-xs-12 pl0">
+                                                    <div class="form-group">
+                                                        <label class="required">Email Address</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8 col-sm-12 col-xs-12">
+                                                    <div class="form-group flex-col">
+                                                        <input type="email" class="form-control" name="CustomerEmail" data-val="true" autocomplete="off" data-val-required="Email is required." asp-for="CustomerEmail" />
+                                                        <span asp-validation-for="CustomerEmail" class="error-label mt10"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row align_center">
+                                                <div class="col-md-4 col-sm-12 col-xs-12 pl0">
+                                                    <div class="form-group">
+                                                        <label class="required">URL Link</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8 col-sm-12 col-xs-12">
+                                                    <div class="form-group flex-col">
+                                                        <input type="text" class="form-control" name="URL" data-val="true" autocomplete="off" data-val-required="URL is required." asp-for="URL" />
+                                                        <span asp-validation-for="URL" class="error-label mt10"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row align_center">
+                                                <div class="col-md-4 col-sm-12 col-xs-12 pl0">
+                                                    <div class="form-group" style="margin-bottom: 5px;">
+                                                        <label class="required">Message</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 col-sm-12 col-xs-12 pl0">
+                                                    <div class="form-group flex-col">
+                                                        <textarea rows="12" class="form-control custom-textarea mb0" style="max-width: unset;" name="Message" data-val="true" autocomplete="off" data-val-required="Message is required." asp-for="Message"></textarea>
+                                                        <span asp-validation-for="Message" class="error-label mt10"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 col-sm-12 col-xs-12 mt35">
+                                                    <div class="pwd-btn text-right">
+                                                        <a href="@Url.RouteUrl("HomePage")" class="cancel-link">Cancel</a>
+                                                        <input type="submit" value="Submit Form" class="btn btn-signin">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid" style="background: #F1F3F6; padding: 20px;"></div> 
+</section>

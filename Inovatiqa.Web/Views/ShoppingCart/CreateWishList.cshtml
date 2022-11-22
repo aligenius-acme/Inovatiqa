@@ -1,0 +1,79 @@
+﻿@model WishlistModel
+@using Inovatiqa.Core.Interfaces
+@inject IWebHelper webHelper
+@{
+    Layout = "_ColumnsOne";
+}
+@{
+    ViewBag.Title = "Create Wish List";
+}
+<div class="page account-page order-list-page from-panel">
+    <div class="page-title panel-heading">
+        <h1 id="pageTitle">
+            Create New List
+        </h1>
+        <h5>
+            Enter a name for your new list.   <a href="@Url.RouteUrl("ViewWishLists")">Lists Help</a>
+        </h5>
+    </div>
+    <div class="page-body">
+        <div class="shipping-address row">
+            <div class="fieldset form-horizontal">
+                <div class="col-8 col-xs-8 col-sm-2 col-md-2 col-lg-2">
+                    <div class="form-group">
+                        <div class="estimate-shipping-row-item address-item">
+                            <div class="col-sm-11 col-md-11">
+                                <p>New list name:</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                    <div class="form-group">
+                        <div class="estimate-shipping-row-item address-item">
+                            <div class="col-sm-12 col-md-12">
+                                <input class="estimate-shipping-address-control form-control" type="text" id="newListName" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="shipping-address row">
+            <div class="fieldset form-horizontal">
+                <div class="col-8 col-xs-8 col-sm-2 col-md-2 col-lg-2">
+                    <div class="form-group">
+                        <div class="estimate-shipping-row-item address-item">
+                            <div class="col-sm-11 col-md-11">
+                                <p style="width:175px">This list can be used by:</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                    <div class="form-group">
+                        <div class="estimate-shipping-row-item address-item">
+                            <div class="col-sm-12 col-md-12">
+                                <input type="radio" id="everyone" name="wishListType" />&nbsp;Everyone (Shared List)
+                                <br />
+                                <input type="radio" checked="checked" id="justMe" name="wishListType" />&nbsp;Just me (Personal List)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="common-buttons" style="width: 150px; padding-left: 35%; float: left;">
+                <div style="float: left; padding-right: 10px;">
+                    <input type="button" id="createWishList" name="createWishList" value="Create" class="btn btn-primary">
+                </div>
+                <div>
+                    <input type="button" onclick="function Cancel() { window.location.href = '/wishlist'};Cancel()" name="cancelList" value="Cancel" class="btn btn-primary">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

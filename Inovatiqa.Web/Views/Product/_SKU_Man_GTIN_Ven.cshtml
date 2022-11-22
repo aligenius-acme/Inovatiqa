@@ -1,0 +1,111 @@
+﻿@model ProductDetailsModel
+@using Inovatiqa.Database.Models
+@using Inovatiqa.Core
+@*
+    <div class="additional-details d-inline">
+        @if ((!string.IsNullOrEmpty(Model.Sku) || Model.ManageInventoryMethodId == InovatiqaDefaults.ManageStockByAttributes) && Model.ShowSku)
+        {
+            <div class="sku" @(string.IsNullOrEmpty(Model.Sku) ? Html.Raw("style=\"display:none\"") : null) style="display: inline; float: left;">
+                <span class="value" id="sku-@Model.Id">@String.Format("#{0}", Model.Sku)</span>
+            </div>
+        }
+        <div class="manufacturers d-inline pull-left" style="margin-left: 20px;">
+            <span class="value">
+                @for (var i = 0; i < Model.ProductManufacturers.Count; i++)
+                {
+                    var item = Model.ProductManufacturers[i];
+                    <a href="@Url.RouteUrl("Manufacturer", new { SeName = item.SeName })">@item.Name</a>
+                    if (i != Model.ProductManufacturers.Count - 1)
+                    {
+                        <span class="separator">,</span>
+                    }
+                }
+            </span>
+        </div>
+        <!--Manufacturer part number-->
+        <div class="manufacturer-part-number d-inline pull-left" style="margin-left: 20px;">
+            <span class="value" id="mpn-@Model.Id">Mfr# @Model.ManufacturerPartNumber</span>
+        </div>
+        <!--GTIN-->
+        @if ((!string.IsNullOrWhiteSpace(Model.Gtin) || Model.ManageInventoryMethodId == InovatiqaDefaults.ManageStockByAttributes) && Model.ShowGtin)
+        {
+            <div class="gtin" @(string.IsNullOrWhiteSpace(Model.Gtin) ? Html.Raw("style=\"display:none\"") : null)>
+                <strong>GTIN:</strong>
+                <span class="value" id="gtin-@Model.Id">@Model.Gtin</span>
+            </div>
+        }
+        <!--Vendor-->
+        @if (Model.ShowVendor)
+        {
+            <div class="product-vendor">
+                <span class="value"><a href="@Url.RouteUrl("Vendor", new { SeName = Model.VendorModel.SeName })">@Model.VendorModel.Name</a></span>
+            </div>
+        }
+    </div>
+*@
+@if ((!string.IsNullOrEmpty(Model.Sku) || Model.ManageInventoryMethodId == InovatiqaDefaults.ManageStockByAttributes) && Model.ShowSku)
+{
+    <div class="row">
+        <div class="col-md-2 col-xs-6">
+            <p><span>SKU #</span></p>
+        </div>
+        <div class="col-md-8  col-xs-6">
+            <p>#@Model.Sku</p>
+        </div>
+    </div>
+}
+<div class="row">
+    <div class="col-md-2  col-xs-6">
+        <p><span>MPN #</span></p>
+    </div>
+    <div class="col-md-8  col-xs-6">
+        <p>@Model.ManufacturerPartNumber</p>
+    </div>
+</div>
+@for (var i = 0; i < Model.ProductManufacturers.Count; i++)
+{
+    var item = Model.ProductManufacturers[i];
+        <div class="row">
+            <div class="col-md-2  col-xs-6">
+                <p><span>Brand</span></p>
+            </div>
+            <div class="col-md-8  col-xs-6">
+                <p><span class="green_text">@item.Name</span></p>
+                @if (i != Model.ProductManufacturers.Count - 1)
+                {
+                    <span class="separator">,</span>
+                }
+            </div>
+        </div>
+ }
+
+<div class="row">
+    <div class="col-md-2  col-xs-6">
+        <p><span>Stock</span></p>
+    </div>
+    <div class="col-md-8  col-xs-6">
+        @if (Model.quantity <= 0)
+        {
+            <p><span style="color: red;">@Model.stockStatus</span></p>
+        }
+        else
+        {
+            <p><span style="color: #6A983C;">@Model.stockStatus</span></p>
+        }
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2  col-xs-6">
+        <p><span>Quantity</span></p>
+    </div>
+    <div class="col-md-8  col-xs-6">
+        @if(Model.quantity >= 0)
+        {
+            <p><span>@Model.quantity</span></p>
+        }
+        else
+        {
+            <p><span>0</span></p>
+        }
+    </div>
+</div>

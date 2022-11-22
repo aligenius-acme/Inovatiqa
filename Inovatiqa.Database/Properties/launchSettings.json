@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Inovatiqa.Database": {
+      "commandName": "Project",
+      "workingDirectory": "C:\\Users\\Salman Computers\\source\\repos\\Inovatiqa\\Inovatiqa.Web"
+    }
+  }
+}

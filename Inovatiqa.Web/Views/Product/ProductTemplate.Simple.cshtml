@@ -1,0 +1,474 @@
+﻿@model ProductDetailsModel
+@using Inovatiqa.Database
+@using Inovatiqa.Core
+@{
+    Layout = "_ColumnsOne";
+}
+
+@{
+    ViewBag.Title = !string.IsNullOrEmpty(Model.MetaTitle) ? Model.MetaTitle : Model.Name;
+}
+@section additionalMeta {
+    <meta name="title" content="@ViewBag.Title" />
+    <meta name="keywords" content="@Model.MetaKeywords" />
+    <meta name="description" content="@Model.MetaDescription" />
+}
+<style>
+    .purchase-item {
+        float: left;
+        border: 5px solid #f3f3f3;
+        text-align: center;
+        padding: 30px 0px 20px 0px;
+        width: 100%
+    }
+
+        .purchase-item input {
+            border-radius: 0px;
+        }
+
+        .purchase-item select {
+            border-radius: 0px;
+        }
+
+    .uom {
+        white-space: nowrap;
+        width: 73%;
+        margin: 1em;
+        float: left;
+    }
+
+    .btn_large {
+        padding: 10px 30px;
+        font-size: 1.2em;
+        max-width: 13.75em;
+    }
+
+    .product-add-button {
+        padding: 3%;
+    }
+
+        .product-add-button input {
+            width: 100%;
+            margin: 4px;
+        }
+</style>
+@*
+    <div class="page product-details-page">
+        <div class="page-body">
+            <form asp-route="Product" asp-route-sename="@Model.SeName" method="post" id="product-details-form">
+                <div data-productid="@Model.Id">
+                    <div class="product-essential from-panel">
+                        <div>
+                            <div class="row">
+                                <div class="product-name panel-heading">
+                                    <!--SKU, MAN, GTIN, vendor-->
+                                    @await Html.PartialAsync("_SKU_Man_GTIN_Ven", Model)
+                                    <br />
+                                    <div class="col-md-12" style="margin-bottom: 20px;margin-left: -1.5%;">
+                                        <h1 style="margin-top:-1%;">
+                                            @Model.Name
+                                        </h1>
+                                    </div>
+                                </div>
+                                <div class="col-md-12" style="margin-top: -25px;"><h5 style="color: #aaa;">@Model.Name</h5></div>
+                                <br />
+                                <div class="col-md-12"><h4 style="color: #090;">@Model.Name</h4></div>
+                                <div class="col-md-3" style="width:29%">
+                                    <!--product pictures-->
+                                    @await Html.PartialAsync("_ProductDetailsPictures", Model)
+                                </div>
+                                <div class="col-md-5" style="width:41%">
+                                    <div class="overview">
+                                        @await Html.PartialAsync("_Discontinued", Model)
+                                        @if (!string.IsNullOrEmpty(Model.ShortDescription))
+                                        {
+                                            <div class="short-description">
+                                                <strong>Features:</strong>
+                                                @if (!string.IsNullOrEmpty(Model.ShortDescription) && Model.ShortDescription.Length > 300)
+                                                {
+                                                    @Html.Raw(Model.ShortDescription.Substring(0, 300) + "...")
+                                                    <a href="#tabbed-description">More features</a>
+                                                }
+                                                else
+                                                    @Html.Raw(Model.ShortDescription)
+                                            </div>
+                                        }
+
+                                        <!--availability-->
+                                        @await Html.PartialAsync("_Availability", Model)
+                                        <!--delivery-->
+                                        @await Html.PartialAsync("_DeliveryInfo", Model)
+                                        <!--product reviews-->
+                                        @@await Html.PartialAsync("_ProductReviewOverview", Model.ProductReviewOverview)@
+                                        <!--sample download-->
+                                        @await Html.PartialAsync("_DownloadSample", Model)
+                                        <!--attributes-->
+                                        @{
+                                            var dataDictAttributes = new ViewDataDictionary(ViewData);
+                                            dataDictAttributes.TemplateInfo.HtmlFieldPrefix = $"attributes_{Model.Id}";
+                                            @await Html.PartialAsync("_ProductAttributes", Model.ProductAttributes.Where(x => x.Name != "UOM").ToList(), dataDictAttributes)
+                                        }
+
+
+
+                                        <!--gift card-->
+                                        @@{
+                                                var dataDictGiftCard = new ViewDataDictionary(ViewData);
+                                                dataDictGiftCard.TemplateInfo.HtmlFieldPrefix = $"giftcard_{Model.Id}";
+                                                @await Html.PartialAsync("_GiftCardInfo", Model.GiftCard, dataDictGiftCard)
+                                            }@
+                                        <!--rental info-->
+                                        @@{
+                                                var dataDictRental = new ViewDataDictionary(ViewData);
+                                                dataDictRental.TemplateInfo.HtmlFieldPrefix = $"rental_{Model.Id}";
+                                                @await Html.PartialAsync("_RentalInfo", Model, dataDictRental)
+                                            }@
+                                        <!--price & add to cart & estimate shipping-->
+                                        @{
+                                            @*var dataDictPrice = new ViewDataDictionary(ViewData);
+                                                dataDictPrice.TemplateInfo.HtmlFieldPrefix = $"price_{Model.Id}";
+                                                @await Html.PartialAsync("_ProductPrice", Model.ProductPrice, dataDictPrice)@
+
+                                            @@await Html.PartialAsync("_ProductTierPrices", Model.TierPrices)@
+
+                                            @*var dataDictAddToCart = new ViewDataDictionary(ViewData);
+                                                dataDictAddToCart.TemplateInfo.HtmlFieldPrefix = $"addtocart_{Model.Id}";
+                                                @await Html.PartialAsync("_AddToCart", Model.AddToCart, dataDictAddToCart)@
+                                        }
+
+                                        @@await Html.PartialAsync("_ShareButton", Model)@
+
+                                    </div>
+                                </div>
+                                <div class="col-md-3" style="width:29%">
+                                    <div class="form-group email-friend-btn">
+                                        <div class="email-compare-button" style="float:right;">
+                                            <!--wishlist, compare, email a friend-->
+                                            @@{
+                                                    var dataDictAddToWishlist = new ViewDataDictionary(ViewData);
+                                                    dataDictAddToWishlist.TemplateInfo.HtmlFieldPrefix = $"addtocart_{Model.Id}";
+                                                    @await Html.PartialAsync("_AddToWishlist", Model.AddToCart, dataDictAddToWishlist)
+                                                }@
+                                            @@await Html.PartialAsync("_ProductEmailAFriendButton", Model)@
+                                            @await Html.PartialAsync("_CompareProductsButton", Model)
+                                        </div>
+                                    </div>
+                                    <div class="purchase-item">
+                                        @{
+                                            var uomModel = Model.ProductAttributes.Where(x => x.Name == "UOM").FirstOrDefault();
+                                            var controlId = $"{InovatiqaDefaults.ProductAttributePrefix}{uomModel.Id}";
+                                            var textPrompt = !string.IsNullOrEmpty(uomModel.TextPrompt) ? uomModel.TextPrompt : uomModel.Name;
+                                            <label class="text-prompt uom">
+                                                @textPrompt
+                                                <select name="@(controlId)" id="@(controlId)" style="display:inline-block" class="btn-dropdown form-control" @(uomModel.Values.Any(value => value.CustomerEntersQty) ? Html.Raw(string.Format("onchange=\"showHideDropdownQuantity('{0}')\"", controlId)) : null)>
+                                                    @foreach (var attributeValue in uomModel.Values)
+                                                    {
+                                                        var attributeName = string.IsNullOrEmpty(attributeValue.PriceAdjustment) ?
+                                                        attributeValue.Name :
+                                                        string.Format("{0} [{1}{2}]", attributeValue.Name, attributeValue.PriceAdjustment,
+                                                            attributeValue.CustomerEntersQty ? " per item" : string.Empty);
+                                                        if (attributeValue == uomModel.Values.First())
+                                                        {
+                                                            <option selected="@attributeValue.IsPreSelected" value="@attributeValue.Id" msku="@attributeValue.MSku">@attributeName @Model.ProductPrice.Price</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option selected="@attributeValue.IsPreSelected" value="@attributeValue.Id" msku="@attributeValue.MSku">@attributeName $@Decimal.Round(@Convert.ToDecimal(Model.ProductPrice.PriceValue) + @Convert.ToDecimal(attributeValue.PriceAdjustmentValue), 2)</option>
+                                                        }
+                                                    }
+                                                </select>
+                                            </label>
+                                            <br />
+                                            <label style="white-space:nowrap">
+                                                QTY
+                                                <input asp-for="@Model.AddToCart.EnteredQuantity" maxlength="4" size="2" style="display:inline-block" name="@(string.Format("{0}{1}{2}", "addtocart_", Model.AddToCart.ProductId, ".EnteredQuantity"))" id="product_enteredQuantity_@Model.AddToCart.ProductId" class="qty-input form-control" type="text" value="1" aria-label="Enter a quantity" />
+                                            </label>
+
+                                            <div class="product-add-button">
+                                                <input type="button" id="add-to-cart-button-@Model.AddToCart.ProductId" class=" btn btn-primary add-to-cart-button btn_large" value="ADD TO CART" data-productid="@Model.AddToCart.ProductId" onclick="AjaxCart.addproducttocart_details('@Url.RouteUrl("AddProductToCart-Details", new { productId = Model.AddToCart.ProductId, shoppingCartTypeId = (int)ShoppingCartType.ShoppingCart, wishListId = 0})', '#product-details-form', @((int)ShoppingCartType.ShoppingCart));return false;" />
+                                                <br />
+                                                <input type="button" id="add-to-wishlist-button-@Model.AddToCart.ProductId" class=" btn btn_green add-to-wishlist-button btn_large" value="ADD TO LIST" data-productid="@Model.AddToCart.ProductId" onclick="AjaxCart.addproducttocart_details('@Url.RouteUrl("AddProductToCart-Details", new {productId = Model.AddToCart.ProductId, shoppingCartTypeId = (int)ShoppingCartType.Wishlist, wishListId = 0})', '#product-details-form', @((int)ShoppingCartType.Wishlist));return false;" />
+                                            </div>
+
+                                        }
+                                    </div>
+                                </div>
+                                <div class="col-md-12 product-details-tabs" id="tabbed-description">
+                                    <ul class="nav nav-tabs">
+                                        @*if (!string.IsNullOrEmpty(@Html.PartialAsync("_ProductTags", Model.ProductTags).ToString()))
+                                            {
+                                                <li class="active"><a href="#tags" data-toggle="tab">Product tags</a></li>
+                                            }@
+                                        @if (!string.IsNullOrEmpty(Model.FullDescription))
+                                        {
+                                            <li class="active"><a href="#description" data-toggle="tab">Description</a></li>
+                                        }
+                                        @if (!string.IsNullOrEmpty(@Html.PartialAsync("_ProductSpecifications", Model.ProductSpecifications).ToString()))
+                                        {
+                                            <li><a href="#specification" data-toggle="tab">Products specifications</a></li>
+                                        }
+                                    </ul>
+                                    <div class="tab-content">
+                                        @*<div class="product-tags tab-pane fade in active" id="tags">
+                                                @await Html.PartialAsync("_ProductTags", Model.ProductTags)
+                                            </div>@
+                                        @if (!string.IsNullOrEmpty(Model.FullDescription))
+                                        {
+                                            <div class="full-description fade tab-pane in active" id="description" style="font-family:Helvetica Neue,Helvetica,Arial,sans-serif;">
+                                                @Html.Raw(Model.FullDescription)
+                                            </div>
+                                        }
+                                        <div class="product-specification fade tab-pane" id="specification" style="font-family:Helvetica Neue,Helvetica,Arial,sans-serif;">
+                                            @await Html.PartialAsync("_ProductSpecifications", Model.ProductSpecifications)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="product-collateral">
+                            @@await Component.InvokeAsync("ProductsAlsoPurchased", new { productId = Model.Id })
+                                @await Component.InvokeAsync("RelatedProducts", new { productId = Model.Id })@
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+*@
+
+<style>
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+        opacity: 1;
+    }
+</style>
+
+
+<section>
+    <img src="/images/UIComponents/bg6.png" class="full_width_img" />
+    @await Html.PartialAsync("_ProductBreadcrumb", Model.Breadcrumb)
+</section>
+
+<section class="container-fluid">
+    <div class="row">
+        <form asp-route="Product" asp-route-sename="@Model.SeName" method="post" id="product-details-form">
+            <div class="container">
+                <div class="row flex_col m_t_50  m_b_50">
+                    <div class="col-md-12 title_text font_lato">
+                        <div class="row flex_col   ">
+                            <div class="col-md-12">
+                                <div class="product_list product_details">
+                                    <div class="row">
+                                        @await Html.PartialAsync("_ProductDetailsPictures", Model)
+                                        <div class="col-md-9 col-sm-7">
+                                            <h2 class="title_product">@Model.Name</h2>
+                                            <div class="row">
+                                                <div class="col-md-8 col-xs-12 description">
+                                                    <h3 class="subtitle_product">@Model.SeName</h3>
+                                                    @await Html.PartialAsync("_SKU_Man_GTIN_Ven", Model)
+                                                    <div class="row">
+                                                        <div class="col-md-9 m_t_10  ">
+                                                            @await Html.PartialAsync("_Discontinued", Model)
+                                                            <h4>Features</h4>
+                                                            @if (!string.IsNullOrEmpty(Model.ShortDescription))
+                                                            {
+                                                                @if (!string.IsNullOrEmpty(Model.ShortDescription) && Model.ShortDescription.Length > 300)
+                                                                {
+                                                                    @Html.Raw(Model.ShortDescription.Substring(0, 300) + "...")
+                                                                    <a href="#tabbed-description">More features</a>
+                                                                }
+                                                                else
+                                                                    @Html.Raw(Model.ShortDescription)
+                                                            }
+                                                            @await Html.PartialAsync("_Availability", Model)
+                                                            <!--delivery-->
+                                                            @await Html.PartialAsync("_DeliveryInfo", Model)
+                                                            <!--sample download-->
+                                                            @await Html.PartialAsync("_DownloadSample", Model)
+                                                            @{
+                                                                var dataDictAttributes = new ViewDataDictionary(ViewData);
+                                                                dataDictAttributes.TemplateInfo.HtmlFieldPrefix = $"attributes_{Model.Id}";
+                                                                    @await Html.PartialAsync("_ProductAttributes", Model.ProductAttributes.Where(x => x.Name != "UOM").ToList(), dataDictAttributes)
+                                                            }
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="col-md-4 col-xs-12  ">
+                                                    <div class="price_box">
+                                                        <div class="row">
+                                                            <div class="col-lg-12 col-sm-12 col-xs-12">
+                                                                <h2 class="text-center"><span id="priceChange_@Model.Id">@Model.ProductPrice.Price</span> @InovatiqaDefaults.CurrencyCode </h2>
+                                                                <div class="row">
+                                                                    <div class="col-md-10 col-md-offset-1">
+                                                                        <div class="uom_box m_t_30">
+                                                                            <label>UOM</label>
+                                                                            <img src="/images/UIComponents/downarrow.svg" class="options_pane_down_arrow">
+                                                                            @{
+                                                                                var uomModel = Model.ProductAttributes.Where(x => x.Name == "UOM").FirstOrDefault();
+                                                                                var controlId = $"{InovatiqaDefaults.ProductAttributePrefix}{uomModel.Id}";
+                                                                                var textPrompt = !string.IsNullOrEmpty(uomModel.TextPrompt) ? uomModel.TextPrompt : uomModel.Name;
+                                                                                    <select name="@(controlId)" style="padding-left:0px" id="@(controlId)" class="form-control" onchange="checkBoxChange(this.options[this.selectedIndex].getAttribute('change-val'), @Model.Id)" @(uomModel.Values.Any(value => value.CustomerEntersQty) ? Html.Raw(string.Format("onchange=\"showHideDropdownQuantity('{0}')\"", controlId)) : null)>
+                                                                                        @foreach (var attributeValue in uomModel.Values)
+                                                                                    {
+                                                                                        var attributeName = string.IsNullOrEmpty(attributeValue.PriceAdjustment) ?
+                                                                                        attributeValue.Name :
+                                                                                        string.Format("{0} [{1}{2}]", attributeValue.Name, attributeValue.PriceAdjustment,
+                                                                                            attributeValue.CustomerEntersQty ? " per item" : string.Empty);
+                                                                                        if (attributeValue == uomModel.Values.First())
+                                                                                        {
+                                                                                                <option selected="@attributeValue.IsPreSelected" change-val="@Model.ProductPrice.Price" value="@attributeValue.Id" msku="@attributeValue.MSku">@attributeName</option>
+                                                                                        }
+                                                                                        else
+                                                                                        {
+                                                                                                <option selected="@attributeValue.IsPreSelected" change-val="$@Decimal.Round(Convert.ToDecimal(Model.ProductPrice.PriceValue) + Convert.ToDecimal(attributeValue.PriceAdjustmentValue), 2)" value="@attributeValue.Id" msku="@attributeValue.MSku">@attributeValue.Name</option>
+                                                                                        }
+                                                                                    }
+                                                                                    </select>
+                                                                            }
+                                                                        </div>
+                                                                        <div class="uom_box m_t_30">
+                                                                            <label>QTY</label>
+                                                                            @*<img src="/images/UIComponents/downarrow.svg" class="options_pane_down_arrow">*@
+                                                                            <input type="number" asp-for="@Model.AddToCart.EnteredQuantity" style="display:inline-block; text-align:center; padding-right:3px;" name="@(string.Format("{0}{1}{2}", "addtocart_", Model.AddToCart.ProductId, ".EnteredQuantity"))" id="product_enteredQuantity_@Model.AddToCart.ProductId" class="form-control" />
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <button style="width: 100%;" class="btn btn-default m_t_30" id="add-to-cart-button-@Model.AddToCart.ProductId" data-productid="@Model.AddToCart.ProductId" onclick="AjaxCart.addproducttocart_details('@Url.RouteUrl("AddProductToCart-Details", new { productId = Model.AddToCart.ProductId, shoppingCartTypeId = (int)ShoppingCartType.ShoppingCart, wishListId = 0})', '#product-details-form', @((int)ShoppingCartType.ShoppingCart));return false;"> <img src="/images/UIComponents/ic-actions-add-simple.png"> Add To Cart</button>
+                                                                <button style="width: 100%;" class="btn btn-default wishlist m_t_30" id="add-to-wishlist-button-@Model.AddToCart.ProductId" data-productid="@Model.AddToCart.ProductId" onclick="AjaxCart.addproducttocart_details('@Url.RouteUrl("AddProductToCart-Details", new {productId = Model.AddToCart.ProductId, shoppingCartTypeId = (int)ShoppingCartType.Wishlist, wishListId = 0})', '#product-details-form', @((int)ShoppingCartType.Wishlist));return false;"> <img src="/Images/UIComponents/heart_black.png"> Add To Wishlist</button>
+                                                            </div>
+
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8 col-sm-12">
+                                            <div class="row m_t_50">
+                                                <div class="col-md-12">
+                                                    <div class="row flex_col align_center">
+                                                        <div class="col-md-10 col-xs-12">
+                                                            <div class="tab_title">
+                                                                <a href="javascript:void(0);" data-val="t1" class="active">Product Specifications</a>
+                                                                <a href="javascript:void(0);" data-val="t2">Product Usage</a>
+                                                                <a href="javascript:void(0);" data-val="t3">Additional Information</a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-2 col-xs-12 text-right">
+                                                            <div class="print_email flex_end">
+                                                                <a href=""><img src="/images/UIComponents/add.svg" /> Print</a>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-12">
+                                                    @await Html.PartialAsync("_ProductSpecifications", Model.ProductSpecifications)
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-4 col-sm-12">
+                                            <div class="col-md-12  ">
+                                                <div class="row">
+                                                    <div class="compare_items_sec_minus first_a m_b_20" style="position: sticky; margin-top: 5%;">
+                                                        <div class="  comare_flex">
+                                                            <a href="@Url.RouteUrl("CompareProducts")" class="m0 compare pointer"><img src="/images/UIComponents/checkbox.png" height="20"><span class="comp-button"> Compare Selected Items</span></a>
+                                                            <a href="#" class="m 0"><img src="/images/UIComponents/ic-contact-mail.svg"> Email</a>
+                                                        </div>
+                                                        <div class="compare_box_section">
+                                                            <div class="compare_box_head"><h4>Similar Items</h4></div>
+                                                            <div class="compare_box_body">
+                                                                <div>
+                                                                    <div class="col-md-5 col-sm-4">
+                                                                        <img src="/images/UIComponents/cc.png" style="margin-top: 15px;">
+                                                                        <input type="checkbox" style="width: 15px; height: 15px; left: -5px;">
+                                                                    </div>
+                                                                    <div>
+                                                                        <div class="c_box" style="display: flex; flex-direction: column;">
+                                                                            <h4>Underarm Crutches McKesson Aluminum Frame Tall Adult 350 lbs. Weight Capacity Push Button - Adjustment</h4>
+                                                                            <p>One Size Fits Most White NonSterile Not Rated 8211</p>
+                                                                            <p><span>In Stock</span></p>
+                                                                            <h3>PR/1 <span>$9.76 USD</span></h3>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div>
+                                                                    <div class="col-md-5 col-sm-4">
+                                                                        <img src="/images/UIComponents/cc.png" style="margin-top: 15px;">
+                                                                        <input type="checkbox" style="width: 15px; height: 15px; left: -5px;">
+                                                                    </div>
+                                                                    <div>
+                                                                        <div class="c_box" style="display: flex; flex-direction: column;">
+                                                                            <h4>Underarm Crutches McKesson Aluminum Frame Tall Adult 350 lbs. Weight Capacity Push Button - Adjustment</h4>
+                                                                            <p>One Size Fits Most White NonSterile Not Rated 8211</p>
+                                                                            <p><span>In Stock</span></p>
+                                                                            <h3>PR/1 <span>$9.76 USD</span></h3>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div>
+                                                                    <div class="col-md-5 col-sm-4">
+                                                                        <img src="/images/UIComponents/cc.png" style="margin-top: 15px;">
+                                                                        <input type="checkbox" style="width: 15px; height: 15px; left: -5px;">
+                                                                    </div>
+                                                                    <div>
+                                                                        <div class="c_box" style="display: flex; flex-direction: column;">
+                                                                            <h4>Underarm Crutches McKesson Aluminum Frame Tall Adult 350 lbs. Weight Capacity Push Button - Adjustment</h4>
+                                                                            <p>One Size Fits Most White NonSterile Not Rated 8211</p>
+                                                                            <p><span>In Stock</span></p>
+                                                                            <h3>PR/1 <span>$9.76 USD</span></h3>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div>
+                                                                    <div class="col-md-5 col-sm-4">
+                                                                        <img src="/images/UIComponents/cc.png" style="margin-top: 15px;">
+                                                                        <input type="checkbox" style="width: 15px; height: 15px; left: -5px;">
+                                                                    </div>
+                                                                    <div>
+                                                                        <div class="c_box" style="display: flex; flex-direction: column;">
+                                                                            <h4>Underarm Crutches McKesson Aluminum Frame Tall Adult 350 lbs. Weight Capacity Push Button - Adjustment</h4>
+                                                                            <p>One Size Fits Most White NonSterile Not Rated 8211</p>
+                                                                            <p><span>In Stock</span></p>
+                                                                            <h3>PR/1 <span>$9.76 USD</span></h3>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 col-sm-12">
+                                            <div class="row">
+                                                <div class="col-md-12 col-xs-12 product_list_description">
+                                                    @if (!string.IsNullOrEmpty(Model.FullDescription))
+                                                    {
+                                                        @Html.Raw(Model.FullDescription)
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+<script>
+    function checkBoxChange(changedPrice, id) {
+        $(`#priceChange_${id}`).html(changedPrice);
+    }
+</script>

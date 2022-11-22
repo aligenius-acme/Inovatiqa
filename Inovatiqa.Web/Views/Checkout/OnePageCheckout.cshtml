@@ -1,0 +1,692 @@
+﻿@using Inovatiqa.Core
+@model OnePageCheckoutModel
+@{
+    Layout = "_ColumnsOne";
+
+    @Html.Resource(@<script src="@Url.Content("~/js/public.accordion.js")" type="text/javascript"></script>, "js")
+    @Html.Resource(@<script src="@Url.Content("~/js/public.onepagecheckout.js")" type="text/javascript"></script>, "js")
+
+    @if (InovatiqaDefaults.UseSandbox)
+    {
+    @Html.Resource(@<script src="@Url.Content(InovatiqaDefaults.SandboxPaymentFormScriptPath)" type="text/javascript"></script>, "js")
+    }
+    else
+    {
+    @Html.Resource(@<script src="@Url.Content(InovatiqaDefaults.PaymentFormScriptPath)" type="text/javascript"></script>, "js")
+    }
+}
+
+@{
+    ViewBag.Title = "Checkout";
+}
+@{
+    //step numbers
+    var billingAddressStepNumber = 1;
+    var shippingAddressStepNumber = 2;
+    var shippingMethodStepNumber = 3;
+    var paymentMethodStepNumber = 4;
+    var paymentInfoStepNumber = 5;
+    var confirmOrderStepNumber = 6;
+    if (!Model.ShippingRequired)
+    {
+        paymentMethodStepNumber = paymentMethodStepNumber - 2;
+        paymentInfoStepNumber = paymentInfoStepNumber - 2;
+        confirmOrderStepNumber = confirmOrderStepNumber - 2;
+    }
+    if (Model.DisableBillingAddressCheckoutStep)
+    {
+        shippingAddressStepNumber--;
+        shippingMethodStepNumber--;
+        paymentMethodStepNumber--;
+        paymentInfoStepNumber--;
+        confirmOrderStepNumber--;
+    }
+
+}
+<style>
+    .order-summary-scroll {
+        max-height: 512px;
+        overflow-x: hidden;
+        overflow-y: scroll;
+    }
+</style>
+<section class="container-fluid signed_in_user_strip orange_strip">
+    <div class="row">
+        <div class="container">
+            <p><i class="fa fa-credit-card"></i> Payment</p>
+        </div>
+    </div>
+</section>
+
+
+<section class="container-fluid  " style="background: #F1F3F6;">
+    <div class="row">
+        <div class="container">
+            <div class="row m_t_40 m_b_40  ">
+                <div class="col-md-12">
+                    <div class="payment_box">
+                        <div class="row">
+                            <div class="col-md-7 col-sm-6 col-xs-12">
+                                <div id="opc-billing" class="tab-section allow">
+                                    <div id="checkout-step-billing" class="step a-item">
+                                        <form id="co-billing-form">
+                                            <div id="checkout-billing-load">
+                                                @await Html.PartialAsync("OpcBillingAddress", Model.BillingAddress)
+                                            </div>
+                                            <div class="buttons" id="billing-buttons-container">
+                                                <span class="please-wait" id="billing-please-wait" style="display: none;">Loading next step...</span>
+                                            </div>
+                                        </form>
+                                        @Html.Resource(@<script type="text/javascript">
+                                                                Billing.init('#co-billing-form', '@(InovatiqaDefaults.StoreUrl)checkout/OpcSaveBilling/', @(Model.DisableBillingAddressCheckoutStep.ToString().ToLowerInvariant()));
+                                                                if ($("#billing-address-select").length > 0) {
+                                                                    Billing.newAddress(!$('#billing-address-select').val());
+                                                                }
+                                                            </script>, "js")
+                                    </div>
+                                </div>
+                                @if (Model.ShippingRequired)
+                                {
+                                    <div class="steps_box step_2" id="opc-shipping">
+                                        <div id="checkout-step-shipping" class="step a-item">
+                                            <form id="co-shipping-form">
+                                                <div id="checkout-shipping-load">
+                                                </div>
+                                                <div class="buttons" id="shipping-buttons-container">
+                                                    <span id="shipping-please-wait" class="please-wait" style="display: none;"> Loading next step...</span>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        @Html.Resource(@<script type="text/javascript">
+                                                                Shipping.init('#co-shipping-form', '@(InovatiqaDefaults.StoreUrl)checkout/OpcSaveShipping/');
+                                                                if ($("#shipping-address-select").length > 0) {
+                                                                    Shipping.newAddress(!$('#shipping-address-select').val());
+                                                                }
+                                                            </script>, "js")
+                                    </div>
+
+                                    <div class="steps_box step_2 m_t_50" id="cosmic-shipping-method">
+                                        <div class="row flex_col align_center">
+                                            <div class="col-md-8">
+                                                <h2>Shipping method</h2>
+                                                <p>Please enter your Shipping method</p>
+                                            </div>
+                                            <div class="col-md-4 text-right">
+                                                <p>Step 2 of 5</p>
+                                            </div>
+                                        </div>
+                                        <div class="row flex_col m_t_20">
+                                            <div class="col-md-12 col-xs-12">
+                                                <div class="shipping_list">
+                                                    <div class="radio_column">
+                                                        <input type="radio" name="r1" />
+                                                        FedEx
+                                                    </div>
+                                                    <div class="pricing_column">
+                                                        <span>+32 USD</span>
+                                                        Additional price
+                                                    </div>
+                                                    <div class="ic_column"><img src="~/images/UICOmponents/footer-ic2.png" class="pay_ic"></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 col-xs-12">
+                                                <div class="shipping_list">
+                                                    <div class="radio_column">
+                                                        <input type="radio" name="r1" />
+                                                        USPS
+                                                    </div>
+                                                    <div class="pricing_column">
+                                                        <span>+15 USD</span>
+                                                        Additional price
+                                                    </div>
+                                                    <div class="ic_column"><img src="~/images/UIComponents/icc1.png" class="pay_ic"></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 col-xs-12">
+                                                <div class="shipping_list">
+                                                    <div class="radio_column">
+                                                        <input type="radio" name="r1" />
+                                                        DHL
+                                                    </div>
+                                                    <div class="pricing_column">
+                                                        <span>+15 USD</span>
+                                                        Additional price
+                                                    </div>
+                                                    <div class="ic_column"><img src="~/images/UIComponents/footer-ic.png" class="pay_ic"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="opc-shipping_method" class="tab-section">
+                                        <div id="checkout-step-shipping-method" class="step a-item">
+                                            <form id="co-shipping-method-form">
+                                                <div id="checkout-shipping-method-load">
+                                                </div>
+                                                @Html.Resource(@<script type="text/javascript">
+                                                                        var localized_data = {
+                                                                            NotAvailableMethodsError: "Your order cannot be completed at this time as there is no shipping methods available for it. Please make necessary changes in your shipping address.",
+                                                                            SpecifyMethodError: "Please specify shipping method."
+                                                                        };
+                                                                        ShippingMethod.init('#co-shipping-method-form', '@(InovatiqaDefaults.StoreUrl)checkout/OpcSaveShippingMethod/', localized_data);
+                                                                    </script>, "js")
+                                                <div class="buttons" id="shipping-method-buttons-container">
+                                                    <span id="shipping-method-please-wait" class="please-wait" style="display: none;">Loading next step...</span>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                }
+
+
+                                <div class="steps_box step_3 m_t_50" id="cosmic-payment-method">
+                                    <div class="row flex_col align_center">
+                                        <div class="col-md-8">
+                                            <h2>Payment method</h2>
+                                            <p>Please enter your Payment method</p>
+                                        </div>
+                                        <div class="col-md-4 text-right">
+                                            <p>Step 3 of 5</p>
+                                        </div>
+                                    </div>
+                                    <div class="row flex_col m_t_20">
+                                        <div class="col-md-12">
+                                            <div class="payment_box" style="padding-top: 10px; padding-bottom: 10px;">
+                                                <div class="payment_head mb0">
+                                                    <label>
+                                                        <input type="radio" name="r2" />
+                                                        Credit card
+                                                    </label>
+                                                    <div class="accept_logos">
+                                                        <img src="~/images/UIComponents/p5.png">
+                                                        <img src="~/images/UIComponents/p4.png">
+                                                        <img src="~/images/UIComponents/p1.png">
+                                                        <img src="~/images/UIComponents/p3.png">
+                                                        <img src="~/images/UIComponents/p2.png">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="opc-payment_method" class="tab-section">
+                                    <div id="checkout-step-payment-method" class="step a-item">
+                                        <form id="co-payment-method-form">
+                                            <div id="checkout-payment-method-load">
+                                            </div>
+                                            <div class="buttons" id="payment-method-buttons-container">
+                                                <span class="please-wait" id="payment-method-please-wait" style="display: none;">Loading next step...</span>
+                                            </div>
+                                        </form>
+                                        @Html.Resource(@<script type="text/javascript">
+                                                                var localized_data = {
+                                                                    NotAvailableMethodsError: "Your order cannot be completed at this time as there is no payment methods available for it.",
+                                                                    SpecifyMethodError: "Your order cannot be completed at this time as there is no payment methods available for it."
+                                                                };
+                                                                PaymentMethod.init('#co-payment-method-form', '@(InovatiqaDefaults.StoreUrl)checkout/OpcSavePaymentMethod/', localized_data);
+                                                            </script>, "js")
+                                    </div>
+                                </div>
+
+
+
+                                <div class="steps_box step_3 m_t_50" id="cosmic-payment-info">
+                                    <div class="row flex_col align_center">
+                                        <div class="col-md-8">
+                                            <h2>Payment Information</h2>
+                                            <p>Please enter your Payment method</p>
+                                        </div>
+                                        <div class="col-md-4 text-right">
+                                            <p>Step 3 of 5</p>
+                                        </div>
+                                    </div>
+                                    <div class="row flex_col m_t_20">
+                                        <div class="col-md-12">
+                                            <div class="payment_box">
+                                                <div class="payment_head">
+                                                    <div class="accept_logos">
+                                                        <img src="~/images/UIComponents/p5.png">
+                                                        <img src="~/images/UIComponents/p4.png">
+                                                        <img src="~/images/UIComponents/p1.png">
+                                                        <img src="~/images/UIComponents/p3.png">
+                                                        <img src="~/images/UIComponents/p2.png">
+                                                    </div>
+                                                </div>
+                                                <div class="payment_body">
+                                                    <div class="row">
+                                                        <div class="col-md-12 col-sm-12 col-xs-12 form-group">
+                                                            <label>Card number</label>
+                                                            <input type="text" class="form-control" placeholder="Card number" />
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-12 col-xs-12 form-group">
+                                                            <label>Card holder</label>
+                                                            <input type="text" class="form-control" placeholder="Card holder" />
+                                                        </div>
+                                                        <div class="col-md-3 col-sm-6 col-xs-6 form-group">
+                                                            <label>Expiration date</label>
+                                                            <input type="text" class="form-control" placeholder="MM/YY" />
+                                                        </div>
+                                                        <div class="col-md-3 col-sm-6 col-xs-6 form-group">
+                                                            <label>CVV</label>
+                                                            <input type="text" class="form-control" placeholder="CVV" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                @*PAYMENT PAGE*@
+
+
+
+
+                                <div id="opc-payment_info" class="tab-section">
+                                    <div id="checkout-step-payment-info" class="step a-item" style="display: none;">
+                                        <form id="co-payment-info-form">
+                                            <div id="checkout-payment-info-load">
+                                                @*payment info content will be loaded here*@ Payment is not required
+                                            </div>
+                                        </form>
+                                        @Html.Resource(@<script type="text/javascript">
+                                                                            PaymentInfo.init('#co-payment-info-form', '@(InovatiqaDefaults.StoreUrl)checkout/OpcSavePaymentInfo/');
+                                                            </script>, "js")
+                                        <div class="buttons" id="payment-info-buttons-container">
+                                            <input type="button" class="btn btn-primary payment-info-next-step-button" onclick="PaymentInfo.save()" value="Continue" />
+                                            <br />
+                                            <span class="please-wait" id="payment-info-please-wait" style="display: none;">Loading next step...</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                @*
+                                    <div id="opc-payment_info" class="tab-section">
+                                        <div id="checkout-step-payment-info" class="step a-item">
+                                            <form id="co-payment-info-form">
+                                                <div id="checkout-payment-info-load">
+                                                </div>
+                                                <div class="buttons" id="payment-info-buttons-container">
+                                                    <span class="please-wait" id="payment-info-please-wait" style="display: none;">Loading next step...</span>
+                                                </div>
+                                            </form>
+                                            @Html.Resource(@<script type="text/javascript">
+                                                PaymentInfo.init('#co-payment-info-form', '@(InovatiqaDefaults.StoreUrl)checkout/OpcSavePaymentInfo/');
+                                            </script>, "js")
+                                        </div>
+                                    </div>
+                                *@
+                                @*END OF PAYMENT PAGE*@
+
+
+
+                                <div id="cosmic-confirm-order">
+                                    <div class="steps_box step_4 m_t_50">
+                                        <div class="row flex_col align_center">
+                                            <div class="col-md-8">
+                                                <h2>Additional information</h2>
+                                                <p>Need something else? We will make it for you!</p>
+                                            </div>
+                                            <div class="col-md-4 text-right">
+                                                <p>Step 4 of 5</p>
+                                            </div>
+                                        </div>
+                                        <div class="row flex_col m_t_10">
+                                            <div class="col-md-12 col-sm-12 col-xs-12 form-group">
+                                                <label>Order notes</label>
+                                                <textarea class="form-control" placeholder="Need a specific delivery day? Sending a gitf? Let’s say ..."></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="steps_box step_5 m_t_50">
+                                        <div class="row flex_col align_center">
+                                            <div class="col-md-8">
+                                                <h2>Confirmation</h2>
+                                                <p>We are getting to the end. Just few clicks and your order is ready!</p>
+                                            </div>
+                                            <div class="col-md-4 text-right">
+                                                <p>Step 5 of 5</p>
+                                            </div>
+                                        </div>
+                                        <div class="row flex_col m_t_30">
+                                            <div class="col-md-12 col-sm-12 col-xs-12 form-group">
+                                                <div class="checkbox">
+                                                    <label><input type="checkbox" value=""> I agree with sending marketing and newsletter emails. No spam promised!</label>
+                                                </div>
+                                                <div class="checkbox m_t_10">
+                                                    <label><input type="checkbox" value=""> I agree with our &nbsp;<a href="" &nbsp> terms and conditions </a>&nbsp; and &nbsp;<a href=""> privacy policy.</a></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="opc-confirm_order" class="tab-section">
+                                    <div id="checkout-step-confirm-order" class="step a-item">
+                                        <div id="checkout-confirm-order-load">
+                                        </div>
+                                        @Html.Resource(@<script type="text/javascript">
+                                                                                ConfirmOrder.init('@(InovatiqaDefaults.StoreUrl)checkout/OpcConfirmOrder/', '@(InovatiqaDefaults.StoreUrl)checkout/completed/');
+                                                            </script>, "js")
+                                        <div class="buttons" id="confirm-order-buttons-container">
+                                            <input type="button" class="btn btn-primary confirm-order-next-step-button" onclick="ConfirmOrder.save()" value="Complete Order" />
+                                            <br />
+                                            <span class="please-wait" id="confirm-order-please-wait" style="display: none;">Submitting order information...</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="steps_box final m_t_40">
+                                    <div class="row">
+                                        <div class="col-md-4 col-sm-12 col-xs-12 form-group">
+                                            <img src="~/images/UIComponents/cart_secure.svg" />
+                                            <h4>All your data are safe</h4>
+                                            <p>We are using the most advanced security to provide you the best experience ever.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-5 col-sm-6 col-xs-12">
+                                <div class="order_summary">
+                                    <h2>Order Summary</h2>
+                                    <p>Price can change depending on shipping method and taxes of your state.</p>
+                                    <div class="order-summary-scroll" style="padding-right:15px;">
+                                        <span style="display:none;" class="comp-button">0</span>
+                                        @foreach (var product in Model.orderSummaryBox.OrderSummaryProducts)
+                                        {
+                                            <div class="order_summary_box" style="height: fit-content; border-bottom: 1px solid #e4e1e1;">
+                                                <div class="s_left">
+                                                    <img src="@product.DefaultPictureModel.ImageUrl" class="product_img" />
+                                                    <a href="#" id="add-to-wishlist-button-@product.ProductId" data-productid="@product.ProductId" onclick="AjaxCart.addproducttocart_details('@Url.RouteUrl("AddProductToCart-Details", new { productId = product.ProductId, shoppingCartTypeId = (int)ShoppingCartType.Wishlist, wishListId = 0 })', '#product-details-form_@product.ProductId', @((int)ShoppingCartType.Wishlist)); return false;"><img src="~/images/UIComponents/small_heart.svg"> <span>Wishlist</span></a>
+                                                    <div class="form-group" style="height:12px;">
+                                                        <label>
+                                                            <input class="compare-checkbox" style="width:12px; height:12px; margin-right:7px;" type="checkbox" onclick="AjaxCart.addorremovefromcomaprelist(@product.ProductId)" />
+                                                            <span class="muted" style="font-size:12px;"> Compare</span>
+                                                        </label>
+                                                    </div>
+                                                    <a onclick="remove(@product.Id)" style="cursor: pointer;"><img src="~/images/UIComponents/small_close.svg"> Remove</a>
+                                                </div>
+      
+                                                <div class="s_right">
+                                                    <a href="@Url.RouteUrl("manufacturer", new { seName = product.SeName})"><h4>@product.Name</h4></a>
+                                                    <p><span>Quantity:</span> @product.Attributes.First()</p>
+                                                    <p><span>UOM:</span> @product.Attributes.Last()</p>
+                                                    <div class="stars">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star-o"></i>
+                                                    </div>
+                                                    <h3>@product.Price USD</h3>
+                                                    @if (product.OldPriceEnabled)
+                                                    {
+                                                        <h5><strike>@product.OldPrice USD</strike></h5>
+                                                    }
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                    <div class="sub_total_box">
+                                        <div class="sub_list">
+                                            <p>Subtotal</p>
+                                            <p id="order-total">@Model.orderSummaryBox.SubTotal USD</p>
+                                        </div>
+                                        <div class="sub_list">
+                                            <p>Tax</p>
+                                            <p>0 USD</p>
+                                        </div>
+                                        <div class="sub_list">
+                                            <p>Shipping</p>
+                                            <p> <span id="TotalShippingFee">0</span> USD</p>
+                                        </div>
+                                    </div>
+                                    <div class="promo_code_box">
+                                        <input type="text" placeholder="Apply promo code">
+                                        <input type="submit" value="Apply Now" class="apply_btn">
+                                    </div>
+                                    <div class="final_amount">
+                                        <div>
+                                            <p>Total Order</p>
+                                            <p><span style="color: #6A983C;">Guaranteed delivery day: June 12, 2020</span></p>
+                                        </div>
+                                        <div>
+                                            <h2><span id="SubTotal">@Model.orderSummaryBox.SubTotal.Replace("$", "")</span> USD</h2>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+@Html.Resource(@<script type="text/javascript">
+                                                Accordion.init('checkout-steps', '.step-title', true);
+                                                Accordion.openSection('#opc-billing');
+
+                                                Checkout.init('@(InovatiqaDefaults.StoreUrl)cart/');
+                                                if (Billing.disableBillingAddressCheckoutStep)
+                                                {
+                                                    Accordion.hideSection('#opc-billing');
+                                                    Billing.save();
+                                                }
+    </script>, "js")
+
+@Html.Resource(@<script type="text/javascript">
+
+                                        function remove(id) {
+                                            if (confirm('This product will be removed from your shopping cart.\nDo you wish to continue?')) {
+                                                $.ajax({
+                                                    url: 'shoppingcart/RemoveFromShoppingCart',
+                                                    data: { Id: id },
+                                                    type: 'GET',
+                                                    success: function (dat) {
+                                                        console.log('Success')
+                                                        console.log(dat);
+                                                        document.location.reload();
+                                                    },
+                                                    error: function (err) {
+                                                        console.log('error occured');
+                                                        console.log(err);
+                                                    }
+                                                });
+                                            }
+
+                                        }
+    </script>, "js")
+
+@*
+    <div class="page checkout-page from-panel">
+        <div class="page-title panel-heading">
+            <h1>Checkout</h1>
+        </div>
+        <div class="page-body checkout-data panel-body ">
+            <ol class="opc" id="checkout-steps">
+                <li id="opc-billing" class="tab-section allow">
+                    <div class="step-title">
+                        <span class="number">@billingAddressStepNumber</span>
+                        <h2>Billing address</h2>
+                    </div>
+                    <div id="checkout-step-billing" class="step a-item" style="display: none;">
+                        <form id="co-billing-form">
+                            <div id="checkout-billing-load">
+                                @await Html.PartialAsync("OpcBillingAddress", Model.BillingAddress)
+                                @*billing address content will be loaded here@
+                            </div>
+                        </form>
+                        @Html.Resource(@<script type="text/javascript">
+                            Billing.init('#co-billing-form', '@(InovatiqaDefaults.StoreUrl)checkout/OpcSaveBilling/', @(Model.DisableBillingAddressCheckoutStep.ToString().ToLowerInvariant()));
+                            if ($("#billing-address-select").length > 0) {
+                                Billing.newAddress(!$('#billing-address-select').val());
+                            }
+                        </script>, "js")
+                        <div class="buttons" id="billing-buttons-container">
+                            <input type="button" title="Continue" class="btn btn-primary new-address-next-step-button" onclick="Billing.save()" value="Continue" />
+                            <br />
+                            <span class="please-wait" id="billing-please-wait" style="display: none;">Loading next step...</span>
+                        </div>
+                    </div>
+                </li>
+                @if (Model.ShippingRequired)
+                {
+                    <li id="opc-shipping" class="tab-section">
+                        <div class="step-title">
+                            <span class="number">@shippingAddressStepNumber</span>
+                            <h2>Shipping address</h2>
+                        </div>
+                        <div id="checkout-step-shipping" class="step a-item" style="display: none;">
+                            <form id="co-shipping-form">
+                                <div id="checkout-shipping-load">
+                                    @*shipping address content will be loaded here@
+                                </div>
+                            </form>
+                            @Html.Resource(@<script type="text/javascript">
+                                Shipping.init('#co-shipping-form', '@(InovatiqaDefaults.StoreUrl)checkout/OpcSaveShipping/');
+                                if ($("#shipping-address-select").length > 0) {
+                                    Shipping.newAddress(!$('#shipping-address-select').val());
+                                }
+                            </script>, "js")
+                            <div class="buttons" id="shipping-buttons-container">
+                                @if (!Model.DisableBillingAddressCheckoutStep)
+                                {
+                                    <p class="back-link">
+                                        <a href="#" onclick="Checkout.back(); return false; "><small>&laquo; </small>Back</a>
+                                    </p>
+                                }
+                                <input type="button" class="btn btn-primary new-address-next-step-button" title="Continue" onclick="Shipping.save()" value="Continue" />
+                                <br/>
+                                <span id="shipping-please-wait" class="please-wait" style="display: none;"> Loading next step...</span>
+                            </div>
+                        </div>
+                    </li>
+                    <li id="opc-shipping_method" class="tab-section">
+                        <div class="step-title">
+                            <span class="number">@shippingMethodStepNumber</span>
+                            <h2>Shipping method</h2>
+                        </div>
+                        <div id="checkout-step-shipping-method" class="step a-item" style="display: none;padding-left:40px;">
+                            <form id="co-shipping-method-form">
+                                <div id="checkout-shipping-method-load">
+                                    @*shipping methods content will be loaded here@
+                                </div>
+                                @Html.Resource(@<script type="text/javascript">
+                                    var localized_data = {
+                                        NotAvailableMethodsError: "Your order cannot be completed at this time as there is no shipping methods available for it. Please make necessary changes in your shipping address.",
+                                        SpecifyMethodError: "Please specify shipping method."
+                                    };
+                                    ShippingMethod.init('#co-shipping-method-form', '@(InovatiqaDefaults.StoreUrl)checkout/OpcSaveShippingMethod/', localized_data);
+                                </script>, "js")
+                            <div class="buttons" id="shipping-method-buttons-container">
+                                <p class="back-link">
+                                    <a href="#" onclick="Checkout.back(); return false;"><small>&laquo; </small>Back</a>
+                                </p>
+                                <input type="button" class="btn btn-primary shipping-method-next-step-button" onclick="ShippingMethod.save()" value="Continue" />
+                                <br />
+                                <span id="shipping-method-please-wait" class="please-wait" style="display: none;">Loading next step...</span>
+                            </div>
+                            </form>
+                        </div>
+                    </li>
+                }
+                <li id="opc-payment_method" class="tab-section">
+                    <div class="step-title">
+                        <span class="number">@paymentMethodStepNumber</span>
+                        <h2>Payment method</h2>
+                    </div>
+                    <div id="checkout-step-payment-method" class="step a-item" style="display: none;">
+                        <form id="co-payment-method-form">
+                            <div id="checkout-payment-method-load">
+                                @*payment methods content will be loaded here@ Payment is not required
+                            </div>
+                        </form>
+                        @Html.Resource(@<script type="text/javascript">
+                                    var localized_data = {
+                                NotAvailableMethodsError: "Your order cannot be completed at this time as there is no payment methods available for it.",
+                                SpecifyMethodError: "Your order cannot be completed at this time as there is no payment methods available for it."
+                            };
+                            PaymentMethod.init('#co-payment-method-form', '@(InovatiqaDefaults.StoreUrl)checkout/OpcSavePaymentMethod/', localized_data);
+                        </script>, "js")
+                    <div class="buttons" id="payment-method-buttons-container">
+                        <p class="back-link">
+                            <a href="#" onclick="Checkout.back(); return false;"><small>&laquo; </small>Back</a>
+                        </p>
+                        <input type="button" class="btn btn-primary payment-method-next-step-button" onclick="PaymentMethod.save()" value="Continue" />
+                        <br />
+                        <span class="please-wait" id="payment-method-please-wait" style="display: none;">Loading next step...</span>
+                    </div>
+                    </div>
+                </li>
+
+
+
+                <li id="opc-payment_info" class="tab-section">
+                    <div class="step-title">
+                        <span class="number">@paymentInfoStepNumber</span>
+                        <h2>Payment information</h2>
+                    </div>
+                    <div id="checkout-step-payment-info" class="step a-item" style="display: none;">
+                        <form id="co-payment-info-form">
+                            <div id="checkout-payment-info-load">
+                                @*payment info content will be loaded here@ Payment is not required
+                            </div>
+                        </form>
+                        @Html.Resource(@<script type="text/javascript">
+                                    PaymentInfo.init('#co-payment-info-form', '@(InovatiqaDefaults.StoreUrl)checkout/OpcSavePaymentInfo/');
+                        </script>, "js")
+                    <div class="buttons" id="payment-info-buttons-container">
+                        <p class="back-link">
+                            <a href="#" onclick="Checkout.back(); return false;"><small>&laquo; </small>Back</a>
+                        </p>
+                        <input type="button" class="btn btn-primary payment-info-next-step-button" onclick="PaymentInfo.save()" value="Continue" />
+                        <br />
+                        <span class="please-wait" id="payment-info-please-wait" style="display: none;">Loading next step...</span>
+                    </div>
+                    </div>
+                </li>
+
+
+
+
+                <li id="opc-confirm_order" class="tab-section">
+                    <div class="step-title">
+                        <span class="number">@confirmOrderStepNumber</span>
+                        <h2>Confirm order</h2>
+                    </div>
+                    <div id="checkout-step-confirm-order" class="step a-item" style="display: none; ">
+                        <div id="checkout-confirm-order-load" >
+                            @*confirm order content will be loaded here@
+                        </div>
+                        @Html.Resource(@<script type="text/javascript">
+                                    ConfirmOrder.init('@(InovatiqaDefaults.StoreUrl)checkout/OpcConfirmOrder/', '@(InovatiqaDefaults.StoreUrl)checkout/completed/');
+                        </script>, "js")
+                    <div class="buttons" id="confirm-order-buttons-container">
+                        <p class="back-link">
+                            <a href="#" onclick="Checkout.back(); return false;"><small>&laquo; </small>Back</a>
+                        </p>
+                        <input type="button" class="btn btn-primary confirm-order-next-step-button" onclick="ConfirmOrder.save()" value="Confirm" />
+                        <br/>
+                        <span class="please-wait" id="confirm-order-please-wait" style="display: none;">Submitting order information...</span>
+                    </div>
+                    </div>
+                </li>
+            </ol>
+        </div>
+
+        @Html.Resource(@<script type="text/javascript">
+            Accordion.init('checkout-steps', '.step-title', true);
+            Accordion.openSection('#opc-billing');
+
+            Checkout.init('@(InovatiqaDefaults.StoreUrl)cart/');
+            if (Billing.disableBillingAddressCheckoutStep)
+            {
+                Accordion.hideSection('#opc-billing');
+                Billing.save();
+            }
+        </script>, "js")
+    </div>
+*@

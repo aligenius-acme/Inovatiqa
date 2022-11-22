@@ -1,0 +1,319 @@
+﻿@{
+    Layout = "_ColumnsOne";
+    //@Html.Resource(@<link href="@Url.Content("~/lib/tab/tabs.css")" rel="stylesheet" type="text/css" />, "css")
+    //@Html.Resource(@<link href="@Url.Content("~/lib/tab/offers.css")" rel="stylesheet" type="text/css" />, "css")
+}
+@{
+    ViewBag.Title = "Inovatiqa - Home";
+}
+
+@section additionalMeta {
+    <meta name="title" content="title..." />
+    <meta name="keywords" content="Home page keywords..." />
+    <meta name="description" content="Home page description..." />
+}
+@*<div class="page home-page">
+        <div class="page-body">
+            @await Component.InvokeAsync("TopicBlock", new { systemName = "HomepageText" })
+            await Component.InvokeAsync("Slider")
+            <div class="tabs">
+                <ul class="featured-nav tabs-nav" id="tabHomePage">
+                    <li class="active"><a class="linkTab" href="#CP" role="tab" data-toggle="tab">COVID 19 Products</a></li>
+                    <li><a class="linkTab active-tab" href="#FP" role="tab" data-toggle="tab">Featured Products</a></li>
+                    <li><a class="linkTab" href="#FC" role="tab" data-toggle="tab">Featured Categories</a></li>
+                    <li><a class="linkTab" href="#BS" role="tab" data-toggle="tab">Best Sellers</a></li>
+                    <li> <a class="linkTab" href="#NU" role="tab" data-toggle="tab">News & Updates</a></li>
+                    <li> <a class="linkTab" href="#WU" role="tab" data-toggle="tab">Why us?</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane fade in active" id="CP">
+                        @*await Component.InvokeAsync("HomepageCovid19Products")
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade in" id="FP">
+                        @*await Component.InvokeAsync("HomepageProducts")
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="FC">
+                        @*await Component.InvokeAsync("HomepageCategories")
+                    </div>
+                    @*<div role="tabpanel" class="tab-pane fade" id="BS">
+                        @await Component.InvokeAsync("HomepageBestSellers")
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="NU">
+                        @await Component.InvokeAsync("HomepageNews")
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="WU">
+                        Content to be placed here....
+                    </div>
+                </div>
+            </div>
+            @*<div>
+                    <ul class="tabs-nav" id="tabHomePage">
+                        <li><a class="linkTab active-tab" href="#CP" data-toggle="tab">COVID-19 Poducts</a></li>
+                        <li><a class="linkTab" href="#FP" data-toggle="tab">Featured Products</a></li>
+                        <li><a class="linkTab" href="#FC" data-toggle="tab">Featured Categories</a></li>
+                        <li><a class="linkTab" href="#NU" data-toggle="tab">News & Updates</a></li>
+                            <li><a class="linkTab" href="#WU" data-toggle="tab">Why us?</a></li>
+                    </ul>
+                </div>
+                <div class="tab-content">
+                    <div class="tab-pane" id="CP">
+                        @await Component.InvokeAsync("HomepageCovid19Products")
+                    </div>
+                    <div class="tab-pane" id="FP">
+                        @await Component.InvokeAsync("HomepageProducts")
+                    </div>
+                    <div class="tab-pane" id="FC">
+                        @await Component.InvokeAsync("HomepageCategories")
+                    </div>
+                    <div class="tab-pane" id="NU">
+                            @await Component.InvokeAsync("HomepageNews")
+                        </div>
+                        <div class="tab-pane" id="WU">
+                            Content to be placed here....
+                        </div>
+                </div>
+           @* <div class="offers-banners" style="width:100%;">
+                <div class="offer-left offer">
+                    <a href="/corporate-sales">
+                        <img class="offer-img" alt="Healthcare Professionals" src="https://www.4mdmedical.com/media/wysiwyg/healthcareprobanner687x280.jpg">
+                    </a>
+                </div>
+                <div class="offer-right offer">
+                    <a href="financing-leasing">
+                        <img class="offer-img" alt="Financing Leasing" src="https://www.4mdmedical.com/media/wysiwyg/have_a_large_order.jpg">
+                    </a>
+                </div>
+            </div>
+            <div style="float:left;width:100%;margin-top:15px;">
+                <div class="block block-inovatiqa-way well" style="margin-bottom:0px;float:left;background-color:#fff;width:100%;">
+                    <div class="page-title panel-heading">
+                        <h1>The Inovatiqa Way</h1>
+                    </div>
+                    <div class="product-grid home-page-inovatiqa-way-grid row" style="width:100%;">
+                        <div class="item-box product-grid col-xs-12 col-sm-4 col-md-3 product-align clearfix">
+                            <div>
+                                <div class="product-item clearfix">
+                                    <div class="picture">
+                                        <img src="https://www.4mdmedical.com/media/wysiwyg/Homepage/home_icon3.png" alt="Friendly Support Icon">
+                                    </div>
+                                    <div class="caption">
+                                        <div class="details">
+                                            <h4 class="product-title">
+                                                Friendly Support
+                                            </h4>
+                                            <p>Call Customer Service: <span style="color: #317bb1;">(346) 229-4142</span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item-box product-grid col-xs-12 col-sm-4 col-md-3 product-align clearfix">
+                            <div>
+                                <div class="product-item clearfix">
+                                    <div class="picture">
+                                        <img src="https://www.4mdmedical.com/media/wysiwyg/Homepage/home_icon4.png" alt="Competitive Pricing Icon">
+                                    </div>
+                                    <div class="caption">
+                                        <div class="details">
+                                            <h4 class="product-title">
+                                                Competitive Pricing
+                                            </h4>
+                                            <p><a href="https://www.4mdmedical.com/contacts/">Contact us</a> for volume discounts and special pricing</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item-box product-grid col-xs-12 col-sm-4 col-md-3 product-align clearfix">
+                            <div>
+                                <div class="product-item clearfix">
+                                    <div class="picture">
+                                        <img src="https://www.4mdmedical.com/media/wysiwyg/Homepage/home_icon5.png" alt="PriceMatch Icon">
+                                    </div>
+                                    <div class="caption">
+                                        <div class="details">
+                                            <h4 class="product-title">
+                                                PriceMatch
+                                            </h4>
+                                            <p>We'll price match other authorized dealers</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item-box product-grid col-xs-12 col-sm-4 col-md-3 product-align clearfix">
+                            <div>
+                                <div class="product-item clearfix">
+                                    <div class="picture">
+                                        <img src="https://www.4mdmedical.com/media/wysiwyg/Homepage/home_icon6.png" alt="Testimonials">
+                                    </div>
+                                    <div class="caption">
+                                        <div class="details">
+                                            <h4 class="product-title">
+                                                Testimonials
+                                            </h4>
+                                            <p>See what our customers have to say about shopping at 4MD Medical</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="offers-banners" style="float:left;width:100%;margin-top:15px;">
+                <div class="offer-left offer">
+                    <a href="/request-a-quote">
+                        <img class="offer-img" alt="Have a large order" src="https://www.4mdmedical.com/media/wysiwyg/have_a_large_order.jpg">
+                    </a>
+                </div>
+                <div class="offer-right offer">
+                    <a href="/pharmacy-rx.html">
+                        <img class="offer-img" alt="Medication made easy" src="https://www.4mdmedical.com/media/wysiwyg/medication_made_easy.jpg">
+                    </a>
+                </div>
+            </div>
+            <div style="float:left;width:100%;margin-top:15px;">
+                @await Component.InvokeAsync("MostViewedProductsBlock", new { productThumbPictureSize = 415 })
+            </div>
+            @await Component.InvokeAsync("HomepageBestSellers")
+            <div style="float:left;width:100%;margin-top:15px;">
+                @await Component.InvokeAsync("FeaturedManufacturerBlock")
+            </div>
+            <div style="float:left;width:100%;margin-top:-5px;">
+                @await Component.InvokeAsync("RecentlyViewedProductsBlock", new { productThumbPictureSize = 415 })
+            </div>
+        </div>
+    </div>
+    @Html.Resource(@<script type="text/javascript">
+                        $(document).ready(function () {
+                            $("#tabHomePage").find('.active-tab').click();
+                            $(".linkTab").on('click', function (e) {
+                                $("#tabHomePage").find('.linkTab').removeClass("active-tab")
+                                $(this).addClass("active-tab");
+                            });
+                        });
+    </script>, "js")
+*@
+
+
+<section class="container-fluid banner_section" style="background: url(images/UIComponents/banner.png) center center/cover no-repeat;">
+    <div class="row overlay_sm">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="banner_text">
+                        <h3>
+                            Covid-19 <br />
+                            Resource Center <br />
+                            <strong>Products In Stock!</strong>
+                        </h3>
+
+                        <ul>
+                            <li>    Masks</li>
+                            <li>    Pulse Oximeters</li>
+                            <li>    Thermometers</li>
+                            <li>    And More...</li>
+                        </ul>
+                        <a onclick="window.location.href = '/Product/ProductSearch?term=covid'" class="btn btn-default">View Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="container-fluid" style="background: #F1F3F6;">
+    <div class="row">
+        <div class="container">
+            <div class="row flex_col m_t_20 m_b_20">
+                <div class="after_banner_boxes">
+                    <div class="after_banner_box">
+                        <img src="\images\UIComponents\ic1.svg" />
+                        <div>
+                            <h4>Free Delivery</h4>
+                            <p>For orders over $99</p>
+                        </div>
+                    </div>
+
+                    <div class="after_banner_box">
+                        <img src="\images\UIComponents\ic-ecommerce-money.svg" />
+                        <div>
+                            <h4 class="m0">Competitive Pricing</h4>
+                            <p>Contact us for volume discounts <br />and special pricing</p>
+                        </div>
+                    </div>
+
+                    <div class="after_banner_box">
+                        <img src="\images\UIComponents\ic-actions-check.svg" />
+                        <div>
+                            <h4 class="m0">Online Ordering Simplified</h4>
+                            <p>Easy to use and order products </p>
+                        </div>
+                    </div>
+
+                    <div class="after_banner_box">
+                        <img src="\images\UIComponents\ic2.svg" />
+                        <div>
+                            <h4 class="m_b_5">Friendly Support</h4>
+                            <p>Call Customer Service: <br /><a href="callto:346-229-4142">(346) 229-4142</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@await Component.InvokeAsync("HomepageCategories")
+@await Component.InvokeAsync("HomepageBrands")
+@await Component.InvokeAsync("HomepageCovid19Products")
+@await Component.InvokeAsync("HomepageProducts")
+
+<section class="container-fluid">
+    <div class="row"><img src="\images\UIComponents\bg.png" class="full_width_img home_banner"></div>
+    <div class="row">
+        <div class="container">
+            <div class="row flex_col m_t_80 m_b_80">
+                <div class="col-md-12 m_b_20 title_text font_lato">
+                    <div class="row flex_col align_center">
+                        <div class="col-md-10  col-sm-12 col-xs-12"><h2 style="padding-left: 30px;"><strong>Our </strong>  Reviews</h2></div>
+                    </div>
+
+                </div>
+                <div class="col-md-12">
+                    <div class="row flex_col">
+                        <div class="col-md-4 col-xs-12">
+                            <div class="testimonial_box">
+                                <div class="test_details">
+                                    <p>"It's a pleasure doing business with a company that stands by their product!"</p>
+                                </div>
+                                <h4>Nancy J.</h4>
+
+                                <img src="\images\UIComponents\user.png" class="user_img" />
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-xs-12">
+                            <div class="testimonial_box">
+                                <div class="test_details">
+                                    <p>"Thank you for the great service you provided. We would look to you for any medical supplies we may need in the future."</p>
+                                </div>
+                                <h4>Peter W.</h4>
+
+                                <img src="\images\UIComponents\user1.png" class="user_img" />
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-xs-12">
+                            <div class="testimonial_box">
+                                <div class="test_details">
+                                    <p>"Thank you Inovatiqa for a great shopping experience."</p>
+                                </div>
+                                <h4>Adam S.</h4>
+
+                                <img src="\images\UIComponents\user3.png" class="user_img" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

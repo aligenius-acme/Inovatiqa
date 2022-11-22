@@ -1,0 +1,1157 @@
+﻿@model IList<CategoryModel>
+@{
+    Layout = "_Root";
+}
+@{
+    ViewBag.Title = "Shop Products";
+}
+@*<link href="~/css/mkstyles/style.css" rel="stylesheet" />
+    <div>
+        <h2 style="margin-left:14px;">
+            Shop Products
+        </h2>
+        <hr class="bb">
+        <div class="col-sm-4 col-md-2 hidden-xs" style="width:23%;">
+            <h4 class="narrow-results-top">All Categories</h4>
+            <div class="accordion">
+                <ul class="refine all-categories">
+                    <li>
+                        <span class="title"><a href="/Ambulatory-Equipment">Ambulatory Equipment</a></span>
+                    </li>
+                    <li>
+                        <span class="title"><a href="/Apparel">Apparel</a></span>
+                    </li>
+                    <li>
+                        <span class="title"><a href="/Appliances-(Durable-Goods)">Appliances (Durable Goods)</a></span>
+                    </li>
+                    <li>
+                        <span class="title"><a href="/Body-Pressure-Relief-and-Positioning">Body Pressure Relief and Positioning</a></span>
+                    </li>
+                    <li>
+                        <span class="title"><a href="/Clinical-Laboratory">Clinical Laboratory</a></span>
+                    </li>
+                    <li>
+                        <span class="title"><a href="/Incontinence">Diagnostic Instruments and Supplies</a></span>
+                    </li>
+                    <li>
+                        <span class="title"><a href="/Drainage-and-Suction">Drainage and Suction</a></span>
+                    </li>
+                    <li>
+                        <span class="title"><a href="/Furnishings">Furnishings</a></span>
+                    </li>
+                    <li>
+                        <span class="title"><a href="/Gloves">Gloves</a></span>
+                    </li>
+                    <li>
+                        <span class="title"><a href="/Housekeeping">Housekeeping</a></span>
+                    </li>
+                    <li>
+                        <span class="title"><a href="/catalog?node=36880">I.V. Therapy</a></span>
+                    </li>
+                    <li>
+                        <span class="title"><a href="/Implants">Implants</a></span>
+                    </li>
+                    <li>
+                        <span class="title"><a href="/Incontinence">Incontinence</a></span>
+                    </li>
+                    <li>
+                        <span class="title"><a href="/Indicators-and-Signage">Indicators and Signage</a></span>
+                    </li>
+                    <li>
+                        <span class="title"><a href="/Instruments">Instruments</a></span>
+                    </li>
+                    <li>
+                        <span class="title"><a href="/Needles-and-Syringes">Needles and Syringes</a></span>
+                    </li>
+                    <li>
+                        <span class="title"><a href="/catalog?node=1725237">Nurse's Station and Office Supplies</a></span>
+                    </li>
+                    <li>
+                        <span class="title"><a href="/Nutritionals-and-Feeding-Supplies">Nutritionals and Feeding Supplies</a></span>
+                    </li>
+                    <li>
+                        <span class="title"><a href="/Office-Supplies">Office Supplies</a></span>
+                    </li>
+                    <li>
+                        <span class="title"><a href="/Orthopedic">Orthopedic</a></span>
+                    </li>
+                    <li>
+                        <span class="title"><a href="/Ostomy">Ostomy</a></span>
+                    </li>
+                    <li>
+                        <span class="title"><a href="/Personal-Hygiene">Personal Hygiene</a></span>
+                    </li>
+                    <li>
+                        <span class="title"><a href="/Pharmaceuticals">Pharmaceuticals</a></span>
+                    </li>
+                    <li>
+                        <span class="title"><a href="/Physical-Therapy">Physical Therapy</a></span>
+                    </li>
+                    <li>
+                        <span class="title"><a href="/Respiratory">Respiratory</a></span>
+                    </li>
+                    <li>
+                        <span class="title"><a href="/Sterilization">Sterilization</a></span>
+                    </li>
+                    <li>
+                        <span class="title"><a href="/Textiles">Textiles</a></span>
+                    </li>
+                    <li>
+                        <span class="title"><a href="/Training-and-Education">Training and Education</a></span>
+                    </li>
+                    <li>
+                        <span class="title"><a href="/Urological">Urological</a></span>
+                    </li>
+                    <li>
+                        <span class="title"><a href="/Utensils">Utensils</a></span>
+                    </li>
+                    <li>
+                        <span class="title"><a href="/Wound-Care">Wound Care</a></span>
+                    </li>
+                    <li>
+                        <span class="title"><a href="/Wound-Closure">Wound Closure</a></span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-sm-8 col-md-10" style="width:76%">
+            <h3 class="page-section">Browse Top Categories</h3>
+            <hr class="bb">
+            <div class="row">
+                <div class="col-xs-12 col-sm-4 col-md-2 prod-category">
+                    <a href="/Clinical-Laboratory">
+                        <div>
+                            <img src="https://imgcdn.mckesson.com/CumulusWeb/Images/Item_Detail/949871.jpg">
+                        </div>
+                        <h5 class="text-center">Clinical Laboratory</h5>
+                    </a>
+                </div>
+                <div class="col-xs-12 col-sm-4 col-md-2 prod-category">
+                    <a href="/Instruments">
+                        <div>
+                            <img src="https://imgcdn.mckesson.com/CumulusWeb/Images/Item_Detail/484942.jpg">
+                        </div>
+                        <h5 class="text-center">Instruments</h5>
+                    </a>
+                </div>
+                <div class="col-xs-12 col-sm-4 col-md-2 prod-category">
+                    <a href="/Furnishings">
+                        <div>
+                            <img src="https://imgcdn.mckesson.com/CumulusWeb/Images/Item_Detail/869623.jpg">
+                        </div>
+                        <h5 class="text-center">Furnishings</h5>
+                    </a>
+                </div>
+                <div class="col-xs-12 col-sm-4 col-md-2 prod-category">
+                    <a href="/Orthopedic">
+                        <div>
+                            <img src="https://imgcdn.mckesson.com/CumulusWeb/Images/Item_Detail/854990.jpg">
+                        </div>
+                        <h5 class="text-center">Orthopedic</h5>
+                    </a>
+                </div>
+                <div class="col-xs-12 col-sm-4 col-md-2 prod-category">
+                    <a href="/Diagnostic-Instruments-and-Supplies">
+                        <div>
+                            <img src="https://imgcdn.mckesson.com/CumulusWeb/Images/Item_Detail/804314.jpg">
+                        </div>
+                        <h5 class="text-center">Diagnostic Instruments and Supplies</h5>
+                    </a>
+                </div>
+                <div class="col-xs-12 col-sm-4 col-md-2 prod-category">
+                    <a href="/Pharmaceuticals">
+                        <div>
+                            <img src="https://imgcdn.mckesson.com/CumulusWeb/Images/Item_Detail/239936.jpg">
+                        </div>
+                        <h5 class="text-center">Pharmaceuticals</h5>
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-4 col-md-2 prod-category">
+                    <a href="/Apparel">
+                        <div>
+                            <img src="https://imgcdn.mckesson.com/CumulusWeb/Images/Item_Detail/689981.jpg">
+                        </div>
+                        <h5 class="text-center">Apparel</h5>
+                    </a>
+                </div>
+                <div class="col-xs-12 col-sm-4 col-md-2 prod-category">
+                    <a href="/Office-Supplies">
+                        <div>
+                            <img src="https://imgcdn.mckesson.com/CumulusWeb/Images/Item_Detail/Office_Supplies/147895.jpg">
+                        </div>
+                        <h5 class="text-center">Office Supplies</h5>
+                    </a>
+                </div>
+                <div class="col-xs-12 col-sm-4 col-md-2 prod-category">
+                    <a href="/Respiratory">
+                        <div>
+                            <img src="https://imgcdn.mckesson.com/CumulusWeb/Images/Item_Detail/911727.jpg">
+                        </div>
+                        <h5 class="text-center">Respiratory</h5>
+                    </a>
+                </div>
+                <div class="col-xs-12 col-sm-4 col-md-2 prod-category">
+                    <a href="/Ambulatory-Equipment">
+                        <div>
+                            <img src="https://imgcdn.mckesson.com/CumulusWeb/Images/Item_Detail/476705.jpg">
+                        </div>
+                        <h5 class="text-center">Ambulatory Equipment</h5>
+                    </a>
+                </div>
+                <div class="col-xs-12 col-sm-4 col-md-2 prod-category">
+                    <a href="/Wound-Care">
+                        <div>
+                            <img src="https://imgcdn.mckesson.com/CumulusWeb/Images/Item_Detail/466872.jpg">
+                        </div>
+                        <h5 class="text-center">Wound Care</h5>
+                    </a>
+                </div>
+                <div class="col-xs-12 col-sm-4 col-md-2 prod-category">
+                    <a href="/Housekeeping">
+                        <div>
+                            <img src="https://imgcdn.mckesson.com/CumulusWeb/Images/Item_Detail/880563.jpg">
+                        </div>
+                        <h5 class="text-center">Housekeeping</h5>
+                    </a>
+                </div>
+            </div>
+            <div name="moreCategoriesRow" style="display:none" class="row">
+                <div class="col-xs-12 col-sm-4 col-md-2 prod-category">
+                    <a href="/catalog?node=36880">
+                        <div>
+                            <img src="https://imgcdn.mckesson.com/CumulusWeb/Images/Item_Detail/191089.jpg">
+                        </div>
+                        <h5 class="text-center">I.V. Therapy</h5>
+                    </a>
+                </div>
+                <div class="col-xs-12 col-sm-4 col-md-2 prod-category">
+                    <a href="/Wound-Closure">
+                        <div>
+                            <img src="https://imgcdn.mckesson.com/CumulusWeb/Images/Item_Detail/911793.jpg">
+                        </div>
+                        <h5 class="text-center">Wound Closure</h5>
+                    </a>
+                </div>
+                <div class="col-xs-12 col-sm-4 col-md-2 prod-category">
+                    <a href="/Physical-Therapy">
+                        <div>
+                            <img src="https://imgcdn.mckesson.com/CumulusWeb/Images/Item_Detail/476731.jpg">
+                        </div>
+                        <h5 class="text-center">Physical Therapy</h5>
+                    </a>
+                </div>
+                <div class="col-xs-12 col-sm-4 col-md-2 prod-category">
+                    <a href="/Body-Pressure-Relief-and-Positioning">
+                        <div>
+                            <img src="https://imgcdn.mckesson.com/CumulusWeb/Images/Item_Detail/939590.jpg">
+                        </div>
+                        <h5 class="text-center">Body Pressure Relief and Positioning</h5>
+                    </a>
+                </div>
+                <div class="col-xs-12 col-sm-4 col-md-2 prod-category">
+                    <a href="/Ostomy">
+                        <div>
+                            <img src="https://imgcdn.mckesson.com/CumulusWeb/Images/Item_Detail/854375.jpg">
+                        </div>
+                        <h5 class="text-center">Ostomy</h5>
+                    </a>
+                </div>
+                <div class="col-xs-12 col-sm-4 col-md-2 prod-category">
+                    <a href="/Needles-and-Syringes">
+                        <div>
+                            <img src="https://imgcdn.mckesson.com/CumulusWeb/Images/Item_Detail/1031804.jpg">
+                        </div>
+                        <h5 class="text-center">Needles and Syringes</h5>
+                    </a>
+                </div>
+            </div>
+            <div name="moreCategoriesRow" style="display:none" class="row">
+                <div class="col-xs-12 col-sm-4 col-md-2 prod-category">
+                    <a href="/Personal-Hygiene">
+                        <div>
+                            <img src="https://imgcdn.mckesson.com/CumulusWeb/Images/Item_Detail/937918.jpg">
+                        </div>
+                        <h5 class="text-center">Personal Hygiene</h5>
+                    </a>
+                </div>
+                <div class="col-xs-12 col-sm-4 col-md-2 prod-category">
+                    <a href="/Textiles">
+                        <div>
+                            <img src="https://imgcdn.mckesson.com/CumulusWeb/Images/Item_Detail/180612.jpg">
+                        </div>
+                        <h5 class="text-center">Textiles</h5>
+                    </a>
+                </div>
+                <div class="col-xs-12 col-sm-4 col-md-2 prod-category">
+                    <a href="/Indicators-and-Signage">
+                        <div>
+                            <img src="https://imgcdn.mckesson.com/CumulusWeb/Images/Item_Detail/524903.jpg">
+                        </div>
+                        <h5 class="text-center">Indicators and Signage</h5>
+                    </a>
+                </div>
+                <div class="col-xs-12 col-sm-4 col-md-2 prod-category">
+                    <a href="/Nutritionals-and-Feeding Supplies">
+                        <div>
+                            <img src="https://imgcdn.mckesson.com/CumulusWeb/Images/Item_Detail/1030688.jpg">
+                        </div>
+                        <h5 class="text-center">Nutritionals and Feeding Supplies</h5>
+                    </a>
+                </div>
+                <div class="col-xs-12 col-sm-4 col-md-2 prod-category">
+                    <a href="/Urological">
+                        <div>
+                            <img src="https://imgcdn.mckesson.com/CumulusWeb/Images/Item_Detail/1020361.jpg">
+                        </div>
+                        <h5 class="text-center">Urological</h5>
+                    </a>
+                </div>
+                <div class="col-xs-12 col-sm-4 col-md-2 prod-category">
+                    <a href="/Drainage-and-Suction">
+                        <div>
+                            <img src="https://imgcdn.mckesson.com/CumulusWeb/Images/Item_Detail/649119.jpg">
+                        </div>
+                        <h5 class="text-center">Drainage and Suction</h5>
+                    </a>
+                </div>
+            </div>
+            <div name="moreCategoriesRow" style="display:none" class="row">
+                <div class="col-xs-12 col-sm-4 col-md-2 prod-category">
+                    <a href="/Training-and-Education">
+                        <div>
+                            <img src="/assets/img/noi-b4b4c7d64ba8c9af22bea55f44e43722.gif">
+                        </div>
+                        <h5 class="text-center">Training and Education</h5>
+                    </a>
+                </div>
+                <div class="col-xs-12 col-sm-4 col-md-2 prod-category">
+                    <a href="/Gloves">
+                        <div>
+                            <img src="https://imgcdn.mckesson.com/CumulusWeb/Images/Item_Detail/765875.jpg">
+                        </div>
+                        <h5 class="text-center">Gloves</h5>
+                    </a>
+                </div>
+                <div class="col-xs-12 col-sm-4 col-md-2 prod-category">
+                    <a href="/Sterilization">
+                        <div>
+                            <img src="https://imgcdn.mckesson.com/CumulusWeb/Images/Item_Detail/960943.jpg">
+                        </div>
+                        <h5 class="text-center">Sterilization</h5>
+                    </a>
+                </div>
+                <div class="col-xs-12 col-sm-4 col-md-2 prod-category">
+                    <a href="/Incontinence">
+                        <div>
+                            <img src="https://imgcdn.mckesson.com/CumulusWeb/Images/Item_Detail/477563.jpg">
+                        </div>
+                        <h5 class="text-center">Incontinence</h5>
+                    </a>
+                </div>
+                <div class="col-xs-12 col-sm-4 col-md-2 prod-category">
+                    <a href="/catalog?node=1725237">
+                        <div>
+                            <img src="https://imgcdn.mckesson.com/CumulusWeb/Images/Item_Detail/481650.jpg">
+                        </div>
+                        <h5 class="text-center">Nurse's Station and Office Supplies</h5>
+                    </a>
+                </div>
+                <div class="col-xs-12 col-sm-4 col-md-2 prod-category">
+                    <a href="/Implants">
+                        <div>
+                            <img src="https://imgcdn.mckesson.com/CumulusWeb/Images/Item_Detail/688266.jpg">
+                        </div>
+                        <h5 class="text-center">Implants</h5>
+                    </a>
+                </div>
+            </div>
+            <div name="moreCategoriesRow" style="display:none" class="row">
+                <div class="col-xs-12 col-sm-4 col-md-2 prod-category">
+                    <a href="/Utensils">
+                        <div>
+                            <img src="https://imgcdn.mckesson.com/CumulusWeb/Images/Item_Detail/854346.jpg">
+                        </div>
+                        <h5 class="text-center">Utensils</h5>
+                    </a>
+                </div>
+                <div class="col-xs-12 col-sm-4 col-md-2 prod-category">
+                    <a href="/Appliances-(Durable-Goods)">
+                        <div>
+                            <img src="https://imgcdn.mckesson.com/CumulusWeb/Images/Item_Detail/1012895.jpg">
+                        </div>
+                        <h5 class="text-center">Appliances (Durable Goods)</h5>
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="panel">
+                        <div>
+                            <div class="text-center">
+                                <a name="moreCategoriesButton" onclick="showMoreCategories()" id="showCategories" href="#" class="btn btn-default"><span class="glyphicon glyphicon-chevron-down"></span>&nbsp;More Categories</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <h3 class="page-section">Top Products</h3>
+            <hr class="bb">
+            <div class="row">
+
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                    <div class="row prod-result recommended">
+                        <div class="col-xs-12">
+                            <div class="prod-wrapper">
+                                <div class="row">
+                                    <div class="col-sm-4 col-md-4 col-lg-4 prod-image hover">
+                                        <img src="https://imgcdn.mckesson.com/CumulusWeb/Images/Item_Detail/949871.jpg" alt="McKesson Brand 5001">
+                                    </div>
+
+                                    <div class="col-sm-8 col-md-8 col-lg-8 hover">
+                                        <h4>
+                                            <div class="sub">
+                                                <div class="item-header">
+                                                    <ul class="product-header">
+                                                        <li class="product-header-id">#949871</li>
+                                                        <li>McKesson Brand&nbsp;#5001</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <a href="/Rapid-Test-Kit-McKesson-Consult™-Fertility-Test-hCG-Pregnancy-Test-Urine-Sample-25-Tests-5001">Rapid Test Kit McKesson Consult™ Fertility Test hCG Pregnancy Test Urine Sample 25 Tests</a>
+                                        </h4>
+                                        <ul class="product-features">
+                                            <li>
+                                                A rapid test for the qualitative detection of human chorionic gonadotr …
+                                            </li>
+                                            <li>
+                                                CLIA Waived for Urine.
+                                            </li>
+                                            <li>
+                                                Contents: 25 Cassettes (in sealed pouches), Disposable specimen pipett …
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                    <div class="row prod-result recommended" data-product="" data-link="/product/1109552/McKesson-Brand-16-702500">
+                        <div class="col-xs-12">
+                            <div class="prod-wrapper">
+                                <div class="row">
+                                    <div class="col-sm-4 col-md-4 col-lg-4 prod-image hover">
+                                        <img src="https://imgcdn.mckesson.com/CumulusWeb/Images/Item_Detail/1109552.jpg" alt="McKesson Brand 16-702500">
+                                    </div>
+
+                                    <div class="col-sm-8 col-md-8 col-lg-8 hover">
+                                        <h4>
+                                            <div class="sub">
+                                                <div class="item-header">
+                                                    <ul class="product-header">
+                                                        <li class="product-header-id">#1109552</li>
+                                                        <li>McKesson Brand&nbsp;#16-702500</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <a href="	/product/1109552/McKesson-Brand-16-702500
+        ">Gravity Feeding Bag Set McKesson 1200 mL</a>
+                                        </h4>
+                                        <ul class="product-features">
+                                            <li>
+                                                Intended for use in administration of enteral nutrition, fluids or med …
+                                            </li>
+                                            <li>
+                                                12 Fr. Standard, Inner Diameter 3.0 mm, Outer Diameter 4.1 mm tubing d …
+                                            </li>
+                                            <li>
+                                                Included ENFit® connector meets ISO 80369-3 compliancy design standard …
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                    <div class="row prod-result recommended" data-product="" data-link="/product/354439/McKesson-Brand-14-116">
+                        <div class="col-xs-12">
+                            <div class="prod-wrapper">
+                                <div class="row">
+                                    <div class="col-sm-4 col-md-4 col-lg-4 prod-image hover">
+                                        <img src="https://imgcdn.mckesson.com/CumulusWeb/Images/Item_Detail/354439_ppkgleft.jpg" alt="McKesson Brand 14-116">
+                                    </div>
+
+                                    <div class="col-sm-8 col-md-8 col-lg-8 hover">
+                                        <h4>
+                                            <div class="sub">
+                                                <div class="item-header">
+                                                    <ul class="product-header">
+                                                        <li class="product-header-id">#354439</li>
+                                                        <li>McKesson Brand&nbsp;#14-116</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <a href="	/product/354439/McKesson-Brand-14-116
+        ">Exam Glove McKesson Medium NonSterile Vinyl Standard Cuff Length Smooth Clear Not Chemo Approved</a>
+                                        </h4>
+                                        <ul class="product-features">
+                                            <li>
+                                                Medium
+                                            </li>
+                                            <li>
+                                                Powder-Free
+                                            </li>
+                                            <li>
+                                                Beaded cuff.
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                    <div class="row prod-result recommended">
+                        <div class="col-xs-12">
+                            <div class="prod-wrapper">
+                                <div class="row">
+                                    <div class="col-sm-4 col-md-4 col-lg-4 prod-image hover">
+                                        <img src="https://imgcdn.mckesson.com/CumulusWeb/Images/Item_Detail/884218_front.jpg" alt="McKesson Brand UPLT1724">
+                                    </div>
+
+                                    <div class="col-sm-8 col-md-8 col-lg-8 hover">
+                                        <h4>
+                                            <div class="sub">
+                                                <div class="item-header">
+                                                    <ul class="product-header">
+                                                        <li class="product-header-id">#884218</li>
+                                                        <li>McKesson Brand&nbsp;#UPLT1724</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <a href="/Underpad-McKesson-Classic-17-X-24-Inch-Disposable-Fluff--Polymer-Light-Absorbency-UPLT1724">Underpad McKesson Classic 17 X 24 Inch Disposable Fluff / Polymer Light Absorbency</a>
+                                        </h4>
+                                        <ul class="product-features">
+                                            <li>
+                                                Designed to lock wetness away for light absorbency up to 800 grams
+                                            </li>
+                                            <li>
+                                                17 X 24 Inch
+                                            </li>
+                                            <li>
+                                                Unisex
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function showMoreCategories(event) {
+            $('[name="moreCategoriesRow"]').toggle();
+            if ($('#showCategories').html().search("Less") > -1)
+                $('#showCategories').html($('#showCategories').html().replace("Less", "More"));
+            else
+                $('#showCategories').html($('#showCategories').html().replace("More", "Less"));
+        }
+    </script>
+*@
+<img src="/images/UIComponents/inner.png" class="full_width_img" />
+<section class="container-fluid">
+    <div class="row">
+        <div class="container">
+            <div class="row flex_col m_t_20 m_b_20">
+                <div class="col-md-10 brad_crump">
+                    <a style="color: #A9A9A9;" href="@Url.RouteUrl("HomePage")">Homepage</a> / <span>Product Categories</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@*@await Component.InvokeAsync("HomepageCategories")*@
+<section class="container-fluid">
+    <div class="row">
+        <div class="container  m_t_30 m_b_50">
+            <div class="row flex_col m0">
+                <div class="col-md-12 title_text font_lato">
+                    <div class="row flex_col align_center m_b_20">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <h2><strong>Product </strong> Categories</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="row flex_col">
+                        @if (Model.Count > 0)
+                        {
+                            int flag = 1;
+                            foreach (var item in Model)
+                            {
+                                if (flag++ > 15)
+                                {
+                                    <div class="col-md-4 col-sm-6 col-xs-12 flex_col hidden_cat">
+                                        <div class="category_box">
+                                            <img @item.PictureModel.AlternateText src="@item.PictureModel.ImageUrl" title="@item.PictureModel.Title" />
+                                            <div>
+                                                <h4>@item.Name</h4>
+                                                <ul>
+                                                    @foreach (var child in item.childCategoriesLinks)
+                                                    {
+                                                        <li><a href="@Url.RouteUrl("Category", new { SeName = child.SeName })">@child.Name</a></li>
+                                                    }
+                                                </ul>
+                                                <a href="@Url.RouteUrl("Category", new { SeName = item.SeName })" class="btn btn-default">View All</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="col-md-4 col-sm-6 col-xs-12 flex_col">
+                                        <div class="category_box">
+                                            <img @item.PictureModel.AlternateText src="@item.PictureModel.ImageUrl" title="@item.PictureModel.Title" />
+                                            <div>
+                                                <h4>@item.Name</h4>
+                                                <ul>
+                                                    @foreach (var child in item.childCategoriesLinks)
+                                                    {
+                                                        <li><a href="@Url.RouteUrl("Category", new { SeName = child.SeName })">@child.Name</a></li>
+                                                    }
+                                                </ul>
+                                                <a href="@Url.RouteUrl("Category", new { SeName = item.SeName })" class="btn btn-default">View All</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        }
+                    </div>
+                    <div class="row m_t_20 ">
+                        <div class="col-md-12 text-center">
+                            <a href="javascript:void(0);" class="btn btn-primary view_all_cat">Show more products <!--i class="fa fa-caret-down"></i--> <img src="/images/UIComponents/Arrow_down_categories.svg" alt=""></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row m_b_80">
+                <div class="col-md-12">
+                    <img src="/images/UIComponents/b2.png" class="full_width_img hidden_img">
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+@*
+    <div class="col-md-12">
+        <div class="row flex_col">
+            <div class="col-md-4 col-sm-6 col-xs-12 flex_col">
+                <div class="category_box">
+            <img src="/images/UIComponents/pr7.png" />
+            <div>
+                <h4>Ambulatory Equipment</h4>
+                <ul>
+                    <li>Transfer Equipment</li>
+                    <li>Ambulatory Accessories</li>
+                    <li>Alarms</li>
+                    <li>PROTECTION MATS</li>
+                </ul>
+                <a  href="/Ambulatory-Equipment" class="btn btn-default">View All</a>
+            </div>
+        </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12 flex_col">
+                <div class="category_box">
+                    <img src="/images/UIComponents/pr0.png" />
+                    <div>
+                        <h4>Clinical Laboratory</h4>
+                        <ul>
+                            <li>Test Kits</li>
+                            <li>Specimen Collection</li>
+                            <li>Laboratory Equipment</li>
+                            <li>Eyewash Stations</li>
+                        </ul>
+                        <a href="/Clinical-Laboratory" class="btn btn-default">View All</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12 flex_col">
+                <div class="category_box">
+                    <img src="/images/UIComponents/pr4.png" />
+                    <div>
+                        <h4>Apparel</h4>
+                        <ul>
+                            <li>Face Shields</li>
+                            <li>MASKS</li>
+                            <li>Shirts and Scrubs</li>
+                            <li>Pants and Scrubs</li>
+                        </ul>
+                        <a href="/Apparel" class="btn btn-default">View All</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12 flex_col">
+                <div class="category_box">
+                    <img src="/images/UIComponents/p6.png" />
+                    <div>
+                        <h4>Needles and Syringes</h4>
+                        <ul>
+                            <li>Syringes</li>
+                            <li>Sharps Collectors</li>
+                            <li>Hypodermic Needles</li>
+                            <li>
+                                SYRINGES W/ NEEDLES
+                            </li>
+                        </ul>
+                        <a href="/Needles-and-Syringes" class="btn btn-default">View All</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12 flex_col">
+                <div class="category_box">
+                    <img src="/images/UIComponents/Pharmaceuticals.png" />
+                    <div>
+                        <h4>Pharmaceuticals</h4>
+                        <ul>
+                            <li>Over the Counter</li>
+                            <li>Rx</li>
+                            <li>Pharmacy Supplies</li>
+                            <li>Accessories</li>
+                        </ul>
+                        <a href="/Pharmaceuticals" class="btn btn-default">View All</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12 flex_col">
+                <div class="category_box">
+                    <img src="/images/UIComponents/pr5.png" />
+                    <div>
+                        <h4>Respiratory</h4>
+                        <ul>
+                            <li>Humidifiers and Nebulizers</li>
+                            <li>Nasal Cannulas</li>
+                            <li>Respiratory Masks</li>
+                            <li>Respiratory Accessories</li>
+                        </ul>
+                        <a href="/Respiratory" class="btn btn-default">View All</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12 flex_col">
+                <div class="category_box">
+                    <img src="/images/UIComponents/cat_12.png" />
+                    <div>
+                        <h4>Instruments</h4>
+                        <ul>
+                            <li>Curettes</li>
+                            <li>Retractors</li>
+                            <li>Needle Holders</li>
+                            <li>Instrument Trays</li>
+                        </ul>
+                        <a href="/Instruments" class="btn btn-default">View All</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12 flex_col">
+                <div class="category_box">
+                    <img src="/images/UIComponents/cat_8.png" />
+                    <div>
+                        <h4>Furnishings</h4>
+                        <ul>
+                            <li>PPE Dispensers</li>
+                            <li>Seating</li>
+                            <li>Beds</li>
+                            <li>Separation Barriers</li>
+                        </ul>
+                        <a href="/Furnishings" class="btn btn-default">View All</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12 flex_col">
+                <div class="category_box">
+                    <img src="/images/UIComponents/cat_16.png" />
+                    <div>
+                        <h4>Orthopedic</h4>
+                        <ul>
+                            <li>Casting</li>
+                            <li>Immobilizers</li>
+                            <li>Splints and Supports</li>
+                            <li>Orthopedic Accessories</li>
+                        </ul>
+                        <a href="/Orthopedic" class="btn btn-default">View All</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12 flex_col">
+                <div class="category_box">
+                    <img src="/images/UIComponents/cat_3.png" />
+                    <div>
+                        <h4>Instruments and Supplies</h4>
+                        <ul>
+                            <li>Diabetes Monitoring</li>
+                            <li>Stethoscopes</li>
+                            <li>Oximetry</li>
+                            <li>Thermometers</li>
+                        </ul>
+                        <a href="/Incontinence" class="btn btn-default">View All</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12 flex_col">
+                <div class="category_box">
+                    <img src="/images/UIComponents/cat_15.png" />
+                    <div>
+                        <h4>Office Supplies</h4>
+                        <ul>
+                            <li>Maintenance & Breakroom</li>
+                            <li>Paper & Printable Media</li>
+                            <li>Technology</li>
+                            <li>File Folders</li>
+                        </ul>
+                        <a href="/Office-Supplies" class="btn btn-default">View All</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12 flex_col">
+                <div class="category_box">
+                    <img src="/images/UIComponents/cat_25.png" />
+                    <div>
+                        <h4>Wound Care</h4>
+                        <ul>
+                            <li>General Wound Care</li>
+                            <li>Advanced Wound Care</li>
+                            <li>Kits and Trays</li>
+                            <li>Wound Measuring Devices</li>
+                        </ul>
+                        <a href="/Wound-Care" class="btn btn-default">View All</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12 flex_col">
+                <div class="category_box">
+                    <img src="/images/UIComponents/cat_6.png" />
+                    <div>
+                        <h4>Housekeeping</h4>
+                        <ul>
+                            <li>Cleaners and Disinfectants</li>
+                            <li>Bags</li>
+                            <li>Dispensers</li>
+                            <li>Air Fresheners</li>
+                        </ul>
+                        <a href="/Housekeeping" class="btn btn-default">View All</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12 flex_col">
+                <div class="category_box">
+                    <img src="/images/UIComponents/cat_7.png" />
+                    <div>
+                        <h4>I.V. Therapy</h4>
+                        <ul>
+                            <li>Tourniquets</li>
+                            <li>Catheters</li>
+                            <li>Infusion Sets</li>
+                            <li>Cannulas</li>
+                        </ul>
+                        <a href="/catalog?node=36880" class="btn btn-default">View All</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12 flex_col">
+                <div class="category_box">
+                    <img src="/images/UIComponents/cat_26.png" />
+                    <div>
+                        <h4>Wound Closure</h4>
+                        <ul>
+                            <li>Kits and Trays</li>
+                            <li>Sutures with Needles</li>
+                            <li>Clip Appliers</li>
+                            <li>Suture Needles</li>
+                        </ul>
+                        <a href="/Wound-Closure" class="btn btn-default">View All</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12 flex_col hidden_cat">
+                <div class="category_box">
+                    <img src="/images/UIComponents/cat_19.png" />
+                    <div>
+                        <h4>Physical Therapy</h4>
+                        <ul>
+                            <li>Treatments</li>
+                            <li>Exercise Equipment</li>
+                            <li>Self-Help Aids</li>
+                            <li>Mats and Pads</li>
+                        </ul>
+                        <a href="/Physical-Therapy" class="btn btn-default">View All</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12 flex_col hidden_cat">
+                <div class="category_box">
+                    <img src="/images/UIComponents/cat_2.png" />
+                    <div>
+                        <h4>Pressure and Positioning</h4>
+                        <ul>
+                            <li>Pillows</li>
+                            <li>Chair Pads</li>
+                            <li>Rolls and Wedges</li>
+                            <li>Mattresses</li>
+                        </ul>
+                        <a href="/Body-Pressure-Relief-and-Positioning" class="btn btn-default">View All</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12 flex_col hidden_cat">
+                <div class="category_box">
+                    <img src="/images/UIComponents/cat_17.png" />
+                    <div>
+                        <h4>Ostomy</h4>
+                        <ul>
+                            <li>Barriers</li>
+                            <li>Hernia Belts</li>
+                            <li>Pouches</li>
+                            <li>Ostomy Accessories</li>
+                        </ul>
+                        <a href="/Ostomy" class="btn btn-default">View All</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12 flex_col hidden_cat">
+                <div class="category_box">
+                    <img src="/images/UIComponents/cat_18.png" />
+                    <div>
+                        <h4>Personal Hygiene</h4>
+                        <ul>
+                            <li>Skin Care</li>
+                            <li>Mouth Care</li>
+                            <li>Hair Care</li>
+                            <li>Washing Equipment</li>
+                        </ul>
+                        <a href="/Personal-Hygiene" class="btn btn-default">View All</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12 flex_col hidden_cat">
+                <div class="category_box">
+                    <img src="/images/UIComponents/cat_21.png" />
+                    <div>
+                        <h4>Textiles</h4>
+                        <ul>
+                            <li>Drapes and Sheets</li>
+                            <li>Procedure Towels</li>
+                            <li>Drapes and Covers</li>
+                            <li>Table Paper</li>
+                        </ul>
+                        <a href="/Textiles" class="btn btn-default">View All</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12 flex_col hidden_cat">
+                <div class="category_box">
+                    <img src="/images/UIComponents/cat_11.png" />
+                    <div>
+                        <h4>Indicators and Signage</h4>
+                        <ul>
+                            <li>Labels</li>
+                            <li>Identification Bands</li>
+                            <li>Room I.D. Flag Systems</li>
+                            <li>Signs</li>
+                        </ul>
+                        <a href="/Indicators-and-Signage" class="btn btn-default">View All</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12 flex_col hidden_cat">
+                <div class="category_box">
+                    <img src="/images/UIComponents/cat_14.png" />
+                    <div>
+                        <h4>Nutritionals Supplies</h4>
+                        <ul>
+                            <li>Syringes</li>
+                            <li>Sharps Collectors</li>
+                            <li>Hypodermic Needles</li>
+                            <li>SYRINGES W/ NEEDLES</li>
+                        </ul>
+                        <a href="/Nutritionals-and-Feeding-Supplies" class="btn btn-default">View All</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12 flex_col hidden_cat">
+                <div class="category_box">
+                    <img src="/images/UIComponents/cat_23.png" />
+                    <div>
+                        <h4>Urological</h4>
+                        <ul>
+                            <li>Urinals</li>
+                            <li>Bags and Meter Bags</li>
+                            <li>Bedpans</li>
+                            <li>Catheters and Sheaths</li>
+                        </ul>
+                        <a href="/Urological" class="btn btn-default">View All</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12 flex_col hidden_cat">
+                <div class="category_box">
+                    <img src="/images/UIComponents/cat_4.png" />
+                    <div>
+                        <h4>Drainage and Suction</h4>
+                        <ul>
+                            <li>Drainage Systems</li>
+                            <li>Suction Instruments</li>
+                            <li>Canisters and Liners</li>
+                            <li>Connector Tubing</li>
+                        </ul>
+                        <a href="/Drainage-and-Suction" class="btn btn-default">View All</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12 flex_col hidden_cat">
+                <div class="category_box">
+                    <img src="/images/UIComponents/cat_22.png" />
+                    <div>
+                        <h4>Training and Education</h4>
+                        <ul>
+                            <li>Training Equipment</li>
+                            <li>Anatomical Charts</li>
+                            <li>Mannequins and Models</li>
+                            <li>Training Medications</li>
+                        </ul>
+                        <a href="/Training-and-Education" class="btn btn-default">View All</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12 flex_col hidden_cat">
+                <div class="category_box">
+                    <img src="/images/UIComponents/cat_5.png" />
+                    <div>
+                        <h4>Gloves</h4>
+                        <ul>
+                            <li>Medical Gloves</li>
+                            <li>Utility Gloves</li>
+                            <li>Compression Gloves</li>
+                            <li>Impact Gloves</li>
+                        </ul>
+                        <a href="/Gloves" class="btn btn-default">View All</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12 flex_col hidden_cat">
+                <div class="category_box">
+                    <img src="/images/UIComponents/cat_20.png" />
+                    <div>
+                        <h4>Sterilization</h4>
+                        <ul>
+                            <li>Sterilization Packaging</li>
+                            <li>Sterilization Indicators</li>
+                            <li>Sterilization Wraps</li>
+                            <li>Trays and Containers</li>
+                        </ul>
+                        <a href="/Sterilization" class="btn btn-default">View All</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12 flex_col hidden_cat">
+                <div class="category_box">
+                    <img src="/images/UIComponents/cat_10.png" />
+                    <div>
+                        <h4>Incontinence</h4>
+                        <ul>
+                            <li>Underpads</li>
+                            <li>Briefs and Diapers</li>
+                            <li>Incontinence Liners</li>
+                            <li>Incontinence Pants</li>
+                        </ul>
+                        <a href="/Incontinence" class="btn btn-default">View All</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12 flex_col hidden_cat">
+                <div class="category_box">
+                    <img src="/images/UIComponents/cat_13.png" />
+                    <div>
+                        <h4>Nurse's Station</h4>
+                        <ul>
+                            <li>Measuring Devices</li>
+                            <li>Mailing Envelopes</li>
+                            <li>Safety Pins</li>
+                            <li>Stickers and Coloring Books</li>
+                        </ul>
+                        <a href="/catalog?node=1725237" class="btn btn-default">View All</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12 flex_col hidden_cat">
+                <div class="category_box">
+                    <img src="/images/UIComponents/cat_9.png" />
+                    <div>
+                        <h4>Implants</h4>
+                        <ul>
+                            <li>Pessaries</li>
+                            <li>Ear Implants</li>
+                            <li>Stents</li>
+                            <li>Eye Implants</li>
+                        </ul>
+                        <a href="/Implants" class="btn btn-default">View All</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12 flex_col hidden_cat">
+                <div class="category_box">
+                    <img src="/images/UIComponents/cat_24.png" />
+                    <div>
+                        <h4>Utensils</h4>
+                        <ul>
+                            <li>Drinking Utensils</li>
+                            <li>Eating Utensils</li>
+                            <li>Basins</li>
+                            <li>Dishware</li>
+                        </ul>
+                        <a href="/Utensils" class="btn btn-default">View All</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12 flex_col hidden_cat">
+                <div class="category_box">
+                    <img src="/images/UIComponents/cat_1.png" />
+                    <div>
+                        <h4>Durable Goods</h4>
+                        <ul>
+                            <li>Freezers and Refrigerators</li>
+                            <li>Purifiers and Distillers</li>
+                            <li>Accessories</li>
+                            <li>Heaters</li>
+                        </ul>
+                        <a href="/Appliances-(Durable-Goods)" class="btn btn-default">View All</a>
+                    </div>
+                </div>
+            </div>*@
+
+@Html.Resource(@<script>
+                    $(document).ready(function () {
+                        $(".view_all_cat").click(function () {
+                            $(".hidden_cat").css({ "display": "flex" });
+                            $(".hidden_img").slideDown();
+                            $(this).hide();
+                        });
+                    });
+</script>, "js");

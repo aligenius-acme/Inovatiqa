@@ -1,0 +1,81 @@
+﻿@model CustomerAddressEditModel
+@{
+    Layout = "_ColumnsOne";
+    ViewBag.Title = "Account";
+}
+
+@*
+    <form asp-route="CustomerAddressEdit" method="post">
+        <div class="page account-page address-edit-page">
+            <div class="page-title">
+                <h1>Account - Edit address</h1>
+            </div>
+            <div class="page-body">
+                <div asp-validation-summary="ModelOnly" class="message-error"></div>
+                @{
+                    var dataDictAddress = new ViewDataDictionary(ViewData);
+                    dataDictAddress.TemplateInfo.HtmlFieldPrefix = "Address";
+                    @await Html.PartialAsync("_CreateOrUpdateAddress", Model.Address, dataDictAddress)
+                }
+                <div class="buttons">
+                    <input type="submit" class="button-1 save-address-button" value="Save" />
+                </div>
+            </div>
+        </div>
+    </form>
+
+*@
+@await Component.InvokeAsync("DashboardBlueBand")
+@*@await Html.PartialAsync("_DashboardBlueBand")*@
+<section class="container-fluid deshboard_section">
+    <div class="row">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="sidebar_menu font_lato">
+                        <h3>Inovatiqa Dashboard</h3>
+                        @await Html.PartialAsync("_DashboardSideBar", "my-account")
+                    </div>
+                </div>
+                <div class="col-md-9 newcustomer-area billing_chang_addres">
+                    <div class="accountform-area font_lato" id="account-deatil">
+                        <div class="form-title">
+                            <h5>Edit <span id="type">Billing</span> Address</h5>
+                        </div>
+                        <hr class="line">
+                        <form class="createaccount-form" asp-route="CustomerAddressEdit" method="post">
+                            <div asp-validation-summary="ModelOnly" class="alert alert-primary" style="border-radius: 0px; display: flex; justify-content: center; height:10px;"></div>
+                            <div class="row flex_col align_center">
+                                @{
+                                    var dataDictAddress = new ViewDataDictionary(ViewData);
+                                    dataDictAddress.TemplateInfo.HtmlFieldPrefix = "Address";
+                                    @await Html.PartialAsync("_CreateOrUpdateAddress", Model.Address, dataDictAddress)
+                                }
+                                <div class="col-md-9 col-md-offset-3 col-sm-12 col-xs-12">
+                                    <div class="form-group font_roboto">
+                                        <input type="submit" name="" value="Save Changes" class="btn btn-signin" />
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+
+    $(document).ready(() => {
+        const params = new URLSearchParams(window.location.search);
+        if (params.has('type')) {
+            if (params.get('type') == '1') {
+                $('#type').html('Billing');
+            }
+            else if (params.get('type') == '2') {
+                $('#type').html('Shipping');
+            }
+        }
+    });
+</script>

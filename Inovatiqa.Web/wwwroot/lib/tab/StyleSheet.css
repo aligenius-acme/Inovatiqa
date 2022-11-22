@@ -1,0 +1,129 @@
+﻿nav1 {
+    justify-content: center;
+    text-align: center;
+}
+
+.tabs-nav {
+    list-style: none;
+    text-align: center;
+    line-height: 20px;
+    margin: -1px 0 -1px 0;
+    padding: 0;
+    width: 100%;
+    border-bottom: 1px solid #d9d9d9;
+    border-top: 1px solid #d9d9d9;
+    justify-content: center !important;
+}
+a{
+    text-decoration:none;
+}
+.tabs-nav div a {
+    display: inline-block;
+    font-size: 15px;
+    color: #212121;
+    margin: -1px 0 -1px 0;
+    padding: 0;
+    position: relative;
+    text-decoration: none;
+}
+nav1 > .nav.nav-tabs {
+    border: none;
+    border-radius: 0;
+}
+
+nav1 > div a.nav-item.nav-link {
+    border: none;
+    padding: 12px 3px;
+    color: black;
+    text-align: center;
+    justify-content: center;
+}
+
+    nav1 > div a.nav-item.nav-link.active-tab {
+        border: none;
+        /*        padding: 16px 6px;
+*/ color: #fff;
+        border-radius: 0;
+        background-color: #337ab7;
+        text-align: center;
+        justify-content: center;
+    }
+
+        nav1 > div a.nav-item.nav-link.active-tab:after {
+            content: "";
+            position: relative;
+            bottom: -45px;
+            left: -9%;
+            border: 15px solid transparent;
+            border-top-color: #337ab7;
+            text-align: center;
+            justify-content: center;
+        }
+
+.tab-content {
+    background: #fdfdfd;
+    line-height: 20px;
+    border: 1px solid #ddd;
+    /*    border-top: 5px solid #337ab7;
+*/ /*border-bottom: 5px solid #337ab7;*/
+    padding: 30px 25px;
+}
+
+nav1 > div a.nav-item.nav-link:hover,
+nav1 > div a.nav-item.nav-link:focus {
+    border: none;
+    background: #337ab7;
+    color: #fff;
+    border-radius: 0;
+    transition: background 0.20s linear;
+}
+
+.linkTab {
+    text-align: center !important;
+    display: inline-table;
+}
+@media only screen (max-width: 600px) {
+    .nav-tabs {
+        text-align: center;
+        display: inline-block;
+        margin: 0 auto;
+    }
+
+    nav1 > div a.nav-item.nav-link {
+        border: none;
+        padding: 15px 5px;
+        color: black;
+        text-align: center;
+        font-size: small;
+    }
+
+    .tabs-nav div a {
+        display: inline-block;
+        font-size: 10px;
+        color: #212121;
+        margin: -1px 0 -1px 0;
+        padding: 0;
+        position: relative;
+        text-decoration: none;
+    }
+
+    nav1 > div a.nav-item.nav-link.active-tab {
+        border: none;
+        padding: 15px 5px;
+        color: #fff;
+        border-radius: 0;
+        background-color: #337ab7;
+        text-align: center;
+        font-size: small;
+    }
+
+        nav1 > div a.nav-item.nav-link.active-tab:after {
+            content: "";
+            position: relative;
+            bottom: -50px;
+            left: -10%;
+            border: 15px solid transparent;
+            border-top-color: #337ab7;
+            text-align: center;
+        }
+}

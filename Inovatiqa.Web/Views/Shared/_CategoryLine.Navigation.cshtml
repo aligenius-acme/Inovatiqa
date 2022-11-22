@@ -1,0 +1,48 @@
+﻿@model CategoryNavigationModel.CategoryLineModel
+
+@functions{
+    public bool BreadCrumbContainsCurrentCategoryId(CategorySimpleModel category)
+    {
+        if (Model.CurrentCategoryId == 0)
+            return false;
+
+        if (category.Id == Model.CurrentCategoryId)
+            return true;
+
+        return false;
+    }
+}
+@{
+    var active = Model.Category.Id == Model.CurrentCategoryId || Model.Category.SubCategories.Count(BreadCrumbContainsCurrentCategoryId) > 0;
+    var last = Model.Category.Id == Model.CurrentCategoryId;
+    var liClass = active ? "active" : "inactive";
+    if (last)
+    {
+        liClass += " last";
+    }
+}
+@*if (Model.Category.NumberOfProducts.HasValue == false)
+    {
+        <li class="@liClass">
+            <a href="@Url.RouteUrl("Category", new { SeName = Model.Category.SeName })">
+                @Model.Category.Name
+            </a>
+        </li>
+    }
+    else
+    {
+        <li class="@liClass">
+            <a href="@Url.RouteUrl("Category", new { SeName = Model.Category.SeName })">
+                @Model.Category.Name
+                <b>(@Model.Category.NumberOfProducts.Value)</b>
+            </a>
+        </li>
+    }*@
+@if (Model.Category.NumberOfProducts.HasValue == false)
+{
+    <div class="list">@Model.Category.Name</div>
+}
+else
+{
+    <div style="cursor: pointer;" onclick="window.location.href='@Url.RouteUrl("Category", new { SeName = Model.Category.SeName })'" class="list">@Model.Category.Name <span>@Model.Category.NumberOfProducts.Value</span></div>
+}

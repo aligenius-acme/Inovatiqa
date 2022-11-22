@@ -1,0 +1,177 @@
+﻿@model HeaderLinksModel
+@inject Inovatiqa.Core.Interfaces.IWebHelper webHelper
+@*
+    <div class="header-links">
+        <ul class="nav-top nav navbar-right">
+            @if (Model.IsAuthenticated)
+            {
+                @*<li><a href="@Url.RouteUrl("CustomerOrders")" class="ico-account">Orders</a></li>@
+                <li><a href="@Url.RouteUrl("Logout")" class="ico-logout">Log out</a></li>
+            }
+            else
+            {
+                var returnUrl = Context.Request.Query.TryGetValue("returnUrl", out var url) && !StringValues.IsNullOrEmpty(url)
+                ? url.ToString()
+                : webHelper.GetRawUrl(Context.Request);
+
+                <li><a href="@Url.RouteUrl("Register", new { returnUrl })" class="ico-register">Register</a></li>
+                <li><a href="@Url.RouteUrl("Login", new { returnUrl })" class="ico-login">Log in</a></li>
+            }
+            @*if (Model.AllowPrivateMessages)
+                {
+                <li>
+                <a href="@Url.RouteUrl("PrivateMessages", new { tab = "" })" class="ico-inbox">
+                <span class="inbox-label">@T("PrivateMessages.Inbox")</span>
+                <span class="inbox-unread">@Model.UnreadPrivateMessages</span>
+                </a>
+                </li>
+                }@
+            @if (Model.WishlistEnabled)
+            {
+                <li>
+                    <a href="@Url.RouteUrl("Wishlist")" class="ico-wishlist" style="border-right: none;">
+                        <span class="wishlist-label">Wishlist</span>
+                        <span class="wishlist-qty">@string.Format("({0})", Model.WishlistItems)</span>
+                    </a>
+                </li>
+            }
+
+            @@if (Model.ShoppingCartEnabled)
+                {
+                <li id="topcartlink" class="dropdown cart-full-screen">
+                <a href="@Url.RouteUrl("ShoppingCart")" class="ico-cart dropdown-toggle">
+                <span class="cart-label">Shopping cart</span>
+                <span class="cart-qty">@string.Format("({0})", Model.ShoppingCartItems)</span>
+                <span class="caret"></span>
+                </a>
+
+                <ul class="dropdown-menu" role="menu">
+                @await Component.InvokeAsync("FlyoutShoppingCart")
+                </ul>
+                </li>
+                }@
+
+            @*Naveed Modifications@
+
+            @if (Model.ShoppingCartEnabled)
+            {
+                <li id="topcartlink" style="background-color:#f18712; color:white;" class="dropdown cart-full-screen">
+                    <a href="@Url.RouteUrl("ShoppingCart")" class="ico-cart dropdown-toggle">
+                        <span class=" cart-label fa fa-shopping-cart" id="SubtotalPrice" style="background-color:#f18712;color: white; margin: 3px" aria-hidden="true"> CART @Model.miniShoppingCartModel.SubTotal</span>
+                        @*<span style="background-color:#f18712; color:white;margin-right:9px" class="cart-qty">@string.Format("({0})", Model.miniShoppingCartModel.Items.Count)</span>@
+                        <span style="background-color:#f18712; color:white;margin-right:9px" class="cart-qty">@string.Format("({0})", Model.miniShoppingCartModel.TotalItems)</span>
+                        @*<span class="caret"></span>@
+                    </a>
+
+                    @*<ul class="dropdown-menu" role="menu">
+                        @await Component.InvokeAsync("FlyoutShoppingCart")
+                     </ul>@
+                </li>
+            }
+            @if (Model.ShoppingCartEnabled)
+            {
+                <li class="cart-small-screen"><a href="@Url.RouteUrl("ShoppingCart")" class="ico-cart">Shopping cart <span class="cart-qty">@string.Format("({0})", Model.ShoppingCartItems)</span></a></li>
+            }
+        </ul>
+        @if (Model.AllowPrivateMessages && !string.IsNullOrEmpty(Model.AlertMessage))
+        {
+            //new private message notification
+            @Html.Resource(@<script type="text/javascript">
+    $(document).ready(function () {
+    displayPopupNotification('@Html.Raw(JavaScriptEncoder.Default.Encode(Model.AlertMessage))', 'success', false);
+    });
+            </script>, "js")
+        }
+        <input type="hidden" id="registered-customer-name" value="@Model.CustomerName" />
+    </div> *@
+
+
+
+<div class="navbar_h">
+    <ul class="nav navbar-nav">
+        <li class="contact_page"><a href="@Url.RouteUrl("ContactUs")">Contact Us</a></li>
+
+        <li><a href="mailto:sales@inovatiqa.com">sales@inovatiqa.com</a></li>
+
+    </ul>
+    <ul class="nav navbar-nav">
+        <li class="current-menu-item"><a href="@Url.RouteUrl("Homepage")">Home</a></li>
+
+        <li><a href="@Url.RouteUrl("ShopProducts")">Product Categories</a></li>
+        <li><a href="@Url.RouteUrl("Brands")">Brands</a></li>
+        <li class="sign_in_user">
+            <a href="#">B2B Services</a>
+            <ul class="sub_menu" style="top: 30px; left: 20px;">
+                <li><a href="@Url.RouteUrl("RequestQuote")">Request a Quote</a></li>
+                <li><a href="@Url.RouteUrl("ContractPricing")">Contract Pricing</a></li>
+                <li><a href="@Url.RouteUrl("PaymentTerms")">Payment Terms</a></li>
+                <li><a href="@Url.RouteUrl("RXPrescription")">RX Prescription</a></li>
+                <li><a href="@Url.RouteUrl("PriceMatch")">Price Match Policy</a></li>
+                <li><a href="~/files/forms/Purchase Order_Form.pdf">Order Form</a></li>
+                <li><a href="@Url.RouteUrl("ReOrderManagement")">Reorder Guide</a></li>
+            </ul>
+        </li>
+        <li class="sign_in_user">
+            <a href="#">Solutions</a>
+            <ul class="sub_menu" style="top: 30px; left: 20px; width: 185px;">
+                <li><a href="@Url.RouteUrl("GPOPurchasing")">Group Purchasing</a></li>
+                <li><a href="@Url.RouteUrl("HealthAccounts")">Health Accounts</a></li>
+                <li><a href="@Url.RouteUrl("GovernmentContracts")">Government Contracts</a></li>
+                <li><a href="@Url.RouteUrl("DistributionServices")">Distribution Services</a></li>
+                <li><a href="@Url.RouteUrl("InternationalShipping")">International Shipping</a></li>
+            </ul>
+        </li>
+        <li><a href="@Url.RouteUrl("AboutUs")">About Us</a></li>
+
+    </ul>
+    <ul class="nav navbar-nav last_nav">
+        @if (Model.IsAuthenticated)
+        {
+            @*<li class="sign_in_user"><a href="#"><img src="/images/UIComponents/User_cicrle_light.svg"> <span><strong>@Model.CustomerName</strong> Dashboard</span></a></li>*@
+            <li class="sign_in_user">
+                <a href="javascript:void(0)"><img src="~/images/UIComponents/User_cicrle_light.svg"> <span><strong>@Model.CustomerName</strong> Dashboard</span></a>
+                <ul class="sub_menu">
+                    <li><a href="@Url.RouteUrl("AccountInformation")">My Account</a></li>
+                    <li><a href="@Url.RouteUrl("CustomerOrders")">My Orders</a></li>
+                    <li><a href="@Url.RouteUrl("PaymentPortal")">Payment Portal</a></li>
+                    <li class="sign_out"><a href="@Url.RouteUrl("Logout")">Sign Out</a></li>
+                </ul>
+            </li>
+        }
+        else
+        {
+            @*
+            var returnUrl = Context.Request.Query.TryGetValue("returnUrl", out var url) && !StringValues.IsNullOrEmpty(url)
+            ? url.ToString() : webHelper.GetRawUrl(Context.Request);
+            <li><a href="@Url.RouteUrl("Login", new { returnUrl })"><img src="\images\UIComponents\User_cicrle_light.svg"> My Account</a></li>
+            *@
+            var returnUrl = Context.Request.Query.TryGetValue("returnUrl", out var url) && !StringValues.IsNullOrEmpty(url)
+            ? url.ToString() : webHelper.GetRawUrl(Context.Request);
+            <li class="sign_in_user">
+                <a href="javascript:void(0)"><img src="~/images/UIComponents/User_cicrle_light.svg"> <span><strong>@Model.CustomerName</strong> Dashboard</span></a>
+                <ul class="sub_menu">
+                    <li><a href="@Url.RouteUrl("Login", new { returnUrl })">Sign in</a></li>
+                    <li><a href="@Url.RouteUrl("Register")">Register</a></li>
+                </ul>
+            </li>
+        }
+    <li class="cart_section_menu">
+        @if (Model.IsAuthenticated)
+        {
+            <a href="@Url.RouteUrl("ShoppingCart")">
+                <span class="badge cart-qty">@string.Format("{0}", Model.miniShoppingCartModel.TotalItems)</span>
+                <img src="~/images/UIComponents/cart.svg"> My Cart
+            </a>
+        }
+        else
+        {
+            <a href="@Url.RouteUrl("GuestCart")">
+                <span class="badge cart-qty">@string.Format("{0}", Model.miniShoppingCartModel.TotalItems)</span>
+                <img src="~/images/UIComponents/cart.svg"> My Cart
+            </a>
+        }
+        @await Component.InvokeAsync("FlyoutShoppingCart")
+    </li>
+    </ul>
+    <input type="hidden" id="registered-customer-name" value="@Model.CustomerName" />
+</div>

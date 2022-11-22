@@ -1,0 +1,332 @@
+﻿@using Inovatiqa.Core;
+@using Inovatiqa.Web.Models.Payment;
+@model PaymentInfoModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <style type="text/css">
+
+        .square-input {
+            background: #F9F9F9;
+            border: 1px solid #D1D1D1;
+            box-sizing: border-box;
+            border-radius: 5px;
+            box-shadow: none;
+            outline: none;
+            padding: 10px 20px;
+            height: 41px;
+            line-height: 1em;
+        }
+
+        .square-input--focus {
+            border-color: #ccc;
+            color: #444;
+        }
+
+        .square-input--error {
+            outline: #e4434b;
+        }
+
+        body form input {
+            color: red;
+        }
+    </style>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#@Html.IdFor(model => model.StoredCardId)').on('change', toggleStoredCard);
+            toggleStoredCard();
+
+            var submitForm = false;
+            var onePageCheckout = @InovatiqaDefaults.OnePageCheckoutEnabled.ToString().ToLower();
+            var use3ds = @InovatiqaDefaults.Use3ds.ToString().ToLower();
+            $('.payment-info-next-step-button').attr('onclick', null);
+            $('.payment-info-next-step-button').prop('disabled', true);
+            $('.payment-info-next-step-button').css("opacity", .3);
+
+            var paymentForm = new SqPaymentForm({
+                applicationId: '@InovatiqaDefaults.ApplicationId',
+                locationId: '@InovatiqaDefaults.LocationId',
+                inputClass: 'square-input',
+                inputStyles: [{
+                    backgroundColor: 'inherit',
+                }],
+                cardNumber: {
+                    elementId: 'square-card-number',
+                    placeholder: '•••• •••• •••• ••••',
+                    class: 'myClass',
+                },
+                expirationDate: {
+                    elementId: 'square-expiration-date',
+                    placeholder: 'MM/YY'
+                },
+                cvv: {
+                    elementId: 'square-cvv',
+                    placeholder: 'CVV'
+                },
+                postalCode: {
+                    elementId: 'square-postal-code'
+                },
+                callbacks: {
+                    cardNonceResponseReceived: function (errors, nonce, cardData) {
+                        if (errors) {
+                            errors.forEach(function (error) {
+                                var currentErrorvalue = $('#@Html.IdFor(Model => Model.Errors)').val();
+                                $('#@Html.IdFor(model => model.Errors)').val(currentErrorvalue + '|' + error.message);
+                            });
+                            paymentForm.destroy();
+                            paymentForm = null;
+                            submitForm = true;
+                            $('input.payment-info-next-step-button').trigger("click");
+                        }
+                        else if (use3ds) {
+                            verifyBuyer(nonce);
+                        }
+                        else {
+                            $('#@Html.IdFor(model => model.CardNonce)').val(nonce);
+                            submitForm = true;
+                            $('input.payment-info-next-step-button').trigger("click");
+                        }
+                    },
+
+                    unsupportedBrowserDetected: function () {
+                        console.log('Browser is not supported');
+                    },
+
+                    paymentFormLoaded: function () {
+                        if (paymentForm) {
+                            paymentForm.setPostalCode('@Model.PostalCode');
+                        }
+                        $('.payment-info-next-step-button').prop('disabled', false);
+                        $('.payment-info-next-step-button').css("opacity", 1);
+                    }
+                }
+            });
+            if (paymentForm) {
+                paymentForm.build();
+            }
+
+            $('input.payment-info-next-step-button').on('click', function (data) {
+                if (!submitForm) {
+                    if (paymentForm) {
+                        var selectedStoredCardId = $('#@Html.IdFor(model => model.StoredCardId)').val();
+                        if ((!selectedStoredCardId || selectedStoredCardId == '@(Guid.Empty.ToString())')) {
+                            paymentForm.requestCardNonce();
+                            return false;
+                        } else if (use3ds) {
+                            verifyBuyer(selectedStoredCardId);
+                            return false;
+                        } else if (onePageCheckout) {
+                            PaymentInfo.save();
+                        }
+                    }
+                }
+                else if (onePageCheckout) {
+                    submitForm = false;
+                    PaymentInfo.save();
+                }
+            });
+
+            $(document).on('accordion_section_opened', function (data) {
+                if (data.currentSectionId != 'opc-confirm_order' && data.currentSectionId != 'opc-payment_info') {
+                    if (paymentForm) {
+                        paymentForm.destroy();
+                        paymentForm = null;
+                    }
+                    $('.payment-info-next-step-button').attr('onclick', 'PaymentInfo.save()');
+                }
+                if (data.currentSectionId == 'opc-payment_info' && data.previousSectionId == 'opc-confirm_order') {
+                    $('.payment-info-next-step-button').attr('onclick', null);
+                }
+            });
+            function verifyBuyer(nonce) {
+                const SaveCard = $('#SaveCard').is(':checked');
+                CardIntent = SaveCard ? 'STORE' : 'CHARGE';
+                const verificationDetails = {
+                    intent: CardIntent,
+                    amount: '@Model.OrderTotal',
+                    currencyCode: '@Model.Currency',
+                    billingContact: {
+                        givenName: '@Model.BillingFirstName',
+                        familyName: '@Model.BillingLastName',
+                        email: '@Model.BillingEmail',
+                        country: '@Model.BillingCountry',
+                        region: '@Model.BillingState',
+                        city: '@Model.BillingCity',
+                        postalCode: '@Model.BillingPostalCode'
+                    }
+                };
+                paymentForm.verifyBuyer(nonce, verificationDetails,
+                    function(err, verificationResult) {
+                        if (err) {
+                            $('#@Html.IdFor(model => model.Errors)').val($('#@Html.IdFor(model => model.Errors)').val() + '|' + err.message);
+                            paymentForm.destroy();
+                            paymentForm = null;
+                        }
+                        else {
+                            if (nonce.indexOf('cnon:') === 0) {
+                                $('#@Html.IdFor(model => model.CardNonce)').val(nonce);
+                            }
+
+                            $('#@Html.IdFor(model => model.Token)').val(verificationResult.token);
+                        }
+                        submitForm = true;
+                        $('input.payment-info-next-step-button').trigger("click");
+                    }
+                );
+            }
+        });
+
+        function toggleStoredCard() {
+            var selectedStoredCardId = $('#@Html.IdFor(model => model.StoredCardId)').val();
+            if (!selectedStoredCardId || selectedStoredCardId == '@(Guid.Empty.ToString())') {
+                $('#square-card-details').show();
+            } else {
+                $('#square-card-details').hide();
+            }
+        }
+    </script>
+</head>
+<body>
+    @*
+        <input type="hidden" asp-for="CardNonce" />
+        <input type="hidden" asp-for="Errors" />
+        <input type="hidden" asp-for="Token" />
+
+        @if (!Model.IsGuest && Model.StoredCards.Any())
+        {
+            <table style="margin-left:auto; margin-right:auto" cellspacing="2" cellpadding="1" border="0">
+                <tr>
+                    <td>
+                        <label style="text-align:left"  asp-for="StoredCardId">Use a previously saved card:</label>
+                    </td>
+                    <td>
+                        <select style="width:315px" asp-for="StoredCardId" asp-items="Model.StoredCards" class="square-input"></select>
+                    </td>
+                </tr>
+            </table>
+        }
+
+        <table style="margin-left:auto; margin-right:auto" cellspacing="2" cellpadding="1" border="0" id="square-card-details">
+            <tr>
+                <td>
+                    <label style="text-align:left">Card number:</label>
+                </td>
+                <td >
+                    <div id="square-card-number" style="width:165px;"></div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label style="text-align:left">Expiration date:</label>
+                </td>
+                <td>
+                    <div id="square-expiration-date"></div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label style="text-align:left">Card code:</label>
+                </td>
+                <td>
+                    <div id="square-cvv" style="width:60px;"></div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label style="text-align:left" asp-for="PostalCode">Postal code:</label>
+                </td>
+                <td>
+                    <div id="square-postal-code"></div>
+                </td>
+            </tr>
+            @if (!Model.IsGuest)
+            {
+                <tr>
+                    <td>
+                        <label asp-for="SaveCard">Save the card data for future purchasing:</label>
+                    </td>
+                    <td>
+                        <input type="checkbox" asp-for="SaveCard" checked/>
+                        <span asp-validation-for="SaveCard"></span>
+                    </td>
+                </tr>
+            }
+        </table>
+    *@
+
+
+
+    <input type="hidden" asp-for="CardNonce" />
+    <input type="hidden" asp-for="Errors" />
+    <input type="hidden" asp-for="Token" />
+    <div class="payment_head">
+        <label>
+            Credit card
+        </label>
+        <div class="accept_logos">
+            <img src="~/images/UIComponents/p5.png">
+            <img src="~/images/UIComponents/p4.png">
+            <img src="~/images/UIComponents/p1.png">
+            <img src="~/images/UIComponents/p3.png">
+            <img src="~/images/UIComponents/p2.png">
+        </div>
+    </div>
+    <div class="payment_body">
+        <div class="row">
+            @if (!Model.IsGuest && Model.StoredCards.Any())
+            {
+                <div class="col-md-12 col-sm-12 col-xs-12 form-group">
+                    <select class="form-control square-input" asp-for="StoredCardId" asp-items="Model.StoredCards" onchange="handleChange(this)"></select>
+                </div>
+            }
+            <div id="square-card-details">
+                <div class="col-md-12 col-sm-12 col-xs-12 form-group">
+                    <label>Card Number</label>
+                    <div class="col-md-12 col-sm-12 col-xs-12 form-group" id="square-card-number"></div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-6 form-group">
+                    <label>Postal Code</label>
+                    <div id="square-postal-code"></div>
+                </div>
+                <div class="col-md-3 col-sm-6 col-xs-6 form-group">
+                    <label>Expiration date</label>
+                    <div id="square-expiration-date"></div>
+                </div>
+                <div class="col-md-3 col-sm-6 col-xs-6 form-group">
+                    <label>CVV</label>
+                    <div id="square-cvv"></div>
+                </div>
+                @if (!Model.IsGuest)
+                {
+                    <div class="col-md-6 col-sm-6 col-xs-6 form-group">
+                        <label>Save Option</label>
+                        <div class="checkbox" style="margin-top: 0px;">
+                            <label>
+                                <input asp-for="SaveCard" type="checkbox" name="SaveCard" id="SaveCard" style="height: 20px; width: 20px;" />
+                                Save card for future purchases.
+                            </label>
+                            <span asp-validation-for="SaveCard"></span>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <script>
+        function handleChange(e) {
+            const value = $(e).find(':selected').val();
+
+            if (value != '00000000-0000-0000-0000-000000000000') {
+
+            }
+
+        }
+    </script>
+</body>
+</html>

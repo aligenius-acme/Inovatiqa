@@ -1,0 +1,744 @@
+﻿@using Inovatiqa.Web.Models.Order
+@using System.Text.RegularExpressions
+@model CustomerReturnRequestsModel
+@{
+    Layout = "_ColumnsOne";
+}
+@{
+    ViewBag.Title = "Return requests";
+}
+@*
+    @Html.Resource(@<script src="@Url.Content("https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js")" type="text/javascript"></script>, "js")
+    @Html.Resource(@<link href="@Url.Content("https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css")" rel="stylesheet" type="text/css" />, "css")
+    @Html.Resource(@<script src="@Url.Content("https://cdnjs.cloudflare.com/ajax/libs/jquery.tipsy/1.0.3/jquery.tipsy.min.js")" type="text/javascript"></script>, "js")
+    @Html.Resource(@<link href="@Url.Content("https://cdnjs.cloudflare.com/ajax/libs/jquery.tipsy/1.0.3/jquery.tipsy.min.css")" rel="stylesheet" type="text/css" />, "css")
+*@
+@*<style>
+        .content-component {
+            border: 1px solid #ccc !important;
+            margin-bottom: 10px !important;
+            border-radius: 3px !important;
+            background: #fff !important;
+            color: #333 !important;
+            box-shadow: 0 2px 1px rgba(0,0,0,0.1) !important;
+            border-top: 1px solid #ddd !important;
+        }
+
+        .main-header {
+            background: #f2f2f2 !important;
+            padding: 2px !important;
+            cursor: pointer !important;
+        }
+
+            .main-header .main {
+                overflow: auto !important;
+                list-style: none !important;
+            }
+
+                .main-header .main > * {
+                    display: block !important;
+                    float: left !important;
+                    margin-right: 20px !important;
+                    font-weight: bold !important;
+                    padding: 1px 0 !important;
+                    color: #999 !important;
+                }
+
+        .po-header-detail {
+            padding: 5px 10px 5px 20px !important;
+            border: 1px solid #eee !important;
+            background: #fff !important;
+            -moz-border-radius: 5px !important;
+        }
+
+        ul.return-total li {
+            clear: both !important;
+        }
+
+        .po-header-detail ul li {
+            float: none !important;
+            margin: 0 !important;
+            font-size: 11px !important;
+            color: #333 !important;
+            font-weight: normal !important;
+        }
+
+        .component-body {
+            padding: 10px !important;
+        }
+
+        .tblSimple {
+            width: 100% !important;
+            border-spacing: 0px !important;
+            clear: both !important;
+            margin-bottom: 5px !important;
+        }
+
+            .tblSimple thead {
+                background: #fafafa !important;
+            }
+
+            .tblSimple > tbody > tr > td {
+                vertical-align: middle !important;
+            }
+
+            .tblSimple td {
+                padding: 4px 2px !important;
+                border-top: 1px solid #ddd !important;
+            }
+
+        .cursor-pointer {
+            cursor: pointer !important;
+        }
+
+        .header-component {
+            width: 120px !important;
+            display: inline !important;
+        }
+    </style>
+    <div class="page account-page return-request-list-page from-panel">
+        <div class="page-title panel-heading">
+            <h1>Return requests</h1>
+        </div>
+        <div class="page-body">
+            <div class="pull-right">
+                <a type="button" class="btn btn_green" href="@Url.RouteUrl("CreateReturnRequest", new {controller="ReturnRequest", returnView = "true" })">Create New Return Request</a>
+            </div>
+            <br />
+            <div>
+                <h3 class="list-header-orange">
+                    Submitted Return Requests
+                </h3>
+                <h6>
+                    All submitted return requests are listed below. Specific items can be clicked on to view credit details, or a return request can be expanded for additional information.
+                </h6>
+            </div>
+            <br />
+            <div class="order-list">
+                <div id="filter-bar">
+                    <label for="viewreturns" class="header-component">View</label>
+                    <select id="viewreturns" name="viewreturns" class="form-control header-component">
+                        <option value="-1"> All Returns</option>
+                        <option value="20"> Closed Returns</option>
+                        <option value="O"> Open Returns</option>
+                    </select>
+                    <label for="searchbox" class="header-component">Find</label>
+                    <input type="text" id="searchbox" value="" class="form-control header-component">
+                    <label for="searchbox" class="header-component">in</label>
+                    <select name="filter" id="searchFilterType" class="form-control header-component">
+                        <option value="0" selected="selected">PO</option>
+                        <option value="1">Order #</option>
+                        <option value="2">Return #</option>
+                        <option value="3">Item #</option>
+                        <option value="4">Description</option>
+                        <option value="5">Manufacturer</option>
+                        <option value="6">Mfr #</option>
+                    </select>
+                    <label for="fromdate" class="header-component">From</label>
+                    <input type="text" id="fromdate" value="" readonly="readonly" class="form-control date-picker header-component">
+                    <label for="todate" class="header-component">To</label>
+                    <input type="text" id="todate" value="" readonly="readonly" class="form-control date-picker header-component">
+                    <a type="button" id="customer-returns-filter" title="Filters records for the last 35 days" href="#" class="btn btn-primary" onclick="FilterReturnRequests(); return false;">Find</a>
+                    <a type="button" id="customer-returns-clear" href="#" class="btn btn-primary" onclick="ClearFilterReturnRequests(); return false;">Clear</a>
+                    <label for="sort" class="header-component">Sort By</label>
+                    <select id="sort" name="sort" class="form-control header-component">
+                        <option value="false"> Return #</option>
+                        <option value="true"> Date Submitted</option>
+                    </select>
+                </div>
+                <br />
+                @{
+                    if (Model.Items != null && Model.Items.Count > 0)
+                    {
+                        foreach (var item in Model.Items)
+                        {
+                            <div class="content-component">
+                                            <div class="main-header" onclick="handleExpanssion(this)">
+                                                <div class="main">
+                                                    @*<input type="button" class="collapsible" value="+" style="border-radius: 100px; border: none;">@
+
+                                                    <div style="margin-left:5px;">
+                                                        <i id="expandBtn" class="fa fa-plus-circle pointer"></i>
+                                                    </div>
+                                                    <div class="return-status" style="color:#999;">@item.ReturnRequestStatus&nbsp;Return&nbsp;#@item.Id</div>
+                                                    <div>@item.ReturnRequestStatus</div>
+                                                    <div>Submitted on @item.CreatedOn.ToString("MMM dd, yyyy")</div>
+                                                    <div><span>Total Pending Credit&nbsp;</span><b class="moneyGreen">@item.PendingCredit</b></div>
+                                                </div>
+                                                <div style="background-color: #FFF; display: none; overflow: hidden; ">
+                                                    <div style="display: flex; justify-content: space-between;">
+                                                        <div>
+                                                            <p style="font-weight: bold;">Returned From</p>
+                                                            <p>@item.BillingAddress.CompanyName</p>
+                                                            <p>@item.BillingAddress.AddressLine</p>
+                                                            <p>@item.BillingAddress.Country, @item.BillingAddress.ZipCode</p>
+                                                        </div>
+                                                        <div>
+                                                            <table class="tblSimple highlight-body">
+                                                                <tr>
+                                                                    <td style="width: 100%;">Total Product Credit </td>
+                                                                    <td style="color: #393;"> @item.TotalProductCredit</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Freight </td>
+                                                                    <td style="color: #393;"> @item.Freight</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Total Pending Credit </td>
+                                                                    <td style="color: #393;"> @item.PendingCredit</td>
+                                                                </tr>
+
+                                                            </table>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                <div class="component-body">
+                                    <table class="tblSimple highlight-body">
+                                        <thead>
+                                            <tr>
+                                                <th>Item #</th>
+                                                <th>Description</th>
+                                                <th>Order #</th>
+                                                <th>PO</th>
+                                                <th>Mfr</th>
+                                                <th>Mfr #</th>
+                                                <th align="center">UOM</th>
+                                                <th class="alignRight">Qty</th>
+                                                <th class="alignRight">Credit</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="cursor-pointer" title="Click to View Detail">
+                                            @{
+                                                <tr>
+                                                    <td>
+                                                        @item.ProductId
+                                                    </td>
+                                                    <td>
+                                                        @item.ProductName
+                                                    </td>
+                                                    <td>@item.OrderId</td>
+                                                    <td>@item.PoNumber</td>
+                                                    <td>
+                                                        @item.ProductManufacturers.FirstOrDefault().Name
+                                                    </td>
+                                                    <td>@item.ManufacturerPartNumber</td>
+                                                    <td align="center">@item.AttributeInfo</td>
+                                                    <td class="alignRight">@item.Quantity</td>
+                                                    <td class="alignRight">
+                                                        <span class="moneyGreen">@item.PendingCredit</span>
+                                                    </td>
+                                                </tr>
+                                                <tr class="trExtra">
+                                                    <td></td>
+                                                    <td colspan="9"><span style="color:grey;">Reason: @item.ReturnReason</span></td>
+                                                </tr>
+                                            }
+
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <div class="content-component" style="margin-top:10px;">
+                            <div class="component-body">
+                                <span class="noresults">Search returned no Returned Items.</span>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+    @Html.Resource(@<script type="text/javascript">
+        $(document).ready(function () {
+            searchParams = new URLSearchParams(window.location.search);
+            if (searchParams.has('returnStatusId'))
+                $('#viewreturns').val(searchParams.get('returnStatusId'));
+            if (searchParams.has('returnRequestFindByKey'))
+                $('#searchFilterType').val(searchParams.get('returnRequestFindByKey'));
+            if (searchParams.has('returnRequestFindByKeyValue'))
+                $('#searchbox').val(searchParams.get('returnRequestFindByKeyValue'));
+            if (searchParams.has('startDateValue'))
+                $('#fromdate').val(searchParams.get('startDateValue'));
+            if (searchParams.has('endDateValue'))
+                $('#todate').val(searchParams.get('endDateValue'));
+            if (searchParams.has('orderByDate'))
+                $('#sort').val(searchParams.get('orderByDate'));
+
+            $('#customer-returns-filter').tipsy();
+
+            $("#newSearchPlace").html($(".dataTables_filter"));
+            $('#returns_filter').find('input').css({ "font-weight": "100" })
+
+            $('#fromdate').datepicker({
+                minDate: '-35D',
+                maxDate: '+0',
+            }).datepicker("setDate", -35);
+
+            $('#todate').datepicker({
+                minDate: '-35D',
+                maxDate: '+0',
+            }).datepicker("setDate", new Date());
+            $('.ui-datepicker').css('font-size', '11px');
+
+            $("#customer-returns-filter").click(function () {
+                var startDateValue = $("#fromDate").val();
+                var endDateValue = $("#toDate").val();
+
+                if (startDateValue == '' || endDateValue == '') {
+                    alert("Please select date range first!");
+                    return;
+                }
+
+                if ($.datepicker.parseDate("mm/dd/yy", endDateValue) < $.datepicker.parseDate("mm/dd/yy", startDateValue)) {
+                    alert("End date must be greater than start date!");
+                    return;
+                }
+
+                setLocation('@Url.RouteUrl("CustomerReturnRequests")?startDateValue=' + startDateValue + '&endDateValue=' + endDateValue);
+            });
+
+            $("#customer-returns-clear").click(function () {
+                setLocation('@Url.RouteUrl("CustomerReturnRequests")');
+            });
+        });
+        function FilterReturnRequests() {
+            var returnStatusId = $('#viewreturns').val();
+            var returnRequestFindByKey = $('#searchFilterType').val();
+            var returnRequestFindByKeyValue = $('#searchbox').val();
+            var startDateValue = $('#fromdate').val();
+            var endDateValue = $('#todate').val();
+            var orderByDate = $('#sort').val();
+
+            var query = "?";
+            if (orderByDate.trim() != "true")
+                query += "orderByDate=" + orderByDate.trim();
+            if (startDateValue.trim() != "")
+                query += "&startDateValue=" + startDateValue.trim();
+            if (endDateValue.trim() != "")
+                query += "&endDateValue=" + endDateValue.trim();
+            if (returnStatusId.trim() != "-1")
+                query += "&returnStatusId=" + returnStatusId.trim();
+            if (returnRequestFindByKeyValue.trim() != "") {
+                query += "&returnRequestFindByKey=" + returnRequestFindByKey.trim();
+                query += "&returnRequestFindByKeyValue=" + returnRequestFindByKeyValue.trim();
+            }
+
+            window.location.href = "/returnrequest/history" + query;
+        }
+        function ClearFilterReturnRequests() {
+            window.location.href = "/returnrequest/history";
+        }
+
+        function handleExpanssion(elem) {
+            // change plus button into minus and vice versa
+            const btn = elem.childNodes[1].childNodes[1].childNodes[1];
+            $(btn).toggleClass("fa-plus-circle fa-minus-circle");
+
+            const div = elem.childNodes[3];
+            $(div).slideToggle("slow", function () {/* Success */ })
+        }
+    </script>, "js")
+*@
+
+<style>
+    .jqueryPagination{
+        display: @(Model.Items.Count > 0 ? "flex" : "none");
+        justify-content: space-between;
+        margin: 8px 12px;
+    }
+    .paging_numbers span a {
+        margin-right: 5px;
+        cursor: pointer;
+        color: #636363;
+    }
+    .paging_numbers span .current{
+        color: #000;
+    }
+    .jqueryPagination p {
+        font-family: Lato;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 13.5px;
+        letter-spacing: 0.05em;
+        color: #636363;
+        margin-bottom:unset;
+    }
+</style>
+
+@await Component.InvokeAsync("DashboardBlueBand")
+@*@await Html.PartialAsync("_DashboardBlueBand")*@
+<section class="container-fluid orderstatus-area">
+    <div class="row">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="dashboard-area">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="sidebar_menu font_lato">
+                                    <h3>Inovatiqa Dashboard</h3>
+                                    @await Html.PartialAsync("_DashboardSideBar", "inovatiqa-returns")
+                                </div>
+                            </div>
+
+                            <div class="col-md-9">
+                                <div class="order-deatil-area s submitrequest">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="tabs font_lato">
+                                                <ul>
+                                                    <li><a href="#" class="active">Returns</a></li>
+                                                    <li><a hred="#">View Submitted Return Request</a></li>
+                                                    <li><a href="@Url.RouteUrl("CreateReturnRequest", new {controller="ReturnRequest", returnView = "true" })" class="new-return">Create Return Request</a></li>
+
+                                                </ul>
+
+                                                <hr>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="order-content">
+
+                                                <div class="tab-content" style="border: none !important;">
+                                                    <div class="contact-manager text-right font_roboto">
+                                                        <a href="#" class="btn conatct-btnpopup" data-toggle="modal" data-target="#contact-mform">Contact Your Account Manager</a>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <select class="form-control" style="width: 20%; margin-bottom: 6vh;" id="viewreturns" name="viewreturns">
+                                                            <option value="-1">View All Returns</option>
+                                                            <option value="20">View Closed Returns</option>
+                                                            <option value="0">View Open Returns</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="order-find-area">
+                                                        <div class="find-fields font_lato">
+                                                            <div class="form-group">
+                                                                <label>Find</label>
+                                                                <input type="text" class="form-control" id="searchbox">
+                                                            </div>
+
+                                                            @*<div class="form-group">
+                                                                <label>In</label>
+                                                                <select disabled class="form-control" name="filter" id="searchFilterType">
+                                                                    <option value="-1">All Fields</option>
+                                                                    <option value="1">Order #</option>
+                                                                    <option value="2">Item #</option>
+                                                                    <option value="3">Description</option>
+                                                                </select>
+                                                            </div>*@
+                                                        </div>
+
+                                                        <div class="date-fileds font_lato">
+                                                            <div class="form-group">
+                                                                <label>From</label>
+                                                                <input type="text" id="fromdate" value="@DateTime.Today.AddDays(-35).ToString("MM/dd/yyyy")" class="form-control date-picker" placeholder="7/2/2021">
+                                                            
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label>To</label>
+                                                                <input type="text" id="todate" value="@DateTime.Today.ToString("MM/dd/yyyy")" class="form-control date-picker" placeholder="7/2/2021">
+
+                                                            </div>
+
+                                                            <div class="find-btn font_roboto">
+                                                                 <input type="submit" id="customer-returns-filter" value="Find" class="btn btn-signin" />
+                                                                <input type="submit" id="customer-returns-clear" value="Clear" class="btn btn-signin" />
+                                                             </div>
+                                                        </div>
+
+                                                        <div class="print-fileds font_lato">
+                                                            <div class="form-group">
+                                                                <label>Sort By</label>
+                                                                <select class="form-control" id="sort" name="sort">
+                                                                    <option value="false"> Return #</option>
+                                                                    <option value="true"> Date Submitted</option>
+                                                                </select>
+                                                            </div>
+
+                                                            <div class="print-button font_roboto">
+                                                                <a href="#" class="btn btn-print"><img src="~/images/UIComponents/print-btn-img.svg">Print</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="items-table-area table-responsive font_roboto">
+                                                        <table class="table border-collapse mb0" id="myTable">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Item Number</th>
+                                                                    <th>Description</th>
+                                                                    <th>Order Number</th>
+                                                                    <th>UOM</th>
+                                                                    <th>Quantity</th>
+                                                                    <th>Credit Total</th>
+                                                                </tr>
+                                                            </thead>
+
+                                                            <tbody>
+                                                                @if (Model.Items != null && Model.Items.Count > 0)
+                                                                {
+                                                                    foreach (var item in Model.Items)
+                                                                    {
+                                                                        <tr>
+                                                                            <td>
+                                                                                <p class="num-blue des-padding">@item.ProductId</p>
+                                                                            </td>
+
+                                                                            <td style="width: 30%;">
+                                                                                <a style="color:unset;" href="@Url.RouteUrl("Product", new { SeName = item.ProductSeName })"><p class="des-padding">@item.ProductName</p></a>
+                                                                                <p class="des-fontsize des-blue">Manufacturer / Manufacturer #</p>
+                                                                                <p class="des-fontsize">@item.ProductManufacturers.FirstOrDefault().Name / @item.ManufacturerPartNumber</p>
+                                                                            </td>
+
+                                                                            <td>
+                                                                                <p class="num-green des-padding">@item.OrderId</p>
+                                                                            </td>
+
+                                                                            <td>
+                                                                                @{
+                                                                                    Regex regex = new Regex("UOM: [A-Za-z]{1,4}(/){0,1}[0-9]{1,4}");
+                                                                                    Match match = regex.Match(item.AttributeInfo);
+                                                                                }
+                                                                                <input type="text" size="4" placeholder="@match.Value.Replace("UOM: ", "")" class="eainput-td" disabled />
+
+                                                                            </td>
+
+                                                                            <td>
+                                                                                <p class="des-padding">@item.Quantity</p>
+                                                                            </td>
+
+                                                                            <td>
+                                                                                <p class="des-padding">@item.PendingCredit</p>
+                                                                            </td>
+
+                                                                        </tr>
+                                                                    }
+
+                                                                }
+
+
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<!-- Contact Manager Modal Popup -->
+<form action="/FooterSendEmails" method="post" id="form">
+    <input type="text" hidden name="Method" value="@Url.RouteUrl("CustomerReturnRequests")" />
+    @await Html.PartialAsync("_ContactAccountManagerModal")
+</form>
+
+@*@Html.Resource(@<script type="text/javascript">
+        $(document).ready(function () {
+            searchParams = new URLSearchParams(window.location.search);
+            if (searchParams.has('returnStatusId'))
+                $('#viewreturns').val(searchParams.get('returnStatusId'));
+            if (searchParams.has('returnRequestFindByKey'))
+                $('#searchFilterType').val(searchParams.get('returnRequestFindByKey'));
+            if (searchParams.has('returnRequestFindByKeyValue'))
+                $('#searchbox').val(searchParams.get('returnRequestFindByKeyValue'));
+            if (searchParams.has('startDateValue'))
+                $('#fromdate').val(searchParams.get('startDateValue'));
+            if (searchParams.has('endDateValue'))
+                $('#todate').val(searchParams.get('endDateValue'));
+            if (searchParams.has('orderByDate'))
+                $('#sort').val(searchParams.get('orderByDate'));
+
+            $('#customer-returns-filter').tipsy();
+
+            $("#newSearchPlace").html($(".dataTables_filter"));
+            $('#returns_filter').find('input').css({ "font-weight": "100" })
+
+            $('#fromdate').datepicker({
+                minDate: '-35D',
+                maxDate: '+0',
+            }).datepicker("setDate", -35);
+
+            $('#todate').datepicker({
+                minDate: '-35D',
+                maxDate: '+0',
+            }).datepicker("setDate", new Date());
+            $('.ui-datepicker').css('font-size', '11px');
+
+            $("#customer-returns-filter").click(function () {
+                var startDateValue = $("#fromDate").val();
+                var endDateValue = $("#toDate").val();
+
+                if (startDateValue == '' || endDateValue == '') {
+                    alert("Please select date range first!");
+                    return;
+                }
+
+                if ($.datepicker.parseDate("mm/dd/yy", endDateValue) < $.datepicker.parseDate("mm/dd/yy", startDateValue)) {
+                    alert("End date must be greater than start date!");
+                    return;
+                }
+
+                setLocation('@Url.RouteUrl("CustomerReturnRequests")?startDateValue=' + startDateValue + '&endDateValue=' + endDateValue);
+            });
+
+            $("#customer-returns-clear").click(function () {
+                setLocation('@Url.RouteUrl("CustomerReturnRequests")');
+            });
+        });
+        function FilterReturnRequests() {
+            var returnStatusId = $('#viewreturns').val();
+            var returnRequestFindByKey = $('#searchFilterType').val();
+            var returnRequestFindByKeyValue = $('#searchbox').val();
+            var startDateValue = $('#fromdate').val();
+            var endDateValue = $('#todate').val();
+            var orderByDate = $('#sort').val();
+
+            var query = "?";
+            if (orderByDate.trim() != "true")
+                query += "orderByDate=" + orderByDate.trim();
+            if (startDateValue.trim() != "")
+                query += "&startDateValue=" + startDateValue.trim();
+            if (endDateValue.trim() != "")
+                query += "&endDateValue=" + endDateValue.trim();
+            if (returnStatusId.trim() != "-1")
+                query += "&returnStatusId=" + returnStatusId.trim();
+            if (returnRequestFindByKeyValue.trim() != "") {
+                query += "&returnRequestFindByKey=" + returnRequestFindByKey.trim();
+                query += "&returnRequestFindByKeyValue=" + returnRequestFindByKeyValue.trim();
+            }
+
+            window.location.href = "/returnrequest/history" + query;
+        }
+        function ClearFilterReturnRequests() {
+            window.location.href = "/returnrequest/history";
+        }
+</script>, "js")*@
+
+@*<script>
+    $(document).ready(function () {
+        var table = $('#myTable').DataTable({
+            "language": {
+                "info": '<div class="tpage-num"><p>Showing _START_ to _END_ of _TOTAL_ Items</p></div>'
+            },
+            "pageLength": 5,
+            "dom": 't<"jqueryPagination"ip>',
+            'pagingType': 'numbers'
+        });
+    });
+</script>*@
+
+@Html.Resource(@<script type="text/javascript">
+                                             $(document).ready(function () {
+                                                
+                                                    var table = $('#myTable').DataTable({
+                                                        "language": {
+                                                            "info": '<div class="tpage-num"><p>Showing _START_ to _END_ of _TOTAL_ Items</p></div>'
+                                                        },
+                                                        "pageLength": 5,
+                                                        "dom": 't<"jqueryPagination"ip>',
+                                                        'pagingType': 'numbers'
+                                                    });
+                                                
+                                                    function filterByColumn() {
+                                                          table
+                                                                .search(this.value)
+                                                                .draw();
+                                                        //var columnNumber = Number($('#searchFilterType').val());
+                                                        //    if (columnNumber != -1) {
+                                                        //        table
+                                                        //            .column(columnNumber)
+                                                        //            .search(this.value)
+                                                        //            .draw();
+                                                        //    }
+                                                        //    else {
+                                                        //        table
+                                                        //            .search(this.value)
+                                                        //            .draw();
+                                                        //    }
+                                                    }
+                                                    $('#searchbox').keyup(filterByColumn);
+                                                    let searchParams = new URLSearchParams(window.location.search);
+                                                    searchParams = new URLSearchParams(window.location.search);
+                                                    if (searchParams.has('returnStatusId'))
+                                                        $('#viewreturns').val(searchParams.get('returnStatusId'));
+                                                    $('.date-picker').datepicker();
+                                                    $('.ui-datepicker').css('font-size', '11px');
+                                                    $('#customer-returns-filter').click(function() {
+                                                        reloadWithParams();
+                                                    });
+                                                    $('#customer-returns-clear').click(function() {
+                                                        setLocation('@Url.RouteUrl("CustomerReturnRequests")');
+                                                    });
+                                                    if (searchParams.has('startDateValue') && searchParams.has('endDateValue')) {
+                                                        $("#fromdate").val(searchParams.get('startDateValue'));
+                                                        $("#todate").val(searchParams.get('endDateValue'));
+                                                        $('#pageTitle').append(" " + searchParams.get('startDateValue') + " to " + searchParams.get('endDateValue'));
+                                                        $('#emptyRow td').eq(0).text($('#emptyRow td').eq(0).text().replace("StartDate", searchParams.get('startDateValue')));
+                                                        $('#emptyRow td').eq(0).text($('#emptyRow td').eq(0).text().replace("EndDate", searchParams.get('endDateValue')));
+                                                    }
+                                                    else {
+                                                        var dateOffset = (24 * 60 * 60 * 1000) * 35;
+                                                        var myDate = new Date();
+                                                        myDate.setTime(myDate.getTime() - dateOffset);
+                                                        $('#pageTitle').append(" " + formatDate(myDate) + " to " + formatDate(new Date()));
+                                                    }
+                                                        function formatDate(date) {
+                                                        var d = new Date(date),
+                                                            month = '' + (d.getMonth() + 1),
+                                                            day = '' + d.getDate(),
+                                                            year = d.getFullYear();
+
+                                                        if (month.length < 2)
+                                                            month = '0' + month;
+                                                        if (day.length < 2)
+                                                            day = '0' + day;
+
+                                                        return [month, day, year].join('/');
+                                                    }
+                                                    function reloadWithParams() {
+                                                        var returnStatusId = Number($('#viewreturns').val());
+                                                        var returnRequestFindByKey = $('#searchFilterType').val();
+                                                        var returnRequestFindByKeyValue = $('#searchbox').val();
+                                                        var startDateValue = $('#fromdate').val();
+                                                        var endDateValue = $('#todate').val();
+                                                        var orderByDate = $('#sort').val();
+                                                        if (startDateValue == '' || endDateValue == '') {
+                                                            alert("Please select date range first!");
+                                                        return;
+                                                        }
+                                                        if ($.datepicker.parseDate("mm/dd/yy", endDateValue) < $.datepicker.parseDate("mm/dd/yy", startDateValue)) {
+                                                            alert("End date must be greater than start date!");
+                                                            return;
+                                                        }
+                                                        //if (searchParams.has('returnStatusId')) {
+                                                        //    returnStatusId = searchParams.get('returnStatusId');
+                                                        //}
+                                                        setLocation('@Url.RouteUrl("CustomerReturnRequests")?startDateValue=' + startDateValue + '&endDateValue=' + endDateValue + '&returnStatusId=' + returnStatusId + '&orderByDate=' + orderByDate + '&returnRequestFindByKey=' + returnRequestFindByKey + '&returnRequestFindByKeyValue=' + returnRequestFindByKeyValue);
+                                                    }
+                                                    });
+    </Script>, "js")

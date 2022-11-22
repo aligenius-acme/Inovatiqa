@@ -1,0 +1,294 @@
+﻿@model CheckoutCompletedModel
+@{
+    Layout = "_ColumnsOne";
+}
+@{
+    ViewBag.Title = "Order Placed";
+}
+@if (!Model.OnePageCheckoutEnabled)
+{
+    @await Component.InvokeAsync("CheckoutProgress", new { step = CheckoutProgressStep.Complete })
+}
+@*
+<div class="page checkout-page from-panel">
+    <div class="page-title panel-heading">
+        <h1>Thank you</h1>
+    </div>
+    <div class="page-body checkout-data panel-body">
+        <div class="section order-completed">
+            <div class="title">
+                <strong>Your order has been successfully processed!</strong>
+            </div>
+            <ul class="details">
+                <li>
+                    Order number: @Model.CustomOrderNumber
+                </li>
+                <li>
+                    <a href="@Url.RouteUrl("OrderDetails", new {orderID = Model.OrderId })">Click here for order details.</a>
+                </li>
+            </ul>
+            <div class="control-group">
+                <div class="controls">
+                    <input type="button" value="Continue" class="btn btn-primary order-completed-continue-button" onclick="setLocation('@Url.RouteUrl("Homepage")')" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+*@
+<section class="container-fluid signed_in_user_strip orange_strip">
+			<div class="row">
+				<div class="container">
+					<p><i class="fa fa-credit-card"></i> Payment</p>
+				</div>
+			</div>
+		</section>
+		<section class="container-fluid  " style="background: #F1F3F6;" >
+			<div class="row    ">
+				<div class="container">
+					<div class="row m_t_40 m_b_40  ">
+						<div class="col-md-12">
+							<div class="payment_box">
+								<div class="row">
+									<div class="col-md-7 col-sm-6 col-xs-12">
+										<div class="steps_box step_1">
+											<div class="row flex_col align_center">
+												<div class="col-md-8">
+													<h2>Billing info</h2>
+													<p>Please enter your Billing info</p>
+												</div>
+												<div class="col-md-4 text-right">
+													<p>Step 1 of 5</p>
+												</div>
+											</div>
+											<div class="row flex_col m_t_30">
+												<div class="col-md-6 col-sm-12 col-xs-12 form-group">
+													<label>First name</label>
+													<input type="text" class="form-control" placeholder="First Name" />
+												</div>
+												<div class="col-md-6 col-sm-12 col-xs-12 form-group">
+													<label>Last name</label>
+													<input type="text" class="form-control" placeholder="Last name" />
+												</div>
+												<div class="col-md-6 col-sm-12 col-xs-12 form-group">
+													<label>Email address</label>
+													<input type="text" class="form-control" placeholder="Email address" />
+												</div>
+												<div class="col-md-6 col-sm-12 col-xs-12 form-group">
+													<label>Phone number</label>
+													<input type="text" class="form-control" placeholder="Phone number" />
+												</div>
+												<div class="col-md-6 col-sm-12 col-xs-12 form-group">
+													<label>Address</label>
+													<input type="text" class="form-control" placeholder="Address" />
+												</div>
+												<div class="col-md-6 col-sm-12 col-xs-12 form-group">
+													<label>Town / City</label>
+													<input type="text" class="form-control" placeholder="Town / City" />
+												</div>
+												<div class="col-md-6 col-sm-12 col-xs-12 form-group">
+													<label>State / Country</label>
+													<select class="form-control">
+														<option>Choose a state or Country</option>
+														<option>Option 1</option>
+														<option>Option 2</option>
+														<option>Option 3</option>
+													</select>
+												</div>
+												<div class="col-md-6 col-sm-12 col-xs-12 form-group">
+													<label>ZIP/Postal code</label>
+													<input type="text" class="form-control" placeholder="ZIP/Postal code" />
+												</div>
+												<div class="col-md-6 col-sm-12 col-xs-12 form-group">
+													<div class="checkbox">
+														<label><input type="checkbox" value=""> Ship to a different address?</label>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="steps_box step_2 m_t_50">
+											<div class="row flex_col align_center">
+												<div class="col-md-8">
+													<h2>Shipping method</h2>
+													<p>Please enter your Shipping method</p>
+												</div>
+												<div class="col-md-4 text-right">
+													<p>Step 2 of 5</p>
+												</div>
+											</div>
+											<div class="row flex_col m_t_20">
+												<div class="col-md-12 col-xs-12">
+													<div class="shipping_list">
+														<div class="radio_column">
+															<input type="radio" name="r1" />
+															FedEx												 		
+														</div>
+														<div class="pricing_column">
+															<span>+32 USD</span>
+															Additional price
+														</div>
+														<div class="ic_column"><img src="~/images/UIComponents/footer-ic2.png" class="pay_ic"></div>
+													</div>
+												</div>
+												<div class="col-md-12 col-xs-12">
+													<div class="shipping_list">
+														<div class="radio_column">
+															<input type="radio" name="r1" />
+															USPS											 		
+														</div>
+														<div class="pricing_column">
+															<span>+15 USD</span>
+															Additional price
+														</div>
+														<div class="ic_column"><img src="~/images/UIComponents/icc1.png" class="pay_ic"></div>
+													</div>
+												</div>
+												<div class="col-md-12 col-xs-12">
+													<div class="shipping_list">
+														<div class="radio_column">
+															<input type="radio" name="r1" />
+															DHL												 		
+														</div>
+														<div class="pricing_column">
+															<span>+15 USD</span>
+															Additional price
+														</div>
+														<div class="ic_column"><img src="~/images/UIComponents/footer-ic.png" class="pay_ic"></div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="steps_box step_3 m_t_50">
+											<div class="row flex_col align_center">
+												<div class="col-md-8">
+													<h2>Payment method</h2>
+													<p>Please enter your Payment method</p>
+												</div>
+												<div class="col-md-4 text-right">
+													<p>Step 3 of 5</p>
+												</div>
+											</div>
+											<div class="row flex_col m_t_20">
+												<div class="col-md-12">
+													<div class="payment_box">
+														<div class="payment_head">
+															<label>
+															<input type="radio" name="r2" />
+															Credit card
+															</label>
+															<div class="accept_logos">
+																<img src="~/images/UIComponents/p5.png">
+																<img src="~/images/UIComponents/p4.png">
+																<img src="~/images/UIComponents/p1.png">
+																<img src="~/images/UIComponents/p3.png">
+																<img src="~/images/UIComponents/p2.png">
+															</div>
+														</div>
+														<div class="payment_body">
+															<div class="row">
+																<div class="col-md-12 col-sm-12 col-xs-12 form-group">
+																	<label>Card number</label>
+																	<input type="text" class="form-control" placeholder="Card number" />
+																</div>
+																<div class="col-md-6 col-sm-12 col-xs-12 form-group">
+																	<label>Card holder</label>
+																	<input type="text" class="form-control" placeholder="Card holder" />
+																</div>
+																<div class="col-md-3 col-sm-6 col-xs-6 form-group">
+																	<label>Expiration date</label>
+																	<input type="text" class="form-control" placeholder="MM/YY" />
+																</div>
+																<div class="col-md-3 col-sm-6 col-xs-6 form-group">
+																	<label>CVV</label>
+																	<input type="text" class="form-control" placeholder="CVV" />
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="steps_box step_4 m_t_50">
+											<div class="row flex_col align_center">
+												<div class="col-md-8">
+													<h2>Additional information</h2>
+													<p>Need something else? We will make it for you!</p>
+												</div>
+												<div class="col-md-4 text-right">
+													<p>Step 4 of 5</p>
+												</div>
+											</div>
+											<div class="row flex_col m_t_10">
+												<div class="col-md-12 col-sm-12 col-xs-12 form-group">
+													<label>Order notes</label>
+													<textarea class="form-control" placeholder="Need a specific delivery day? Sending a gitf? Let’s say ..." ></textarea>
+												</div>
+											</div>
+										</div>
+										<div class="steps_box step_5 m_t_50">
+											<div class="row flex_col align_center">
+												<div class="col-md-8">
+													<h2>Confirmation</h2>
+													<p>We are getting to the end. Just few clicks and your order is ready!</p>
+												</div>
+												<div class="col-md-4 text-right">
+													<p>Step 5 of 5</p>
+												</div>
+											</div>
+											<div class="row flex_col m_t_30">
+												<div class="col-md-12 col-sm-12 col-xs-12 form-group">
+													<div class="checkbox">
+														<label><input type="checkbox" id="someId"> I agree with sending marketing and newsletter emails. No spam promised!</label>
+													</div>
+													<div class="checkbox m_t_10">
+														<label><input type="checkbox" id="someId"> I agree with our <a href="">terms and conditions</a> and <a href="">privacy policy.</a></label>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="steps_box m_t_10">
+											<input type="submit" value="Complete Order" data-toggle="modal" data-target="#final_modal" class="btn btn-primary" />
+										</div>
+										<div class="steps_box final m_t_40">
+											<div class="row">
+												<div class="col-md-4 col-sm-12 col-xs-12 form-group">
+													<img src="~/images/UIComponents/cart_secure.svg" />
+													<h4>All your data are safe</h4>
+													<p>We are using the most advanced security to provide you the best experience ever.</p>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<img src="~/images/UIComponents/bg_p.png" class="full_width_img" />
+
+
+
+<div id="final_modal" class="modal fade" role="dialog" style="margin-top: 50px;">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-body final_msg">
+				<h2>The beginning of a great relationship!</h2>
+				<img src="~/images/UIComponents/3.png" class="img-responsive">
+				<p>Thank you for the opportunity to provide your needs!<br/> Your order has been placed and your order ID is @Model.CustomOrderNumber. <a href="@Url.RouteUrl("OrderDetails", new {orderID = Model.OrderId })">click here</a> to view more details. </p>
+			</div>
+		</div>
+	</div>
+</div>
+<button id="btn" data-toggle="modal" data-target="#final_modal" style="position: fixed;"></button>
+
+<script>
+	$(document).ready(function () {
+		$('#btn').click();
+        $("#final_modal").on("hidden.bs.modal", function () {
+            window.location.href = "@Url.RouteUrl("Homepage")"
+        });
+    });
+</script>

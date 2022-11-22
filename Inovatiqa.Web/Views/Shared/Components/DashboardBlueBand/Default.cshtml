@@ -1,0 +1,50 @@
+﻿@using Inovatiqa.Database.Models
+@model Customer
+
+
+
+<section class="container-fluid details_top_bar">
+    <div class="row">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="top_bar_account font_lato">
+                        <ul>
+                            <li><a href="#">Account #<span id="acct_id"> @Model.Id</span></a></li>
+                            <li><a href="#" id="flip">@(Model.BillingAddress != null ? Model.BillingAddress.Company:"Company Unavailable.")</a></li>
+                        </ul>
+                        @if (Model.BillingAddress != null) { 
+                            <div id="panel">
+                                <div class="addres_box">
+                                    <div class="adress">
+                                        <h2>Billing Account</h2>
+                                        <h3 id="BillingAccountNo">@Model.BillingAddress.Id</h3>
+                                        <h4 id="billingCompanyName">@Model.BillingAddress.Company</h4>
+                                        <p id="BillingStreetAddress">@Model.BillingAddress.Address1</p>
+                                        <p><span id="BillingAddressCity">@Model.BillingAddress.City</span>, <span id="BillingAddressState">@(ViewBag.BillingAddressState != null ? ViewBag.BillingAddressState.Name : "N/A")</span>, <span id="BillingAddressZip">@Model.BillingAddress.ZipPostalCode</span></p>
+                                    </div>
+                                    <div class="adress_btn">
+                                        <a href="@Url.RouteUrl("SwitchDefaultAddress", new { type = 1 })" class="btn primary edit font_roboto">Switch</a>
+                                    </div>
+                                </div>
+                                <hr class="line">
+                                <div class="addres_box">
+                                    <div class="adress">
+                                        <h2>Current Shipping Address</h2>
+                                        <h3 id="ShippingAccountNo">@Model.ShippingAddress.Id</h3>
+                                        <h4 id="ShippingCompanyName">@Model.ShippingAddress.Company</h4>
+                                        <p id="ShippingStreetAddress">@Model.ShippingAddress.Address1</p>
+                                        <p><span id="ShippingCity">@Model.ShippingAddress.City</span>, <span id="ShippingState">@(Model.ShippingAddress.StateProvince != null ? Model.ShippingAddress.StateProvince.Name :  "N/A" )</span>, <span id="ShippingZip">@Model.ShippingAddress.ZipPostalCode</span></p>
+                                    </div>
+                                    <div class="adress_btn">
+                                        <a href="@Url.RouteUrl("SwitchDefaultAddress", new { type = 2 })" class="btn primary edit font_roboto">Switch</a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

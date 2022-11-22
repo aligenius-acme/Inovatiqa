@@ -1,0 +1,189 @@
+﻿@model Inovatiqa.Web.Models.Common.EmailModel
+@{
+    Layout = "_ColumnsOne";
+}
+<div class="page  from-panel thumbnail"  style="height:1000px">
+    <div class="page-title panel-heading">
+        <h1>Receive Our Free Catalogs</h1>
+    </div>
+    <div style="margin:10px">
+        <div class="">
+            <div class="col-big">
+                <h2>Receive Our FREE Catalogs</h2>
+                <h3>We will send you our latest catalog filled with special offers and sale prices you won't want to miss!</h3>
+                <form action="/FooterSendEmails" id="catalog-request-form" class="column2-form" method="post">
+
+                    <input type="text" hidden name="EmailSubject" value="ECatalogs" asp-for="EmailSubject" />
+
+                    <div class="personal-business">
+                        <p>Are you buying for personal or business use?</p>
+                        <span class="checkbox-wrapper">
+                            <input type="radio" name="catalog-request[personal-business]" value="business" class="radio" id="business-usage" checked="">
+                            <label for="business-usage">Business</label>
+                        </span>
+                        <span class="checkbox-wrapper">
+                            <input type="radio" name="catalog-request[personal-business]" value="personal" class="radio" id="personal-usage">
+                            <label for="personal-usage">Personal</label>
+                        </span>
+                    </div>
+                    <p class="form-information">Items with (*) are required</p>
+                    <div class="fieldset">
+
+
+                        <div class="form-group col-lg-12">
+                            <label asp-for="CustomerEmail"></label> <span style="color:red">*</span>
+                            <input type="email" name="CustomerEmail" data-val="true" autocomplete="off" data-val-required="The Email field is required." asp-for="CustomerEmail" class="form-control input-sm" placeholder="Email Address" />
+                            <span asp-validation-for="CustomerEmail" style="min-width: 100%;" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group col-lg-6">
+                            <label asp-for="CustomerFirstName"></label> <span style="color:red">*</span>
+                            <input type="text" name="CustomerFirstName" data-val="true" autocomplete="off" data-val-required="The First Name field is required." asp-for="CustomerFirstName" class="form-control input-sm" placeholder="First Name" />
+                            <span asp-validation-for="CustomerFirstName" style="min-width: 100%;" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label asp-for="CustomerLastName"></label> <span style="color:red">*</span>
+                            <input type="text" name="CustomerLastName" data-val="true" autocomplete="off" data-val-required="The Last Name field is required." asp-for="CustomerLastName" class="form-control input-sm" placeholder="Last Name" />
+                            <span asp-validation-for="CustomerLastName" style="min-width: 100%;" class="text-danger"></span>
+                        </div>
+
+                        <div id="companyField" class="form-group col-lg-6">
+                            <label asp-for="Company"></label> <span style="color:red">*</span>
+                            <input type="text" name="Company" data-val="true" autocomplete="off" data-val-required="The Company field is required." asp-for="Company" class="form-control input-sm" placeholder="Enter Company Name" />
+                            <span asp-validation-for="Company" style="min-width: 100%;" class="text-danger"></span>
+                        </div>
+
+
+
+                        <div class="form-group col-lg-6">
+                            <label asp-for="Address1"></label> <span style="color:red">*</span>
+                            <input type="text" name="Address1" data-val="true" autocomplete="off" data-val-required="The Address 1 field is required." asp-for="Address1" class="form-control input-sm" placeholder="Enter Address 1" />
+                            <span asp-validation-for="Address1" style="min-width: 100%;" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label asp-for="Address2"></label> <span style="color:red">*</span>
+                            <input type="text" name="Address2" data-val="true" autocomplete="off" data-val-required="The Address 2 field is required." asp-for="Address2" class="form-control input-sm" placeholder="Enter Address 2" />
+                            <span asp-validation-for="Address2" style="min-width: 100%;" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group col-lg-6">
+                            <label asp-for="City"></label> <span style="color:red">*</span>
+                            <input type="text" name="City" data-val="true" autocomplete="off" data-val-required="The City field is required." asp-for="City" class="form-control input-sm" placeholder="Enter City name" />
+                            <span asp-validation-for="City" style="min-width: 100%;" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group col-lg-6">
+                            <label asp-for="State"></label> <span style="color:red">*</span>
+                            <input type="text" name="State" data-val="true" autocomplete="off" data-val-required="The State field is required." asp-for="State" class="form-control input-sm" placeholder="Enter State name" />
+                            <span asp-validation-for="State" style="min-width: 100%;" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group col-lg-6">
+                            <label asp-for="ZipCode"></label> <span style="color:red">*</span>
+                            <input type="text" name="ZipCode" data-val="true" autocomplete="off" data-val-required="The Zip Code field is required." asp-for="ZipCode" class="form-control input-sm" placeholder="Enter Zip code " />
+                            <span asp-validation-for="ZipCode" style="min-width: 100%;" class="text-danger"></span>
+                        </div>
+
+
+
+                        <div class="form-group col-lg-6">
+                            <label asp-for="Phone"></label> <span style="color:red">*</span>
+                            <input type="text" name="Phone" data-val="true" autocomplete="off" data-val-required="The Phone field is required." asp-for="Phone" class="form-control input-sm" placeholder="Enter Phone Number" />
+                            <span asp-validation-for="Phone" style="min-width: 100%;" class="text-danger"></span>
+                        </div>
+
+
+
+                        <div class="form-group col-lg-6">
+                            <label asp-for="PhoneNumber"></label> <span style="color:red">*</span>
+                            <input type="text" name="PhoneNumber" data-val="true" autocomplete="off" data-val-required="The Phone Number field is required." asp-for="PhoneNumber" class="form-control input-sm" placeholder="Enter Phone Number" />
+                            <span asp-validation-for="PhoneNumber" style="min-width: 100%;" class="text-danger"></span>
+                        </div>
+
+
+                        <div class=" col-lg-12 mobile-offers checkbox-wrapper">
+                            <input type="checkbox" name="catalog-request[offers-on-mobile]" id="offers-on-mobile">
+                            <label for="offers-on-mobile">I would like to receive mobile offers and promotions on my mobile phone. View our <a href="/privacy-policy" target="_blank">Privacy Policy</a>. Message &amp; data rates may apply.</label>
+                        </div>
+                        <br />
+                        <div class="fields">
+                            <div class="field col-lg-12">
+                                <label for="catalog-request:type-of-catalog" class="required">
+                                    <em>*</em>Type of catalog
+                                </label>
+                                <br />
+                                <div class="checkbox-group checkbox-wrapper">
+                                    <input type="checkbox" id="medicalEquipment" name="catalog-request[type-of-catalog][]" value="Medical Equipment" class="validate-one-required-by-name">
+                                    <label for="medicalEquipment">Medical Equipment</label><br>
+                                    <input type="checkbox" id="physicalTherapy" name="catalog-request[type-of-catalog][]" value="Physical Therapy" class="validate-one-required-by-name">
+                                    <label for="physicalTherapy">Physical Therapy</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-sm-12 col-md-12 col-lg-12"></label>
+                        <div class="col-sm-12 col-md-12">
+                            @*<img style="height:70px" src="~/images/111.PNG" />*@
+
+                            <div class="recaptcha checkbox-wrapper" style="overflow:hidden;position:relative;margin-bottom:10px;">
+                                <input type="checkbox" id="cb-606f48a879604" name="cb-606f48a879604" value="" class="hide required-entry" style="visibility:hidden; position:absolute; left:-1000000px">
+                                <div id="el-606f48a879604"><div style="width: 304px; height: 78px;"><div><iframe src="https://www.google.com/recaptcha/api2/anchor?ar=1&amp;k=6Le_FEAUAAAAAJnzGzfM-bEdcmOjsNA8YrH_OETN&amp;co=aHR0cHM6Ly93d3cuNG1kbWVkaWNhbC5jb206NDQz&amp;hl=en&amp;type=image&amp;v=bfvuz6tShG5aoZp4K4zPVf5t&amp;theme=light&amp;size=normal&amp;cb=82j3g96lawtp" width="304" height="78" role="presentation" name="a-67yeznpcak9q" frameborder="0" scrolling="no" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation allow-modals allow-popups-to-escape-sandbox"></iframe></div><textarea id="g-recaptcha-response" name="g-recaptcha-response" class="g-recaptcha-response" style="width: 250px; height: 40px; border: 1px solid rgb(193, 193, 193); margin: 10px 25px; padding: 0px; resize: none; display: none;"></textarea></div><iframe style="display: none;"></iframe></div>
+                                <script type="text/javascript">
+                                    var onloadCallback = function () {
+                                        grecaptcha.render('el-606f48a879604', {
+                                            'sitekey': "6Le_FEAUAAAAAJnzGzfM-bEdcmOjsNA8YrH_OETN",
+                                            'theme': "light",
+                                            'type': "image",
+                                            'size': "normal",
+                                            'callback': function (response) {
+                                                if (response.length > 0) {
+                                                    $('cb-606f48a879604').writeAttribute('value', 'checked');
+                                                    $('cb-606f48a879604').checked = true;
+                                                }
+                                            }
+                                        });
+                                    };
+                                </script>
+                                <script async="" src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&amp;render=explicit&amp;hl=en" defer="" type="text/javascript"></script>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="buttons-set col-lg-12" id="catalog-request-buttons-container">
+                        <button type="submit" class="button" title="Send My catalog now!">
+                            <span><span>Send My catalog now!</span></span>
+                        </button>
+                    </div>
+                    <script type="text/javascript">
+                        var radios = document.getElementsByName('catalog-request[personal-business]');
+                        //var companyField = document.getElementById('companyField');
+
+                        for (var i = 0; i < radios.length; i++) {
+                            radios[i].addEventListener('click', function () {
+
+                                if (this.value === 'personal') {
+                                    $("#companyField").fadeOut("slow");
+                                } else {
+                                    $("#companyField").fadeIn("slow");
+                                }
+                            });
+                        }
+
+                        var catalogRequestForm = new VarienForm('catalog-request-form', true);
+                    </script>
+                </form>
+            </div>
+            <br>
+            <br>
+
+        </div>
+    </div>
+</div>

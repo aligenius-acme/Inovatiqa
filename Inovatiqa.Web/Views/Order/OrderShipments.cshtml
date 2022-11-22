@@ -1,0 +1,408 @@
+﻿@using Inovatiqa.Web.Models.Order
+@using Inovatiqa.Core;
+@model OrderDetailsModel
+@{
+    Layout = "_ColumnsOne";
+}
+@{
+    ViewBag.Title = "Order Shipment Details";
+}
+
+@*
+    @Html.Resource(@<link href="@Url.Content("https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css")" rel="stylesheet" type="text/css" />, "css")
+    @Html.Resource(@<script src="@Url.Content("https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js")" type="text/javascript"></script>, "js")
+    @Html.Resource(@<script src="@Url.Content("https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js")" type="text/javascript"></script>, "js")
+    @Html.Resource(@<script src="@Url.Content("https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js")" type="text/javascript"></script>, "js")
+    @Html.Resource(@<link href="@Url.Content("https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css")" rel="stylesheet" type="text/css" />, "css")
+    @Html.Resource(@<script src="@Url.Content("https://cdnjs.cloudflare.com/ajax/libs/jquery.tipsy/1.0.3/jquery.tipsy.min.js")" type="text/javascript"></script>, "js")
+    @Html.Resource(@<link href="@Url.Content("https://cdnjs.cloudflare.com/ajax/libs/jquery.tipsy/1.0.3/jquery.tipsy.min.css")" rel="stylesheet" type="text/css" />, "css")
+    @Html.Resource(@<script src="@Url.Content("https://cdn.datatables.net/rowreorder/1.2.7/js/dataTables.rowReorder.min.js")" type="text/javascript"></script>, "js")
+    @Html.Resource(@<script src="@Url.Content("https://cdn.datatables.net/responsive/2.2.6/js/dataTables.responsive.min.js")" type="text/javascript"></script>, "js")
+    @Html.Resource(@<link href="@Url.Content("https://cdn.datatables.net/rowreorder/1.2.7/css/rowReorder.dataTables.min.css")" rel="stylesheet" type="text/css" />, "css")
+    @Html.Resource(@<link href="@Url.Content("https://cdn.datatables.net/responsive/2.2.6/css/responsive.dataTables.min.css")" rel="stylesheet" type="text/css" />, "css")
+
+    <style>
+        #TotalsRow:hover {
+            cursor: pointer;
+            background-color: #ECF2F4;
+        }
+    </style>
+
+
+    <div style="display:flex; justify-content: space-between;">
+        <p style="color: #808080;">Order Shipment Details</p>
+    </div>
+    @{
+        string date = "";
+        if (@Model.Shipments.Count > 0)
+            date = @Model.Shipments.OrderByDescending(x => x.ShippedDate).Select(x => x.ShippedDate).FirstOrDefault()?.ToString("MM/dd/yyyy");
+        var shippedItems = Model.Items.Where(x => x.IsShipped == true).ToList();
+    }
+    <div style="display: flex; justify-content: space-between;">
+        <div>
+            <p style="color: #808080;">PO</p>
+            <p style="font-weight: bold;">@Model.PONumber</p>
+        </div>
+        <div>
+            <p style="color: #808080;">Order #</p>
+            <p style="font-weight: bold;">@Model.CustomOrderNumber</p>
+        </div>
+        <div>
+            <p style="color: #808080;">Last Shipment</p>
+            <p style="font-weight: bold;">@date</p>
+        </div>
+        <div>
+            <p style="color: #808080;">Shipment</p>
+            <p style="font-weight: bold;">@Model.Shipments.Count</p>
+        </div>
+    </div>
+    <div style="display: flex; background-color: #ECF2F4; margin-bottom: 10px;">
+        <div div style="margin-right: 25%; margin-left: 5px; margin-top: 5px;">
+            <p style="font-weight: bold;">Account</p>
+            <p>@Model.ShippingAddress.Id @Model.BillingAddress.Company @Model.BillingAddress.Address1 @Model.BillingAddress.City @Model.BillingAddress.StateProvinceName @Model.BillingAddress.ZipPostalCode</p>
+        </div>
+        <div style="margin-right: 25%; margin-left: 5px; margin-top: 5px;">
+            <p style="font-weight: bold;">Ship To</p>
+            <p>@Model.ShippingAddress.Id @Model.ShippingAddress.Company @Model.ShippingAddress.Address1 @Model.ShippingAddress.City @Model.ShippingAddress.StateProvinceName @Model.ShippingAddress.ZipPostalCode</p>
+        </div>
+    </div>
+    <div class="page account-page reorder-guide-page from-panel">
+
+        <div class="page-body">
+            <div class="shipment-list">
+                <div class="col-md-12 product-details-tabs" id="tabbed-description">
+                    <table id="tblShipment" class="table table-bordered table-condensed table-striped" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th style="text-align:center;white-space:nowrap">
+                                    Line
+                                </th>
+                                <th style="text-align:center;white-space:nowrap">
+                                    Item #
+                                </th>
+                                <th style="text-align:center;white-space:nowrap">
+                                    Description
+                                </th>
+                                <th style="text-align:center;white-space:nowrap">
+                                    Mfr
+                                </th>
+                                <th style="text-align:center;white-space:nowrap">
+                                    Mfr #
+                                </th>
+                                <th style="text-align:center;white-space:nowrap">
+                                    UOM
+                                </th>
+                                <th style="text-align:center;white-space:nowrap">
+                                    Total Qty
+                                </th>
+                                <th style="text-align:center;white-space:nowrap">
+                                    Track
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="all shippedorder" style="display: table-row-group;">
+                            @if (shippedItems.Count > 0)
+                            {
+                                var count = 0;
+                                @foreach (var item in shippedItems)
+                                {
+                                    <tr>
+                                        <td>@count</td>
+                                        <td>
+                                            @item.Id
+                                        </td>
+                                        <td>
+                                            <a href="@Url.RouteUrl("Product", new {SeName = item.ProductSeName})">@item.ProductName</a>
+                                        </td>
+                                        <td>@item.ManufacturerPartNumber</td>
+                                        <td>@item.ProductManufacturers.FirstOrDefault().Name</td>
+                                        <td class="alignLeft">@item.AttributeInfo</td>
+                                        <td class="alignRight">@item.Quantity</td>
+                                        <td class="alignRight bold orange"><a href="@item.TrackingNumberUrl">Track</a></td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr id="emptyRow">
+                                    <td colspan="8">
+                                        <div class="no-data">
+                                            no items found.
+                                        </div>
+                                    </td>
+                                    <td style="display: none;"></td>
+                                    <td style="display: none;"></td>
+                                    <td style="display: none;"></td>
+                                    <td style="display: none;"></td>
+                                    <td style="display: none;"></td>
+                                    <td style="display: none;"></td>
+                                    <td style="display: none;"></td>
+                                    <td style="display: none;"></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    @Html.Resource(@<script type="text/javascript">
+                        $(document).ready(function () {
+                            $('#tblAllItems').DataTable();
+                            $('#tblBackorderedItems').DataTable();
+                            $('#tblShippedItems').DataTable();
+                        });
+                        var items = 0;
+                        function addtocartCount(selector) {
+                            var id = $(selector).attr('data');
+                            if (items == 0) {
+                                $('#addToCartList').attr('disabled');
+                            }
+                            if (selector.checked) {
+                                $('#addToCartList').removeAttr('disabled');
+                                $('#addToCartList').val(`Add ITEM TO CART (${++items})`);
+                                $('[data=' + id + ']').attr('checked', true);
+                            }
+                            else {
+                                $('#addToCartList').removeAttr('disabled');
+                                $('#addToCartList').val(`Add ITEM TO CART (${--items})`);
+                                $('[data=' + id + ']').attr('checked', false);
+                            }
+                        }
+                        function toggleAddToCart() {
+                            $('#addToCartList').toggle();
+                        }
+    </script>, "js")
+*@
+<style>
+    .jqueryPagination{
+        display: @(Model.Items.Count > 0 ? "flex" : "none");
+        justify-content: space-between;
+        margin: 8px 12px;
+    }
+    .paging_numbers span a {
+        margin-right: 5px;
+        cursor: pointer;
+        color: #636363;
+    }
+    .paging_numbers span .current{
+        color: #000;
+    }
+    .jqueryPagination p {
+        font-family: Lato;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 13.5px;
+        letter-spacing: 0.05em;
+        color: #636363;
+        margin-bottom:unset;
+    }
+    td {
+        vertical-align: middle;
+    }
+    .orderstatus-area .items-table-area .table tbody tr {
+        border-bottom: 1px solid #E2E8F0 !important;
+    }
+</style>
+
+@{
+    string date = "";
+    if (@Model.Shipments.Count > 0)
+        date = @Model.Shipments.OrderByDescending(x => x.ShippedDate).Select(x => x.ShippedDate).FirstOrDefault()?.ToString("MM/dd/yyyy");
+    var shippedItems = Model.Items.Where(x => x.IsShipped == true).ToList();
+}
+
+@await Component.InvokeAsync("DashboardBlueBand")
+@*@await Html.PartialAsync("_DashboardBlueBand")*@
+<section class="container-fluid orderstatus-area">
+    <div class="row">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="dashboard-area">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="sidebar_menu font_lato">
+                                    <h3>Inovatiqa Dashboard</h3>
+                                    @await Html.PartialAsync("_DashboardSideBar", "inovatiqa-orders")
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="order-deatil-area sorder-staus">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="tabs font_lato">
+                                                @await Html.PartialAsync("_OrderNewTopBar", "order-status")
+                                                <hr class="mb0">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="order-content">
+                                                <div class="tab-content" style="border: none !important;">
+                                                    <div class="contact-manager text-right font_roboto">
+                                                        <a href="#" class="btn conatct-btnpopup" data-toggle="modal" data-target="#contact-mform">Contact Your Account Manager</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="order-content">
+                                                <div class="tab-content" style="border: none !important;">
+                                                    <div class="sorder-num font_lato">
+                                                        <p style="color: #636363;">Order Shipment Detail</p>
+                                                        <hr>
+                                                    </div>
+                                                    <div class="srecent-orders font_roboto">
+                                                        <div class="form-group" style="margin-right: 100px;">
+                                                            <a href="@Url.RouteUrl("CustomerOrders")" style="color: #0068A3;">View All Recent Orders</a>
+                                                        </div>
+                                                        <div class="print-fileds font_lato">
+                                                            <div class="print-button font_roboto">
+                                                                <a href="#" class="btn btn-print"><img src="/images/UIComponents/print-btn-img.svg">Print</a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="srecent-order-btn font_roboto">
+                                                            <a href="#" class="btn recent-btn">Proof of Delivery</a>
+                                                            <a href="@Url.RouteUrl("CustomerOrders")" class="btn recent-btn recent-btn2">Go Back</a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="spayorder-detail font_roboto">
+                                                        <hr>
+                                                        <div class="spaystatus-area">
+                                                            <div class="order-pay-info">
+                                                                <h5>PO</h5>
+                                                                <p>@(Model.PONumber is null ? "N/A" : Model.PONumber)</p>
+                                                            </div>
+                                                            <div class="order-pay-info">
+                                                                <h5>Order Number</h5>
+                                                                <p>@Model.CustomOrderNumber</p>
+                                                            </div>
+                                                            <div class="order-pay-info">
+                                                                <h5>Last Shipment Date</h5>
+                                                                <p>@date</p>
+                                                            </div>
+                                                            <div class="order-pay-info">
+                                                                <h5>Payment</h5>
+                                                                <p>-</p>
+                                                            </div>
+                                                            <div class="order-pay-info">
+                                                                <h5>Status</h5>
+                                                                <p>@Model.OrderStatus</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="saddress-area font_lato">
+                                                        <div class="row">
+                                                            <div class="col-md-4 col-sm-4">
+                                                                <div class="acc-info">
+                                                                    <h5>Account</h5>
+                                                                    <p>#@Model.BillingAddress.Id @Model.BillingAddress.Company</p>
+                                                                    <p>@Model.BillingAddress.Address1<br> @Model.BillingAddress.City, @Model.BillingAddress.StateProvinceName, @Model.BillingAddress.ZipPostalCode</p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-8 col-sm-8">
+                                                                <div class="acc-info adds-info">
+                                                                    <h5>Ship To</h5>
+                                                                    <p>#@Model.ShippingAddress.Id @Model.ShippingAddress.Company</p>
+                                                                    <p>@Model.ShippingAddress.Address1<br> @Model.ShippingAddress.City, @Model.ShippingAddress.StateProvinceName, @Model.ShippingAddress.ZipPostalCode</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="items-table-area sorder-infotable table-responsive font_roboto">
+                                                        <table class="table border-collapse mb0" id="orderShippment">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Line</th>
+                                                                    <th>Item Number</th>
+                                                                    <th>Description</th>
+                                                                    <th>Manufacturer / #</th>
+                                                                    <th>UOM</th>
+                                                                    <th>Total Quantity</th>
+                                                                    <th>Track</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @if (shippedItems.Count > 0)
+                                                                {
+                                                                    var count = 1;
+                                                                    @foreach (var item in shippedItems)
+                                                                    {
+                                                                        <tr>
+
+                                                                            <td>
+                                                                                <p>@(count++)</p>
+                                                                            </td>
+                                                                            <td>
+                                                                                <p>@item.Id</p>
+                                                                            </td>
+                                                                            <td style="width: 250px;">
+                                                                                <a href="@Url.RouteUrl("Manufacturer", new { SeName = item.ProductSeName})"></a><p class="des-padding" style="color: #0068A3;">@item.ProductName</p>
+                                                                                <p class="des-orange" style="color: #636363;">Shipped 7/3/2021 MMS Private Delivery 26598441</p>
+                                                                            </td>
+                                                                            <td>
+                                                                                <p>@item.ProductManufacturers.FirstOrDefault().Name / @item.ManufacturerPartNumber </p>
+                                                                                <p class="des-orange" style="color: #767676;">Routing</p>
+                                                                            </td>
+                                                                            <td>
+                                                                                <p>@item.AttributeInfo</p>
+                                                                            </td>
+                                                                            <td>
+                                                                                <p>@item.Quantity</p>
+                                                                            </td>
+                                                                            <td>
+                                                                                <p><a href="@item.TrackingNumberUrl" style="color: #54B4D7;">Track</a></p>
+                                                                            </td>
+                                                                        </tr>
+                                                                    }
+                                                                }
+                                                                else
+                                                                {
+                                                                    <tr id="emptyRow">
+                                                                        <td colspan="7">
+                                                                            <div class="no-data">
+                                                                                no items found.
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                }
+                                                                <tr>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td style="padding: 10px 10px 10px 0px;"><a href="@Url.RouteUrl("CustomerOrders")" class="btn recent-btn recent-btn2" style="margin: 0;">Go Back</a></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@await Html.PartialAsync("_ContactAccountManagerModal")
+
+<script>
+    $(document).ready(function () {
+        $('#orderShippment').DataTable({
+            "language": {
+                "info": '<div class="tpage-num"><p>Showing _START_ to _END_ of _TOTAL_ Items</p></div>'
+            },
+            "pageLength": 5,
+            "dom": 't<"jqueryPagination"ip>',
+            'pagingType': 'numbers'
+        });
+    });
+</script>

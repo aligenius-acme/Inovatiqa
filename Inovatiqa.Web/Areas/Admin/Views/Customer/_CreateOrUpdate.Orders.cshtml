@@ -1,0 +1,72 @@
+﻿@model CustomerModel
+<div class="panel-body">
+    @await Html.PartialAsync("Table", new DataTablesModel
+    {
+        Name = "order-grid",
+        UrlRead = new DataUrl("OrderList", "Customer", new RouteValueDictionary { [nameof(Model.CustomerOrderSearchModel.CustomerId)] = Model.CustomerOrderSearchModel.CustomerId }),
+        Length = Model.CustomerOrderSearchModel.PageSize,
+        LengthMenu = Model.CustomerOrderSearchModel.AvailablePageSizes,
+        ColumnCollection = new List<ColumnProperty>
+        {
+            new ColumnProperty(nameof(CustomerOrderModel.CustomOrderNumber))
+            {
+                Title = "Order #",
+                Width = "200"
+            },
+            new ColumnProperty(nameof(CustomerOrderModel.OrderTotal))
+            {
+                Title = "Order total",
+                Width = "200"
+            },
+            new ColumnProperty(nameof(CustomerOrderModel.OrderStatus))
+            {
+                Title = "Order status",
+                Width = "200",
+                Render = new RenderCustom("renderColumnOrderStatus")
+            },
+            new ColumnProperty(nameof(CustomerOrderModel.PaymentStatus))
+            {
+                Title = "Payment status",
+                Width = "200"
+            },
+            new ColumnProperty(nameof(CustomerOrderModel.ShippingStatus))
+            {
+                Title = "Shipping status",
+                Width = "200"
+            },
+            new ColumnProperty(nameof(CustomerOrderModel.StoreName))
+            {
+                Title = "Store",
+                Width = "200",
+                Visible = false
+            },
+            new ColumnProperty(nameof(CustomerOrderModel.CreatedOn))
+            {
+                Title = "Created on",
+                Width = "200",
+                Render = new RenderDate()
+            },
+            new ColumnProperty(nameof(CustomerOrderModel.Id))
+            {
+                Title = "View",
+                Width = "100",
+                ClassName = InovatiqaColumnClassDefaults.Button,
+                Render = new RenderButtonView(new DataUrl("~/Admin/Order/Edit/"))
+            }
+        }
+    })
+    <script>
+        function renderColumnOrderStatus(data, type, row, meta) {
+            var color; 
+            switch (row.OrderStatusId) {
+            case 10: color = 'yellow'; break;
+            case 20: color = 'blue'; break;
+            case 30: color = 'green'; break;
+            case 40: color = 'red'; break;
+            case 50:color = 'lightgreen'; break;
+            case 60: color = 'lightblue'; break;
+            }
+            return '<span class="grid-report-item ' + color + '">' + data + '</span >';
+        }
+    </script>
+</div>

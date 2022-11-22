@@ -1,0 +1,135 @@
+﻿@using Inovatiqa.Database.Models
+@*@model IList<Address>*@
+@model CustomerAddressListModel
+@{
+    Layout = "_ColumnsOne";
+
+    ViewBag.Title = "Account";
+}
+<style>
+    .truncation p{
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .truncation h4 {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .truncation h3 {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+</style>
+@await Component.InvokeAsync("DashboardBlueBand")
+@*@await Html.PartialAsync("_DashboardBlueBand")*@
+<section class="container-fluid deshboard_section">
+    <div class="row">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="sidebar_menu font_lato">
+                        <h3>Inovatiqa Dashboard</h3>
+                        @await Html.PartialAsync("_DashboardSideBar", "my-account")
+                    </div>
+                </div>
+                <div class="col-md-9 newcustomer-area billing_chang_addres shipping_chang_addres ">
+                    <div class="accountform-area font_lato" id="account-deatil">
+                        <div class="form-title">
+                            <h5>Edit Billing Address</h5>
+                        </div>
+                        <hr class="line">
+                        <div class="row">
+                            @{
+                                var success = TempData["Success"];
+                                if (Convert.ToString(success) == "true")
+                                {
+                                                <div class="alert alert-success" style="border-radius: 0px; display: flex; justify-content: space-around; width: 90%;">Selected Addresses have been deleted successfully.</div>
+                                }
+                                else if (Convert.ToString(success) == "false")
+                                {
+                                                <div class="alert alert-danger" style="border-radius: 0px; display: flex; justify-content: space-around; width: 90%;">One or more addresses that you selected to delete cannot be deleted at this time.</div>
+                                }
+                                TempData.Remove("Success");
+                            }
+                            <form id="deleteSelectedForm" asp-controller="customer" asp-action="BulkDeleteAddresses" method="post">
+                                <input type="hidden" name="addressType" value="1" />
+                                @foreach (var address in Model.Addresses)
+                                {
+                                    @if(address.IsSiblingAddress == false)
+                                    {
+                                        <div class="col-md-3 col-sm-4" style="width: 30%; height:300px;">
+                                            <div class="shipping_details truncation">
+                                                @if(address.HasCustomerBillingAddress == false && address.HasCustomerShippingAddress == false)
+                                                {
+                                                    <input type="checkbox" class="fix_left_side" id="@address.Id" value="@address.Id" name="IDtoDelete">
+                                                }
+                                                <h3>#@address.Id</h3>
+                                                <h4>@address.FirstName @address.LastName</h4>
+                                                <p>@address.Address1</p>
+                                                <p>@address.City.ToUpper(), @(address.StateProvinceName != null ? address.StateProvinceName : "")  @address.ZipPostalCode</p>
+                                                <a href="/customer/addressedit?addressId=@address.Id&type=1&customerId=@address.CustomerId" class="btn primary edit font_roboto">Edit</a>
+                                                <input type="hidden" name="customerId" value="@address.CustomerId" />
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            </form>
+                        </div>
+                        @if(Model.HasSubAccount == 1)
+                        {
+                            <div class="form-title">
+                                <h5>SubAccount Address</h5>
+                            </div>
+                            <hr class="line" />
+                            <div class="row" style="padding-top: 10px;">
+                                @foreach (var address in Model.Addresses)
+                                {
+                                    @if (address.IsSiblingAddress == true)
+                                    {
+                                        <div class="col-md-3 col-sm-4" style="width: 30%; height:300px; ">
+                                            <div class="shipping_details truncation">
+                                                <h3>#@address.Id</h3>
+                                                <h4>@address.FirstName @address.LastName</h4>
+                                                <p>@address.Address1</p>
+                                                <p>@address.City.ToUpper(), @(address.StateProvinceName != null ? address.StateProvinceName : "")  @address.ZipPostalCode</p>
+                                                <a href="/customer/addressedit?addressId=@address.Id&type=1&customerId=@address.CustomerId" class="btn primary edit font_roboto">Edit</a>
+                                                <input type="hidden" name="customerId" value="@address.CustomerId" />
+                                            </div>
+                                        </div> 
+                                    }
+
+                                }
+                            </div>
+                        }
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="add_remove">
+                                    <a href="@Url.RouteUrl("CustomerAddressAdd")" style="color: #46760A;"><img src="~/images/UIComponents/Layer-add.svg" class="img_responsive"> Add</a>
+                                    <a href="javascript:void(0)" onclick="$('#deleteSelectedForm').submit()"><img src="~/images/UIComponents/Layer_minas.svg" class="img_responsive"> Delete</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+
+    function toggleBackground() {
+        console.log('I am working');
+    }
+
+    function deleteSelected() {
+        var checkedIds = Array();
+        $('input[type="checkbox"][checked]').each(function (i, v) {
+            checkedIds.push($(v).attr('id'));
+        });
+        console.log(checkedIds);
+    }
+</script>

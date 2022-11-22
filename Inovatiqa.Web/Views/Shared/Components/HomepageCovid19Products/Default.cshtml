@@ -1,0 +1,46 @@
+﻿@model IList<ProductOverviewModel>
+@*
+@if (Model.Count > 0)
+{
+    <div class="product-grid home-page-covid-19-product-grid row">
+        @if (Model.Count > 0)
+        {
+            foreach (var product in Model)
+            {
+                <div class="item-box product-grid col-xs-12 col-sm-4 col-md-3 product-align clearfix">
+                    <div class="thumbnail">
+                        @await Html.PartialAsync("_ProductBox", product)
+                    </div>
+                </div>
+            }
+        }
+    </div>
+}
+    *@
+<section class="container-fluid">
+    <div class="row">
+        <div class="container">
+            <div class="row flex_col   m_b_30">
+                <div class="col-md-12 title_text font_lato ">
+                    <div class="row flex_col align_center">
+                        <div class="col-md-12 col-sm-12 col-xs-12"><h2><strong>Coronavirus </strong> Supplies</h2></div>
+                    </div>
+
+                </div>
+                <div class="col-md-12">
+                    <div class="row flex_col  ">
+                        @if (Model.Count > 0)
+                        {
+                            foreach (var product in Model)
+                            {
+                                <div class="col-md-3 col-sm-6 col-xs-12 flex_col">
+                                        @await Html.PartialAsync("_ProductBox", product)
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

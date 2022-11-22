@@ -1,0 +1,59 @@
+@model CustomerModel
+
+<div class="panel-body">
+    @await Html.PartialAsync("Table", new DataTablesModel
+    {
+        Name = "customer-addresses-grid",
+        UrlRead = new DataUrl("AddressesSelect", "Customer", new RouteValueDictionary { [nameof(Model.CustomerAddressSearchModel.CustomerId)] = Model.CustomerAddressSearchModel.CustomerId }),
+        UrlDelete = new DataUrl("AddressDelete", "Customer", new RouteValueDictionary { [nameof(Model.CustomerAddressSearchModel.CustomerId)] = Model.CustomerAddressSearchModel.CustomerId }),
+        Length = Model.CustomerAddressSearchModel.PageSize,
+        LengthMenu = Model.CustomerAddressSearchModel.AvailablePageSizes,
+        ColumnCollection = new List<ColumnProperty>
+        {
+            new ColumnProperty(nameof(AddressModel.FirstName))
+            {
+                Title = "First name"
+            },
+            new ColumnProperty(nameof(AddressModel.LastName))
+            {
+                Title = "Last Name"
+            },
+            new ColumnProperty(nameof(AddressModel.Email))
+            {
+                Title = "Email"
+            },
+            new ColumnProperty(nameof(AddressModel.PhoneNumber))
+            {
+                Title = "Phone number"
+            },
+            new ColumnProperty(nameof(AddressModel.FaxNumber))
+            {
+                Title = "Fax number"
+            },
+            new ColumnProperty(nameof(AddressModel.AddressHtml))
+            {
+                Title = "Address",
+                Encode = false
+            },
+            new ColumnProperty(nameof(AddressModel.Id))
+            {
+                Title = "Edit",
+                Width = "100",
+                ClassName =  InovatiqaColumnClassDefaults.Button,
+                Render = new RenderButtonEdit(new DataUrl("~/Admin/Customer/AddressEdit?customerId=" + Model.CustomerAddressSearchModel.CustomerId + "&addressid=", true))
+            },
+            new ColumnProperty(nameof(AddressModel.Id))
+            {
+                Title = "Delete",
+                Width = "100",
+                Render = new RenderButtonRemove("Delete"),
+                ClassName =  InovatiqaColumnClassDefaults.Button
+            }
+        }
+    })
+</div>
+<div class="panel-body">
+    <button type="button" class="btn btn-primary" onclick="location.href = '@Url.Action("AddressCreate", new { customerId = Model.Id })'">
+        Add new address
+    </button>
+</div>

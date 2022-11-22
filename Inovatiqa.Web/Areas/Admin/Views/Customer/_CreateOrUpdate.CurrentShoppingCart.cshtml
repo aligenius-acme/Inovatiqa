@@ -1,0 +1,81 @@
+﻿@model CustomerModel
+<div class="panel-body">
+    <div class="form-group">
+        <div class="col-md-3">
+            <nop-label asp-for="CustomerShoppingCartSearchModel.ShoppingCartTypeId" />
+        </div>
+        <div class="col-md-9">
+            <nop-select asp-for="CustomerShoppingCartSearchModel.ShoppingCartTypeId" asp-items="@Model.CustomerShoppingCartSearchModel.AvailableShoppingCartTypes" />
+        </div>
+    </div>
+</div>
+
+<div class="panel-body">
+    @await Html.PartialAsync("Table", new DataTablesModel
+    {
+        Name = "currentshoppingcart-grid",
+        UrlRead = new DataUrl("GetCartList", "Customer", new RouteValueDictionary { [nameof(Model.CustomerShoppingCartSearchModel.CustomerId)] = Model.CustomerShoppingCartSearchModel.CustomerId }),
+        Length = Model.CustomerShoppingCartSearchModel.PageSize,
+        LengthMenu = Model.CustomerShoppingCartSearchModel.AvailablePageSizes,
+        Filters = new List<FilterParameter>
+        {
+            new FilterParameter(nameof(CustomerShoppingCartSearchModel.ShoppingCartTypeId), nameof(CustomerShoppingCartSearchModel))
+        },
+        ColumnCollection = new List<ColumnProperty>
+        {
+            new ColumnProperty(nameof(ShoppingCartItemModel.ProductName))
+            {
+                Title = "Product",
+                Width = "500",
+                Render = new RenderCustom("renderProductName")
+            },
+            new ColumnProperty(nameof(ShoppingCartItemModel.Quantity))
+            {
+                Title = "Quantity",
+                Width = "200"
+            },
+            new ColumnProperty(nameof(ShoppingCartItemModel.UnitPrice))
+            {
+                Title = "Unit price",
+                Width = "200"
+            },
+            new ColumnProperty(nameof(ShoppingCartItemModel.Total))
+            {
+                Title = "Total",
+                Width = "200"
+            },
+            new ColumnProperty(nameof(ShoppingCartItemModel.Store))
+            {
+                Title = "Store",
+                Width = "200",
+                Visible = false
+            },
+            new ColumnProperty(nameof(ShoppingCartItemModel.UpdatedOn))
+            {
+                Title = "Updated on",
+                Width = "200",
+                Render = new RenderDate()
+            }
+        }
+    })
+
+    @Html.Resource(@<script type="text/javascript">
+        $(document).ready(function() {
+            $('#@Html.IdFor(model => model.CustomerShoppingCartSearchModel.ShoppingCartTypeId)').change(function() {
+                updateTable('#currentshoppingcart-grid');
+            });
+        });
+    </script>, "js")
+
+    @Html.Resource(@<script type="text/javascript">
+        function renderProductName(data, type, row, meta) {
+            var link = '@Url.Content("~/Admin/Product/Edit/")' + row.ProductId;
+            var div = "";
+
+            if (row.AttributeInfo && row.AttributeInfo.length > 0)
+                div = "<div>" + row.AttributeInfo + "</div>";
+
+            return '<a href="' + link + '">' + data + '</a>'+div;
+        }
+    </script>, "js")
+</div>

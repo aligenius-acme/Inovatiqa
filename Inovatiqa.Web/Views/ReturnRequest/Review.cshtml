@@ -1,0 +1,384 @@
+﻿@using Inovatiqa.Web.Models.Order
+@model ReturnRequestItemsSelectionModel
+@{
+    Layout = "_ColumnsOne";
+}
+@{
+    ViewBag.Title = "Return requests";
+}
+@*@Html.Resource(@<script src="@Url.Content("https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js")" type="text/javascript"></script>, "js")
+    @Html.Resource(@<link href="@Url.Content("https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css")" rel="stylesheet" type="text/css" />, "css")
+    @Html.Resource(@<script src="@Url.Content("https://cdnjs.cloudflare.com/ajax/libs/jquery.tipsy/1.0.3/jquery.tipsy.min.js")" type="text/javascript"></script>, "js")
+    @Html.Resource(@<link href="@Url.Content("https://cdnjs.cloudflare.com/ajax/libs/jquery.tipsy/1.0.3/jquery.tipsy.min.css")" rel="stylesheet" type="text/css" />, "css")
+    @Html.Resource(@<link rel="stylesheet" href="@Url.Content("https://pro.fontawesome.com/releases/v5.10.0/css/all.css")" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />, "css")
+    <style>
+        .content-component {
+            border: 1px solid #ccc !important;
+            margin-bottom: 10px !important;
+            border-radius: 3px !important;
+            background: #fff !important;
+            color: #333 !important;
+            box-shadow: 0 2px 1px rgba(0,0,0,0.1) !important;
+            border-top: 1px solid #ddd !important;
+        }
+
+        .main-header {
+            background: #f2f2f2 !important;
+            padding: 2px !important;
+            cursor: pointer !important;
+        }
+
+            .main-header .main {
+                overflow: auto !important;
+                list-style: none !important;
+            }
+
+                .main-header .main > * {
+                    display: block !important;
+                    float: left !important;
+                    margin-right: 20px !important;
+                    font-weight: bold !important;
+                    padding: 1px 0 !important;
+                    color: #999 !important;
+                }
+
+        .po-header-detail {
+            padding: 5px 10px 5px 20px !important;
+            border: 1px solid #eee !important;
+            background: #fff !important;
+            -moz-border-radius: 5px !important;
+        }
+
+        ul.return-total li {
+            clear: both !important;
+        }
+
+        .po-header-detail ul li {
+            float: none !important;
+            margin: 0 !important;
+            font-size: 11px !important;
+            color: #333 !important;
+            font-weight: normal !important;
+        }
+
+        .component-body {
+            padding: 10px !important;
+        }
+
+        .tblSimple {
+            width: 100% !important;
+            border-spacing: 0px !important;
+            clear: both !important;
+            margin-bottom: 5px !important;
+        }
+
+            .tblSimple thead {
+                background: #fafafa !important;
+            }
+
+            .tblSimple > tbody > tr > td {
+                vertical-align: middle !important;
+            }
+
+            .tblSimple td {
+                padding: 4px 2px !important;
+                border-top: 1px solid #ddd !important;
+            }
+
+        .cursor-pointer {
+            cursor: pointer !important;
+        }
+
+        .header-component {
+            width: 120px !important;
+            display: inline !important;
+        }
+
+        .null {
+            border: 1px solid red;
+        }
+    </style>
+    <div class="page account-page return-request-list-page from-panel">
+        <div class="page-title panel-heading">
+            <h1>Return requests</h1>
+            <div style="display: flex;">
+                <div style="margin-right: 50%;">
+                    <b>Facility Address</b><br />
+                    <span>@Model.Company</span><br />
+                    <span>@Model.AddressLine1</span><br />
+                    <span>@Model.City, @Model.Zip</span>
+                </div>
+                <div>
+                    <b>Return Authorization</b>
+                    <p>@Model.Email1</p>
+                    <p>@Model.Email2</p>
+                    <b>Shipping Labels: @Model.ShippingLabel</b>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align:right;float:right;">
+            <input type="button" value="Cancel" class="btn btn-primary" style="margin-right:0;" onclick="window.location.href='/returnrequest/history'">
+            <input type="button" class="btn btn_green" style="margin-right:0;" value="Submit" onclick="window.location.href = '@Url.Action("Completed", "ReturnRequest", new { Selected = Model.SelectedItems, Quantity = Model.SelectedItemsQuantity, Credit = Model.SelectedItemsPrice, ShippingLabel = Model.ShippingLabel, email1 = Model.Email1, email2=Model.Email2, reasons = Model.SelectedItemsReturnReason, Actions = Model.SelectedItemsReturnAction})'">
+        </div>
+        <br>
+        <div class="page-body">
+            <br />
+            <div>
+                <div class="rowTitle dontprint" style="overflow:auto;">
+                    <table width="100%">
+                        <tbody>
+                            <tr>
+                                <td>
+
+
+                                    <div style="font-size:16px;color:#ddd;">
+                                        <span class="bold" style="color:#f60;">Create Return Request</span>
+                                        &nbsp;&nbsp;
+                                        <span id="retDef" class="return-def bold">
+                                            Items: <span id="lineCount">@Model.SelectedItems.Count</span>
+                                            <span style="margin-left:20px;">
+                                                Product Value&nbsp;<b id="totalCredit" style="color: green;">$ @Model.SelectedItemsPrice</b>
+                                            </span>
+                                        </span>
+                                    </div>
+                                </td>
+                                <td align="right"><h1 style="color:#888;">Step 4 of 5: Review And Submit</h1></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <br />
+            <div class="order-list">
+
+                <div class="content-component">
+                    <div class="component-body">
+                        <table class="tblSimple highlight-body">
+                            <thead>
+                                <tr>
+                                    <th>PO/Name</th>
+                                    <th>Invoice</th>
+                                    <th>Order #</th>
+                                    <th>Item #</th>
+                                    <th>Description</th>
+                                    <th align="center">UOM</th>
+                                    <th class="alignRight">Return</th>
+                                    <th class="alignRight">Credit</th>
+                                </tr>
+                            </thead>
+                            <tbody class="cursor-pointer" title="Click to View Detail">
+                                @if(Model.Items.Count > 0)
+                                {
+                                    foreach(var item in Model.Items)
+                                        {
+                                <tr>
+                                    <td>@item.PO</td>
+                                    <td>@item.Invoice</td>
+                                    <td>@item.OrderNo</td>
+                                    <td>@item.Itemno</td>
+                                    <td>@item.Description<br><span style="color: grey;">Return Reason: @item.ReturnReason</span></td>
+                                    <td>@item.UOM</td>
+                                    <td>@item.ReturnQuantity</td>
+                                    <td>@((Convert.ToDecimal(item.Price))*(item.ReturnQuantity))</td>
+                                </tr>
+                                        }
+                                }
+                                else
+                                {
+
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <hr />
+                <div style="background-color: #fff5ea; display: flex; margin-left: 70%; margin-bottom: 2.5%; ">
+                    <h3>Total Pending Credit <span style="color: green;">$@Model.SelectedItemsPrice</span></h3>
+                </div>
+            </div>
+        </div>
+    </div>
+*@
+<style>
+    .jqueryPagination{
+        display: @(Model.Items.Count > 0 ? "flex" : "none");
+        justify-content: space-between;
+        margin: 8px 12px;
+    }
+    .paging_numbers span a {
+        margin-right: 5px;
+        cursor: pointer;
+        color: #636363;
+    }
+    .paging_numbers span .current{
+        color: #000;
+    }
+    .jqueryPagination p {
+        font-family: Lato;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 13.5px;
+        letter-spacing: 0.05em;
+        color: #636363;
+        margin-bottom:unset;
+    }
+
+    th {
+        padding: 34px;
+    }
+
+    td {
+        padding: 9px !important;
+        max-width: 250px;
+    }
+</style>
+ 
+
+@await Component.InvokeAsync("DashboardBlueBand")
+@*@await Html.PartialAsync("_DashboardBlueBand")*@
+<section class="container-fluid orderstatus-area">
+    <div class="row">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="dashboard-area">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="sidebar_menu font_lato">
+                                    <h3>Inovatiqa Dashboard</h3>
+                                    @await Html.PartialAsync("_DashboardSideBar", "inovatiqa-returns")
+                                </div>
+                            </div>
+
+                            <div class="col-md-9">
+                                <div class="order-deatil-area s step-one submitrequest step-four">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="tabs font_lato">
+                                                <ul>
+                                                    <li><a class="previous-check active">Step One</a></li>
+                                                    <li><a class="previous-check active" data-toggle="modal" data-target="#step-returnpopup" data-backdrop="false">Step Two</a></li>
+                                                    <li><a class="previous-check active">Step Three</a></li>
+                                                    <li><a class="active">Step Four</a></li>
+                                                    <li><a>Step Five</a></li>
+
+                                                </ul>
+
+                                                <hr>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="order-content">
+
+                                                <div class="tab-content" style="border: none !important">
+                                                    <div class="return-invoiceitem font_lato">
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="retunable-item">
+                                                                    <p>Select Returnable Items</p>
+                                                                </div>
+
+                                                                <div class="returnaddress-area">
+                                                                    <div class="facily-address">
+                                                                        <p><span>Facility Address:</span> @Model.AddressLine1, @Model.City, @Model.Zip</p>
+                                                                    </div>
+
+                                                                    <div class="ship-label" style="margin-left: 52px;">
+                                                                        <p>Return Authorization Shipping Labels: @Model.ShippingLabel</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+
+
+                                                        </div>
+                                                    </div>
+
+                                                    <div style="display: flex; justify-content: flex-end; margin-top: 66px;">
+                                                        <div class="contact-manager text-right font_roboto">
+                                                            <a href="@Url.RouteUrl("CustomerReturnRequests")" class="btn conatct-btnpopup">Cancel Request</a>
+                                                        </div>
+                                                        <div class="find-btn font_roboto">
+                                                            <a onclick="window.location.href = '@Url.Action("Completed", "ReturnRequest", new { Selected = Model.SelectedItems, Quantity = Model.SelectedItemsQuantity, Credit = Model.SelectedItemsPrice, ShippingLabel = Model.ShippingLabel, email1 = Model.Email1, email2=Model.Email2, reasons = Model.SelectedItemsReturnReason, Actions = Model.SelectedItemsReturnAction})'" class="btn btn-signin">Submit Request</a>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="product-value font_lato">
+                                                        <p>Items: @Model.SelectedItems.Count</p>
+                                                        <p>Product Value $ @Model.SelectedItemsPrice.ToString("0.00")</p>
+                                                    </div>
+
+                                                    <div class="items-table-area table-responsive font_roboto">
+                                                        <table class="table border-collapse mb0" id="reviewTable">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Item Number</th>
+                                                                    <th>Product Description</th>
+                                                                    <th>Order Number</th>
+                                                                    <th>Invoice Date</th>
+                                                                    <th>PO</th>
+                                                                    <th>UOM</th>
+                                                                    <th>Return</th>
+                                                                    <th>Credit</th>
+                                                                </tr>
+                                                            </thead>
+
+                                                            <tbody>
+                                                                @if (Model.SelectedItems.Count > 0)
+                                                                {
+                                                                    foreach (var item in Model.Items)
+                                                                    {
+                                                                        <tr>
+                                                                            <td>@item.Itemno</td>
+                                                                            <td>@item.Description</td>
+                                                                            <td>@item.OrderNo</td>
+                                                                            <td>@item.InvoiceDate</td>
+                                                                            <td>@item.PO</td>
+                                                                            <td>@item.UOM</td>
+                                                                            <td>@item.ReturnQuantity</td>
+                                                                            <td>@(((Convert.ToDecimal(item.Price))*(item.ReturnQuantity)).ToString("#.###"))</td>
+                                                                        </tr>
+                                                                    }
+                                                                }
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+
+                                                    <div class="total-pending text-right font_lato">
+                                                        <p>Total Pending Credit $ @Model.SelectedItemsPrice.ToString("#.###")</p>
+
+                                                        <hr>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<script>
+    $(document).ready(function () {
+        const dt = $('#reviewTable').DataTable({
+            "language": {
+                "info": '<div class="tpage- num"><p>Showing _START_ to _END_ of _TOTAL_ Items</p></div>'
+            },
+            "pageLength": 5,
+            "dom": 't<"jqueryPagination"ip>',
+            'pagingType': 'numbers'
+        });
+    });
+
+</script>

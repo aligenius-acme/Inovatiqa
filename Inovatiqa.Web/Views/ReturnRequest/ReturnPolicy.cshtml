@@ -1,0 +1,50 @@
+﻿@{
+    Layout = "_ColumnsOne";
+}
+@{
+    ViewBag.Title = "Create Return Request";
+}
+<form id="frm" onsubmit="waitDialog();">
+    <div class="rowTitle dontprint" style="overflow:auto;">
+        <table width="100%">
+            <tbody>
+                <tr>
+                    <td>
+                        <div style="font-size:16px;color:#ddd;">
+                            <span class="bold" style="color:#f60;">Return Policy</span>
+                        </div>
+                    </td>
+                    <td align="right"><h1 style="color:#888;">Return Policy for Primary Care Customers</h1></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="row rowTable" style="margin: 10px 0;">
+        <table style="width: 100%; border: 0;" cellspacing="0">
+            <thead>
+                <tr style="border-bottom:1px solid #ddd;">
+                    <td width="60%">The Return Policy for Primary Care sales is included in the <a href="#">Terms of Sale</a>.</td>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td valign="top">
+                        <ul class="rowList" style="margin-left:5px;">
+                            <li>
+                                Products stocked in Seller’s distribution center that are $15 and greater, if returned between 30-80 days: $15 Restocking Fee per item
+                            </li>
+                            <li>
+                                Products NOT stocked in any of Seller’s distribution centers that are $100 and greater, if returned within 180 days: $35 Restocking Fee per item plus any additional cost from the supplier (23% AVG)
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="rowAlert" style="padding:5px;clear:both;margin-top:5px; font-weight: bold;">
+        There will be no restocking fee for any Product returned due to Seller error or due to a recall or defective condition.
+    </div>
+</form>

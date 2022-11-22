@@ -1,0 +1,30 @@
+﻿@model List<ManufacturerModel>
+@if (Model.Count > 0)
+{
+    <section class="container-fluid">
+        <div class="row">
+            <div class="container">
+                <div class="row flex_col    ">
+                    <div class="col-md-12 title_text font_lato">
+                        <div class="row flex_col align_center">
+                            <div class="col-md-8 col-sm-6 col-xs-12"><h2><strong>Top</strong> Brands</h2></div>
+                            <div class="col-md-4 col-sm-6 col-xs-12 text-right show_all"><a href="@Url.RouteUrl("Brands")">Shop All Brands <img src="\images\UIComponents\Polygon 1.svg"></a></div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="row flex_col m0">
+                                <div class="brands_icons">
+                                    @foreach (var manufacturer in Model)
+                                    {
+                                        <a href="@Url.RouteUrl("Manufacturer", new { SeName = manufacturer.SeName})" style="cursor:pointer;"><img style="box-sizing: border-box; border: 1px solid #EEEDDE; border-radius: 3%; width: 248px; height: 127.91px;" src="@manufacturer.PictureModel.FullSizeImageUrl" class="img-responsive center-block brand_img"></a>
+
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+}

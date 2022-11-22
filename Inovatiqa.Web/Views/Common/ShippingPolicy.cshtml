@@ -1,0 +1,182 @@
+﻿
+@{
+    Layout = "_ColumnsOne";
+    ViewBag.Title = "Shipping Policy";
+}
+@*
+    <style>
+        .table td, table th, table tbody tr td{
+            padding: 10px 20px;
+            font-size: 13px;
+        }
+    </style>
+    <div class="page  from-panel">
+        <div class="page-title panel-heading">
+            <h1>Shipping Policy</h1>
+        </div>
+        <div style="margin:10px">
+            <div class="">
+
+                <br>
+                <h4 style="font-weight:bold">Shipping Rates</h4>
+
+                <p>Shipping costs calculated on the shopping cart page.</p>
+                <br>
+
+
+                <p>*Free shipping on most orders over $150.00, Heavier items however, are excluded from our free shipping policy. If you have multiple products in your order, we encourage you to contact us so we can help you minimize your shipping rates.</p>
+                <br>
+
+                <p>*Please note: Freight services such as lift gate, inside delivery and residential delivery will be charged an additional fee decided by the freight company.</p>
+                <br>
+
+                <p style="font-weight:bold">Our shipping rates for the 48 contiguous states in the continental USA excluding Alaska, Hawaii, and on APO / FPO are calculate at Shopping Cart page.</p>
+                <br>
+
+                <p>Orders shipped to Alaska, Hawaii, Puerto Rico and outside the United States will have additional shipping charges. We will contact you via email or phone for your approval.</p>
+                <br>
+
+                <h4 style="font-weight:bold">
+                    Additional Freight Shipping Charges
+                </h4>
+
+                <table style="width: 428px; height: 80px;border:medium;">
+                    <thead>
+                        <tr>
+                        <th style="background-color: #142c43; color:white">Freight Service</th>
+                        <th style="background-color: #142c43; color:white">Cost $</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Lift Gate</td>
+                            <td>$75</td>
+                        </tr>
+                        <tr>
+                            <td>Inside Delivery</td>
+                            <td>Call for Quote</td>
+                        </tr>
+                        <tr>
+                            <td>Residential Delivery</td>
+                            <td>Call for Quote</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p></p>
+                <br>
+
+
+
+                <h4 style="font-weight:bold">  Order Processing Time</h4>
+                <p>It may take approximately one or two business days to process an order before it ships, provided that the merchandise is in stock and that we are able to complete the address verification and payment process.</p>
+                <br>
+
+
+                <h4 style="font-weight:bold">Delivery Time</h4>
+                <p>Delivery times will vary. Most orders will ship within 2-3 business days and arrive within 5–7 business days. Shipping time varies from manufacturer to manufacturer.</p>
+                <br>
+
+                <p>To expedite your order, kindly contact our customer service department at <a href="customerservice@inovatiqa.com">customerservice@inovatiqa.com</a>. Extra charges may apply.</p>
+                <br>
+
+
+
+                <br>
+
+            </div>
+        </div>
+    </div>
+*@
+
+
+<style>
+    .become-customer-box {
+        box-shadow: none !important;
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+
+    .newcustomer-area {
+        padding: 0px !important;
+        background: #FFF !important;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        /*font-weight: 500 !important;*/
+    }
+
+    .segment-line {
+        border: 0.1px solid #DADADA !important;
+    }
+
+    .small-heading {
+        font-weight: 500 !important;
+    }
+
+    .heading {
+        font-family: Lato;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 20px;
+        line-height: 24px;
+        color: #000000;
+    }
+
+    .muted {
+        color: #636363 !important;
+        font-size: 14px !important;
+    }
+</style>
+<section class="container-fluid newcustomer-area">
+    <div class="container-fluid" style="background: #F1F3F6; padding: 10px;">
+        <div class="container">
+            <span class="muted"><a style="color: #A9A9A9;" href="@Url.RouteUrl("Homepage")">Inovatiqa</a> / </span> Shipping Policy
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="container">
+            <div class="row mt10">
+                <div class="col-md-12">
+                    <div class="become-customer-box" style="padding-top: 0px; padding-bottom: 80px;">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="font_lato">
+                                    <div class="customer-select">
+                                        <h4 class="heading-price-match mt25">Shipping Policy</h4>
+                                        <hr class="segment-line">
+                                        <h4 class="heading">Shipping Rates</h4>
+                                        <p class="price-match-helper-text mt25">
+                                            Shipping costs calculated on the shopping cart page.
+                                        </p>
+                                        <p class="price-match-helper-text mt20">
+                                            *Free shipping on most orders over $99.00. Heavier items however, are excluded from our free shipping policy. If you have multiple products in your order, we encourage you to contact us so we can help you minimize your shipping rates.
+                                        </p>
+                                        <p class="price-match-helper-text mt20">
+                                            *Please note: Freight services such as lift gate, inside delivery and residential delivery will be charged an additional fee decided by the freight company.
+                                        </p>
+                                        <p class="price-match-helper-text mt20">
+                                            Our shipping rates for the 48 contiguous states in the continental USA excluding Alaska and Hawaii, and on APO / FPO are calculate at the <a href="@Url.RouteUrl("ShoppingCart")">Shopping Cart</a> page.
+                                        </p>
+                                        <p class="price-match-helper-text mt20">Orders shipped to Alaska, Hawaii, Puerto Rico and outside the United States will have additional shipping charges. We will contact you via email or phone for your approval. If you have any questions, please visit our <a href="@Url.RouteUrl("ContactUs")">Contact Us</a> page.</p>
+                                        <p class="price-match-helper-text mt20">Some products must be shipped by truck due to the weight and/or dimensions. If your order contains any oversize item or certain additional shipping charges, a customer service representative will contact you before we process the order.</p>
+                                        <h4 class="heading mt42">Order Processing Time</h4>
+                                        <p class="price-match-helper-text ">It may take approximately one or two business days to process an order before it ships, provided that the merchandise is in stock and that we are able to complete the address verification and payment process.</p>
+                                        <h4 class="heading mt42">Delivery Time</h4>
+                                        <p class="price-match-helper-text ">
+                                            Delivery times will vary. Most orders will ship within 2-3 business days and arrive within 5-7 business days. Shipping time varies from manufacturer to manufacturer.
+                                        </p>
+                                        <p class="price-match-helper-text mt20">
+                                            To expedite your order, contact our customer service department at <a href="mailto:customerservice@inovatiqa.com" class="blue">customerservice@inovatiqa.com</a>. Extra charges may apply.
+                                        </p>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid" style="background: #F1F3F6; padding: 25px;"></div>
+</section>

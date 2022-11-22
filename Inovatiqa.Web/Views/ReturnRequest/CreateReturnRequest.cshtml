@@ -1,0 +1,214 @@
+﻿@{
+    Layout = "_ColumnsOne";
+}
+@{
+    ViewBag.Title = "Create Return Request";
+}
+@*<form id="frm" onsubmit="waitDialog();">
+        <div class="rowTitle dontprint" style="overflow:auto;">
+            <table width="100%">
+                <tbody>
+                    <tr>
+                        <td>
+                            <div style="font-size:16px;color:#ddd;">
+                                <span class="bold" style="color:#f60;">Create Return Request</span>
+                                &nbsp;&nbsp;
+                                <span id="retDef" class="return-def bold">
+                                    Items: <span id="lineCount">0</span>
+                                    <span id="totalCredit" style="margin-left:20px;">
+                                        Product Value&nbsp;<b>$0.00</b>
+                                    </span>
+                                </span>
+                            </div>
+                        </td>
+                        <td align="right"><h1 style="color:#888;">Step 1 of 5: Reason for Returning Items</h1></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+        <div class="dontprint" style="padding-bottom: 4px;overflow:auto;">
+            <div style="padding-top: 2px;float:left;">
+                Please review the return reasons and policy information before continuing.  Click on 'Continue to Next Step' to create your return.
+            </div>
+            <div style="text-align:right;float:right;">
+                <input type="button" value="Cancel" class="btn btn-primary" style="margin-right:0;" onclick="window.location.href='/returnrequest/history'">
+                <a class="btn btn_green" style="margin-right:0;" href="/ReturnRequest/SelectItems">Continue to Next Step</a>
+            </div>
+        </div>
+
+
+        <div class="row rowTable" style="margin: 10px 0;">
+            <table style="width: 100%; border: 0;" cellspacing="0">
+                <thead>
+                    <tr style="border-bottom:1px solid #ddd;">
+                        <td width="60%">Reason for Returning Items</td>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td valign="top">
+                            <ul class="rowList" style="margin-left:5px;">
+                                <li>
+                                    Wrong item shipped
+                                </li>
+                                <li>
+                                    Item has expired
+                                </li>
+                                <li>
+                                    Item is defective
+                                </li>
+                                <li>
+                                    Item arrived damaged
+                                </li>
+                                <li>
+                                    Ordered too many/excess inventory
+                                </li>
+                                <li>
+                                    Wrong item ordered
+                                </li>
+                                <li>
+                                    Does not meet expectations
+                                </li>
+                                <li>
+                                    Inovatiqa order entry error
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="rowAlert" style="padding:5px;clear:both;margin-top:5px; font-weight: bold;">
+            Returns are subject to review by Customer Service.<br>
+            For all other return reasons including those listed below, please contact Customer Service at 800-945-5646 or <a href="#" class="csupport" onclick="openSend('s', document.body.id,'Return Request','18');">click here</a>.
+        </div>
+        <ul class="rowList" style="margin-left:5px;">
+            <li>Recalled items</li>
+            <li>Overshipment</li>
+        </ul>
+
+
+        <div class="row rowTable" style="margin: 10px 0;">
+            <table style="width: 100%; border: 0;" cellspacing="0">
+                <thead>
+                    <tr style="border-bottom:1px solid #ddd;">
+                        <td>Return Policy</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td valign="top">
+                            <a href="/ReturnRequest/returnpolicy" target="_blank">Click here</a>
+                            to view return policy.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </form>*@
+
+@await Component.InvokeAsync("DashboardBlueBand")
+@*@await Html.PartialAsync("_DashboardBlueBand")*@
+<section class="container-fluid orderstatus-area">
+    <div class="row">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="dashboard-area">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="sidebar_menu font_lato">
+                                    <h3>Inovatiqa Dashboard</h3>
+                                    @await Html.PartialAsync("_DashboardSideBar", "inovatiqa-returns")
+                                </div>
+                            </div>
+
+                            <div class="col-md-9">
+                                <div class="order-deatil-area s submitrequest step-one">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="tabs font_lato">
+                                                <ul>
+                                                    <li><a class="active">Step One</a></li>
+                                                    <li><a>Step Two</a></li>
+                                                    <li><a>Step Three</a></li>
+                                                    <li><a>Step Four</a></li>
+                                                    <li><a>Step Five</a></li>
+
+                                                </ul>
+
+                                                <hr>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12" style="margin-bottom: 5vh;">
+                                            <a href="/ReturnRequest/SelectItems" class="new-return"><img src="~/images/UIComponents/ic-actions-add.png"> Create a return Request</a>
+                                        </div>
+                                        <div class="col-md-12">
+
+                                            <div class="order-content">
+                                                <div class="tab-content">
+                                                    <div class="return-invoiceitem font_lato">
+                                                        <div class="row">
+                                                            <div class="col-md-12 col-sm-12">
+                                                                <div style="margin-bottom: 5vh;">
+                                                                    <p>In order to Create a Return Request, please review the return reasons and policy information before continuing. Click on the “Create Return Request” button above to create your return.</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-title">
+                                                        <h4>Reason for Returning Items</h4>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="tabs font_lato">
+                                                <hr>
+                                            </div>
+                                            <div class="category_box" style="border: none; padding: 0px;">
+                                                <ul>
+                                                    <li style="color: black; text-transform: none;">Wrong Item Shipped</li>
+                                                    <li style="color: black; text-transform: none;">Item has expired</li>
+                                                    <li style="color: black; text-transform: none;">Item is defective</li>
+                                                    <li style="color: black; text-transform: none;">Item arrived damaged</li>
+                                                    <li style="color: black; text-transform: none;">Ordered too many/excess inventory</li>
+                                                    <li style="color: black; text-transform: none;">Wrong item ordered</li>
+                                                    <li style="color: black; text-transform: none;">Does not meet expectations</li>
+                                                    <li style="color: black; text-transform: none;">Inovatiqa order entry error</li>
+                                                </ul>
+                                            </div>
+                                            <div>
+                                                <h4>Returns are subject to review by Customer Service</h4>
+                                            </div>
+                                            <div>
+                                                <p>For all other return reasons including those listed below, please contact Customer Service at 800-945-5646 or <a href="#">click here.</a></p>
+
+                                            </div>
+                                            <div class="category_box" style="border: none; padding: 0px;">
+                                                <ul>
+                                                    <li style="color: black; text-transform: none;">Recalled items</li>
+                                                    <li style="color: black; text-transform: none;">Overshipment</li>
+                                                </ul>
+                                            </div>
+                                            <div>
+                                                <h5 style="font-weight: 600;">Return Policy</h5>
+                                                <p><a href="/ReturnRequest/returnpolicy" target="_blank">Click Here</a> to view return policy</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+</section>

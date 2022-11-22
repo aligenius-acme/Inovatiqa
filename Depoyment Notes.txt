@@ -1,0 +1,8 @@
+Inovatiqa Defaults:
+1.	public static string StoreUrl => "http://localhost:15536/";
+	change about with the domain url
+
+2. 	Always query Setting Table to look for shippingsettings.shippingoriginaddressid and update Id below.
+	See Shipping Origin Address section
+
+3.	Email Account Table: Update SMTP settings for email account responsible for sending emails.

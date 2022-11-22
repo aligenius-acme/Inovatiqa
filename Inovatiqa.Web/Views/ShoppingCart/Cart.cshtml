@@ -1,0 +1,191 @@
+﻿@model ShoppingCartModel
+@{
+    Layout = "_ColumnsOne";
+}
+@{
+    ViewBag.Title = "Shopping Cart";
+}
+<style>
+    .jqueryPagination{
+        margin: 0 !important;
+    }
+    .paging_numbers{
+        padding-top:8px;
+    }
+</style>
+@*
+    @Html.Resource(@<link href="@Url.Content("https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css")" rel="stylesheet" type="text/css" />, "css")
+    @Html.Resource(@<script src="@Url.Content("https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js")" type="text/javascript"></script>, "js")
+    @Html.Resource(@<script src="@Url.Content("https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js")" type="text/javascript"></script>, "js")
+    @if (!Model.OnePageCheckoutEnabled)
+    {
+        @await Component.InvokeAsync("CheckoutProgress", new { step = CheckoutProgressStep.Cart })
+    }
+    <div class="page shopping-cart-page from-panel">
+        <div class="page-title panel-heading">
+            <h1>Shopping Cart</h1>
+        </div>
+
+
+        <div class="col-lg-12">
+            <div class="col-lg-6">
+                <p>
+                    <b>Account</b> #15104 @ViewBag.LoggedUser
+                </p>
+            </div>
+            <div class="col-lg-6">
+                <p>
+                    <b>Ship To</b> # @(ViewBag.BillingAddress != null ? (ViewBag.BillingAddress.Id+"   "+ViewBag.BillingAddress.Company) : null)
+                </p>
+                <p style="margin-left: 65px;"> @(ViewBag.BillingAddress != null ? ViewBag.BillingAddress.Address1 : null) </p>
+                <p style="margin-left: 65px;">  @(ViewBag.BillingAddress != null ? ViewBag.BillingAddress.City+", "+ViewBag.BillingAddress.ZipPostalCode : null)</p>
+            </div>
+        </div>
+
+
+        <div class="page-body">
+            @await Component.InvokeAsync("OrderSummary", new { overriddenModel = Model })
+        </div>
+    </div>
+*@
+
+<style>
+    .truncation p {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+</style>
+@await Html.PartialAsync("_ContactAccountManagerModal")
+
+@await Component.InvokeAsync("DashboardBlueBand")
+@*@await Html.PartialAsync("_DashboardBlueBand")*@
+<section class="container-fluid orderstatus-area">
+
+    <div class="row">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="dashboard-area">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="sidebar_menu font_lato">
+                                    <h3>Inovatiqa Dashboard</h3>
+                                    @await Html.PartialAsync("_DashboardSideBar", "inovatiqa-orders")
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="order-deatil-area sorder-staus sinvoice-order">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="tabs font_lato">
+                                                @await Html.PartialAsync("_OrderNewTopBar", "cart")
+                                                <hr>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="order-content">
+                                                <div class="tab-content" style="border: none !important;">
+                                                    <div class="contact-manager text-right font_roboto">
+                                                        <a href="#" class="btn conatct-btnpopup" onclick="popup(); return false;">Contact Your Account Manager</a>
+                                                    </div>
+                                                    <div style="display: flex; justify-content: space-between; max-width: 60%;">
+                                                        <div>
+                                                            <span>
+                                                                <p><span style="font-weight: 600;">Account</span> #@(ViewBag.Id != null ? ViewBag.Id : null) @(ViewBag.LoggedUser != "" ? "( " + ViewBag.LoggedUser + " )" : "")</p>
+                                                            </span>
+                                                        </div>
+                                                        @{
+                                                            var viewBagAddress = (ViewBag.ShippingAddress.Address1 != null ? ViewBag.ShippingAddress.Address1 + ", " : "") + (ViewBag.ShippingAddress.City != null ? ViewBag.ShippingAddress.City + ", " : "") + (ViewBag.state != null ? ViewBag.state + "," : "") + (ViewBag.ShippingAddress.ZipPostalCode != null ? ViewBag.ShippingAddress.ZipPostalCode : "");
+                                                        }
+                                                        <div style="min-width: 300px; max-width: 300px;">
+                                                            <span>
+                                                                <p><span style="font-weight: 600;">Ship to</span> #@(ViewBag.ShippingAddress != null ?  ViewBag.ShippingAddress.Id+"   "+ "( " + (viewBagAddress.Length >= 25 ? viewBagAddress.Substring(0, 25).Insert(25, "...") : viewBagAddress) + " )" : null)</p>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    @await Component.InvokeAsync("OrderSummary", new { overriddenModel = Model })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="hideTips" class="viewsubmit-info font_roboto paragraph_with_header" style="margin-top: 10%;">
+                                    <span style="font-weight: 500">Cart entry tips to help you get started</span>
+
+                                    <br /><br />
+                                    <span style="font-weight: 500">Keying in the item and UOM together</span>
+                                    <p>Within the Item '#' field, you may put in the item number and UOM together. An example would be '456cs', '504298bx', or '600112 BX'. If you leave off the UOM, we'll attempt to default it to whatever you previously ordered.</p>
+
+
+                                    <span style="font-weight: 500">Detailed item entry</span>
+                                    <p>When the 'Quick Add' checkbox is unchecked for item entry, adding an item will first show you a dialog where you can make modifications before adding the item to the cart. This option works best if you aren't sure of the UOM, need to put in comments with your item, or would like to check the status of the item before adding it to the cart.</p>
+
+
+                                    <span style="font-weight: 500">Quick item entry</span>
+                                    <p>When you check the 'Quick Add' check box next to item entry, adding an item will immediately place it in the cart. This option works best for those people who know their item numbers and units of measure and would like to generate an order as quickly as possible.</p>
+
+
+                                    <span style="font-weight: 500">Reorder Guide</span>
+                                    <p>Can't remember what you may need to order? Click here to view your 90 day item history with suggested reorder dates and quantities.</p>
+
+
+                                    <span style="font-weight: 500">Adding items from a list</span>
+                                    <p>You can either key in the item number directly within cart or pick items from one of your lists by clicking here.</p>
+
+
+                                    <span style="font-weight: 500">Searching by manufacturer # or description</span>
+                                    <p>Because McKesson supplies our customers with over a quarter million products, adding items by manufacturer's information should instead be entered into the search box at the top, then added to the cart.</p>
+
+
+                                    <span style="font-weight: 500">Editing items and resolving issues</span>
+                                    <p>To edit or make modifications to items in your cart, you can just click on the 'EDIT' icon next to each item. This will show you a dialog where you can make modifications and save changes or delete the item from your cart.</p>
+
+
+                                    <span style="font-weight: 500">Deleting items from your cart</span>
+                                    <p>You can click on the red minus icon with each item or you may edit an item and delete from there.</p>
+                                    <p><a style="cursor:pointer;" onclick="hidetips()">Hide these tips</a> when you're done.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@*@Html.Resource(@<script type="text/javascript">
+                        function popup() {
+                            $('[id*="contact-mform"]').modal('show');
+                        }
+
+    </script>, "js")*@
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+<script>
+    $(document).ready(function () {
+            $('#shopping-cart-table').DataTable({
+                "language": {
+                    "info": '<div class="tpage-num"><p>Showing _START_ to _END_ of _TOTAL_ Items</p></div>'
+                },
+                "pageLength": 5,
+                "dom": 't<"jqueryPagination"ip>',
+                "pagingType": 'numbers'
+                
+            });
+            $("#quick_addprod").change(function () {
+                if (this.checked) {
+                    if ($('#product_enteredQuantity_Id').val() == '')
+                        document.getElementById("product_enteredQuantity_Id").value = 1;
+                }
+                else {
+                    if ($('#product_enteredQuantity_Id').val() == '')
+                        document.getElementById("product_enteredQuantity_Id").value = "";
+                }
+            });
+    });
+</script>
+<script>
+    function hidetips() {
+        $('#hideTips').hide();
+    }
+</script>

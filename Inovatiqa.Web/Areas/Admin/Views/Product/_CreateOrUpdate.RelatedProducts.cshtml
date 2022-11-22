@@ -1,0 +1,84 @@
+﻿@model ProductModel
+<div class="panel-body">
+    <p>
+        The Related Products option provides the opportunity to advertise products that are not part of the selected category, to your visitors. These products are displayed on the product details pages.
+    </p>
+    @if (Model.Id > 0)
+    {
+        <div class="panel panel-default">
+            <div class="panel-body">
+
+                @await Html.PartialAsync("Table", new DataTablesModel
+                {
+                    Name = "relatedproducts-grid",
+                    UrlRead = new DataUrl("RelatedProductList", "Product", new RouteValueDictionary { [nameof(Model.RelatedProductSearchModel.ProductId)] = Model.RelatedProductSearchModel.ProductId }),
+                    UrlDelete = new DataUrl("RelatedProductDelete", "Product", null),
+                    UrlUpdate = new DataUrl("RelatedProductUpdate", "Product", null),
+                    Length = Model.RelatedProductSearchModel.PageSize,
+                    LengthMenu = Model.RelatedProductSearchModel.AvailablePageSizes,
+                    ColumnCollection = new List<ColumnProperty>
+                        {
+                            new ColumnProperty(nameof(RelatedProductModel.Product2Name))
+                            {
+                                Title = "Product"
+                            },
+                            new ColumnProperty(nameof(RelatedProductModel.DisplayOrder))
+                            {
+                                Title = "Display order",
+                                Width = "150",
+                                ClassName = InovatiqaColumnClassDefaults.CenterAll,
+                                Editable = true,
+                                EditType = EditType.Number
+                            },
+                            new ColumnProperty(nameof(RelatedProductModel.ProductId2))
+                            {
+                                Title = "View",
+                                Width = "150",
+                                ClassName = InovatiqaColumnClassDefaults.Button,
+                                Render = new RenderButtonView(new DataUrl("~/Admin/Product/Edit/", nameof(RelatedProductModel.Product2Name)))
+                            },
+                            new ColumnProperty(nameof(RelatedProductModel.Id))
+                            {
+                                Title = "Edit",
+                                Width = "200",
+                                ClassName =  InovatiqaColumnClassDefaults.Button,
+                                Render = new RenderButtonsInlineEdit()
+                            },
+                            new ColumnProperty(nameof(RelatedProductModel.Id))
+                            {
+                                Title = "Delete",
+                                Width = "100",
+                                Render = new RenderButtonRemove("Delete"),
+                                ClassName = InovatiqaColumnClassDefaults.Button
+                            }
+                        }
+                })
+            </div>
+            <div class="panel-footer">
+                <button type="submit" id="btnAddNewRelatedProduct" class="btn btn-primary" onclick="javascript:OpenWindow('@(Url.Action("RelatedProductAddPopup", "Product", new {productId = Model.Id, btnId = "btnRefreshRelatedProducts", formId = "product-form"}))', 800, 800, true); return false;">
+                    Add new related product
+                </button>
+                <input type="submit" id="btnRefreshRelatedProducts" style="display: none" />
+                <script>
+                    $(document).ready(function () {
+                        $('#btnRefreshRelatedProducts').click(function () {
+                            //refresh grid
+                            updateTable('#relatedproducts-grid');
+
+                            //return false to don't reload a page
+                            return false;
+                        });
+                    });
+                </script>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="panel panel-default">
+            <div class="panel-body">
+                You need to save the product before you can add related products for this product page.
+            </div>
+        </div>
+    }
+</div>

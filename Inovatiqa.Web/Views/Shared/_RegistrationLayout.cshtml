@@ -1,0 +1,131 @@
+﻿@{
+    Layout = "_Root.Head";
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+
+    <div class="master-wrapper-page container">
+        <div style="margin-bottom:2%">
+            <div class="col-sm-10 col-md-10" style="margin-bottom:20px">
+                <div class="header-logo">
+                    <a href="@Url.RouteUrl("Homepage")">
+                        <img style=" width: 180px;height: 80px;margin-top: 15px;" title="" alt="inovatiqa" src="\Themes\CoreTheme\Content\images\logo.png">
+                    </a>
+                </div>
+            </div>
+            <div class="col-sm-2 col-md-2" style="margin-bottom:20px">
+                <a href="@Url.RouteUrl("Homepage")">
+                    <h3 style="padding-top: 24.5px; padding-bottom: 24.5px; text-align:right;text-decoration:none ">Need Help?</h3>
+                </a>
+            </div>
+        </div>
+
+        <div>
+            @RenderBody()
+        </div>
+        @Html.Resource(@<script type="text/javascript">
+            $(document).ready(function () {
+                //$('#eu-cookie-bar-notification').show();
+                @*$('#eu-cookie-ok').on('click', function () {
+                    $.ajax({
+                        cache: false,
+                        type: "POST",
+                        url: "@Url.RouteUrl("EuCookieLawAccept")",
+                        dataType: "json",
+                        success: function (data, textStatus, jqXHR) {
+                            $('#eu-cookie-bar-notification').hide();
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            alert('Cannot store value');
+                        }
+                    });
+                });*@
+            });
+        </script>, "js")
+        @*<div id="eu-cookie-bar-notification" class="eu-cookie-bar-notification">
+            <div class="content">
+                <div class="text">Cookies help us deliver our services. By using our services, you agree to our use of cookies.</div>
+                <div class="buttons-more">
+                    <input type="button" class="ok-button button-1 btn btn-primary" id="eu-cookie-ok" value="OK" />
+                </div>
+            </div>
+        </div>*@
+        <div class="footer">
+            <div class="footer-top">
+                <div class="footer-zone row">
+                    <div class="column information col-sm-3 col-md-3">
+                        <h3>Information</h3>
+                        <ul class="nav nav-list">
+                            <li><a href="@Url.RouteUrl("ContactUs")">Contact Us</a></li>
+                        </ul>
+                    </div>
+                    <div class="column customer-service col-sm-3 col-md-3">
+                        <h3>Customer Services</h3>
+                        <ul class="nav nav-list">
+                            <li style="float:none"><a href="@Url.RouteUrl("ProductSearch")">Search</a> </li>
+                            <li><a href="@Url.RouteUrl("NewsArchive")">News</a></li>
+                            <li><a href="@Url.RouteUrl("RecentlyViewedProducts")">Recently viewed products</a></li>
+                            <li><a href="@Url.RouteUrl("CompareProducts")">Compare products list</a></li>
+                            <li><a href="@Url.RouteUrl("NewProducts")">New Products</a></li>
+                            <li><a href="@Url.RouteUrl("AboutUs")">About Us</a></li>
+                        </ul>
+                    </div>
+                    <div class="column my-account col-sm-3 col-md-3">
+                        <h3>My account</h3>
+                        <ul class="nav nav-list">
+                            <li><a href="@Url.RouteUrl("CustomerInfo")">Account</a></li>
+                            <li><a href="@Url.RouteUrl("CustomerOrders")">Orders</a></li>
+                            <li><a href="@Url.RouteUrl("CustomerAddresses")">Addresses</a></li>
+                            <li><a href="@Url.RouteUrl("ShoppingCart")">Shopping cart</a></li>
+                            <li><a href="@Url.RouteUrl("Wishlist")">Wishlist</a></li>
+                            <li><a href="@Url.RouteUrl("ApplyVendorAccount")">Apply for vendor account</a></li>
+                        </ul>
+                    </div>
+                    <div class="column follow-us col-sm-3 col-md-3">
+                        <h3>Follow Us</h3>
+                        <ul class="nav nav-list social-icons">
+                            <li class="facebook"><i class="fa fa-facebook pointer"></i><a href="#" target="_blank">Facebook</a></li>
+                            <li class="twitter"><i class="fa fa-twitter pointer"></i><a href="#" target="_blank">Twitter</a></li>
+                            <li class="youtube"><i class="fa  fa-youtube pointer"></i><a href="#" target="_blank">Youtube</a></li>
+                        </ul>
+                        <div class="newsletter">
+                            @await Component.InvokeAsync("NewsletterBox")
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6 col-md-6">
+                        <div class="footer-information">
+
+                        </div>
+                        <div class="poweredby">
+
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-6">
+                        <div class="designedby pull-right">
+                            <div class="footer-theme-credit"></div>
+                            <div class="footer-designedby"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 footer-store-theme">
+                        <div class="footer-disclaimer">
+                            Copyright © 2020 Inovatiqa. All rights reserved.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,83 @@
+﻿@{
+    Layout = "_ColumnsOne";
+    ViewBag.Title = "International Shipping";
+}
+<style>
+    .become-customer-box{
+        box-shadow : none !important;
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+    .newcustomer-area{
+        padding: 0px !important;
+        background: #FFF !important;
+    }
+    h1, h2, h3, h4, h5, h6{
+        font-weight: 500 !important;
+    }
+    .segment-line{
+        border: 0.1px solid #DADADA !important;
+    }
+    .small-heading {
+        font-family: Lato;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 18px;
+        line-height: 22px;
+        /* identical to box height */
+
+
+        color: #000000;
+    }
+    .fancy-heading, .heading-price-match {
+        font-size: 21px !important;
+    }
+    .price-match-helper-text {
+        font-size: 17px !important;
+    }
+</style>
+<section class="container-fluid newcustomer-area">
+    <div class="container-fluid" style="background: #F1F3F6; padding: 10px;">
+        <div class="container">
+            <span class="muted"><a style="color: #A9A9A9;" href="@Url.RouteUrl("Homepage")">Inovatiqa</a> / </span> International Shipping
+        </div>
+    </div>
+    <div class="row">
+        <div class="container">
+            <div class="row mt10">
+                <div class="col-md-12">
+                    <div class="become-customer-box">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="font_lato">
+                                    <div class="customer-select">
+                                        <img src="~/images/UIComponents/international_shipping.png" style="width: 103%;">
+                                        <div>
+                                            <h4 class="fancy-heading">International Shipping</h4>
+                                        </div>
+                                        <h4 class="heading-price-match">International Orders</h4>
+                                        <hr class="segment-line">
+                                        <p class="price-match-helper-text mt25">International orders require prepayment by wire transfer so we need some information from you.</p>
+                                        <p class="price-match-helper-text mt25">Please email us at <a href="mailto:customerservice@inovatiqa.com" class="blue">customerservice@inovatiqa.com</a>, including the following information and we will provide you with a complete quote:</p>
+                                        <ul class="unmuted-list">
+                                            <li class="price-match-helper-text mt25">Contact Name, Phone Number, and Email address</li>
+                                            <li class="price-match-helper-text mt16">Item number and Quantity</li>
+                                            <li class="price-match-helper-text mt16">What Freight Company do you plan to use, if any...</li>
+                                            <li class="price-match-helper-text mt16">
+                                                Final Address Location
+                                            </li>
+                                        </ul>
+                                        <p class="mt25 price-match-helper-text">International orders cannot be cancelled or returned once the wire transfer has been received.</p>
+                                        <p class="mt25 price-match-helper-text">Inovatiqa will email a quote back to you within 2 business days. Once you have reviewed and accepted this quote, you can email your order back to us.</p>
+                                        <h4 class="small-heading mt25">International orders cannot be returned.</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid" style="background: #F1F3F6; padding: 25px;"></div> 
+</section>

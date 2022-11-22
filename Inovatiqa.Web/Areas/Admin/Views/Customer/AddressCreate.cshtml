@@ -1,0 +1,24 @@
+@model CustomerAddressModel
+
+@{
+    //page title
+    ViewBag.PageTitle = "Add a new address";
+}
+
+<form asp-controller="Customer" asp-action="AddressCreate" method="post">
+    <div class="content-header clearfix">
+        <h1 class="pull-left">
+            Add a new address
+            <small>
+                <i class="fa fa-arrow-circle-left"></i>
+                <a asp-action="Edit" asp-route-id="@Model.CustomerId">back to customer details</a>
+            </small>
+        </h1>
+        <div class="pull-right">
+            <button type="submit" class="btn bg-blue">
+                Save
+            </button>
+        </div>
+    </div>
+    @await Html.PartialAsync("_CreateOrUpdateAddress", Model)
+</form>

@@ -1,0 +1,235 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Validators\**" />
+    <Content Remove="Validators\**" />
+    <EmbeddedResource Remove="Validators\**" />
+    <None Remove="Validators\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="App_Data\Pdf\Roboto.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="App_Data\Pdf\Roboto.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Inovatiqa.Core\Inovatiqa.Core.csproj" />
+    <ProjectReference Include="..\Inovatiqa.Database\Inovatiqa.Database.csproj" />
+    <ProjectReference Include="..\Inovatiqa.Services\Inovatiqa.Services.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Areas\Admin\Views\ActivityLog\ActivityLogs.cshtml" />
+    <None Include="Areas\Admin\Views\ActivityLog\ActivityTypes.cshtml" />
+    <None Include="Areas\Admin\Views\CustomerRole\AssociateProductToCustomerRolePopup.cshtml" />
+    <None Include="Areas\Admin\Views\CustomerRole\Create.cshtml" />
+    <None Include="Areas\Admin\Views\CustomerRole\Edit.cshtml" />
+    <None Include="Areas\Admin\Views\CustomerRole\List.cshtml" />
+    <None Include="Areas\Admin\Views\CustomerRole\_CreateOrUpdate.cshtml" />
+    <None Include="Areas\Admin\Views\Customer\AddressCreate.cshtml" />
+    <None Include="Areas\Admin\Views\Customer\AddressEdit.cshtml" />
+    <None Include="Areas\Admin\Views\Customer\Create.cshtml" />
+    <None Include="Areas\Admin\Views\Customer\Edit.cshtml" />
+    <None Include="Areas\Admin\Views\Customer\GdprLog.cshtml" />
+    <None Include="Areas\Admin\Views\Customer\List.cshtml" />
+    <None Include="Areas\Admin\Views\Customer\_CreateOrUpdate.ActivityLog.cshtml" />
+    <None Include="Areas\Admin\Views\Customer\_CreateOrUpdate.Addresses.cshtml" />
+    <None Include="Areas\Admin\Views\Customer\_CreateOrUpdate.BackInStockSubscriptions.cshtml" />
+    <None Include="Areas\Admin\Views\Customer\_CreateOrUpdate.cshtml" />
+    <None Include="Areas\Admin\Views\Customer\_CreateOrUpdate.CurrentShoppingCart.cshtml" />
+    <None Include="Areas\Admin\Views\Customer\_CreateOrUpdate.Impersonate.cshtml" />
+    <None Include="Areas\Admin\Views\Customer\_CreateOrUpdate.Info.cshtml" />
+    <None Include="Areas\Admin\Views\Customer\_CreateOrUpdate.Orders.cshtml" />
+    <None Include="Areas\Admin\Views\Customer\_CreateOrUpdate.RewardPoints.cshtml" />
+    <None Include="Areas\Admin\Views\Customer\_CreateOrUpdateAddress.cshtml" />
+    <None Include="Areas\Admin\Views\Customer\_CustomerAttributes.cshtml" />
+    <None Include="Areas\Admin\Views\Manufacturer\Create.cshtml" />
+    <None Include="Areas\Admin\Views\Manufacturer\Edit.cshtml" />
+    <None Include="Areas\Admin\Views\Manufacturer\List.cshtml" />
+    <None Include="Areas\Admin\Views\Manufacturer\ProductAddPopup.cshtml" />
+    <None Include="Areas\Admin\Views\Manufacturer\_CreateOrUpdate.cshtml" />
+    <None Include="Areas\Admin\Views\Manufacturer\_CreateOrUpdate.Display.cshtml" />
+    <None Include="Areas\Admin\Views\Manufacturer\_CreateOrUpdate.Info.cshtml" />
+    <None Include="Areas\Admin\Views\Manufacturer\_CreateOrUpdate.Mappings.cshtml" />
+    <None Include="Areas\Admin\Views\Manufacturer\_CreateOrUpdate.Products.cshtml" />
+    <None Include="Areas\Admin\Views\Manufacturer\_CreateOrUpdate.Seo.cshtml" />
+    <None Include="Areas\Admin\Views\OnlineCustomer\List.cshtml" />
+    <None Include="Areas\Admin\Views\Report\BestCustomersByNumberOfOrders.cshtml" />
+    <None Include="Areas\Admin\Views\Report\BestCustomersByOrderTotal.cshtml" />
+    <None Include="Areas\Admin\Views\Report\Bestsellers.cshtml" />
+    <None Include="Areas\Admin\Views\Report\CountrySales.cshtml" />
+    <None Include="Areas\Admin\Views\Report\LowStock.cshtml" />
+    <None Include="Areas\Admin\Views\Report\NeverSold.cshtml" />
+    <None Include="Areas\Admin\Views\Report\RegisteredCustomers.cshtml" />
+    <None Include="Areas\Admin\Views\Shared\Components\CommonStatistics\Default.cshtml" />
+    <None Include="Areas\Admin\Views\Shared\Components\SettingMode\Default.cshtml" />
+    <None Include="Areas\Admin\Views\Shared\EditorTemplates\MultiSelect.cshtml" />
+    <None Include="Areas\Admin\Views\ShoppingCart\CurrentCarts.cshtml" />
+    <None Include="Areas\Admin\Views\Vendor\Create.cshtml" />
+    <None Include="Areas\Admin\Views\Vendor\Edit.cshtml" />
+    <None Include="Areas\Admin\Views\Vendor\List.cshtml" />
+    <None Include="Areas\Admin\Views\Vendor\_CreateOrUpdate.cshtml" />
+    <None Include="Areas\Admin\Views\Vendor\_CreateOrUpdate.Display.cshtml" />
+    <None Include="Areas\Admin\Views\Vendor\_CreateOrUpdate.Info.cshtml" />
+    <None Include="Areas\Admin\Views\Vendor\_CreateOrUpdate.Notes.cshtml" />
+    <None Include="Areas\Admin\Views\Vendor\_CreateOrUpdate.Seo.cshtml" />
+    <None Include="Areas\Admin\Views\Vendor\_VendorAttributes.cshtml" />
+    <None Include="Views\Payment\MakePayment.cshtml" />
+    <None Include="Views\Payment\OpenInvoices.cshtml" />
+    <None Include="Views\Payment\PaidInvoices.cshtml" />
+    <None Include="Views\Payment\PaymentPortal.cshtml" />
+    <None Include="Views\Payment\UnappliedCash.cshtml" />
+    <None Include="wwwroot\icons\icons_0\safari-pinned-tab.svg" />
+    <None Include="wwwroot\icons\icons_0\site.webmanifest" />
+    <None Include="wwwroot\icons\samples\favicon_package.zip" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\css\bootstrap-theme.min.css" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\css\bootstrap-theme.min.rtl.css" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\css\bootstrap.min.css" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\css\bootstrap.min.rtl.css" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\css\font-awesome.min.css" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\css\jquery-ui-1.10.3.custom.min.css" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\css\print.css" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\css\theme-styles-responsive-rtl.css" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\css\theme-styles-responsive.css" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\css\theme-styles-rtl.css" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\css\theme-styles.css" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\fonts\fontawesome-webfont.eot" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\fonts\fontawesome-webfont.svg" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\fonts\fontawesome-webfont.ttf" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\fonts\fontawesome-webfont.woff" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\fonts\fontawesome-webfont.woff2" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\fonts\FontAwesome.otf" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\fonts\glyphicons-halflings-regular.eot" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\fonts\glyphicons-halflings-regular.svg" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\fonts\glyphicons-halflings-regular.ttf" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\fonts\glyphicons-halflings-regular.woff" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\fonts\glyphicons-halflings-regular.woff2" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\images\ajax_loader_large.gif" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\images\ajax-loader-small.gif" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\images\animated-overlay.gif" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\images\arrow-dropdown.png" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\images\arrow-up.png" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\images\bbeditor-button-bg.gif" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\images\closelabel.gif" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\images\compare-button.png" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\images\compare-icon.png" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\images\discontinued-product-icon.png" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\images\down-arrow.png" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\images\email-button.png" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\images\forum-footer-bg.gif" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\images\ico-close-notification-bar.png" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\images\ico-delete.gif" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\images\ie_warning.jpg" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\images\loading.gif" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\images\logo.gif" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\images\logo.png" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\images\nextlabel.gif" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\images\prevlabel.gif" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\images\search.png" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\images\star-x-active.png" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\images\star-x-inactive.png" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\images\toggle-down-arrow.png" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\images\toggle-up-arrow.png" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\images\ui-bg_glass_75_dadada_1x400.png" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\images\ui-icons_222222_256x240.png" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\images\ui-icons_2e83ff_256x240.png" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\images\ui-icons_454545_256x240.png" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\images\ui-icons_888888_256x240.png" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\images\ui-icons_cd0a0a_256x240.png" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\images\vote-down-selected.png" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\images\vote-down.png" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\images\vote-up-selected.png" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\images\vote-up.png" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\images\wishlist-icon.png" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\images\wishlist-white-icon.png" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\img\glyphicons-halflings-white.png" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\img\glyphicons-halflings.png" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\js\bootstrap.min.js" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\js\bootstrap.min.rtl.js" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\js\custom.js" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\js\head.min.js" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\js\respond.min.js" />
+    <None Include="wwwroot\Themes\CoreTheme\Content\js\selectivizr-min.js" />
+    <None Include="wwwroot\Themes\DefaultClean\Content\css\print.css" />
+    <None Include="wwwroot\Themes\DefaultClean\Content\css\styles.css" />
+    <None Include="wwwroot\Themes\DefaultClean\Content\css\styles.rtl.css" />
+    <None Include="wwwroot\Themes\DefaultClean\Content\images\ajax-loader-small.gif" />
+    <None Include="wwwroot\Themes\DefaultClean\Content\images\back-button.png" />
+    <None Include="wwwroot\Themes\DefaultClean\Content\images\calendar-next.png" />
+    <None Include="wwwroot\Themes\DefaultClean\Content\images\calendar-prev.png" />
+    <None Include="wwwroot\Themes\DefaultClean\Content\images\close.png" />
+    <None Include="wwwroot\Themes\DefaultClean\Content\images\compare-button.png" />
+    <None Include="wwwroot\Themes\DefaultClean\Content\images\details.png" />
+    <None Include="wwwroot\Themes\DefaultClean\Content\images\discontinued-product-icon.png" />
+    <None Include="wwwroot\Themes\DefaultClean\Content\images\download-button.png" />
+    <None Include="wwwroot\Themes\DefaultClean\Content\images\edit.png" />
+    <None Include="wwwroot\Themes\DefaultClean\Content\images\edit_.png" />
+    <None Include="wwwroot\Themes\DefaultClean\Content\images\email-button.png" />
+    <None Include="wwwroot\Themes\DefaultClean\Content\images\first.png" />
+    <None Include="wwwroot\Themes\DefaultClean\Content\images\ie_warning.jpg" />
+    <None Include="wwwroot\Themes\DefaultClean\Content\images\last.png" />
+    <None Include="wwwroot\Themes\DefaultClean\Content\images\loading.gif" />
+    <None Include="wwwroot\Themes\DefaultClean\Content\images\logo.png" />
+    <None Include="wwwroot\Themes\DefaultClean\Content\images\menu-icon.png" />
+    <None Include="wwwroot\Themes\DefaultClean\Content\images\move.png" />
+    <None Include="wwwroot\Themes\DefaultClean\Content\images\new.png" />
+    <None Include="wwwroot\Themes\DefaultClean\Content\images\next.png" />
+    <None Include="wwwroot\Themes\DefaultClean\Content\images\pointer.png" />
+    <None Include="wwwroot\Themes\DefaultClean\Content\images\prev.png" />
+    <None Include="wwwroot\Themes\DefaultClean\Content\images\rating1.png" />
+    <None Include="wwwroot\Themes\DefaultClean\Content\images\rating2.png" />
+    <None Include="wwwroot\Themes\DefaultClean\Content\images\remove.png" />
+    <None Include="wwwroot\Themes\DefaultClean\Content\images\remove_.png" />
+    <None Include="wwwroot\Themes\DefaultClean\Content\images\reply.png" />
+    <None Include="wwwroot\Themes\DefaultClean\Content\images\retry.png" />
+    <None Include="wwwroot\Themes\DefaultClean\Content\images\return.png" />
+    <None Include="wwwroot\Themes\DefaultClean\Content\images\rss.png" />
+    <None Include="wwwroot\Themes\DefaultClean\Content\images\shipping.png" />
+    <None Include="wwwroot\Themes\DefaultClean\Content\images\shopping-bag.png" />
+    <None Include="wwwroot\Themes\DefaultClean\Content\images\social-sprite.png" />
+    <None Include="wwwroot\Themes\DefaultClean\Content\images\subscribe-button.png" />
+    <None Include="wwwroot\Themes\DefaultClean\Content\images\toggle-black.png" />
+    <None Include="wwwroot\Themes\DefaultClean\Content\images\toggle-gray.png" />
+    <None Include="wwwroot\Themes\DefaultClean\Content\images\toggle-white.png" />
+    <None Include="wwwroot\Themes\DefaultClean\Content\images\topic-type1.png" />
+    <None Include="wwwroot\Themes\DefaultClean\Content\images\topic-type2.png" />
+    <None Include="wwwroot\Themes\DefaultClean\Content\images\topic-type3.png" />
+    <None Include="wwwroot\Themes\DefaultClean\Content\images\view-grid.png" />
+    <None Include="wwwroot\Themes\DefaultClean\Content\images\view-list.png" />
+    <None Include="wwwroot\Themes\DefaultClean\Content\images\vote-down-selected.png" />
+    <None Include="wwwroot\Themes\DefaultClean\Content\images\vote-down.png" />
+    <None Include="wwwroot\Themes\DefaultClean\Content\images\vote-up-selected.png" />
+    <None Include="wwwroot\Themes\DefaultClean\Content\images\vote-up.png" />
+    <None Include="wwwroot\Themes\DefaultClean\Content\images\watch.png" />
+    <None Include="wwwroot\Themes\DefaultClean\Content\images\wishlist-button.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\images\thumbs\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.16.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.12" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
+    <PackageReference Include="NEST" Version="7.13.2" />
+    <PackageReference Include="Square" Version="12.0.0" />
+  </ItemGroup>
+
+</Project>

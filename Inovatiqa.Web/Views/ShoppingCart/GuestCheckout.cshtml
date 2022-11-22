@@ -1,0 +1,244 @@
+﻿@model ShoppingCartModel
+@{
+    Layout = "_ColumnsOne";
+}
+@{
+    ViewBag.Title = "Guest Shopping Cart";
+}
+<style>
+    .heading {
+        font-family: Lato;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 20px;
+        line-height: 24px;
+        /* identical to box height */
+
+
+        color: #000000;
+    }
+
+    label {
+        font-family: Lato;
+        font-style: normal !important;
+        font-weight: normal !important;
+        font-size: 14.5px !important;
+        line-height: 17px !important;
+        color: #000000 !important;
+    }
+
+    .label-small {
+        font-family: Open Sans;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 12px;
+        line-height: 16px;
+        /* C1/C */
+
+        color: #A9A9A9;
+    }
+
+    .L2Heading {
+        font-family: Lato;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 18px;
+        line-height: 22px;
+        color: #000000;
+    }
+
+    .text {
+        font-family: Lato;
+        font-style: normal;
+        font-weight: normal !important;
+        font-size: 16px !important;
+        line-height: 19px !important;
+        color: #636363;
+    }
+
+    .li {
+        margin-top: 20px;
+    }
+
+    .grey {
+        color: #636363;
+        margin-right: 4px;
+    }
+
+    .green {
+        color: #6A983C !important;
+    }
+
+    .line:before {
+        /* content: "";
+        position: absolute;
+        right: 10px;
+        top: 80px;
+        bottom: 0px;
+        width: 1px;
+        border-right: 1px solid #C4C4C4; */
+    }
+
+    .row {
+        /*display: flex;
+        justify-content: space-between;*/
+    }
+
+    .newcustomer-area .inovatiqaway-area .account-detail ul li:before {
+        background: unset !important;
+    }
+    .newcustomer-area{
+        padding: 40px !important;
+    }
+    .normal {
+        font-family: Lato;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 20px;
+        line-height: 24px;
+        color: #000000;
+    }
+    .muted {
+        color: #A9A9A9 !important;
+    }
+    .muted:hover{
+        font-size:12px;
+        line-height:16px;
+    }
+    .small {
+        font-family: Lato;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 13.5px;
+        line-height: 16px;
+        color: #46760A;
+    }
+    .small-heading {
+        font-family: Lato !important;
+        font-style: normal !important;
+        font-weight: 600 !important;
+        font-size: 14px !important;
+        line-height: 17px !important;
+        color: #151515 !important;
+    }
+    .small-info {
+        font-family: Poppins !important;
+        font-style: normal !important;
+        font-weight: 600 !important;
+        font-size: 13.5px !important;
+        line-height: 20px !important;
+        text-align: right !important;
+        /* C1/A */
+
+        color: #151515;
+    }
+    .col-md-7:before {
+        content: "";
+        position: absolute;
+        right: 80px;
+        top: 55px;
+        bottom: -40px;
+        width: 0.5px;
+        border: 0.5px solid #DADADA;
+    }
+    .green-heading {
+        font-family: Poppins !important;
+        font-style: normal !important;
+        font-weight: 600 !important;
+        font-size: 19px !important;
+        line-height: 28px !important;
+        /* identical to box height */
+
+        text-align: right !important;
+        /* C2/A */
+
+        color: #6A983C !important;
+    }
+</style>
+<section class="container-fluid newcustomer-area">
+    <div class="row">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="become-customer-box" style="padding-bottom: 75px;">
+                        <div style="display: flex; justify-content: space-around;">
+                            <h4 class="heading-price-match mt0">Customer Checking </h4>
+                            <h4 class="heading-price-match mt0">Order Summary</h4>
+                        </div>
+                        <hr class="segment-line mb0" />
+                        <div class="row">
+                            <div class="col-md-7">
+                                <div class="yourself-area font_lato">
+                                    <div class="customer-select">
+                                        @*<h5 class="heading mt25">Continue as Guest</h5>*@
+                                        <div class="accountform-area font_lato mt53" style="display: block;">
+                                            <div class="row flex_col align_center">
+                                                <div class="col-md-8 col-sm-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        @*<label>Email Address</label>
+                                                        <div style="display: flex; width: 193%;">
+                                                            <input type="email" class="form-control input" name="CustomerFirstName" data-val-required="Email is required." data-val="true" autocomplete="off" data-val-required="This field is required." id="CustomerFirstName" style="background: #F1F3F6; margin-bottom: 20px;" />
+                                                            <input type="button" onclick="guestCheckoutPayment()" name="name" value="Continue to Payment" style="background: #636363; border-radius: 1px; color: #FFF; font-family: Roboto; font-size: 12px; max-width: 25%; margin-left: 7%;" />
+                                                        </div>
+                                                        <span class="error-label mt0" id="guestCheckoutEmail" hidden>Email is invalid.<br /></span>*@
+                                                        <a href="@Url.RouteUrl("Register")" class="small mt20">Click Here to Create an Account</a>
+                                                        <label class="small mt35">Already have an account?</label>
+                                                        <div class="form-group">
+                                                            <a href="@Url.RouteUrl("CheckoutOnePage")" class="btn btn-signin form-control mt33" style="border: none; max-width: 25%; height: 30px; " >Sign In</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <h5 class="heading mt25">Order Summary</h5>
+                                <p class="label-small muted">Price can change depending on shipping method and taxes of your state.</p>
+                                <div class="custom-summary">
+                                    <div class="sub_total_box">
+                                        <div class="sub_list">
+                                            <p class="small-heading">Subtotal</p>
+                                            <p class="small-info">$@(Model.Items.Sum(item => Convert.ToDecimal(item.SubTotal.Replace("$", ""))))</p>
+                                        </div>
+                                        <div class="sub_list">
+                                            <p class="small-heading">Tax</p>
+                                            <p class="small-info">0 USD</p>
+                                        </div>
+                                        <div class="sub_list">
+                                            <p class="small-heading">Shipping</p>
+                                            <p class="small-info"> <span id="TotalShippingFee">0</span> USD</p>
+                                        </div>
+                                        <hr class="segment-line mb0">
+                                    </div>
+                                    <div class="final_amount mt0">
+                                        <div>
+                                            <p class="small-heading">Total Order</p>
+                                        </div>
+                                        <div>
+                                            <h2 class="green-heading"><span id="SubTotal">$@(Model.Items.Sum(item => Convert.ToDecimal(item.SubTotal.Replace("$", ""))))</span> USD</h2>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    function guestCheckoutPayment() {
+        var email = document.getElementById("CustomerFirstName").value;
+        if (/^\w+([\.-]?\w+)*\u0040\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+            window.location.href = "/onepagecheckout";
+        }
+        else {
+            $("#guestCheckoutEmail").show();
+        }
+
+    }
+</script>

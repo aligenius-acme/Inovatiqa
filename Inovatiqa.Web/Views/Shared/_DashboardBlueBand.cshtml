@@ -1,0 +1,81 @@
+﻿<section class="container-fluid details_top_bar">
+    <div class="row">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="top_bar_account font_lato">
+                        <ul>
+                            <li><a href="#">Account #
+                                <span id="acct_id"></span>
+                                </a>
+                            </li>
+                            <li><a href="#" id="flip"></a></li>
+                        </ul>
+                        <div id="panel">
+                            <div class="addres_box">
+                                <div class="adress">
+                                    <h2>Billing Account</h2>
+                                    <h3 id="BillingAccountNo"></h3>
+                                    <h4 id="billingCompanyName"></h4>
+                                    <p id="BillingStreetAddress"></p>
+                                    <p><span id="BillingAddressCity"></span>, <span id="BillingAddressState"> </span><span id="BillingAddressZip"></span></p>
+                                </div>
+                                <div class="adress_btn">
+                                    <a href="@Url.RouteUrl("SwitchDefaultAddress", new { type = 1 })" class="btn primary edit font_roboto">Switch</a>
+                                </div>
+                            </div>
+                            <hr class="line">
+                            <div class="addres_box">
+                                <div class="adress">
+                                    <h2>Current Shipping Address</h2>
+                                    <h3 id="ShippingAccountNo"></h3>
+                                    <h4 id="ShippingCompanyName"></h4>
+                                    <p id="ShippingStreetAddress"></p>
+                                    <p><span id="ShippingCity"></span>, <span id="ShippingState"></span> <span id="ShippingZip"></span></p>
+                                </div>
+                                <div class="adress_btn">
+                                    <a href="@Url.RouteUrl("SwitchDefaultAddress", new { type = 2 })" class="btn primary edit font_roboto">Switch</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    $(document).ready(() => {
+        SomeData();
+    });
+    function SomeData() {
+        $.ajax({
+            cache: true,
+            type: "GET",
+            url: "/customer/BlueBandData",
+            data: {},
+            success: function (data) {
+                $('#acct_id').html(data.customerId);
+                $('#flip').html(data.billingAddress.company);
+                $('#BillingAccountNo').html('# ' + data.billingAddress.id);
+                $('#billingCompanyName').html(data.billingAddress.company);
+                $('#BillingStreetAddress').html(data.billingAddress.address);
+                $('#BillingAddressCity').html(data.billingAddress.city);
+                $('#BillingAddressState').html(data.billingAddress.state);
+                $('#BillingAddressZip').html(data.billingAddress.zip);
+
+                $('#ShippingAccountNo').html('# ' + data.shippingAddress.id);
+                $('#ShippingCompanyName').html(data.shippingAddress.company);
+                $('#ShippingStreetAddress').html(data.shippingAddress.address);
+                $('#ShippingCity').html(data.shippingAddress.city);
+                $('#ShippingState').html(data.shippingAddress.state);
+                $('#ShippingZip').html(data.shippingAddress.zip);
+
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }
+</script>

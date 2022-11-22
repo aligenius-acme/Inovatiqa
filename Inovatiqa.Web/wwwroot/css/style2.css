@@ -1,0 +1,2846 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Teko:wght@300;400;500;600;700&display=swap');
+
+/*Signin Page CSS Start*/
+.font_teko {
+    font-family: 'Teko', sans-serif;
+}
+
+.new-info-heading {
+	font-family: Lato;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 21px;
+	line-height: 140%;
+	color: #000000;
+}
+.mt18{
+	margin-top: 18px;
+}
+.green {
+	color: #46760A !important;
+}
+.breadcrumb-bar {
+	font-family: Open Sans;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 13.7143px;
+	line-height: 19px;
+}
+.washed {
+	color: #A9A9A9 !important;
+}
+.red {
+	font-family: Open Sans;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 14.5px;
+	line-height: 20px;
+	color: #D50029;
+}
+	.red:hover {
+		color: #D50029;
+	}
+.green-fill {
+	background: #F0FFE0 !important;
+}
+.grey-fill {
+	background: #718096 !important;
+	color: #FFF;
+}
+.blue:hover, .blue:focus {
+	color: #0068A3;
+}
+.signin-page-area{
+	background: #F1F3F6;
+	padding: 49px;
+}
+.Distribution-text {
+	font-family: Lato;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 17px;
+	line-height: 140%;
+	/* or 24px */
+
+
+	color: #454646;
+}
+.signin-page-area .return-customer{
+	max-width: 500px;
+	width: 100%;
+}
+.error-label {
+	font-family: Lato;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 11px;
+	line-height: 13px;
+	color: #D50029;
+}
+.GPO-invalid-field {
+	background: #FFFFFF;
+	border: 1px solid #D50029;
+	box-sizing: border-box;
+	border-radius: 1px;
+	resize: none;
+}
+.GPO-invalid-field:focus {
+		background: #FFFFFF;
+		border: 1px solid #D50029;
+		box-sizing: border-box;
+		border-radius: 1px;
+		box-shadow: none;
+}
+.govt-contracts-text {
+	font-family: Lato;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 17px;
+	line-height: 140%;
+	/* or 24px */
+
+
+	color: #454646;
+}
+.signin-page-area .signin-title h4{
+	font-size: 22px;
+   line-height: 26px;
+   color: #000000;
+   font-weight: 400;
+   margin-top: 0px;
+   margin-bottom: 0px;
+}
+.signin-page-area .signin-title hr{
+	border-top: 0.5px solid #DADADA;
+	margin-bottom: 36px;
+}
+
+.signin-page-area .signin-page-rowarea{
+	padding: 19px 31px 36px 31px;
+	background: #fff;
+	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.flex-row{
+	display: flex;
+	flex-direction: row;
+}
+
+.signin-page-area .form-signin .form-group label{
+	font-size: 14.5px;
+	line-height: 17px;
+	color: #000000;
+	font-weight: 400;
+	margin-bottom: 13px;
+}
+
+.signin-page-area .form-signin .form-group input{
+	height: 35px;
+	background: #F1F3F6;
+	border: 1px solid #D1D1D1;
+	box-sizing: border-box;
+	border-radius: 1px;
+	box-shadow: none;
+	margin-bottom: 29px;
+	max-width: 400px;
+	width: 100%;
+
+}
+.signin-page-area .form-signin .form-group input[type=password]{
+	margin-bottom: 21px;
+}
+
+.signin-page-area .form-signin{
+	border: 1px solid #DADADA;
+	padding: 30px 25px 13px 25px;
+}
+
+.signin-page-area .form-signin .checkbox a{
+	color:#1F72CD;
+	font-size: 12.5px;
+	line-height: 15px;
+	font-weight: 400;
+	margin-left: 13px;
+}
+
+.signin-page-area .form-signin .checkbox {
+	margin-bottom: 0px;
+	margin-top: 0px;
+}
+
+
+
+.signin-page-area .form-signin .checkbox label{
+	font-size: 12.5px;
+	color: #000000;
+	font-weight: 400;
+}
+
+.signin-page-area .form-signin .checkbox label input[type=checkbox] {
+    width: 15px;
+    height: 15px;
+    margin-top: 6px;
+    margin-right: 8px;
+    outline: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: url(../images/UIComponents/new-customer-check.png) center center / 100% 100% no-repeat;
+
+   
+}
+
+.signin-page-area .form-signin .checkbox label input[type=checkbox]:checked {
+    background: url(../images/UIComponents/new-cus-form-checked.svg) center center / 100% 100% no-repeat;
+     border: 1px solid #C4C4C4;
+}
+
+.btn-signin{
+	font-weight: 400;
+	font-size: 12px;
+	line-height: 14px;
+	color: #FFFFFF;
+	border-radius: 1px!important;
+	background: #0068A3!important;
+	padding: 8px 13.5px;
+}
+
+/*a.btn-1{
+	padding: 8px 13.5px;
+	background: #0068A3;
+	border-radius: 1px;
+	color: #fff;
+	font-size: 12px;
+	line-height: 14px;
+	font-weight: 400;
+}*/
+
+.signin-page-area .btn.active.focus, .btn.active:focus, .btn.focus, .btn:active.focus, .btn:active:focus, .btn:focus {
+    outline: none;
+    outline-offset: -2px;
+}
+
+.signin-page-area .btn.focus, .signin-page-area .btn:focus, .signin-page-area .btn:hover {
+    color: #fff;
+    text-decoration: none;
+}
+
+.signin-page-area .form-signin hr{
+	max-width: 350px;
+	width: 100%;
+	border-top: 0.5px solid #DADADA;
+	margin-top: 45px;
+	margin-bottom: 19px;
+}
+
+.signin-page-area .new-customer .new-customer-info{
+	padding: 30px 24px 43px 24px;
+	border: 1px solid #DADADA;
+}
+
+.signin-page-area .new-customer .new-customer-info p{
+	font-weight: 400;
+	font-size: 14.5px;
+	line-height: 17px;
+	color: #000000;
+	margin-bottom: 45px;
+}
+
+
+
+
+/*Signin Page CSS End*/
+
+
+/*Become New member Section CSS Start*/
+
+.newcustomer-area{
+	background: #F1F3F6;
+	padding: 35px;
+}
+
+.newcustomer-area .become-customer-box{
+	background: #FFFFFF;
+	padding: 42px 63px 114px 63px;
+	/*box-shadow: 0px 4px 4px rgb(0 0 0 / 25%);*/
+}
+
+.newcustomer-area .become-customer-box .yourself-area .customer-select h4{
+	font-size: 25px;
+	line-height: 30px;
+	color: #000000;
+	margin-top: 0px;
+	margin-bottom: 29px;
+	font-weight: 400;
+
+}
+
+.newcustomer-area .become-customer-box .yourself-area .customer-select .form-group label{
+	font-size: 12.5px;
+	line-height: 15px;
+	color: #000000;
+	font-weight: 400;
+	margin-bottom: 8px;
+}
+
+.newcustomer-area .become-customer-box .yourself-area .customer-select .form-group select{
+	height: auto;
+	border: 1px solid #D1D1D1;
+	box-sizing: border-box;
+	border-radius: 1px;
+	box-shadow: none;
+	/*max-width: 438px;
+	width: 100%;*/
+	padding: 9px 14px;
+	background: #fff url(../images/UIComponents/arrow_up_down.svg) center right 8px / auto no-repeat;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.newcustomer-area .become-customer-box .yourself-area .customer-select .form-group select option{
+	font-size: 14px;
+	line-height: 17px;
+	color: #636363;
+	font-weight: 400;
+	padding: 13px 14px!important;
+	height: auto;
+}
+
+
+.newcustomer-area .inovatiqa-detail .inovatiqa-offers h4{
+	font-size: 18.71px;
+	line-height: 22px;
+	color: #54B4D7;
+	margin-bottom: 7px;
+	margin-top: 0px;
+	font-weight: 700;
+}
+
+.newcustomer-area .inovatiqaway-area .inovatiqa-title h4{
+	font-weight: 500;
+	font-size: 43px;
+	line-height: 62px;
+	color: #000000;
+	margin-top: 0px;
+}
+
+.newcustomer-area .inovatiqa-detail .inovatiqa-offers p{
+	font-size: 12.71px;
+	line-height: 15px;
+	color: #000000;
+	font-weight: 400;
+	margin-bottom: 21px;
+}
+
+.newcustomer-area .inovatiqa-detail .inovatiqa-offers p span{
+	color: #6A983C;
+	margin-left: 5px;
+}
+
+.newcustomer-area .inovatiqa-detail .inovatiqa-img img{
+	float: right;
+}
+
+.newcustomer-area .inovatiqaway-area .account-detail h5{
+	margin-top: 30px;
+	font-size: 22px;
+	line-height: 26px;
+	color: #000000;
+	font-weight: 400;
+	margin-bottom: 19px;
+}
+
+.newcustomer-area .inovatiqaway-area .account-detail p{
+	font-size: 14px;
+	line-height: 17px;
+	color: #000000;
+	font-weight: 400;
+	max-width: 428px;
+	width: 100%;
+	margin-bottom: 27px;
+}
+
+.newcustomer-area .inovatiqaway-area .account-detail ul{
+	list-style-type: none;
+}
+
+.newcustomer-area .inovatiqaway-area .account-detail ul li{
+	font-size: 14px;
+	line-height: 17px;
+	color: #000000;
+	font-weight: 400;
+	margin-bottom: 12px;
+	position: relative;
+	padding-left: 33px;
+	display: flex;
+	align-items: center;
+}
+
+.newcustomer-area .inovatiqaway-area .account-detail ul li:before{
+	content: "";
+	background: url("~/../../images/UIComponents/new-customer-checked.png")no-repeat;
+	width: 16px;
+	height: 12.49px;
+	position: absolute;
+	left: 0;
+}
+
+.newcustomer-area .inovatiqaway-area .business-account h5{
+	margin-top: 49px;
+	margin-bottom: 32px;
+}
+
+.newcustomer-area .inovatiqaway-area .business-account a{
+	color: #0068A3;
+}
+
+.newcustomer-area .inovatiqaway-area .business-account ul li.pdf-img{
+	margin-top: 14px;
+}
+
+	.newcustomer-area .inovatiqaway-area .business-account ul li.pdf-img:before {
+		background: url("~/../../images/UIComponents/new-customer-pdf.png")no-repeat;
+		height: 20px;
+	}
+
+.newcustomer-area .yourself-area{
+	max-width: 438px;
+	width: 100%;
+}
+
+/*Form Section CSS Start*/
+
+.newcustomer-area .accountform-area .form-title h5{
+	font-size: 22px;
+	line-height: 26px;
+	color: #000000;
+	font-weight: 400;
+	margin-top: 49px;
+	margin-bottom: 58px;
+}
+
+.newcustomer-area .accountform-area .form-group input, .accountform-area .form-group select{
+	max-width: 302px;
+	width: 100%;
+}
+
+.newcustomer-area .accountform-area .form-group select{
+	height: auto;
+	border: 1px solid #D1D1D1;
+	box-sizing: border-box;
+	border-radius: 1px;
+	box-shadow: none;
+	/*max-width: 438px;
+	width: 100%;*/
+	padding: 9px 14px;
+	background: #fff url(../images/UIComponents/arrow_up_down.svg) center right 8px / auto no-repeat;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+
+.newcustomer-area .accountform-area .form-group label{
+	font-size: 14.5px;
+	line-height: 17px;
+	color: #000000;
+	font-weight: 400;
+}
+
+.newcustomer-area .accountform-area .form-group input{
+	background: #FFFFFF;
+	border: 1px solid #D1D1D1;
+	box-sizing: border-box;
+	border-radius: 1px;
+	box-shadow: none;
+	height: 35px;
+}
+
+.newcustomer-area .accountform-area .form-group{
+	margin-bottom: 34px;
+}
+
+.newcustomer-area .accountform-area .form-group label.required:after {
+    content:" *";
+    color: #D50029;
+    font-size: 12.5px;
+	line-height: 15px;
+	font-weight: 400;
+  }
+
+ .newcustomer-area .accountform-area .checkbox label{
+ 	
+ 	font-size: 14px;
+	line-height: 17px;
+	color: #000000;
+	font-weight: 400;
+	display: flex;
+	align-items: center;
+	padding: 0px;
+ }
+
+.newcustomer-area .accountform-area .checkbox label input[type=checkbox] {
+    width: 15px;
+    height: 15px;
+    min-width: 15px;
+    margin: 0px;
+    margin-right: 14px;
+    outline: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: url(../images/UIComponents/new-customer-check.png) center center / 100% 100% no-repeat;
+    position: relative;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+}
+
+.newcustomer-area .accountform-area .checkbox{
+	margin-bottom: 58px;
+
+}
+
+.newcustomer-area .accountform-area .checkbox label input[type=checkbox]:checked {
+    background: url(../images/UIComponents/new-cus-form-checked.svg) center center / 100% 100% no-repeat;
+    border: 1px solid #C4C4C4;
+}
+
+.newcustomer-area .change-pwd-area .form-title h5{
+	margin-top: 61px;
+	margin-bottom: 19px;
+}
+
+.newcustomer-area .change-pwd-area .form-deatil p{
+	font-size: 14px;
+	line-height: 17px;
+	color: #000000;
+	font-weight: 400;
+	margin-bottom: 50px;
+}
+
+
+.newcustomer-area .change-pwd-area .pwd-checkbox label{
+	  display: flex;
+	  align-items: center;
+	  margin-bottom: 34px;
+	  font-size: 14px;
+	line-height: 17px;
+	color: #000000;
+	font-weight: 400;
+	padding: 0px;
+}
+
+.newcustomer-area .change-pwd-area .pwd-checkbox label span{
+	font-weight: 600;
+}
+
+.newcustomer-area .become-customer-box .btn-continue .btn.btn-signin:hover{
+    color: #fff!important;
+}
+
+
+
+.newcustomer-area .change-pwd-area .pwd-checkbox label input[type=checkbox] {
+    width: 15px;
+    height: 15px;
+    margin: 0px;
+    margin-right: 14px;
+    outline: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: url(../images/UIComponents/new-customer-check.png) center center / 100% 100% no-repeat;
+    position: relative;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+}
+
+
+.newcustomer-area .change-pwd-area .pwd-checkbox label input[type=checkbox]:checked {
+    background: url(../images/UIComponents/new-cus-form-checked.svg) center center / 100% 100% no-repeat;
+    border: 1px solid #C4C4C4;
+}
+
+.newcustomer-area .change-pwd-area .notrobot-check p{
+	font-size: 12px;
+	line-height: 14px;
+	color: #000000;
+	font-weight: 400;
+}
+
+.newcustomer-area .change-pwd-area .robot-captcha{
+	margin-bottom: 23px;
+	margin-top: 10px;
+}
+
+.newcustomer-area .change-pwd-gray .form-title h5{
+	color: rgba(118, 118, 118, 0.85);
+	margin-top: 6px;
+}
+
+.newcustomer-area .change-pwd-gray .form-deatil p{
+	color: rgba(118, 118, 118, 0.85);
+}
+.newcustomer-area .change-pwd-gray .form-group label{
+	color: rgba(118, 118, 118, 0.85);
+}
+
+.newcustomer-area .change-pwd-gray .notrobot-check p{
+	color: rgba(118, 118, 118, 0.85);
+}
+
+.newcustomer-area .change-pwd-gray .pwd-checkbox label {
+    color: rgba(118, 118, 118, 0.85);
+}
+
+.newcustomer-area .change-pwd-gray .btn-signin{
+    background: #C4C4C4!important;
+}
+
+.newcustomer-area .accountform-area{
+	display: none;
+}
+
+
+.small-label{
+	font-size: 11px !important;
+}
+.main-heading{
+	font-family: Lato !important;
+	font-style: normal !important;
+	font-weight: normal !important;
+	font-size: 22px !important;
+	line-height: 26px !important;
+	color: #000000 !important;
+}
+.sub-heading-price-match{
+	font-family: Lato;
+	font-style: normal;
+	font-weight: 500;
+	font-size: 20px;
+	line-height: 24px;
+	color: #000000;
+}
+.heading-price-match{
+	font-family: Lato;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 22px;
+	line-height: 26px;
+	color: #000000;
+}
+.price-match-helper-text{
+	font-family: Lato;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 18px;
+	line-height: 22px;
+	color: #636363;
+}
+.price-match-helper-text-bold{
+	font-family: Lato;
+	font-style: normal;
+	font-weight: bold;
+	font-size: 18px;
+	line-height: 22px;
+	color: #636363;
+}
+.mt80{
+	margin-top: 80px;
+}
+.flex-col{
+	display: flex;
+	flex-direction: column;
+}
+.list{
+	list-style-type: square;
+	margin-left: 15px;
+}
+.list li{
+	font-family: Lato;
+font-style: normal;
+font-weight: normal;
+font-size: 18px;
+line-height: 22px;
+color: #636363;
+}
+.heading-quote{
+	font-family: Lato !important;
+font-style: normal !important;
+font-weight: normal !important;
+font-size: 20px !important;
+line-height: 24px !important;
+color: #000000 !important;
+}
+.helper-text{
+	font-family: Lato;
+font-style: normal;
+font-weight: normal;
+font-size: 12.5px;
+line-height: 15px;
+
+color: #000000;
+}
+.helper-heading{
+	font-size: 14.5px !important;
+	line-height: 17px !important;
+	margin-top: 22px !important;
+	margin-bottom: 10px !important;
+}
+.custom-file-input{
+	background-color: #636363 !important;
+	border-radius: 1px !important;
+	color: #FFF !important;
+	border: none !important;
+
+}
+.file-text{
+	white-space: nowrap; 
+	margin-left: 10px; 
+	margin-top: 4px; 
+	color: #636363;
+}
+.cancel-link{
+	color: #F85604;
+	margin-right: 20px;
+}
+.label-quote{
+	font-family: Lato;
+font-style: normal;
+font-weight: normal;
+font-size: 11px;
+line-height: 13px;
+color: #000000;
+}
+.inline-boxes{
+	display: flex;
+}
+.ml10{
+	margin-left: 10px;
+}
+.mt10{
+	margin-top: 10px;
+}
+.mt20{
+	margin-top: 20px;
+}
+.mt42{
+	margin-top: 42px !important;
+}
+.small-heading-price-match{
+	font-family: Lato;
+	font-style: normal;
+	font-weight: 500;
+	font-size: 18px;
+	line-height: 22px;
+	color: #000000;
+}
+.heading-rx-prescription{
+	font-family: Lato;
+	font-style: normal;
+	font-weight: 600;
+	font-size: 20px;
+	line-height: 24px;
+	color: #000000;
+
+}
+.helper-image{
+	background: #FFFFFF;
+box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.unmuted-list{
+	font-family: Lato;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 18px;
+	line-height: 22px;
+	color: #000000;
+	list-style-type: none;
+}
+.ml29{
+	margin-left: 29px !important;
+}
+.Govt-contracts-text {
+	font-family: Lato;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 17px;
+	line-height: 140%;
+	/* or 24px */
+
+
+	color: #454646;
+}
+.GPO-larger-text {
+	font-family: Lato;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 20px;
+	line-height: 24px;
+	color: #636363;
+}
+.mt30{
+	margin-top: 30px;
+}
+.mt102{
+	margin-top: 102px;
+}
+.mt53{
+	margin-top: 53px;
+}
+.mt55{
+	margin-top: 55px !important;
+}
+.mt57{
+	margin-top: 57px;
+}
+.mt36{
+	margin-top: 36px;
+}
+.mt16{
+	margin-top: 16px;
+}
+.ty50{
+	transform: translateY(50%);
+}
+.mt85{
+	margin-top: 85px;
+}
+.mt17{
+	margin-top: 17px;
+}
+.mb30{
+	margin-bottom: 30px;
+}
+.mb0{
+	margin-bottom: 0px !important;
+}
+.mt0{
+	margin-top: 0px;
+}
+.mt7{
+	margin-top: 7px;
+}
+.mt16{
+	margin-top: 16px;
+}
+.mt63{
+	margin-top: 63px;
+}
+.mt74{
+	margin-top: 74px;
+}
+.mt130{
+	margin-top: 130px;
+}
+.mt118{
+	margin-top: 118px;
+}
+.mt25{
+	margin-top: 25px;
+}
+.ml21{
+	margin-left: 21px;
+}
+.mt37{
+	margin-top: 37px !important;
+}
+.mt35{
+	margin-top: 35px !important;
+}
+.fixed-width{
+	width: 60%;
+}
+.fancy-heading{
+	font-family: Lato;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 22px;
+	line-height: 140%;
+	padding: 10px;
+	color: #FFFFFF;
+	text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+	background: rgba(0, 0, 0, 0.45);
+	background-color: #00000073;
+	color: #FFF;
+	width: fit-content;
+	transform: translateY(-150%) translateX(10%);
+	height: 48px;
+}
+.muted-bg-heading{
+	font-family: Lato;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 21px;
+	line-height: 140%;
+	color: #000000;
+}
+.heading-fill{
+	background: #F1F3F6;
+border: 0.5px solid #D1D1D1;
+box-sizing: border-box;
+width: fit-content;
+padding-left: 10px;
+padding-right: 10px;
+}
+.bordered-div{
+	background: #FFFFFF;
+border: 0.5px solid #D1D1D1;
+box-sizing: border-box;
+}
+.same-line-muted{
+	display: flex;
+}
+.black-muted{
+	font-family: Lato;
+font-style: normal;
+font-weight: normal;
+font-size: 18px;
+line-height: 22px;
+/* identical to box height */
+
+
+color: #000000;
+}
+.muted-text-18{
+	font-family: Lato;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 18px;
+	line-height: 22px;
+	/* identical to box height */
+	
+	
+	color: #636363;
+}
+.mini-heading{
+	font-family: Lato;
+	font-style: normal;
+	font-weight: 600;
+	font-size: 20px;
+	line-height: 24px;
+	color: #000000;
+}
+.small-heading{
+	font-family: Lato;
+font-style: normal;
+font-weight: 600;
+font-size: 18px;
+line-height: 22px;
+color: #000000;
+}
+.blue-heading{
+	font-family: Lato;
+font-style: italic;
+font-weight: 500;
+font-size: 22px;
+line-height: 26px;
+
+color: #0068A3;
+}
+.small-small-label{
+	font-family: Open Sans;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 12px !important;
+	line-height: 19px;
+	color: #000000;
+}
+.unmuted-list li::before {
+	content: "■";
+	color: #636363;
+	margin-right: 10px;
+	position: relative;
+	top: -3px;
+}
+.list-rx-prescription{
+	font-family: Lato;
+	font-style: normal;
+	font-weight: 600;
+	font-size: 16px;
+	line-height: 22px;
+	color: #000000;
+	list-style-type: square;
+}
+.list-rx-prescription::marker{
+	color: red;
+}
+.flex-row{
+	display: flex;
+	flex-direction: row;
+}
+.pl0{
+	padding-left: 0px !important;
+}
+.mb10{
+	margin-bottom: 10px !important;
+}
+.custom-textarea{
+	border-radius: 0px;
+	box-shadow: none;
+	border: 1px solid rgba(209, 209, 209, 0.85);
+	resize: none;
+}
+.custom-paragraph {
+	font-family: Lato;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 17px;
+	line-height: 140%;
+	/* or 24px */
+
+
+	color: #454646;
+}
+.about-heading {
+	font-family: Lato;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 22px;
+	line-height: 26px;
+	color: #000000;
+}
+.mt33{
+	margin-top: 33px !important;
+}.mb37{
+	 margin-bottom: 37px !important;
+ }
+.custom-textarea:focus{
+	box-shadow: none;
+	border: 1px solid rgba(209, 209, 209, 0.85);
+}
+.ml30{
+	margin-left: 30px !important;
+}
+.mr30{
+	margin-right: 30px !important;
+}
+/*Form Section CSS End*/
+
+/*Become New member Section CSS End*/
+
+/*Inovatiqa Orders Section CSS Start*/
+
+
+.orderstatus-area{
+	padding-top: 57px;
+	padding-bottom: 65px;
+}
+
+
+.orderstatus-area .order-deatil-area .tabs ul{
+    list-style-type: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.orderstatus-area .order-deatil-area .tabs ul li{
+	display: inline-block;
+}
+
+.orderstatus-area .order-deatil-area .tabs ul li a{
+	padding-left: 20px;
+	padding-right: 20px;
+	padding-top: 7px;
+	cursor: pointer;
+	font-size: 17px;
+	line-height: 21px;
+	letter-spacing: 0.1px;
+	color: rgba(118, 118, 118, 0.85);
+	font-weight: 400;
+	display: block;
+}
+.orderstatus-area .order-deatil-area .tabs ul li a:first-child{
+	padding-left: 0px;
+}
+
+.orderstatus-area .order-deatil-area .tabs ul li a.active{
+	color: #000;
+}
+
+.orderstatus-area .order-deatil-area .tabs ul li a:hover{
+	color: #000;
+}
+
+.orderstatus-area .order-deatil-area .tabs hr {
+    border-top: 1px solid #E2E8F0;
+    margin-top: 23px;
+    margin-bottom: 36px;
+}
+
+.orderstatus-area .order-deatil-area .tabs ul li a.new-order{
+	font-size: 17px;
+	line-height: 21px;
+	letter-spacing: 0.1px;
+	color: #46760A;
+	font-weight: 400;
+	position: relative;
+	padding-right: 0px;
+	padding-left: 42px;
+	display: flex;
+	align-items: center;
+}
+
+.orderstatus-area .order-deatil-area .tabs ul li a.new-order img{
+	margin-right: 8px;
+}
+
+.contact-manager a.conatct-btnpopup{
+	font-size: 13px;
+	line-height: 15px;
+	color: #FF8B00;
+	font-weight: 400;
+	padding: 0px;
+
+}
+
+.s.contact-mpopupform .modal-content{
+	border-radius: 0px;
+}
+
+.s.contact-mpopupform .modal-header{
+	background: #0068A3;
+	padding: 20px 46px;
+}
+
+.s.contact-mpopupform .modal-header label{
+	font-style: normal;
+	font-weight: 600;
+	font-size: 13.5px;
+	line-height: 16px;
+	color: #FFFFFF;
+	margin-bottom: 11px;
+}
+
+.s.contact-mpopupform .modal-header .form-group select {
+    height: auto;
+    background: #FFFFFF;
+    border: 1px solid rgba(209, 209, 209, 0.85);
+    box-sizing: border-box;
+    border-radius: 1px;
+    box-shadow: none;
+    padding: 8px 29px 8px 8px;
+    background: #fff url(../images/UIComponents/arrow_up_down.svg) center right 8px / auto no-repeat;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.s.contact-mpopupform .modal-header .form-group{
+	margin-bottom: 0px;
+}
+
+.s.contact-mpopupform .modal-body .manger-info h4{
+	font-style: normal;
+	font-weight: 500;
+	font-size: 22px;
+	line-height: 26px;
+	color: #000000;
+	margin-top:0px;
+}
+
+.s.contact-mpopupform .modal-body .manger-info p{
+	font-style: normal;
+	font-weight: normal;
+	font-size: 13px;
+	line-height: 16px;
+	color: #000000;
+	margin-bottom: 24px;
+}
+
+.s.contact-mpopupform .modal-body .please-call{
+	background: #F0FFDD;
+	border: 1px solid rgba(118, 118, 118, 0.85);
+	box-sizing: border-box;
+	border-radius: 1px;
+	padding: 12px 7px;
+}
+
+.s.contact-mpopupform .modal-body .please-call p{
+	margin-bottom: 0px;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 14px;
+	line-height: 17px;
+	color: #000000;
+}
+
+.s.contact-mpopupform .modal-body .contactm-form .form-group label{
+	font-style: normal;
+	font-weight: normal;
+	font-size: 15px;
+	line-height: 18px;
+	color: #000000;
+	margin-bottom: 0px;
+	margin-top: 10px;
+}
+
+.s.contact-mpopupform .modal-body .contactm-form .form-control::-webkit-input-placeholder {
+    font-style: normal;
+	font-weight: normal;
+	font-size: 15px;
+	line-height: 18px;
+	color: #000000;
+}
+
+.s.contact-mpopupform .modal-body .contactm-form .form-group input{
+	background: #FFFFFF;
+	border: 1px solid rgba(209, 209, 209, 0.85);
+	box-sizing: border-box;
+	border-radius: 1px;
+	height: auto;
+	padding: 7px 5px;
+	margin-bottom: 18px;
+	box-shadow: none;
+}
+
+.s.contact-mpopupform .modal-body .contactm-form .form-group textarea{
+	background: #FFFFFF;
+	border: 1px solid rgba(209, 209, 209, 0.85);
+	box-sizing: border-box;
+	border-radius: 1px;
+	box-shadow: none;
+}
+
+.s.contact-mpopupform .modal-body .contactm-form .max-charlimit p{
+	text-align: center;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 14px;
+	line-height: 17px;
+	color: #636363;
+	margin-bottom: 0px;
+	margin-top: 5px;
+}
+
+.s.contact-mpopupform .modal-body .contactm-form .form-group{
+	margin-bottom: 0px;
+}
+
+.s.contact-mpopupform .modal-body .contactm-form .contactperson-info{
+	margin-top: 22px;
+	margin-bottom: 18px;
+}
+
+.s.contact-mpopupform .modal-body .contactm-form .contactperson-info p{
+	font-style: normal;
+	font-weight: normal;
+	font-size: 15px;
+	line-height: 18px;
+	color: #000000;
+}
+.s.contact-mpopupform .modal-body{
+	padding-top: 15px;
+	padding-left: 46px;
+	padding-right: 46px;
+}
+
+.s.contact-mpopupform .modal-body .contactm-form .form-max-width{
+	max-width: 350px;
+	width: 100%;
+}
+
+.s.contact-mpopupform .modal-footer .popup-btn{
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+}
+.s.contact-mpopupform .modal-footer .popup-btn a.btn-cancelreq{
+	font-style: normal;
+	font-weight: normal;
+	font-size: 12px;
+	line-height: 14px;
+	color: #F85604;
+	padding: 0px;
+}
+
+.s.contact-mpopupform .modal-footer .popup-btn .btn-signin{
+	max-width: 120px;
+	width: 100%;
+	margin-left: 36px;
+
+}
+
+.s.contact-mpopupform .modal-footer{
+	border-top: none;
+	padding: 80px 46px;
+}
+
+.s.contact-mpopupform .modal-dialog {
+    width: 720px;
+    margin: 30px auto;
+}
+
+.s.contact-mpopupform .modal-footer .popup-btn .btn-signin .btn.focus, .btn:focus{
+    color: #fff;
+    text-decoration: none;
+}
+
+.s.contact-mpopupform .modal-footer .popup-btn .btn-signin:hover{
+	color: #fff;
+}
+
+/*Modalpop CSS End*/
+
+a.btn-items{
+	font-weight: 600;
+	font-size: 10px;
+	line-height: 12px;
+	letter-spacing: 0.05em;
+	color: rgba(118, 118, 118, 0.85);
+	padding: 8px 12px;
+	background: #FFFFFF;
+	border: 1px solid rgba(247, 245, 249, 0.85);
+	box-sizing: border-box;
+	border-radius: 1px;
+	margin-left: 14px;
+}
+
+.order-content .item-btns .btn.focus, .order-content .item-btns .btn:focus{
+    color: rgba(118, 118, 118, 0.85);
+    text-decoration: none;
+}
+
+a.btn-items:first-child{
+	margin-left: 0px;
+}
+
+a.btn-items.active{
+	color: #000000;
+	background: #EDF2F7;
+	filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+	border: none;
+	box-shadow: none;
+	font-family: 'Roboto', sans-serif;;
+}
+
+a.btn-items:hover{
+	color: #000000;
+	background: #EDF2F7;
+	filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+.order-content .find-btn .btn.focus, .order-content .find-btn .btn:focus, .order-content .find-btn .btn:hover {
+    color: #fff;
+    text-decoration: none;
+}
+
+
+.orderstatus-area .order-deatil-area .order-content .item-btns{
+	margin-bottom: 24px;
+}
+
+.orderstatus-area .order-deatil-area .order-content .find-fields .form-group, .date-fileds .form-group{
+	display: flex;
+	align-items: center;
+	margin-left: 10px;
+	margin-bottom: 0px;
+}
+
+.orderstatus-area .order-deatil-area .order-content .print-fileds .form-group{
+	display: flex;
+	align-items: center;
+	margin-bottom: 0px;
+}
+
+.orderstatus-area .order-deatil-area .order-content .print-fileds{
+	margin-left: 10px;
+}
+
+.orderstatus-area .order-deatil-area .order-content .find-fields .form-group:first-child, .date-fileds .form-group:first-child{
+	margin-left: 0px;
+}
+
+.orderstatus-area .order-deatil-area .order-content .order-find-area{
+	display: flex;
+	justify-content: space-between;
+}
+
+.orderstatus-area .order-deatil-area .order-content .order-find-area .find-fields, .order-find-area .date-fileds, .order-find-area .print-fileds{
+	display: flex;
+	align-items: center;
+}
+
+.orderstatus-area .order-deatil-area .order-content .form-group label, .order-content .form-group select{
+	font-size: 12px;
+	line-height: 14px;
+	letter-spacing: 0.05em;
+	color: #636363;
+	font-weight: 400;
+	margin-bottom: 0px;
+}
+
+.orderstatus-area .order-deatil-area .order-content .form-group input {
+    background: #FFFFFF;
+	border: 1px solid rgba(209, 209, 209, 0.85);
+	box-sizing: border-box;
+	border-radius: 1px;
+    box-shadow: none;
+    height: 35px;
+}
+
+.orderstatus-area .order-deatil-area .order-content .form-group input{
+	margin-left: 10px;
+}
+
+.orderstatus-area .order-deatil-area .order-content .find-fields .form-group input{
+	max-width: 89px;
+	width: 100%;
+	margin-left: 10px;
+}
+
+.orderstatus-area .order-deatil-area .order-content .date-fileds{
+	margin-left: 10px;
+}
+
+.orderstatus-area .order-deatil-area .order-content .date-fileds .form-group input{
+	position: relative;
+	max-width: 85px;
+	width: 100%;
+	font-family: Roboto;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 12px;
+	line-height: 14px;
+	letter-spacing: 0.05em;
+	color: #636363;
+	/*background: #fff url(../images/icons-calendar.png) center right 8px / auto no-repeat;*/
+	height: auto;
+	padding: 9px 13px;
+}
+
+.btn.active, .btn:active {
+    box-shadow: none;
+}
+
+
+.orderstatus-area .order-deatil-area .order-content .form-group select {
+	height: auto;
+	background: #FFFFFF;
+	border: 1px solid rgba(209, 209, 209, 0.85);
+	box-sizing: border-box;
+	border-radius: 1px;
+	box-shadow: none;
+	padding: 8px 29px 8px 8px;
+	background: #fff url(../../images/UIComponents/arrow_up_down.svg) center right 8px / auto no-repeat;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+}
+
+.orderstatus-area .order-deatil-area .order-content .find-fields .form-group select{
+	max-width: 98px;
+    width: 100%;
+    margin-left: 5px;
+}
+
+.orderstatus-area .order-deatil-area .order-content .find-btn{
+	margin-left: 10px;
+	display: flex;
+}
+
+.orderstatus-area .order-deatil-area .order-content .find-btn .btn-signin+.btn-signin{
+	margin-left: 4px;
+}
+
+.orderstatus-area .order-deatil-area .order-content .print-fileds .print-button{
+	margin-left: 10px;
+}
+
+.print-button a.btn-print{
+	border: 1px solid #D1D1D1;
+	box-sizing: border-box;
+	border-radius: 1px;
+	padding: 5px 8px;
+	font-size: 12px;
+	line-height: 14px;
+	color: #868686;
+	font-weight: 400;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.print-button a.btn-print img{
+	margin-right: 5px;
+}
+
+.print-button .btn.focus, .print-button .btn:focus, .print-button .btn:hover {
+    color: #868686;
+    text-decoration: none;
+}
+
+.orderstatus-area .items-table-area .table>thead>tr>th {
+    vertical-align: bottom;
+     border-bottom: none;
+     font-size: 13.5px;
+	line-height: 16px;
+	color: #3A3A3A;
+	font-weight: 400;
+	padding: 15px 8px;
+}
+
+.orderstatus-area .items-table-area{
+	background: #FFFFFF;
+	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+	border-radius: 3px;
+	margin-top: 14px;
+}
+
+.orderstatus-area .items-table-area .table{
+	padding: 12px 19px;
+	margin-bottom: 41px;
+}
+
+.orderstatus-area .items-table-area .table thead tr{
+	background: #EDF2F7;
+}
+
+.orderstatus-area .items-table-area .table thead tr th{
+	vertical-align: middle;
+}
+
+
+.orderstatus-area .items-table-area .table > thead > tr > th, .orderstatus-area .items-table-area .table > tbody > tr > td {
+    border-right: none; 
+}
+
+.orderstatus-area .items-table-area .table>tbody>tr>td{
+	border-top: none;
+}
+
+.orderstatus-area .items-table-area .table tbody tr td{
+	font-size: 13px;
+	line-height: 15px;
+	color: #636363;
+	font-weight: 400;
+	padding-top: 7px;
+	padding-bottom: 14px;
+}
+
+.orderstatus-area .items-table-area .table tbody tr td span p{
+	margin-top: 51px;
+	padding-top: 0px;
+}
+
+.orderstatus-area .items-table-area .table tbody tr td p{
+	margin-bottom: 0px;
+	padding-top: 7px;
+}
+
+.orderstatus-area .items-table-area .table tbody tr{ 
+	border-bottom: 1px solid #E2E8F0;
+}
+
+.orderstatus-area .items-table-area .table tbody tr td p.track-blue{
+	color: #54B4D7;
+}
+
+
+.orderstatus-area .items-table-area .table tbody tr td p.ship-orange{
+	color: #F85604;
+}
+
+.orderstatus-area .items-table-area .table tbody tr td p.num-green{
+	color: #6A983C;
+}
+
+.orderstatus-area .items-table-area .table tbody tr td p.des-orange{
+	color: #FD6020;
+}
+
+.orderstatus-area .items-table-area .table tbody tr td p.des-fontsize{
+	font-size: 14px;
+	line-height: 16px;
+}
+
+.orderstatus-area .items-table-area .table tbody tr td p.complete-blue{
+	color: #0068A3;
+}
+
+.orderstatus-area .items-table-area .table tbody tr td p.b-black{
+	color: #000;
+}
+/*Inovatiqa Orders Section CSS End*/
+
+/*Order Status Page CSS Start*/
+
+.orderstatus-area .sorder-staus .tabs hr {
+    margin-bottom: 45px;
+}
+
+.orderstatus-area .sorder-staus .order-content .sorder-num p {
+    font-style: normal;
+	font-weight: normal;
+	font-size: 16px;
+	line-height: 19px;
+	color: #46760A;
+}
+
+.orderstatus-area .sorder-staus .order-content .sorder-num hr{
+	border-top: 1px solid #D1D1D1;
+	margin-top: 18px;
+	margin-bottom: 14px;
+}
+
+.orderstatus-area .sorder-staus .srecent-orders{
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+}
+
+.orderstatus-area .sorder-staus .srecent-orders .form-group{
+	display: flex;
+	align-items: center;
+	margin-bottom: 0px;
+
+}
+
+.orderstatus-area .sorder-staus .srecent-orders .form-group label{
+    font-family: Roboto;
+font-style: normal;
+font-weight: normal;
+font-size: 13px;
+line-height: 15px;
+color: #0068A3;
+min-width: 190px;
+width: 100%;
+}
+
+.orderstatus-area .sorder-staus .srecent-orders .form-group select{
+	min-width: 125px;
+	width: 100%;
+}
+
+.orderstatus-area .sorder-staus .recent-btn{
+	font-style: normal;
+	font-weight: normal;
+	font-size: 12px;
+	line-height: 14px;
+	color: #FFFFFF;
+	background: #6A983C;
+	border-radius: 1px;
+	margin-left: 21px;
+	padding: 8px 20px;
+}
+
+.orderstatus-area .sorder-staus .recent-btn2{
+	background: #0068A3;
+	padding: 8px 6px;
+	margin-left: 28px;
+}
+
+.orderstatus-area .sorder-staus .spaystatus-area .order-pay-info h5{
+	font-style: normal;
+	font-weight: normal;
+	font-size: 13.5px;
+	line-height: 16px;
+	color: #636363;
+	margin-bottom: 7px;
+	margin-top: 0px;
+
+}
+
+.orderstatus-area .sorder-staus .spayorder-detail hr{
+	border-top: 1px solid #D1D1D1;
+	margin-top: 13px;
+	margin-bottom: 11px;
+}
+
+.orderstatus-area .sorder-staus .spaystatus-area .order-pay-info p{
+	font-style: normal;
+	font-weight: 500;
+	font-size: 13.5px;
+	line-height: 16px;
+	color: #000000;
+	margin-bottom: 0px;
+}
+
+.orderstatus-area .sorder-staus .spaystatus-area{
+	display: flex;
+
+}
+.orderstatus-area .sorder-staus .spaystatus-area .order-pay-info:first-child{
+	margin-left: 0px;
+}
+
+.orderstatus-area .sorder-staus .spaystatus-area .order-pay-info{
+	margin-left: 80px;
+}
+
+.orderstatus-area .sorder-staus .saddress-area .acc-info h5{
+	font-style: normal;
+	font-weight: bold;
+	font-size: 14px;
+	line-height: 17px;
+	letter-spacing: 0.05em;
+	color: #000000;
+	margin-top: 0px;
+	margin-bottom: 4px;
+}
+
+.orderstatus-area .sorder-staus .saddress-area .acc-info p{
+	font-style: normal;
+	font-weight: normal;
+	font-size: 12px;
+	line-height: 14px;
+	letter-spacing: 0.05em;
+	color: #000000;
+	margin-bottom: 4px;
+}
+
+.orderstatus-area .sorder-staus .saddress-area .acc-info p+p{
+	margin-bottom: 0px;
+}
+
+.orderstatus-area .sorder-staus .saddress-area{
+	background: #F1F3F6;
+	border: 1px solid #D1D1D1;
+	box-sizing: border-box;
+	padding: 12px 18px;
+	margin-top: 11px;
+	margin-bottom: 13px;
+}
+
+.orderstatus-area .sorder-staus .sallitem-btns{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.orderstatus-area .sorder-staus .add-cart-btn .recent-btn {
+    margin-left: 0px;
+}
+
+.orderstatus-area .sorder-staus .sallitem-btns .item-btns {
+    margin-bottom: 0px;
+}
+
+.orderstatus-area .sorder-staus .items-table-area {
+    margin-top: 19px;
+}
+
+.orderstatus-area .sorder-staus .sorder-infotable thead tr th span i{
+	color: #979797;
+	margin-left: 4px;
+	font-size: 13px;
+}
+
+.orderstatus-area .sorder-staus .sorder-infotable .custom-checkbox{
+	display: flex;
+	align-items: center;
+	margin-top: 20px;
+}
+
+.orderstatus-area .sorder-staus .sorder-infotable .custom-checkbox label{
+	font-style: normal;
+	font-weight: normal;
+	font-size: 13px;
+	line-height: 15px;
+	color: #000000;
+	margin-bottom: 0px;
+}
+
+.orderstatus-area .sorder-staus .sorder-infotable .custom-checkbox input[type=checkbox] {
+    width: 15px;
+    height: 15px;
+    margin-top: 0px;
+    margin-right: 6px;
+    outline: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: url(../images/UIComponents/new-customer-check.png) center center / 100% 100% no-repeat;
+
+   
+}
+
+.orderstatus-area .sorder-staus .sorder-infotable .custom-checkbox input[type=checkbox]:checked {
+    background: url(../images/UIComponents/new-cus-form-checked.svg) center center / 100% 100% no-repeat;
+     border: 1px solid #C4C4C4;
+}
+
+.orderstatus-area .sorder-staus .sorder-infotable .table tbody tr td {
+    padding-top: 4px;
+    padding-bottom: 13px;
+  
+}
+
+.orderstatus-area .sorder-staus .sorder-infotable .table tbody tr td p {
+    margin-bottom: 0px;
+    padding-top: 20px;
+}
+
+.orderstatus-area .sorder-staus .sorder-infotable .table tbody tr td p.des-orange {
+    padding-top: 4px;
+}
+
+.orderstatus-area .sorder-staus .sorder-infotable .table tbody p.des-padding{
+	padding-top: 7px;
+}
+
+.orderstatus-area .sorder-staus .sorder-infotable .table .subtotal h5{
+	font-style: normal;
+	font-weight: 600;
+	font-size: 14px;
+	line-height: 17px;
+	letter-spacing: 0.05em;
+	color: #000000;
+	margin-bottom: 12px;
+	margin-top: 0px;
+}
+
+.orderstatus-area .sorder-staus .sorder-infotable .table .subtotal h5:first-child{
+	margin-top: 20px;
+}
+
+.orderstatus-area .sorder-staus .sorder-infotable .table .subtotal hr{
+	border-top: 1px solid #D1D1D1;
+}
+
+.orderstatus-area .sorder-staus .sorder-infotable .table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.orderstatus-area .sorder-staus .sorder-infotable .table{
+	margin-bottom: 0px;
+}
+
+/*Order Status Page CSS End*/
+
+/*Invoice Order page CSS Start*/
+
+.orderstatus-area .sinvoice-order .tabs hr {
+    margin-bottom: 33px;
+}
+
+.orderstatus-area .sinvoice-order .spaystatus-area .order-pay-info p.orderpay-gray {
+    color: rgba(118, 118, 118, 0.85);
+}
+
+.orderstatus-area .sinvoice-order .saddress-area .invoice-table td {
+    font-style: normal;
+	font-weight: 600;
+	font-size: 13px;
+	line-height: 16px;
+	letter-spacing: 0.05em;
+	color: #000000;
+}
+
+.orderstatus-area .sinvoice-order .saddress-area .invoice-table thead tr th{
+	text-align: center;
+}
+
+.orderstatus-area .sinvoice-order .saddress-area .invoice-table .table>tbody>tr>td{
+	border-top: none;
+	border-right: none;
+}
+
+.orderstatus-area .sinvoice-order .saddress-area .invoice-table .table > thead > tr > th{
+    border-right: none;
+    border-bottom: 1.5px solid #E2E8F0;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+.orderstatus-area .sinvoice-order .saddress-area .invoice-table .table > tbody > tr > td {
+	border-right: none;
+    border-bottom: none;
+    padding: 4px 9px;
+}
+
+.orderstatus-area .sinvoice-order .saddress-area .invoice-table .table > tbody > tr{
+	border-bottom: 1px solid #E2E8F0;
+}
+
+.orderstatus-area .sinvoice-order .saddress-area .invoice-table .table > tbody > tr:last-child{
+	border-bottom: none;
+}
+
+.orderstatus-area .sinvoice-order .saddress-area .invoice-table{
+	background: #FFFFFF;
+	border: 1px solid #767676;
+	box-sizing: border-box;
+}
+
+.orderstatus-area .sinvoice-order .saddress-area .invoice-table .table{
+	margin-bottom: 0px;
+}
+
+.orderstatus-area .sinvoice-order .sallitem-btns {
+    display: initial;
+}
+
+.orderstatus-area .sinvoice-order .saddress-area {
+    margin-bottom: 40px;
+}
+
+.orderstatus-area .sinvoice-order .sinvoicet .table tbody tr td p {
+    margin-bottom: 0px;
+    padding-top: 0px;
+}
+
+.orderstatus-area .sinvoice-order .sinvoicet .table tbody tr td {
+    padding-top: 19px;
+    vertical-align: middle;
+}
+
+.orderstatus-area .sinvoice-order .sinvoicet .custom-checkbox {
+    margin-top: 0px;
+}
+
+.orderstatus-area .sinvoice-order .sinvoicet .invoicet-blue{
+	color: #0068A3;
+}
+
+.orderstatus-area .sinvoice-order .tpage-num p{
+	font-style: normal;
+	font-weight: normal;
+	font-size: 13.5px;
+	line-height: 16px;
+	color: rgba(118, 118, 118, 0.85);
+	margin: 12px 8px;
+}
+
+.orderstatus-area .sinvoice-order .sinvoicet .table tbody tr:last-child {
+    border-bottom: 1px solid #E2E8F0;
+}
+/*invoice Order page css End*/
+
+
+/*View Submited Page CSS Start*/
+
+.orderstatus-area .s.submitrequest .tabs ul {
+    display:initial;
+}
+
+.orderstatus-area .s.submitrequest .tabs ul li {
+    display: inline-block;
+    margin-right: 35px;
+}
+
+.orderstatus-area .s.submitrequest .tabs ul li a.new-return{
+	color: #46760A;
+}
+
+.orderstatus-area .s.submitrequest .viewsubmit-info p{
+	font-style: normal;
+	font-weight: normal;
+	font-size: 13px;
+	line-height: 15px;
+	color: #000000;
+	width: 100%;
+	max-width: 750px;
+	margin-top: 14px;
+	margin-bottom: 27px;
+}
+
+.orderstatus-area .s.submitrequest .order-content .print-fileds .form-group select {
+    width: 100%;
+    max-width: 130px;
+    padding-right: 23px;
+}
+
+.orderstatus-area .s.submitrequest .items-table-area {
+    margin-top: 12px;
+}
+
+.orderstatus-area .s.submitrequest .order-content .print-fileds .form-group label{
+	min-width: 50px;
+}
+
+.orderstatus-area .s.submitrequest .items-table-area .table tbody tr td p.num-blue {
+    color: #0068A3;
+}
+
+.orderstatus-area .s.submitrequest .items-table-area .table tbody tr td p.des-blue{
+	color: #7594C2
+}
+
+.orderstatus-area .s.submitrequest .items-table-area .table tbody tr td {
+    padding-top: 25px !important;
+    padding-bottom: 25px !important;
+    vertical-align: middle;
+}
+
+.orderstatus-area .s.submitrequest .items-table-area .table tbody tr td p {
+    margin-bottom: 0px;
+    padding-top: 6px;
+}
+
+.orderstatus-area .s.submitrequest .items-table-area .table tbody tr td p:first-child{
+	padding-top: 0px;
+}
+
+.orderstatus-area .s.submitrequest .items-table-area .table tbody tr td input.eainput-td{
+	background: #FFFFFF;
+	border: 0.7px solid #C4C4C4;
+	box-sizing: border-box;
+	border-radius: 1px;
+	height: auto;
+	padding: 5px 6px;
+	margin-top: 6px;
+}
+
+.orderstatus-area .s.submitrequest .items-table-area .table tbody tr td input.eainput-td::-webkit-input-placeholder{
+	font-style: normal;
+	font-weight: normal;
+	font-size: 13px;
+	line-height: 15px;
+	color: #636363;
+}
+
+.orderstatus-area .s.submitrequest .items-table-area .table tbody tr td p.des-padding{
+	padding-top: 11px;
+}
+
+
+
+/*View Submited Page CSS End*/
+
+/*Step One Page CSS Start*/
+
+.orderstatus-area .s.step-one .tabs ul li a.previous-check{
+	position: relative;
+	padding-left: 25px;
+
+}
+
+.orderstatus-area .s.step-one .tabs ul li a.previous-check:before{
+	content: "";
+	position: absolute;
+	background: url(../images/UIComponents/step-check.svg)no-repeat;
+	width: 17px;
+    height: 12px;
+    top: 10px;
+    left: 0;
+    bottom: 0;
+    margin: auto;
+}
+
+.orderstatus-area .s.step-one .return-invoiceitem p {
+    font-style: normal;
+	font-weight: normal;
+	font-size: 13px;
+	line-height: 16px;
+	letter-spacing: 0.05em;
+	color: #000000;
+	margin-bottom: 0px;
+}
+
+.orderstatus-area .s.step-one .return-invoiceitem .return-invoice-itemnum{
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+}
+
+.orderstatus-area .s.step-one .return-invoiceitem .return-invoice-itemnum p{
+	font-style: normal;
+	font-weight: 600;
+	font-size: 13px;
+	line-height: 16px;
+	letter-spacing: 0.05em;
+	color: #46760A;
+
+
+}
+
+.orderstatus-area .s.step-one .return-invoiceitem .return-invoice-itemnum p+p{
+	margin-left: 15px;
+}
+
+.orderstatus-area .s.step-one .tabs hr {
+    margin-bottom: 58px;
+}
+
+.orderstatus-area .s.step-one .return-invoiceitem .cus-service-call{
+	background: #F1F3F6;
+	border: 1px solid #D1D1D1;
+	box-sizing: border-box;
+	padding: 10px 16px;
+	margin-top: 20px;
+
+}
+
+.orderstatus-area .s.step-one .return-invoiceitem .cus-service-call p{
+	font-style: normal;
+	font-weight: normal;
+	font-size: 12px;
+	line-height: 14px;
+	letter-spacing: 0.05em;
+	color: #000000;
+	margin-bottom: 0px;
+}
+
+.orderstatus-area .s.step-one .return-invoiceitem .select-shipto{
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.orderstatus-area .s.step-one .return-invoiceitem .select-shipto p{
+	font-style: normal;
+	font-weight: normal;
+	font-size: 13px;
+	line-height: 16px;
+	letter-spacing: 0.05em;
+	color: #000000;
+}
+
+.orderstatus-area .s.step-one .return-invoiceitem .select-shipto p span{
+	font-weight: bold;
+}
+
+.orderstatus-area .s.step-one .return-invoiceitem .select-shipto{
+	background: #FFFFFF;
+	border: 1px solid #D1D1D1;
+	box-sizing: border-box;
+	padding: 12px 16px;
+	margin-top: 21px;
+}
+
+.orderstatus-area .s.step-one .return-invoiceitem .select-shipto .switch-btn a{
+	padding-right: 10px;
+}
+.orderstatus-area .s.step-one .return-invoiceitem .select-shipto .switch-btn a:last-child{
+	padding-right: 0px;
+}
+
+.orderstatus-area .s.step-one .return-invoiceitem .select-shipto .switch-btn a+a{
+	border-left: 1px solid #C4C4C4;
+	padding-left: 10px;
+}
+
+.orderstatus-area .s.step-one .return-invoiceitem{
+	width: 100%;
+	max-width: 750px;
+   
+}
+
+.orderstatus-area .s.step-one .tabs.font_lato{
+	max-width: 750px;
+	width: 100%;
+}
+
+.orderstatus-area .s.step-one .cancel-req-btns a.cancel-btn{
+	font-style: normal;
+	font-weight: normal;
+	font-size: 12px;
+	line-height: 14px;
+	color: #F85604;
+}
+
+.orderstatus-area .s.step-one .cancel-req-btns{
+	margin-top: 64px;
+	margin-bottom: 27px;
+}
+
+.orderstatus-area .s.step-one .cancel-req-btns a.continue-btn{
+	font-style: normal;
+	font-weight: normal;
+	font-size: 12px;
+	line-height: 14px;
+	color: #FFFFFF;
+	background: #0068A3;
+	border-radius: 1px;
+	padding: 8px 13px;
+}
+
+.orderstatus-area .s.step-one .order-content .date-fileds .form-group input {
+    padding: 9px 6px;
+}
+
+.orderstatus-area .s.step-one .order-content .form-group label.first-lable{
+    min-width: 60px;
+}
+
+.orderstatus-area .s.step-one .items-table-area .table tbody tr td input.eainput-td {
+    max-width: 21px;
+    width: 100%;
+}
+
+/*Step popup CSS Start*/
+
+.s.returnt-steparea .modal-header{
+	border-bottom: none;
+	padding: 7px 16px;
+}
+
+.s.returnt-steparea .modal-content{
+	border-radius: 0px;
+	box-shadow: none;
+}
+
+.s.returnt-steparea .modal-body{
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+.s.returnt-steparea .modal-header .header-title h5{
+	font-style: normal;
+	font-weight: normal;
+	font-size: 12px;
+	line-height: 14px;
+	color: #000000;
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+
+.s.returnt-steparea .modal-header hr{
+	border-top: 1px solid #F1F3F6;
+	margin-top: 10px;
+	margin-bottom: 32px;
+}
+
+.s.returnt-steparea .modal-body .reason-area .form-group select {
+    height: auto;
+    background: #FFFFFF;
+    border: 1px solid rgba(209, 209, 209, 0.85);
+    box-sizing: border-box;
+    border-radius: 1px;
+    box-shadow: none;
+    padding: 4px 29px 4px 7px;
+    background: #fff url(../images/UIComponents/arrow_up_down.svg) center right 8px / auto no-repeat;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    max-width: 300px;
+    width: 100%;
+    margin-left: 20px;
+}
+
+.s.returnt-steparea .modal-body .reason-area .form-group label{
+	font-style: normal;
+	font-weight: normal;
+	font-size: 12px;
+	line-height: 14px;
+	color: #636363;
+}
+
+.s.returnt-steparea .modal-body .reason-area .form-group input{
+	background: #FFFFFF;
+	border: 1px solid #D1D1D1;
+	box-sizing: border-box;
+	border-radius: 1px;
+	box-shadow: none;
+	max-width: 30px;
+	width: 100%;
+	height: auto;
+	margin-left: 13px;
+	padding: 3px 10px;
+}
+
+.s.returnt-steparea .modal-body .reason-area .form-group{
+	display: flex;
+	align-items: center;
+}
+
+.s.returnt-steparea .modal-body .reason-area .reason-select{
+	display: flex;
+	align-items: center;
+}
+
+.s.returnt-steparea .modal-footer .popup-btn a{
+	font-style: normal;
+	font-weight: normal;
+	font-size: 11px;
+	line-height: 13px;
+	letter-spacing: 0.05em;
+	color: #FFFFFF;
+	background: #979797;
+	border-radius: 1px;
+	padding: 4px 6px;
+}
+
+.s.returnt-steparea .modal-footer{
+	border-top: 0px;
+	padding-top: 20px 8px;
+}
+.s.returnt-steparea .modal-footer hr{
+	border-top: 1px solid #F1F3F6;
+	margin-top: 0px;
+	margin-bottom: 8px;
+}
+
+.s.returnt-steparea .modal-footer .popup-btn a.btn-cancel{
+	background: #979797;
+	border-radius: 1px;
+	padding: 4px 6px;
+}
+
+.s.returnt-steparea .modal-footer .popup-btn a.btn-ok{
+	background: #0068A3;
+	border-radius: 1px;
+}
+
+.s.returnt-steparea .modal-dialog {
+    width: 458px;
+    margin: 200px auto;
+}
+
+.s.returnt-steparea .modal-body .reason-select{
+	margin-bottom: 35px;
+}
+/*Step One pge CSS End*/
+
+
+
+/*Step Four CSS Start*/
+
+.orderstatus-area .s.step-four .retunable-item p{
+	font-style: normal;
+	font-weight: 600;
+	font-size: 16px;
+	line-height: 19px;
+	letter-spacing: 0.05em;
+	color: #46760A;
+	margin-bottom: 34px;
+}
+
+.orderstatus-area .s.step-four .returnaddress-area{
+	display: flex;
+	align-items: center;
+}
+
+
+
+.orderstatus-area .s.step-four .returnaddress-area .facily-address p{
+	font-style: normal;
+	font-weight: 300;
+	font-size: 15px;
+	line-height: 18px;
+	letter-spacing: 0.05em;
+	color: #000000;
+	margin-bottom: 0px;
+	width: 100%;
+	max-width: 288px;
+}
+
+.orderstatus-area .s.step-four .returnaddress-area .ship-label p{
+	font-style: normal;
+	font-weight: 400;
+	font-size: 15px;
+	line-height: 18px;
+	letter-spacing: 0.05em;
+	color: #000000;
+	margin-bottom: 0px;
+	max-width: 200px;
+	width: 100%;
+}
+
+.orderstatus-area .s.step-four .returnaddress-area .facily-address p span{
+	font-weight: 400;
+}
+
+.orderstatus-area .s.step-four .product-value{
+	display: flex;
+	align-items: center;
+	margin-top: -13px;
+}
+
+.orderstatus-area .s.step-four .product-value p{
+	font-style: normal;
+	font-weight: 600;
+	font-size: 13px;
+	line-height: 16px;
+	letter-spacing: 0.05em;
+	color: #000000;
+	margin-bottom: 0px;
+}
+
+.orderstatus-area .s.step-four .product-value p+p{
+	margin-left: 17px;
+}
+
+.orderstatus-area .s.step-four .items-table-area {
+    margin-top: 24px;
+}
+
+.orderstatus-area .s.step-four .items-table-area .table{
+	margin-bottom: 41px;
+}
+
+.orderstatus-area .s.step-four .total-pending{
+	margin-top: 71px;
+}
+
+.orderstatus-area .s.step-four .total-pending p{
+	font-style: normal;
+	font-weight: 600;
+	font-size: 16px;
+	line-height: 19px;
+	letter-spacing: 0.05em;
+	color: #000000;
+	padding-bottom: 37px;
+}
+
+.orderstatus-area .s.step-four .total-pending hr{
+	border-top: 1px solid #E2E8F0;
+}
+
+.orderstatus-area .s.step-four .table tbody tr td{
+    padding: 34px;
+    /*display: inline-block;*/
+  
+}
+
+/*Step Four CSS End*/
+
+
+/*Media Query*/
+
+@media screen and (max-width: 1400px){
+
+.orderstatus-area .order-deatil-area .tabs ul li a{
+    padding-right: 0px;
+}
+
+
+.orderstatus-area .order-deatil-area .find-btn .btn-signin {
+    padding: 8px 5px;
+   
+}
+
+}
+
+
+
+@media screen and (max-width: 1200px){
+	.newcustomer-area .become-customer-box {
+    padding-left: 30px;
+    padding-right: 30px;
+  
+}
+
+.newcustomer-area .change-pwd-area .pwd-checkbox label {
+    font-size: 12px;
+}
+
+
+.newcustomer-area {
+    padding: 20px;
+}
+
+.orderstatus-area .order-deatil-area .tabs ul li a {
+    font-size: 15px;
+}
+
+.orderstatus-area .order-deatil-area .tabs ul li a.new-order {
+    font-size: 16px;
+}
+
+.orderstatus-area .order-deatil-area .order-content .form-group input {
+    padding: 6px 6px;
+}
+
+.orderstatus-area .order-deatil-area .order-content .order-find-area {
+    display: initial;
+}
+
+.orderstatus-area .order-deatil-area .order-content .date-fileds {
+    margin-left: 0px;
+    margin-top: 20px;
+}
+
+.orderstatus-area .order-deatil-area .order-content .print-fileds {
+    margin-left: 0px;
+    margin-top: 20px;
+}
+
+.orderstatus-area .sorder-staus .srecent-orders {
+    justify-content: start;
+}
+
+.orderstatus-area .sinvoice-order .spaystatus-area .order-pay-info {
+    margin-left: 50px;
+}
+
+}
+
+
+@media screen and (max-width: 990px){
+
+.signin-page-area .return-customer {
+    max-width: none;
+}
+.custom-table tbody tr td img{
+	padding: 13% !important;
+
+}
+.signin-page-area .new-customer {
+	margin-top: 30px;
+}
+
+
+.signin-page-area .form-signin .form-group input {
+    max-width: none;
+   
+}
+
+.newcustomer-area .yourself-area {
+    max-width: none;
+}
+
+.newcustomer-area .accountform-area .form-group input, .accountform-area .form-group select {
+    max-width: none;
+   
+}
+
+.newcustomer-area .accountform-area .form-group {
+    margin-bottom: 20px;
+}
+
+.newcustomer-area .change-pwd-area .pwd-btn{
+	text-align: left;
+}
+
+.newcustomer-area .inovatiqaway-area {
+	margin-top: 30px;
+}
+
+.newcustomer-area .change-pwd-gray .form-title h5 {
+    margin-top: 20px;
+}
+
+.orderstatus-area .s.step-one .tabs.font_lato {
+    max-width: none;
+}
+
+.orderstatus-area .s.step-one .return-invoiceitem {
+    max-width: none;
+}
+
+}
+
+@media screen and (max-width: 767px){
+
+.newcustomer-area .inovatiqa-detail .inovatiqa-img img {
+    display: none;
+}
+.custom-table tbody tr td img {
+	padding: 3% !important;
+}
+.orderstatus-area .sorder-staus .saddress-area .adds-info{
+	margin-top: 20px;
+}
+
+.orderstatus-area .sorder-staus .srecent-orders {
+    display: initial;
+}
+
+.orderstatus-area .sorder-staus .recent-btn {
+    margin-left: 0px;
+    margin-right: 20px;
+    margin-top: 20px;
+}
+
+.orderstatus-area .sorder-staus .srecent-orders .form-group {
+    display: initial;
+}
+
+.orderstatus-area .sorder-staus .spaystatus-area {
+     display: initial; 
+}
+
+.orderstatus-area .sorder-staus .spaystatus-area .order-pay-info {
+    margin-left: 0px;
+    margin-bottom: 20px;
+}
+
+.orderstatus-area .sorder-staus .sallitem-btns {
+    display: initial;
+}
+
+.orderstatus-area .sorder-staus .add-cart-btn {
+    text-align:left;
+}
+
+.orderstatus-area .sinvoice-order .contact-manager{
+    text-align: left;
+}
+
+.orderstatus-area .sinvoice-order .tabs hr {
+    margin-bottom: 20px;
+}
+
+.orderstatus-area .sinvoice-order .saddress-area .invoice-table {
+    margin-top: 20px;
+}
+
+.orderstatus-area .sinvoice-order .add-cart-btn .recent-btn {
+    margin-right: 0px;
+    margin-top: 0px;
+}
+
+.s.contact-mpopupform .modal-dialog {
+    width:auto;
+    margin: 30px;
+}
+
+.s.contact-mpopupform .modal-header {
+    padding: 20px 25px;
+}
+
+.s.contact-mpopupform .modal-body {
+    padding-left: 25px;
+    padding-right: 25px;
+}
+
+.s.contact-mpopupform .modal-footer {
+    padding: 40px 25px;
+}
+
+.s.contact-mpopupform .modal-footer .popup-btn {
+    justify-content: center;
+}
+
+.orderstatus-area .s.submitrequest .tabs ul li {
+    margin-right: 25px;
+}
+
+.orderstatus-area .s.step-one .return-invoiceitem .return-invoice-itemnum {
+    justify-content: start;
+    margin-top: 20px;
+}
+
+.orderstatus-area .s.step-one .return-invoiceitem .select-shipto {
+    align-items: initial;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+
+.s.returnt-steparea .modal-dialog {
+    width: auto;
+    margin: 200px 30px;
+}
+
+.orderstatus-area .s.step-four .returnaddress-area {
+    display: initial;
+}
+
+.orderstatus-area .s.step-four .returnaddress-area .ship-label{
+    margin-top: 20px;
+}
+
+.orderstatus-area .s.step-four .tabs ul li {
+    margin-right: 20px;
+}
+
+}
+
+
+
+@media screen and (max-width: 480px){
+	.signin-page-area .form-signin .checkbox label {
+    display: flex;
+}
+
+.signin-page-area .form-signin .checkbox a {
+    margin-left: 0px;
+}
+
+.signin-page-area .signin-page-rowarea {
+    padding: 19px 18px 25px 18px;
+    
+}
+
+.signin-page-area .form-signin {
+    padding: 15px;
+}
+
+.signin-page-area .form-signin hr {
+    margin-top: 25px;
+}
+
+.signin-page-area .new-customer .new-customer-info {
+    padding: 15px;
+}
+
+.signin-page-area {
+    padding: 30px 20px;
+}
+
+
+.newcustomer-area {
+    padding: 15px;
+}
+
+.newcustomer-area .become-customer-box {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.newcustomer-area .become-customer-box .yourself-area .customer-select .form-group select {  
+    padding: 9px 40px 9px 9px;
+}
+
+
+
+
+.newcustomer-area .inovatiqaway-area .inovatiqa-title h4 {
+    line-height: 50px;
+}
+
+a.btn-items{
+    width: 100%;
+    margin-bottom: 14px;
+    margin-left: 0px;
+}
+
+.orderstatus-area .order-deatil-area .order-content .contact-manager{
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.orderstatus-area .order-deatil-area .order-content .order-find-area .find-fields, .order-find-area .date-fileds, .order-find-area .print-fileds {
+    display: initial;
+}
+
+.orderstatus-area .order-deatil-area .order-content .find-fields .form-group input {
+    max-width: none;
+    margin-left: 0px;
+}
+
+.orderstatus-area .order-deatil-area .order-content .find-fields .form-group select {
+    max-width: none;
+}
+
+.orderstatus-area .order-deatil-area .order-content .find-fields .form-group, .date-fileds .form-group {
+    margin-left: 0px;
+    margin-bottom: 20px;
+}
+
+.orderstatus-area .order-deatil-area .order-content .date-fileds .form-group input {
+    max-width: none;
+    margin-left: 0px;
+}
+
+.orderstatus-area .order-deatil-area .order-content .form-group label, .order-content .form-group select {
+ 
+    min-width: 50px;
+}
+
+.orderstatus-area .order-deatil-area .order-content .find-fields .form-group select {
+     margin-left: 0px; 
+}
+
+.orderstatus-area .order-deatil-area .order-content .find-btn {
+    margin-left: 0px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.orderstatus-area .order-deatil-area .find-btn .btn-signin {
+    padding: 8px 14px;
+}
+
+.orderstatus-area .order-deatil-area .order-content .print-fileds .print-button {
+    margin-left: 0px;
+    margin-top: 20px;
+}
+
+.orderstatus-area .order-deatil-area .tabs ul {
+    justify-content: initial;
+    align-items: initial;
+    flex-direction: column;
+}
+
+.orderstatus-area .order-deatil-area .tabs ul li a.new-order {
+    padding-left: 0px;
+}
+
+.orderstatus-area .order-deatil-area .tabs ul li a{
+    padding: 10px 0px;
+}
+
+
+
+.orderstatus-area .sorder-staus .sallitem-btns {
+    display: initial;
+}
+
+.orderstatus-area .sorder-staus .add-cart-btn {
+    text-align: center;
+}
+
+.orderstatus-area .sorder-staus .add-cart-btn .recent-btn {
+    margin-right: 0px;
+    margin-top: 0px;
+    width: 100%;
+}
+
+.orderstatus-area .sorder-staus .recent-btn {
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 20px;
+}
+
+.orderstatus-area .sorder-staus .srecent-order-btn{
+	display: flex;
+	flex-direction: column;
+}
+
+.orderstatus-area .s.submitrequest .order-content .print-fileds .form-group select {   
+     max-width: none; 
+}
+
+.orderstatus-area .s.submitrequest .tabs ul li {
+    display: block;
+    margin-right: 0px;
+}
+
+.orderstatus-area .s.step-one .cancel-req-btns {
+    text-align: left;
+}
+
+.orderstatus-area .s.step-one .order-content .form-group label.first-lable {
+    min-width: initial;
+}
+
+.orderstatus-area .s.step-one .tabs hr {
+    margin-bottom: 35px;
+}
+.orderstatus-area .s.step-one .return-invoiceitem .select-shipto .switch-btn{
+    margin-top: 10px;
+}
+
+.s.returnt-steparea .modal-body {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.s.returnt-steparea .modal-body .reason-area .reason-select {
+    display: initial;
+    margin-bottom: 20px;
+}
+
+.s.returnt-steparea .modal-body .reason-area .form-group select {
+    margin-left: 0px;
+    max-width: none;
+    margin-bottom: 20px;
+}
+
+.s.returnt-steparea .modal-dialog {
+    margin: 100px 30px;
+}
+
+.s.returnt-steparea .modal-header hr {
+    margin-bottom: 15px;
+}
+
+.orderstatus-area .s.step-four .returnaddress-area .facily-address p {
+    max-width: none;
+}
+
+.orderstatus-area .s.step-four .returnaddress-area .ship-label p {
+    max-width: none;
+}
+
+}
+
+

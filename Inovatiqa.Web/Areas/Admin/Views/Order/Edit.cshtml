@@ -1,0 +1,88 @@
+@model OrderModel
+@inject Inovatiqa.Services.WorkContext.Interfaces.IWorkContextService workContextService
+@{
+    //page title
+    ViewBag.PageTitle = "Edit order details";
+}
+
+@{
+    const string hideInfoBlockAttributeName = "OrderPage.HideInfoBlock";
+    var hideInfoBlock = genericAttributeService.GetAttribute<bool>(workContextService.CurrentCustomer, hideInfoBlockAttributeName, workContextService.CurrentCustomer.Id);
+
+    const string hideBillingAndShippingBlockAttributeName = "OrderPage.HideBillingAndShippingBlock";
+    var hideBillingAndShippingBlock = genericAttributeService.GetAttribute<bool>(workContextService.CurrentCustomer, hideBillingAndShippingBlockAttributeName, workContextService.CurrentCustomer.Id);
+
+    const string hideProductsBlockAttributeName = "OrderPage.HideProductsBlock";
+    var hideProductsBlock = genericAttributeService.GetAttribute<bool>(workContextService.CurrentCustomer, hideProductsBlockAttributeName, workContextService.CurrentCustomer.Id);
+
+    const string hideNotesBlockAttributeName = "OrderPage.HideNotesBlock";
+    var hideNotesBlock = genericAttributeService.GetAttribute<bool>(workContextService.CurrentCustomer, hideNotesBlockAttributeName, workContextService.CurrentCustomer.Id);
+}
+
+<form asp-controller="Order" asp-action="Edit" method="post" id="order-form">
+    <div class="content-header clearfix">
+        <h1 class="pull-left">
+            Edit order details - @Model.CustomOrderNumber
+            <small>
+                <i class="fa fa-arrow-circle-left"></i>
+                <a asp-action="List">back to order list</a>
+            </small>
+        </h1>
+        <div class="pull-right">
+            <a id="adminPrintInvoice" class="btn bg-purple">
+                <i class="fa fa-file-pdf-o"></i>
+                Invoice (PDF)
+            </a>
+            @if (!Model.IsLoggedInAsVendor)
+            {
+                <span id="order-delete" class="btn bg-red">
+                    <i class="fa fa-trash-o"></i>
+                    Delete
+                </span>
+            }
+            <input type="submit" id="btnRefreshPage" style="display: none" />
+            <script>
+                $(document).ready(function () {
+                    $('#btnRefreshPage').click(function () {
+                        //refresh pageed
+                        location.reload();
+                    });
+                });
+            </script>
+        </div>
+    </div>
+
+    <div asp-validation-summary="All"></div>
+
+    <div class="content">
+        <div class="form-horizontal">
+
+            <nop-panels id="order-panels">
+                <nop-panel asp-name="order-info" asp-icon="fa fa-info" asp-title="Info" asp-hide-block-attribute-name="@hideInfoBlockAttributeName" asp-hide="@hideInfoBlock" asp-advanced="false">@await Html.PartialAsync("_OrderDetails.Info", Model)</nop-panel>
+                <nop-panel asp-name="order-billing-shipping" asp-icon="fa fa-truck" asp-title="Billing &amp; shipping" asp-hide-block-attribute-name="@hideBillingAndShippingBlockAttributeName" asp-hide="@hideBillingAndShippingBlock" asp-advanced="false">@await Html.PartialAsync("_OrderDetails.BillingShipping", Model)</nop-panel>
+                <nop-panel asp-name="order-products" asp-icon="fa fa-th-list" asp-title="Products" asp-hide-block-attribute-name="@hideProductsBlockAttributeName" asp-hide="@hideProductsBlock" asp-advanced="true">@await Html.PartialAsync("_OrderDetails.Products", Model)</nop-panel>
+
+                @if (!Model.IsLoggedInAsVendor)
+                {
+                    <nop-panel asp-name="order-notes" asp-icon="fa fa-sticky-note-o" asp-title="Order notes" asp-hide-block-attribute-name="@hideNotesBlockAttributeName" asp-hide="@hideNotesBlock" asp-advanced="true">@await Html.PartialAsync("_OrderDetails.Notes", Model)</nop-panel>
+                }
+
+            </nop-panels>
+        </div>
+    </div>
+</form>
+<nop-delete-confirmation asp-model-id="@Model.Id" asp-button-id="order-delete" />
+<script>
+    $(document).ready(function () {
+        $("#adminPrintInvoice").click(function (event) {
+            event.stopImmediatePropagation();
+
+            $('#shipments-grid > tbody > tr').each(function (index, tr) {
+                var shipmentId = $(this).find('td').eq(1).text();
+                //window.location.href = '@Url.Action("PdfInvoice", "Order")?orderId=' + @Model.Id + '&shipmentId=' + shipmentId;
+                var redirectURL = '@Url.Action("PdfInvoice", "Order")?orderId=' + @Model.Id + '&shipmentId=' + shipmentId;
+                window.open(redirectURL)
+            });
+        })
+    });
+</script>

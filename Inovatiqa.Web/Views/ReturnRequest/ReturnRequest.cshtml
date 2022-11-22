@@ -1,0 +1,126 @@
+﻿@using Inovatiqa.Web.Models.Order
+@model SubmitReturnRequestModel
+@{
+    Layout = "_ColumnsOne";
+}
+@{
+    ViewBag.Title = "Return Item(s)";
+}
+<div class="page return-request-page from-panel">
+    <div class="page-title panel-heading">
+        <h1>@Html.Raw(string.Format("Return item(s) from <a href=\"{0}\">order #{1}</a>", Url.RouteUrl("OrderDetails", new { orderId = Model.OrderId }), Model.CustomOrderNumber))</h1>
+    </div>
+    <div class="page-body">
+        @if (!string.IsNullOrEmpty(Model.Result))
+        {
+            <div class="description alert alert-success">
+                @Model.Result
+            </div>
+        }
+        else
+        {
+            <form asp-route="ReturnRequest" method="post">
+                <div class="section">
+                    <div class="title">
+                        <strong>Which items do you want to return?</strong>
+                    </div>
+                    <div class="panel panel-default">
+                        <table class="table table-bordered table-condensed table-striped">
+                            <colgroup>
+                                <col />
+                                <col />
+                                <col width="1" />
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th class="a-center name">
+                                        Product
+                                    </th>
+                                    <th class="a-center price">
+                                        Unit price
+                                    </th>
+                                    <th class="a-center quantity">
+                                        Qty. to return
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Items)
+                                {
+                                    <tr>
+                                        <td class="a-left name">
+                                            <a href="@Url.RouteUrl("Product", new { SeName = item.ProductSeName })">@item.ProductName</a>
+                                            @if (!string.IsNullOrEmpty(item.AttributeInfo))
+                                            {
+                                                <div class="attributes">
+                                                    @Html.Raw(item.AttributeInfo)
+                                                </div>
+                                            }
+                                        </td>
+                                        <td class="a-left price">
+                                            @item.UnitPrice
+                                        </td>
+                                        <td class="a-left quantity">
+                                            <select name="quantity@(item.Id)" class="form-control dropdown-toggle">
+                                                @for (var i = 0; i <= item.Quantity; i++)
+                                                {
+                                                    <option value="@(i)">@(i)</option>
+                                                }
+                                            </select>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="fieldset">
+                    <div class="title">
+                        <strong>Why are you returning these items?</strong>
+                    </div>
+                    <div class="form-fields form-horizontal">
+                        <div class="form-group">
+                            @{
+                                var reasonsSelectList = Model.AvailableReturnReasons.Select(x => new SelectListItem
+                                {
+                                    Text = x.Name,
+                                    Value = x.Id.ToString()
+                                }).ToList();
+                            }
+                            <label class="control-label col-sm-3 col-md-4">Return Request Reason:</label>
+                            <div class="col-sm-6 col-md-4">
+                                <select asp-for="ReturnRequestReasonId" asp-items="@reasonsSelectList" class="form-control return-reasons dropdown-toggle"></select>
+                            </div>
+                        </div>
+                        @*<div class="form-group">
+                            @{
+                                var actionsSelectList = Model.AvailableReturnActions.Select(x => new SelectListItem
+                                {
+                                    Text = x.Name,
+                                    Value = x.Id.ToString()
+                                }).ToList();
+                            }
+                            <label class="control-label col-sm-3 col-md-4" asp-for="ReturnRequestActionId" asp-postfix=":"></label>
+                            <div class="col-sm-6 col-md-4">
+                                <select asp-for="ReturnRequestActionId" asp-items="@actionsSelectList" class="form-control return-actions dropdown-toggle"></select>
+                            </div>
+                        </div>*@
+                        <div class="form-group">
+                            <label class="control-label col-sm-3 col-md-4">Comments:</label>
+                            <div class="col-sm-6 col-md-4">
+                                <textarea class="comment form-control" asp-for="Comments"></textarea>
+                                <span asp-validation-for="Comments"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-3 col-md-offset-4 col-md-4">
+                                <input type="submit" name="submit-return-request" class="btn btn-primary submit-return-request-button" value="Submit return request" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        }
+    </div>
+</div>

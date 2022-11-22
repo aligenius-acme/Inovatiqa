@@ -1,0 +1,310 @@
+﻿@using Inovatiqa.Web.Models.Order
+@using Inovatiqa.Core;
+@model OrderDetailsModel
+@{ Layout = "_ColumnsOne";
+    ViewBag.Title = "Invoiced Order Details"; }
+
+
+<style>
+    .jqueryPagination {
+        display: flex;
+        justify-content: space-between;
+        margin:unset;
+    }
+
+    .paging_numbers span a {
+        margin-right: 5px;
+        cursor: pointer;
+        color: #636363;
+        
+       
+    }
+
+    .paging_numbers span .current {
+        color: #000;
+
+    }
+
+    .jqueryPagination p {
+        font-family: Lato;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 13.5px;
+        letter-spacing: 0.05em;
+        color: #636363;
+        margin-bottom: unset;
+    }
+    .paging_numbers{
+        padding:6px;
+    }
+</style>
+
+
+@await Component.InvokeAsync("DashboardBlueBand")
+@*@await Html.PartialAsync("_DashboardBlueBand");*@
+<section class="container-fluid orderstatus-area">
+    <div class="row">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="dashboard-area">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="sidebar_menu font_lato">
+                                    <h3>Inovatiqa Dashboard</h3>
+                                    @await Html.PartialAsync("_DashboardSideBar", "inovatiqa-orders")
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="order-deatil-area sorder-staus sinvoice-order">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="tabs font_lato">
+                                                @await Html.PartialAsync("_OrderNewTopBar", "invoiced-orders")
+                                                <hr>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="order-content">
+                                                <div class="tab-content" style="border: none !important;">
+                                                    <div class="contact-manager text-right font_roboto">
+                                                        <a href="#" class="btn conatct-btnpopup" data-toggle="modal" data-target="#contact-mform">Contact Your Account Manager</a>
+                                                    </div>
+                                                    <div class="sorder-num font_lato">
+                                                        <p>Order Details #@Model.CustomOrderNumber</p>
+                                                        <hr>
+                                                    </div>
+                                                    <div class="srecent-orders font_roboto">
+                                                        <div class="form-group">
+                                                            <label><a style="color: #337ab7;" href="@Url.RouteUrl("CustomerOrders")">View All Recent Orders</a></label>
+                                                            <select class="form-control">
+                                                                <option>Option</option>
+                                                                <option>Option</option>
+                                                                <option>Option</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="srecent-order-btn font_roboto">
+                                                            <a href="javascript:void(0);" class="btn recent-btn" onclick="setLocation('@Url.RouteUrl("OrderShipments", new { orderId = Model.Id })')">Track Order</a>
+                                                            <a href="@Url.RouteUrl("ContactUs")" class="btn recent-btn recent-btn2">Contact Customer Service</a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="spayorder-detail font_roboto">
+                                                        <hr>
+                                                        <div class="spaystatus-area">
+                                                            @*By Hamza because this is Invoiced order details not Invoices details So there is not sence of Invoice No*@
+                                                            @*<div class="order-pay-info">
+                                                                <h5>Invoice #</h5>
+                                                                <p>@Model.OrderStatusId</p>
+                                                            </div>*@
+                                                            <div class="order-pay-info">
+                                                                <h5>Order #</h5>
+                                                                <p>@Model.CustomOrderNumber</p>
+                                                            </div>
+                                                            <div class="order-pay-info">
+                                                                <h5>PO</h5>
+                                                                <p>@(Model.PONumber ?? "N/A")</p>
+                                                            </div>
+                                                            <div class="order-pay-info">
+                                                                <h5>Captured</h5>
+                                                                <p>@Model.CreatedOn.ToString("dd/MM/yyyy")</p>
+                                                            </div>
+                                                            <div class="order-pay-info">
+                                                                <h5>Invoiced</h5>
+                                                                <p>@Model.CreatedOn.ToString("dd/MM/yyyy")</p>
+                                                            </div>
+                                                            <div class="order-pay-info">
+                                                                <h5>Status</h5>
+                                                                <p class="orderpay-gray">@Model.OrderStatus</p>
+                                                            </div>
+                                                            <div class="order-pay-info">
+                                                                <h5>Total</h5>
+                                                                <p>@Model.OrderTotal</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="saddress-area font_lato">
+                                                        <div class="row">
+                                                            <div class="col-md-4 col-sm-4">
+                                                                <div class="acc-info">
+                                                                    <h5>Account</h5>
+                                                                    <p>#@Model.ShippingAddress.Id @Model.BillingAddress.Company</p>
+                                                                    <p>@Model.BillingAddress.Address1<br>  @Model.BillingAddress.City @Model.BillingAddress.StateProvinceName @Model.BillingAddress.ZipPostalCode</p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4 col-sm-4">
+                                                                <div class="acc-info adds-info">
+                                                                    <h5>Ship To</h5>
+                                                                    <p>#@Model.ShippingAddress.Id @Model.ShippingAddress.Company </p>
+                                                                    <p>@Model.ShippingAddress.Address1 <br>@Model.ShippingAddress.City @Model.ShippingAddress.StateProvinceName @Model.ShippingAddress.ZipPostalCode</p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4 col-sm-4">
+                                                                <div class="invoice-table font_lato">
+                                                                    <table class="table border-collapse mb0" id="invoicedOrder">
+
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th colspan="2">
+                                                                                    Invoice
+                                                                                </th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+
+                                                                            <tr>
+                                                                                <td>Subtotal</td>
+                                                                                <td class="text-right">@Model.OrderSubtotal</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>Freight</td>
+                                                                                <td class="text-right">@Model.OrderShipping</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>Tax</td>
+                                                                                <td class="text-right">$0.00</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>Total</td>
+                                                                                <td class="text-right">@Model.OrderTotal</td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="sallitem-btns">
+                                                        <div class="add-cart-btn font_roboto">
+                                                            <a href="javascript:void(0);" id="addToCartList" hidden name="addToCartList" class="recent-btn add-to-cart-button" onclick="AjaxCart.addbulkproducttocart_details('@Url.RouteUrl("AddbulkProductToCart_Details")');return false;">Add to Cart</a>
+                                                            <a href="javascript:void(0);" id="disableAddToCartList" class="disabled recent-btn add-to-cart-button" style="background-color: #C4C4C4; cursor:not-allowed;">Add to Cart</a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="items-table-area sorder-infotable sinvoicet table-responsive font_roboto">
+                                                        <table class="table border-collapse mb0" id="tblAllItems">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th class="invoicet-blue">Line</th>
+                                                                    <th class="invoicet-blue">Item Number</th>
+                                                                    <th class="invoicet-blue">Description</th>
+                                                                    <th class="invoicet-blue">Manufacturer / #</th>
+                                                                    <th>UOM</th>
+                                                                    <th>Quantity</th>
+                                                                    <th>Ship Quantity</th>
+                                                                    <th>Price</th>
+                                                                    <th>Total</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @if (Model.Items.Count > 0)
+                                                                {
+                                                                    var count = 0;
+                                                    @foreach (var item in Model.Items)
+                                                    {
+                                                        count = count + 1;
+                                    <tr>
+                                        <td>
+                                            <div class="custom-control custom-checkbox">
+                                                <input name="line" value="1" type="checkbox" data="@item.Id" orderId="@Model.Id" orderItemId="@item.Id" class="custom-control-input" onclick="addtocartCount(this)">
+                                                <label class="custom-control-label" for="customCheck1">@count</label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <p>@item.Id</p>
+                                        </td>
+                                        <td>
+                                            <p class="invoicet-blue" style="max-width:180px;"><a class="invoicet-blue" href="@Url.RouteUrl("Product", new { SeName = item.ProductSeName })">@item.ProductName</a></p>
+                                        </td>
+                                        <td>
+                                            <p>@item.ProductManufacturers.FirstOrDefault().Name /</p>
+                                            <p>Mfr #@item.ManufacturerPartNumber</p>
+                                        </td>
+                                        <td>
+                                            <p>@item.AttributeInfo</p>
+                                        </td>
+                                        <td>
+                                            <p class="qty">@item.Quantity</p>
+                                        </td>
+                                        <td>
+                                            <p>@item.Shipped</p>
+                                        </td>
+                                        <td>
+                                            <p>@item.UnitPrice</p>
+                                        </td>
+                                        <td>
+                                            <p>@item.SubTotal</p>
+                                        </td>
+                                    </tr>
+} }
+                                                                else
+                                                                {
+                                                    <tr>
+                                                        <td>
+                                                            <div class="no-data">
+                                                                no items found.
+                                                            </div>
+                                                        </td>
+
+                                                    </tr>
+}
+
+                                                            </tbody>
+                                                        </table>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@await Html.PartialAsync("_ContactAccountManagerModal")
+<script>
+    //const { Script } = require("node:vm");
+
+    $(document).ready(function () {
+        $('#tblAllItems').DataTable({
+            "language": {
+                "info": '<div class="tpage-num"><p>Showing _START_ to _END_ of _TOTAL_ Items</p></div>'
+            },
+            "pageLength": 5,
+            "dom": 't<"jqueryPagination"ip>',
+            'pagingType': 'numbers'
+        });
+    });
+</script>
+
+@Html.Resource(@<script type="text/javascript">
+                    var items = 0;
+                    function addtocartCount(selector) {
+                        var id = $(selector).attr('data');
+                        if (items == 0) {
+                            $('#addToCartList').attr('disabled');
+                        }
+                        if (selector.checked) {
+                            $('#disableAddToCartList').hide();
+                            $('#addToCartList').show();
+                            $('#addToCartList').removeAttr('disabled');
+                            $('#addToCartList').val(`Add ITEM TO CART (${++items})`);
+                            $('[data=' + id + ']').attr('checked', true);
+                        }
+                        else {
+                            $('#addToCartList').removeAttr('disabled');
+                            $('#addToCartList').val(`Add ITEM TO CART (${--items})`);
+                            $('[data=' + id + ']').attr('checked', false);
+                        }
+                    }
+                    function hideAddToCart() {
+                        $('#addToCartList').hide();
+                    }
+                    function showAddToCart() {
+                        $('#addToCartList').show();
+                    }
+
+</script>, "js")

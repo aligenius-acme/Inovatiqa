@@ -1,0 +1,79 @@
+﻿@model Inovatiqa.Web.Models.Slider.PublicInfoModel
+@{
+    Layout = "";
+
+    @Html.Resource(@<script src="@Url.Content("~/lib/slider/jquery.nivo.slider.js")" type="text/javascript"></script>, "js")
+    @Html.Resource(@<link href="@Url.Content("~/lib/slider/nivo-slider.css")" rel="stylesheet" type="text/css" />, "css")
+    @Html.Resource(@<link href="@Url.Content("~/lib/slider/themes/custom/custom.css")" rel="stylesheet" type="text/css" />, "css")
+}
+
+<div class="slider-wrapper theme-custom">
+    <div id="nivo-slider" class="nivoSlider">
+        @{
+            var dataSlide1 = new ViewDataDictionary(ViewData)
+            {
+                {"pictureUrl", Model.Picture1Url},
+                { "text", Model.Text1},
+                { "link", Model.Link1},
+                {"alttext", Model.AltText1 }
+            };
+
+            @await Html.PartialAsync("_PublicInfo.SliderLine.cshtml", dataSlide1)
+        }
+
+        @{
+            var dataSlide2 = new ViewDataDictionary(ViewData)
+            {
+                {"pictureUrl", Model.Picture2Url},
+                { "text", Model.Text2},
+                { "link", Model.Link2},
+                {"alttext", Model.AltText2 }
+            };
+
+            @await Html.PartialAsync("_PublicInfo.SliderLine.cshtml", dataSlide2)
+        }
+
+        @{
+            var dataSlide3 = new ViewDataDictionary(ViewData)
+            {
+                {"pictureUrl", Model.Picture3Url},
+                { "text", Model.Text3},
+                { "link", Model.Link3},
+                {"alttext", Model.AltText3 },
+                { "dataTransition", "slideInLeft"}
+            };
+
+            @await Html.PartialAsync("_PublicInfo.SliderLine.cshtml", dataSlide3)
+        }
+
+        @{
+            var dataSlide4 = new ViewDataDictionary(ViewData)
+            {
+                {"pictureUrl", Model.Picture4Url},
+                { "text", Model.Text4},
+                { "link", Model.Link4},
+                {"alttext", Model.AltText4 }
+            };
+
+            @await Html.PartialAsync("_PublicInfo.SliderLine.cshtml", dataSlide4)
+        }
+
+        @{
+            var dataSlide5 = new ViewDataDictionary(ViewData)
+            {
+                {"pictureUrl", Model.Picture5Url},
+                { "text", Model.Text5},
+                { "link", Model.Link5},
+                {"alttext", Model.AltText5 }
+            };
+
+            @await Html.PartialAsync("_PublicInfo.SliderLine.cshtml", dataSlide5)
+        }
+    </div>
+</div>
+
+@Html.Resource(@<script type="text/javascript">
+    $(window).on('load', function () {
+        $('#nivo-slider').nivoSlider();
+    });
+</script>, "js")

@@ -1,0 +1,491 @@
+﻿@model Inovatiqa.Web.Models.Common.EmailModel
+@{
+    Layout = "_ColumnsOne";
+    ViewBag.Title = "Request a Quote";
+}
+
+@*
+<div class="thumbnail " style="height:1400px !important">
+    <div class="page-title panel-heading">
+        <h1>Request a quote</h1>
+    </div>
+    <div style="margin:10px">
+            <h3> Need a Quote?</h3>
+            <h4>
+                Submit the form below for volume discounts and special pricing.
+            </h4>
+
+
+            <div class="col-lg-12">
+
+                <div class="col-lg-1"></div>
+                <div class="col-lg-10">
+                    <form action="/FooterSendEmails" method="post" enctype="multipart/form-data" >
+
+
+                        <input type="text" hidden name="EmailSubject" value="Request Quote" asp-for="EmailSubject" />
+
+                        <div class="form-group col-lg-12">
+                            <label>Company / Facility Name</label>
+                            <input type="text" name="Company" data-val="true" autocomplete="off" data-val-required="The Company field is required." asp-for="Company" class="form-control input-sm" placeholder="Company Name" />
+                            <span asp-validation-for="Company" style="min-width: 100%;" class="text-danger"></span>
+                        </div>
+
+
+
+                        <div class="form-group col-lg-12">
+                            <label asp-for="CustomerFirstName"></label>
+                            <input type="text" name="CustomerFirstName" data-val="true" autocomplete="off" data-val-required="The First Name field is required." asp-for="CustomerFirstName" class="form-control input-sm" placeholder="First Name" />
+                            <span asp-validation-for="CustomerFirstName" style="min-width: 100%;" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group col-lg-12">
+                            <label asp-for="CustomerLastName"></label>
+                            <input type="text" name="CustomerLastName" data-val="true" autocomplete="off" data-val-required="The Last Name field is required." asp-for="CustomerLastName" class="form-control input-sm" placeholder="Last Name" />
+                            <span asp-validation-for="CustomerLastName" style="min-width: 100%;" class="text-danger"></span>
+                        </div>
+
+
+                        <div class="form-group col-lg-12">
+                            <label asp-for="CustomerEmail"></label>
+                            <input type="email" name="CustomerEmail" data-val="true" autocomplete="off" data-val-required="The Email field is required." asp-for="CustomerEmail" class="form-control input-sm" placeholder="Email Address" />
+                            <span asp-validation-for="CustomerEmail" style="min-width: 100%;" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group col-lg-12">
+                            <label asp-for="PhoneNumber"></label>
+                            <input type="text" name="PhoneNumber" data-val="true" autocomplete="off" data-val-required="The Phone Number field is required." asp-for="PhoneNumber" class="form-control input-sm" placeholder="PhoneNumber" />
+                            <span asp-validation-for="PhoneNumber" style="min-width: 100%;" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group col-lg-12">
+                            <label asp-for="Fax"></label>
+                            <input type="text" name="Fax" data-val="true" autocomplete="off" data-val-required="The Fax field is required." asp-for="Fax" class="form-control input-sm" placeholder="Fax" />
+                            <span asp-validation-for="Fax" style="min-width: 100%;" class="text-danger"></span>
+                        </div>
+
+
+                        <div class="form-group col-lg-12">
+                            <label asp-for="Address1"></label>
+                            <input type="text" name="Address1" data-val="true" autocomplete="off" data-val-required="The Address field is required." asp-for="Address1" class="form-control input-sm" placeholder="Address" />
+                            <span asp-validation-for="Address1" style="min-width: 100%;" class="text-danger"></span>
+                        </div>
+
+
+                        <div class="form-group col-lg-12">
+                            <label asp-for="City"></label>
+                            <input type="text" name="City" data-val="true" autocomplete="off" data-val-required="The City field is required." asp-for="City" class="form-control input-sm" placeholder="City" />
+                            <span asp-validation-for="City" style="min-width: 100%;" class="text-danger"></span>
+                        </div>
+
+
+                        <div class="form-group col-lg-12">
+                            <label asp-for="ZipCode"></label>
+                            <input type="text" name="ZipCode" data-val="true" autocomplete="off" data-val-required="The Zip Code field is required." asp-for="ZipCode" class="form-control input-sm" placeholder="State" />
+                            <span asp-validation-for="ZipCode" style="min-width: 100%;" class="text-danger"></span>
+                        </div>
+
+
+                        <div class="form-group col-lg-12">
+                            <label>Upload RFQ / Bid Documents / Specification Sheets</label>
+                            <input type="file" id="File" name="File" class="form-control input-sm" placeholder="" />
+
+                        </div>
+
+
+
+
+                        <div class="form-group col-lg-12">
+                            <label asp-for="Quantity"></label>
+                            <input type="text" name="Quantity" data-val="true" autocomplete="off" data-val-required="The Quantity field is required." asp-for="Quantity" class="form-control input-sm" placeholder="Quantity" />
+                            <span asp-validation-for="Quantity" style="min-width: 100%;" class="text-danger"></span>
+                        </div>
+
+
+                        <div class="form-group col-lg-12">
+                            <label asp-for="ManufacturerProductNumber"></label>
+                            <input type="number" name="ManufacturerProductNumber" data-val="true" autocomplete="off" data-val-required="The Manufacturer Product Number field is required." asp-for="ManufacturerProductNumber" class="form-control input-sm" placeholder="Manufacturer Product Number" />
+                            <span asp-validation-for="ManufacturerProductNumber" style="min-width: 100%;" class="text-danger"></span>
+                        </div>
+
+
+                        <div class="form-group col-lg-12">
+                            <label asp-for="Description"></label>
+                            <input type="text" name="Description" data-val="true" autocomplete="off" data-val-required="The Description field is required." asp-for="Description" class="form-control input-sm" placeholder="Description" />
+                            <span asp-validation-for="Description" style="min-width: 100%;" class="text-danger"></span>
+                        </div>
+
+
+
+
+
+                        <div class="form-group col-lg-12">
+                            <label> Comments</label>
+                            <textarea type="text" name="Message" data-val="true" autocomplete="off" data-val-required="The Comment field is required." asp-for="Message" class="form-control input-sm" style="height:125px" placeholder="Type a message"></textarea>
+
+                            <span asp-validation-for="Message" style="min-width: 100%;" class="text-danger"></span>
+                        </div>
+
+
+
+                        <div class="form-group  col-lg-12" style="margin-top:20px">
+                            <button type="submit" class="btn btn-primary  col-lg-2" style="text-align:center;"> Submit Form  </button>
+                        </div>
+
+
+                    </form>
+
+
+
+
+
+
+                </div>
+                <div class="col-lg-1"></div>
+
+
+
+            </div>
+
+
+
+            <br>
+            <br>
+            <br>
+            <br>
+
+    </div>
+</div>
+    *@
+<style>
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+    .become-customer-box{
+        box-shadow: none !important;
+    }
+    input[type=button], input[type=submit], .cancel-link {
+        font-family: Roboto !important;
+    }
+    .main-heading{
+        font-size: 21px !important;
+    }
+    .heading-quote{
+        font-size: 19px !important;
+    }
+    .helper-text{
+        font-size: 11.5px !important;
+    }
+    label, .helper-heading {
+        font-size: 13.5px !important;
+        white-space: nowrap;
+    }
+    .segment-line{
+        margin-bottom: 0px !important;
+    }
+    .newcustomer-area{
+        padding: 40px !important;
+    }
+</style>
+<section class="container-fluid newcustomer-area">
+    <div class="row">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="become-customer-box">
+                        <h4 class="main-heading">Request a Quote</h4>
+                        <hr class="segment-line">
+                        <form class="createaccount-form" style="margin-top: 25px;" action="/FooterSendEmails" method="post" enctype="multipart/form-data">
+                            @if (TempData["message"] != null && TempData["message"].ToString() != "")
+                            {
+                                <div class="alert alert-success" role="alert">
+                                    @TempData["message"]
+                                </div>
+                            }
+                            <div class="row">
+                                <div class="col-md-7">
+                                    <div class="yourself-area font_lato" style="max-width: unset;">
+                                        <div class="accountform-area font_lato" style="display: block;">
+                                            <div class="form-title">
+                                                <h5 class="heading-quote mb0 mt25" style="margin-top: 0px; margin-bottom: 10px !important;">Need a Quote?</h5>
+                                                <p style="margin-bottom: 40px;" class="helper-text">Submit the form below for volume discounts and special pricing.</p>
+                                            </div>
+                                            <input type="text" hidden name="EmailSubject" value="Request Quote" asp-for="EmailSubject" />
+                                            <input type="text" hidden name="Method" value="/request-quote" asp-for="Method" />
+
+                                            <div class="row align_center">
+                                                <div class="col-md-4 col-sm-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="required">Company / Facility Name</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8 col-sm-12 col-xs-12">
+                                                    <div class="form-group flex-col">
+                                                        <input type="text" class="form-control" name="Company" data-val="true" autocomplete="off" data-val-required="Company/Facility is required." asp-for="Company" />
+                                                        <span asp-validation-for="Company" class="error-label mt10"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 col-sm-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="required">Contact Name</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8 col-sm-12 col-xs-12">
+                                                    <div class="form-group flex-col">
+                                                        <input type="text" class="form-control" name="CustomerFirstName" data-val="true" autocomplete="off" data-val-required="Contact Name is required." asp-for="CustomerFirstName" />
+                                                        <span asp-validation-for="CustomerFirstName" class="error-label mt10"></span>
+                                                    </div>
+                                                </div>
+                                                @*
+                                <div class="col-md-8 col-sm-12 col-xs-12">
+                                    <div class="col-md-6 col-sm-12 col-xs-12" style="padding-left: 0px;">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" name="CustomerFirstName" data-val="true" autocomplete="off" data-val-required="First Name is required." asp-for="CustomerFirstName" />
+                                            <label class="small-label">First Name</label>
+                                            <span asp-validation-for="CustomerFirstName" class="error-label"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" name="CustomerLastName" data-val="true" autocomplete="off" data-val-required="Last Name is required." asp-for="CustomerLastName" />
+                                            <label class="small-label">Last Name</label>
+                                            <span asp-validation-for="CustomerLastName" class="error-label"></span>
+                                        </div>
+                                    </div>
+                                </div>*@
+                                                <div class="col-md-4 col-sm-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="required">Email Address</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8 col-sm-12 col-xs-12">
+                                                    <div class="form-group flex-col">
+                                                        <input type="email" class="form-control" name="CustomerEmail" data-val="true" autocomplete="off" data-val-required="Email is required." asp-for="CustomerEmail" />
+                                                        <span class="error-label mt10" asp-validation-for="CustomerEmail"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 col-sm-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="required">Phone Number</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8 col-sm-12 col-xs-12">
+                                                    <div class="form-group flex-col">
+                                                        <input type="tel" class="form-control" style="border: 1px solid #D1D1D1;" id="phoneNumber" name="PhoneNumber" data-val="true" autocomplete="off" data-val-required="Phone Number is required." asp-for="PhoneNumber" />
+                                                        <span class="error-label mt10" asp-validation-for="PhoneNumber"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 col-sm-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="required">Fax</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8 col-sm-12 col-xs-12">
+                                                    <div class="form-group flex-col">
+                                                        
+                                                        <input type="tel" id="fax" class="form-control" name="Fax" data-val="true" autocomplete="off" data-val-required="Phone Number is required." asp-for="Fax" />
+                                                        <span class="error-label mt10" asp-validation-for="Fax"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 col-sm-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="required">Address Line 1</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8 col-sm-12 col-xs-12">
+                                                    <div class="form-group flex-col">
+                                                        <input type="text" class="form-control" name="Address1" data-val="true" autocomplete="off" data-val-required="Address is required." asp-for="Address1" />
+                                                        <span class="error-label mt10" asp-validation-for="Address1"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 col-sm-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label>Address Line 2</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8 col-sm-12 col-xs-12">
+                                                    <div class="form-group flex-col">
+                                                        <input type="text" class="form-control" name="Address2" data-val="true" autocomplete="off" asp-for="Address2" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 col-sm-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="required">City</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8 col-sm-12 col-xs-12">
+                                                    <div class="form-group flex-col">
+                                                        <input type="text" class="form-control" name="City" data-val="true" autocomplete="off" data-val-required="City is required." asp-for="City" />
+                                                        <span class="error-label mt10" asp-validation-for="City"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 col-sm-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="required">Region / State</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8 col-sm-12 col-xs-12">
+                                                    <div class="form-group flex-col">
+                                                        @*<input class="form-control" type="text" name="State" asp-for="State" data-val="true" autocomplete="off" data-val-required="State is required." />*@
+                                                        <select class="form-control" name="State" asp-for="State" data-val="true" autocomplete="off" data-val-required="State is required.">
+                                                        <option value="">Select state</option><option value="1">AA (Armed Forces Americas)</option><option value="2">AE (Armed Forces Europe)</option><option value="3">Alabama</option><option value="4">Alaska</option><option value="5">American Samoa</option><option value="6">AP (Armed Forces Pacific)</option><option value="7">Arizona</option><option value="8">Arkansas</option><option value="9">California</option><option value="10">Colorado</option><option value="11">Connecticut</option><option value="12">Delaware</option><option value="13">District of Columbia</option><option value="14">Federated States of Micronesia</option><option value="15">Florida</option><option value="16">Georgia</option><option value="17">Guam</option><option value="18">Hawaii</option><option value="19">Idaho</option><option value="20">Illinois</option><option value="21">Indiana</option><option value="22">Iowa</option><option value="23">Kansas</option><option value="24">Kentucky</option><option value="25">Louisiana</option><option value="26">Maine</option><option value="27">Marshall Islands</option><option value="28">Maryland</option><option value="29">Massachusetts</option><option value="30">Michigan</option><option value="31">Minnesota</option><option value="32">Mississippi</option><option value="33">Missouri</option><option value="34">Montana</option><option value="35">Nebraska</option><option value="36">Nevada</option><option value="37">New Hampshire</option><option value="38">New Jersey</option><option value="39">New Mexico</option><option value="40">New York</option><option value="41">North Carolina</option><option value="42">North Dakota</option><option value="43">Northern Mariana Islands</option><option value="44">Ohio</option><option value="45">Oklahoma</option><option value="46">Oregon</option><option value="47">Palau</option><option value="48">Pennsylvania</option><option value="49">Puerto Rico</option><option value="50">Rhode Island</option><option value="51">South Carolina</option><option value="52">South Dakota</option><option value="53">Tennessee</option><option value="54">Texas</option><option value="55">Utah</option><option value="56">Vermont</option><option value="57">Virgin Islands</option><option value="58">Virginia</option><option value="59">Washington</option><option value="60">West Virginia</option><option value="61">Wisconsin</option><option value="62">Wyoming</option>
+                                                        </select>
+                                                        <span asp-validation-for="State" class="error-label mt10"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 col-sm-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="required">Postal Code</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8 col-sm-12 col-xs-12">
+                                                    <div class="form-group flex-col">
+                                                        <input type="text" maxlength="10" class="form-control" name="ZipCode" data-val="true" autocomplete="off" data-val-required="Postal Code is required." asp-for="ZipCode" />
+                                                        <span asp-validation-for="ZipCode" class="error-label mt10"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="inovatiqaway-area">
+                                        <div class="accountform-area font_lato" style="display: block;">
+                                            <div class="form-title">
+                                                <h5 class="heading-quote" style="margin-top: 0px; margin-bottom: 10px;">Select / Remove File</h5>
+                                                <p class="helper-text">Please select a file to continue.</p>
+                                                <h4 class="helper-heading">Upload RFQ / Bid Documents / Specific Sheets</h4>
+                                            </div>
+                                            <div class="createaccount-form unchecked-hidefrom_a">
+                                                <div class="row flex_col align_center">
+                                                    <div class="col-md-4 col-sm-12 col-xs-12">
+                                                        <div class="form-group" style="display: flex;">
+                                                            <input type="file" id="File" name="File" hidden style="display: none;" />
+                                                            <input type="button" class="form-control custom-file-input" value="Select File" onclick="uploadFile()">
+                                                            <input type="button" class="form-control custom-file-input" value="Remove File" style="margin-left: 10px;" onclick="RemoveFile()">
+                                                            <p class="file-text" id="FileName">No File Selected</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 col-sm-12 col-xs-12" style="padding-left: 0px;">
+                                                    <div class="inline-boxes">
+                                                        <div>
+                                                            <label class="label-quote">Quantity</label>
+                                                            <div class="form-group">
+                                                                <img src="~/images/UIComponents/down_arrow.svg" style="position: absolute; left: 115px; top: 45px;" onclick="$('#qty_field').val($('#qty_field').val() - 1)" />
+                                                                <img src="~/images/UIComponents/up_arrow.svg" style="position: absolute; left: 115px; top: 38px;" onclick="$('#qty_field').val(parseInt($('#qty_field').val()) + 1)" />
+                                                                <input type="number" class="form-control" min="1" name="Quantity" data-val="true" autocomplete="off" asp-for="Quantity" id="qty_field" />
+                                                                
+                                                            </div>
+                                                        </div>
+                                                        <div class="ml10">
+                                                            <label class="label-quote">Manufacturer Product #</label>
+                                                            <div class="form-group">
+                                                                <input type="number" class="form-control" name="ManufacturerProductNumber" data-val="true" autocomplete="off" asp-for="ManufacturerProductNumber" />
+                                                                
+                                                            </div>
+                                                        </div>
+                                                        <div class="ml10">
+                                                            <label class="label-quote">Description</label>
+                                                            <div class="form-group">
+                                                                <input type="text" class="form-control" name="Description" data-val="true" autocomplete="off" asp-for="Description" />
+                                                                
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 col-sm-12 col-xs-12" style="padding-left: 0px;">
+                                                    <div class="form-group">
+                                                        <label class="label-quote">Comment:</label>
+                                                        <textarea rows="10" class="form-control custom-textarea" name="Message" data-val="true" autocomplete="off" asp-for="Message"></textarea>
+                                                        
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="pwd-btn text-right">
+                                                        <a href="@Url.RouteUrl("Homepage")" class="cancel-link">Cancel Request</a>
+                                                        <input type="submit" value="Submit Request" class="btn btn-signin" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    $(document).ready(function () {
+         var spinner = jQuery(this),
+                input = spinner.find('input[type="number"]'),
+                btnUp = spinner.find('.quantity-up'),
+                btnDown = spinner.find('.quantity-down'),
+                min = input.attr('min'),
+                max = input.attr('max');
+
+            btnUp.click(function () {
+                var oldValue = parseFloat(input.val());
+                if (oldValue >= max) {
+                    var newVal = oldValue;
+                } else {
+                    var newVal = oldValue + 1;
+                }
+                spinner.find("input").val(newVal);
+                spinner.find("input").trigger("change");
+            });
+
+            btnDown.click(function () {
+                var oldValue = parseFloat(input.val());
+                if (oldValue <= min) {
+                    var newVal = oldValue;
+                } else {
+                    var newVal = oldValue - 1;
+                }
+                spinner.find("input").val(newVal);
+                spinner.find("input").trigger("change");
+            });
+
+ 
+        $('#fax').keypress(() => {
+            const regex = /^\(?([0-9]{4})\)?[-. ]?([0-9]{0,4})[-. ]?([0-9]{0,8})$/;
+            if (!$('#phoneNumber').val().match(regex)) {
+                const elem = document.getElementById('phoneNumber');
+                elem.style.border = '1px solid red';
+            } else {
+                const elem = document.getElementById('phoneNumber');
+                elem.style.border = '1px solid #D1D1D1';
+            }
+        });
+        $('.cancel-link').click(function () {
+            $('form').trigger("reset");
+        });
+    });
+
+
+    function uploadFile() {
+        $('#File').click();
+    }
+    $('#File').change(function () {
+        const fileName = $(this).val().split('\\').pop();
+        $('#FileName').html(fileName != '' ? fileName : 'No File Selected');
+    });
+    function RemoveFile() {
+        //document.getElementById("Filefield").value = null;
+        $('#File').val(null);
+        const fileName = $('#File').val().split('\\').pop();
+        $('#FileName').html(fileName != '' ? fileName : 'No File Selected');
+    }
+</script>

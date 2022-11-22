@@ -1,0 +1,758 @@
+﻿@using Inovatiqa.Web.Models.Order
+@model CustomerOrderItemsListModel
+@{
+    Layout = "_ColumnsOne";
+}
+@{
+    ViewBag.Title = "Orders Items";
+}
+@*
+    @Html.Resource(@<link href="@Url.Content("https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css")" rel="stylesheet" type="text/css" />, "css")
+    @Html.Resource(@<script src="@Url.Content("https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js")" type="text/javascript"></script>, "js")
+    @Html.Resource(@<script src="@Url.Content("https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js")" type="text/javascript"></script>, "js")
+    @Html.Resource(@<script src="@Url.Content("https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js")" type="text/javascript"></script>, "js")
+    @Html.Resource(@<link href="@Url.Content("https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css")" rel="stylesheet" type="text/css" />, "css")
+    @Html.Resource(@<script src="@Url.Content("https://cdnjs.cloudflare.com/ajax/libs/jquery.tipsy/1.0.3/jquery.tipsy.min.js")" type="text/javascript"></script>, "js")
+    @Html.Resource(@<link href="@Url.Content("https://cdnjs.cloudflare.com/ajax/libs/jquery.tipsy/1.0.3/jquery.tipsy.min.css")" rel="stylesheet" type="text/css" />, "css")
+    @Html.Resource(@<script src="@Url.Content("https://cdn.datatables.net/rowreorder/1.2.7/js/dataTables.rowReorder.min.js")" type="text/javascript"></script>, "js")
+    @Html.Resource(@<script src="@Url.Content("https://cdn.datatables.net/responsive/2.2.6/js/dataTables.responsive.min.js")" type="text/javascript"></script>, "js")
+    @Html.Resource(@<link href="@Url.Content("https://cdn.datatables.net/rowreorder/1.2.7/css/rowReorder.dataTables.min.css")" rel="stylesheet" type="text/css" />, "css")
+    @Html.Resource(@<link href="@Url.Content("https://cdn.datatables.net/responsive/2.2.6/css/responsive.dataTables.min.css")" rel="stylesheet" type="text/css" />, "css")
+
+    <style>
+        .shaddedleft {
+            border-left: 5px solid #5f9732 !important;
+            padding-right: 3px !important;
+            color: #5f9732 !important;
+            font-size: 0.8em !important;
+            text-transform: uppercase !important;
+        }
+
+        #filter-bar {
+            margin-left: 240px;
+            margin-bottom: -35px;
+        }
+
+        #pageTitle {
+            font-size: 1.3em;
+        }
+    </style>
+    <div class="page account-page order-list-page from-panel">
+        <div class="page-title panel-heading">
+            <h1 id="pageTitle">Submitted Item Status</h1>
+        </div>
+        <div class="page-body">
+            <div class="order-list">
+                <div class="order-list">
+                    <div class="col-md-12 product-details-tabs" id="tabbed-description">
+                        <ul class="nav nav-tabs">
+                            <li class="active ordertabs" value="0"><a href="#AllItems" value="10" data-toggle="BackOrders">All Items</a></li>
+                            <li class="ordertabs" value="25"><a href="#ShippedOrders" value="25" data-toggle="tab">Shipped Items @*(@Model.Orders.Where(x => x.OrderStatus == "Complete").Count())@</a></li>
+                            <li class="ordertabs" value="30"><a href="#BackOrders" value="30" data-toggle="tab">Back Ordered @*(@Model.Orders.Where(x => x.OrderStatus == "Complete").Count())@</a></li>
+                      </ul>
+                        <div class="tab-content">
+                            <div class="fade tab-pane in active" id="AllItems" style="font-family:Helvetica Neue,Helvetica,Arial,sans-serif;">
+
+                            </div>
+                            <div id="filter-bar" style="float: right; margin-bottom: 5px;">
+                                <label for="fromDate">From</label>
+                                <input type="text" id="fromDate" value="@DateTime.Today.AddDays(-35).ToString("MM/dd/yyyy")" class="form-control date-picker" style="width:110px;display:inline">
+                                <label for="toDate">To</label>
+                                <input type="text" id="toDate" value="@DateTime.Today.ToString("MM/dd/yyyy")" class="form-control date-picker" style="width:110px;display:inline">
+                                <a type="button" id="customer-orders-filter" title="Filters records for the last 35 days" href="#" class="btn btn-primary">Find</a>
+                                <a type="button" id="customer-orders-clear" href="#" class="btn btn-primary">Clear</a>
+                            </div>
+                            <table id="order" class="table table-bordered table-condensed table-striped">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align:center;white-space:nowrap">
+                                            Status
+                                        </th>
+                                        <th style="text-align:center;white-space:nowrap">
+                                            Item #
+                                        </th>
+                                        <th style="text-align:center;white-space:nowrap">
+                                            Description
+                                        </th>
+                                        <th style="text-align:center;white-space:nowrap">
+                                            Order #
+                                        </th>
+                                        <th style="text-align:center;white-space:nowrap">
+                                            PO
+                                        </th>
+                                        <th style="text-align:center;white-space:nowrap">
+                                            Date
+                                        </th>
+                                        <th style="text-align:center;white-space:nowrap">
+                                            UOM
+                                        </th>
+                                        <th style="text-align:center;white-space:nowrap">
+                                            Ordered
+                                        </th>
+                                        <th style="text-align:center;white-space:nowrap">
+                                                B/O
+                                        </th>
+                                        <th style="text-align:center;white-space:nowrap">
+                                            Ship
+                                        </th>
+                                        <th style="text-align:center;white-space:nowrap">
+                                            Track
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model.Orders.Count > 0)
+                                    {
+                                        @foreach (var order in Model.Orders)
+                                        {
+                                            @foreach (var item in order.Items)
+                                            {
+                                                <tr onclick="setLocation('@Url.RouteUrl("OrderDetails", new { orderId = order.Id })')" style="cursor:pointer;">
+                                                    <td class="shaddedleft">
+                                                        @order.OrderStatus
+                                                    </td>
+                                                    <td>
+                                                        <div>
+                                                            @item.Id.ToString().PadLeft(7, '0')
+                                                        </div>
+                                                        <br />
+                                                        <span style="color:grey">Mfr #@item.ManufacturerPartNumber.Replace("Mfr#", "")</span>
+                                                    </td>
+                                                    <td>
+                                                        <div>@item.ProductName</div>
+                                                        @*<span style="color:grey">@item.ProductManufacturers.FirstOrDefault().Name Ship To #121212212 </span>@
+                                                    </td>
+                                                    <td>
+                                                        <div><a href="#" onclick="setLocation('@Url.RouteUrl("OrderDetails", new { orderId = order.Id })')">@order.CustomOrderNumber</a></div>
+                                                        @*<br /><span style="color:grey">INOVATIQA CORPORATION</span>@
+                                                    </td>
+                                                    <td>
+                                                        @order.PONumber
+                                                    </td>
+                                                    <td>
+                                                        @order.CreatedOn.ToString("MM/dd/yyyy")
+                                                    </td>
+                                                    <td>
+                                                        @item.AttributeInfo.Trim()
+                                                    </td>
+                                                    <td>
+                                                        @item.Quantity
+                                                    </td>
+                                                    <td>
+                                                        @item.Bo
+                                                    </td>
+                                                    <td>
+                                                        @item.Shipped
+                                                    </td>
+                                                    <td>
+                                                        @if (order.OrderStatusId != 40)
+                                                        {
+                                                            <i class="fa fa-truck order-track-button pointer" title="Track order" orderId="@order.Id"></i>
+                                                        }
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <tr id="emptyRow">
+                                            <td colspan="11">
+                                                <div class="no-data">
+                                                    Search returned no Items from  to EndDate.
+                                                </div>
+                                            </td>
+                                            <td style="display: none;"></td>
+                                            <td style="display: none;"></td>
+                                            <td style="display: none;"></td>
+                                            <td style="display: none;"></td>
+                                            <td style="display: none;"></td>
+                                            <td style="display: none;"></td>
+                                            <td style="display: none;"></td>
+                                            <td style="display: none;"></td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                            <table id="BackOrders" style="display: none">
+                                <tr>
+                                    <td>Ali Ahmad</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @Html.Resource(@<script type="text/javascript">
+                                    $(document).ready(function () {
+                                        //$('#order').DataTable({
+                                        //    //"bPaginate": true,
+                                        //    "bLengthChange": false,
+                                        //    //"bFilter": true,
+                                        //    //"bInfo": true,
+                                        //    //"bAutoWidth": true,
+                                        //    language: {
+                                        //        search: "Find",
+                                        //        //searchPlaceholder: "Filter records..."
+                                        //    },
+                                        //    //"order": [[3, "desc"]],
+                                        //    //rowReorder: {
+                                        //    //    selector: 'td:nth-child(2)'
+                                        //    //},
+                                        //    "dom": '<"pull-left"f><"pull-right"l>tip',
+                                        //    responsive: true
+                                        //});
+
+                                        //$('#order').DataTable();
+                                        let searchParams = new URLSearchParams(window.location.search);
+                                        var shippedItems = 0;
+                                        if (searchParams.has('shippedItems')) {
+                                            $('.order-list li').removeClass("active");
+                                            $('.order-list li[value="' + searchParams.get('shippedItems') + '"]').addClass("active");
+                                        }
+                                        var isReturnview = @Model.IsReturnView.ToString().ToLower();
+
+                                        if(!isReturnview)
+                                            shippedItems = $('.ordertabs').val();
+
+                                        $('#customer-orders-filter').tipsy();
+
+                                        //$("#newSearchPlace").html($(".dataTables_filter"));
+                                        //$('#order_filter').find('input').css({ "font-weight": "100" })
+
+                                        $('.date-picker').datepicker();
+                                        $('.ui-datepicker').css('font-size', '11px');
+                                        $("#customer-orders-filter").click(function () {
+                                            reloadwithParams();
+                                        });
+                                        $(".ordertabs").click(function () {
+                                            reloadwithParams();
+                                        });
+                                        function reloadwithParams() {
+                                            var startDateValue = $("#fromDate").val();
+                                            var endDateValue = $("#toDate").val();
+
+                                            if (startDateValue == '' || endDateValue == '') {
+                                                alert("Please select date range first!");
+                                                return;
+                                            }
+
+                                            if ($.datepicker.parseDate("mm/dd/yy", endDateValue) < $.datepicker.parseDate("mm/dd/yy", startDateValue)) {
+                                                alert("End date must be greater than start date!");
+                                                return;
+                                            }
+                                            if ($(event.currentTarget).attr('class').search("ordertabs") != -1) {
+                                                console.log('Hit 1');
+                                                shippedItems = $(event.currentTarget).attr('value');
+                                            }
+                                            else if (searchParams.has('shippedItems')){
+                                                shippedItems = searchParams.get('shippedItems');
+                                                console.log('Hit 2');
+                                            }
+                                            if (isReturnview)
+                                                setLocation('@Url.RouteUrl("CustomerOrderItems")?startDateValue=' + startDateValue + '&endDateValue=' + endDateValue + '&shippedItems=' + shippedItems + '&returnView=true');
+                                            else {
+                                                //orderStatusId = $('li.active a').attr("value");
+                                                setLocation('@Url.RouteUrl("CustomerOrderItems")?startDateValue=' + startDateValue + '&endDateValue=' + endDateValue + '&shippedItems=' + shippedItems);
+                                            }
+                                        }
+
+                                        $("#customer-orders-clear").click(function () {
+                                            debugger;
+                                            if (isReturnview)
+                                                setLocation('@Url.RouteUrl("CustomerOrderItems")?returnView=true');
+                                            else {
+                                                setLocation('@Url.RouteUrl("CustomerOrderItems")');
+                                            }
+                                        });
+
+                                        if (searchParams.has('startDateValue') && searchParams.has('endDateValue')) {
+                                            $("#fromDate").val(searchParams.get('startDateValue'));
+                                            $("#toDate").val(searchParams.get('endDateValue'));
+                                            $('#pageTitle').append(" " + searchParams.get('startDateValue') + " to " + searchParams.get('endDateValue'));
+                                            $('#emptyRow td').eq(0).text($('#emptyRow td').eq(0).text().replace("StartDate", searchParams.get('startDateValue')));
+                                            $('#emptyRow td').eq(0).text($('#emptyRow td').eq(0).text().replace("EndDate", searchParams.get('endDateValue')));
+                                        }
+                                        else {
+                                            var dateOffset = (24 * 60 * 60 * 1000) * 35; //5 days
+                                            var myDate = new Date();
+                                            myDate.setTime(myDate.getTime() - dateOffset);
+                                            $('#pageTitle').append(" " + formatDate(myDate) + " to " + formatDate(new Date()));
+                                        }
+
+                                        $(".order-track-button").click(function () {
+                                            var orderId = $(this).attr("orderId");
+                                            var url = "/orderdetails/" + orderId + "?trackView=true";
+                                            window.location.href = url;
+                                        });
+                                        function formatDate(date) {
+                                            var d = new Date(date),
+                                                month = '' + (d.getMonth() + 1),
+                                                day = '' + d.getDate(),
+                                                year = d.getFullYear();
+
+                                            if (month.length < 2)
+                                                month = '0' + month;
+                                            if (day.length < 2)
+                                                day = '0' + day;
+
+                                            return [month, day, year].join('/');
+                                        }
+                                        $('#order').DataTable({
+                                            "dom": '<"pull-left"f><"pull-right"l>t<"pull-left"i><"pull-right"p>',
+                                            language: {
+                                                search: "Find",
+                                                //searchPlaceholder: "Filter records..."
+                                            },
+                                            "bLengthChange": false
+                                        });
+                                    });
+    </script>, "js")
+*@
+<style>
+
+    .jqueryPagination{
+        display: @(Model.Orders.Count > 0 ? "flex" : "none");
+        justify-content: space-between;
+        margin: 8px 12px;
+
+    }
+    .paging_numbers span a {
+        margin-right: 5px;
+        cursor: pointer;
+        color: #636363;
+    }
+    .paging_numbers span .current{
+        color: #000;
+    }
+    .jqueryPagination p {
+        font-family: Lato;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 13.5px;
+        letter-spacing: 0.05em;
+        color: #636363;
+        margin-bottom:unset;
+    }
+
+    @*
+    .jqueryPagination{
+        display: @(Model.Orders.Count > 0 ? "flex" : "none");
+        justify-content: space-between;
+        margin: 8px 12px;
+    }
+    .paging_numbers span a {
+        margin-right: 5px;
+        cursor: pointer;
+    }
+    .paging_numbers span .current{
+        color: #000;
+    }
+    .jqueryPagination p {
+        font-family: Lato;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 13.5px;
+        letter-spacing: 0.05em;
+        color: #636363;
+    }
+    table{
+        margin-bottom: 0px !important;
+    }
+    .paginate_button{
+        margin-right: 5px;
+        cursor: pointer !important;
+    }
+    .current, .current:hover, .current:focus{
+        color: black;
+        cursor: initial;
+
+    }*@
+</style>
+@await Html.PartialAsync("_DashboardBlueBand")
+
+<section class="container-fluid orderstatus-area">
+    <div class="row">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="dashboard-area">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="sidebar_menu font_lato">
+                                    <h3>Inovatiqa Dashboard</h3>
+                                    @await Html.PartialAsync("_DashboardSideBar", "inovatiqa-orders")
+                                </div>
+                            </div>
+
+                            <div class="col-md-9">
+                                <div class="order-deatil-area">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="tabs font_lato">
+                                                @await Html.PartialAsync("_OrderNewTopBar", "item-status")
+                                                <hr>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="order-content">
+
+                                                <div class="tab-content" style="border: none !important;">
+                                                    <div class="contact-manager text-right font_roboto">
+                                                        <a href="#" class="btn conatct-btnpopup" data-toggle="modal" data-target="#contact-mform">Contact Your Account Manager</a>
+                                                    </div>
+                                                    <div class="item-btns font_lato">
+
+                                                        <a href="#AllItems" value="0" data-toggle="BackOrders" class="ordertabs btn btn-items @(Model.ActiveStatusId == 0 ? "active" : "")">All Items <span>[@(Model.ShippedItemsCount + Model.BackorderItemsCount)]</span></a>
+                                                        <a href="#ShippedOrders" value="25" data-toggle="tab" class="ordertabs btn btn-items @(Model.ActiveStatusId == 25 ? "active" : "")">Shipped Items <span>[@Model.ShippedItemsCount]</span></a>
+                                                        <a href="#BackOrders" value="30" data-toggle="tab" class="ordertabs btn btn-items @(Model.ActiveStatusId == 30 ? "active" : "")">Backordered Items<span>[@Model.BackorderItemsCount]</span></a>
+                                                    </div>
+
+                                                    <div class="order-find-area">
+                                                        <div class="find-fields font_lato">
+                                                            <div class="form-group">
+                                                                <label>Find</label>
+                                                                <input type="text" class="form-control" id="search">
+                                                            </div>
+
+                                                            @*<div class="form-group">
+                                                                <label>In</label>
+                                                                <select class="form-control" id="columnSelector">
+                                                                    <option value="-1">All Fields</option>
+                                                                    <option value="1">Item Number</option>
+                                                                    <option value="2">Description</option>
+                                                                    <option value="3">Order Number</option>
+                                                                    <option value="4">UOM</option>
+                                                                </select>
+                                                            </div>*@
+                                                        </div>
+
+                                                        <div class="date-fileds font_lato">
+                                                            <div class="form-group">
+                                                                <label>From</label>
+                                                                <input type="text" id="fromDate" value="@DateTime.Today.AddDays(-35).ToString("MM/dd/yyyy")" class="form-control date-picker" placeholder="7/2/2021">
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label>To</label>
+                                                                <input type="text" id="toDate" value="@DateTime.Today.ToString("MM/dd/yyyy")" class="form-control date-picker" placeholder="7/2/2021">
+                                                            </div>
+
+                                                            <div class="find-btn font_roboto">
+                                                                <input type="submit" id="customer-orders-filter" value="Find" class="btn btn-signin" />
+                                                                <input type="submit" id="customer-orders-clear" value="Clear" class="btn btn-signin" />
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="print-fileds font_lato" style="max-width:240px;">
+                                                            <div class="form-group" style="justify-content:flex-end; ">
+                                                                @*<select class="form-control" onchange="window.location.href = '/order/items/history?filterCategoryId='+$('#filterCategaries').val()" id="filterCategaries">*@
+                                                                <select class="form-control" id="filterCategaries">
+                                                                    <option>View All Categories</option>
+                                                                    @if (Model.AvailableCatagories.Count > 0)
+                                                                    {
+                                                                        foreach (var Categories in Model.AvailableCatagories)
+                                                                        {
+                                                                            if(Model.SelectedCategory == Categories.Key)
+                                                                            {
+                                                                                <option selected value="@Categories.Key">@Categories.Value</option>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <option value="@Categories.Key">@Categories.Value</option>
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                </select>
+                                                            </div>
+
+                                                            <div class="print-button font_roboto">
+                                                                <a href="#" class="btn btn-print"><img src="~/images/UIComponents/print-btn-img.svg">Print</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="items-table-area table-responsive font_roboto">
+                                                        <table class="table border-collapse mb0" id="order">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Date</th>
+                                                                    <th>Item Number</th>
+                                                                    <th>Description</th>
+                                                                    <th>Order Number</th>
+                                                                    <th>UOM</th>
+                                                                    <th>Price</th>
+                                                                    <th>PO</th>
+                                                                    <th>Ordered</th>
+                                                                    <th>B/O</th>
+                                                                    <th>Ship</th>
+                                                                    <th>Track</th>
+                                                                </tr>
+                                                            </thead>
+
+                                                            <tbody>
+                                                                @if (Model.Orders.Count > 0)
+                                                                {
+                                                                    foreach (var order in Model.Orders)
+                                                                    {
+                                                                        foreach (var item in order.Items)
+                                                                        {
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <p>@order.CreatedOn.ToString("MM/dd/yyyy")</p>
+                                                                                    <span><p class="complete-blue">@order.OrderStatus</p></span>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <p class="num-green">@item.Sku</p>
+                                                                                </td>
+                                                                                <td style="width: 30%;">
+                                                                                    <a style="color:unset;" href="@Url.RouteUrl("Product", new { SeName = item.ProductSeName })"><p style="color:unset;">@item.ProductName</p></a>
+                                                                                    <p class="des-fontsize">Mfr #@item.ManufacturerPartNumber.Replace("Mfr#", "") @item.ProductManufacturers.FirstOrDefault().Name</p>
+                                                                                    <p class="des-orange">[DC Houston, TX] Item being packaged, Delivery expected on 6/14/2021</p>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <p class="num-green pointer" onclick="setLocation('@Url.RouteUrl("OrderDetails", new { orderId = order.Id })')">@order.Id</p>
+                                                                                </td>
+                                                                                <td>
+                                                                                   <p>@item.AttributeInfo.Trim()</p>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <p>@item.UnitPrice</p>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <p>@order.PONumber</p>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <p>@item.Quantity</p>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <p class="b-black">@item.Bo</p>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <p class="ship-orange">@item.Shipped</p>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <p class="track-blue order-track-button pointer" orderId="@order.Id">Track</p>
+                                                                                </td>
+                                                                            </tr>
+                                                                        }
+                                                                    }
+                                                                }
+                                                                else
+                                                                {
+                                                                    <tr id="emptyRow">
+                                                                        <td colspan="11">
+                                                                            <div class="no-data">
+                                                                                No item found.
+                                                                            </div>
+                                                                        </td>
+                                                                        <td style="display: none;"></td>
+                                                                        <td style="display: none;"></td>
+                                                                        <td style="display: none;"></td>
+                                                                        <td style="display: none;"></td>
+                                                                        <td style="display: none;"></td>
+                                                                        <td style="display: none;"></td>
+                                                                        <td style="display: none;"></td>
+                                                                        <td style="display: none;"></td>
+                                                                    </tr>
+                                                                }
+
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<form action="/FooterSendEmails" method="post" id="form">
+    <input type="text" hidden name="Method" value="@Url.RouteUrl("CustomerOrderItems")" />
+    @await Html.PartialAsync("_ContactAccountManagerModal")
+</form>
+@Html.Resource(@<script type="text/javascript">
+                        $(document).ready(function () {
+                            var table = $('#order').DataTable({
+                                "language": {
+                                    "info": '<div class="tpage-num"><p>Showing _START_ to _END_ of _TOTAL_ Items</p></div>'
+                                },
+                                "pageLength": 5,
+                                "dom": 't<"jqueryPagination"ip>',
+                                'pagingType': 'numbers',
+                                'ordering': false
+                            });
+                            function filterByColumn() {
+                                table
+                                        .search(this.value)
+                                        .draw();
+                                //var columnNumber = Number($('#columnSelector').val());
+                                //if (columnNumber != -1) {
+                                //    table
+                                //        .column(columnNumber)
+                                //        .search(this.value)
+                                //        .draw();
+                                //}
+                                //else {
+                                //    table
+                                //        .search(this.value)
+                                //        .draw();
+                                //}
+                            }
+                            $('#search').keyup(filterByColumn);
+                           
+                                                        //$('#order').DataTable({
+                                                        //    //"bPaginate": true,
+                                                        //    "bLengthChange": false,
+                                                        //    //"bFilter": true,
+                                                        //    //"bInfo": true,
+                                                        //    //"bAutoWidth": true,
+                                                        //    language: {
+                                                        //        search: "Find",
+                                                        //        //searchPlaceholder: "Filter records..."
+                                                        //    },
+                                                        //    //"order": [[3, "desc"]],
+                                                        //    //rowReorder: {
+                                                        //    //    selector: 'td:nth-child(2)'
+                                                        //    //},
+                                                        //    "dom": '<"pull-left"f><"pull-right"l>tip',
+                                                        //    responsive: true
+                                                        //});
+
+                                                        /*$('#search').on('keyup', function(){
+                                                            const columnNumber = Number($('#columnSelector').val());
+                                                            const Query = $('#search').val();
+                                                            if(columnNumber != 0){
+                                                                table
+                                                                    .columns(columnNumber)
+                                                                    .search(Query)
+                                                                    .draw();
+                                                            }
+                                                            else{
+                                                                table.search(Query).draw();
+                                                            }
+                                                        });*/
+
+
+                                                        let searchParams = new URLSearchParams(window.location.search);
+                                                        var shippedItems = 0;
+                                                        if (searchParams.has('shippedItems')) {
+                                                            $('.order-list li').removeClass("active");
+                                                            $('.order-list li[value="' + searchParams.get('shippedItems') + '"]').addClass("active");
+                                                        }
+                                                        var isReturnview = @Model.IsReturnView.ToString().ToLower();
+
+                                                        if(!isReturnview)
+                                                            shippedItems = $('.ordertabs').val();
+
+                                                        @*$('#customer-orders-filter').tipsy();*@ // creating an issue that was not allowing below code to execute... commented by Ali Ahmad from old UI
+
+                                                        //$("#newSearchPlace").html($(".dataTables_filter"));
+                                                        //$('#order_filter').find('input').css({ "font-weight": "100" })
+
+                                                        $('.date-picker').datepicker();
+                                                        $('.ui-datepicker').css('font-size', '11px');
+                                                        $("#customer-orders-filter").click(function () {
+                                                            reloadwithParams();
+                                                        });
+                                                        $(".ordertabs").click(function () {
+                                                            reloadwithParams();
+                                                        });
+                                                        function reloadwithParams() {
+                                                            var startDateValue = $("#fromDate").val();
+                                                            var endDateValue = $("#toDate").val();
+                                                            var category = Number($("#filterCategaries").val());
+
+                                                            if (startDateValue == '' || endDateValue == '') {
+                                                                alert("Please select date range first!");
+                                                                return;
+                                                            }
+
+                                                            if ($.datepicker.parseDate("mm/dd/yy", endDateValue) < $.datepicker.parseDate("mm/dd/yy", startDateValue)) {
+                                                                alert("End date must be greater than start date!");
+                                                                return;
+                                                            }
+                                                            if ($(event.currentTarget).attr('class').search("ordertabs") != -1) {
+                                                                console.log('Hit 1');
+                                                                shippedItems = $(event.currentTarget).attr('value');
+                                                            }
+                                                            else if (searchParams.has('shippedItems')){
+                                                                shippedItems = searchParams.get('shippedItems');
+                                                                console.log('Hit 2');
+                                                            }
+                                                            if (isReturnview) {
+                                                                setLocation('@Url.RouteUrl("CustomerOrderItems")?startDateValue=' + startDateValue + '&endDateValue=' + endDateValue + '&filterCategoryId=' + category + '&shippedItems=' + shippedItems + '&returnView=true');
+                                                            }
+                                                            //else if ($('#filterCategaries').val() > 0) {
+                                                              //  setLocation('UrlRouteUrl"CustomerOrderItems")?startDateValue=' + startDateValue + '&endDateValue=' + endDateValue + '&filterCategoryId=' + category  + '&shippedItems=' + shippedItems);
+                                                            //}
+                                                            else {
+                                                                //orderStatusId = $('li.active a').attr("value");
+                                                                setLocation('@Url.RouteUrl("CustomerOrderItems")?startDateValue=' + startDateValue + '&endDateValue=' + endDateValue + '&filterCategoryId=' + category  + '&shippedItems=' + shippedItems);
+                                                            }
+                                                        }
+
+                                                        $("#customer-orders-clear").click(function () {
+                                                            debugger;
+                                                            if (isReturnview)
+                                                                setLocation('@Url.RouteUrl("CustomerOrderItems")?returnView=true');
+                                                            else {
+                                                                setLocation('@Url.RouteUrl("CustomerOrderItems")');
+                                                            }
+                                                        });
+
+                                                        if (searchParams.has('startDateValue') && searchParams.has('endDateValue')) {
+                                                            $("#fromDate").val(searchParams.get('startDateValue'));
+                                                            $("#toDate").val(searchParams.get('endDateValue'));
+                                                            $('#pageTitle').append(" " + searchParams.get('startDateValue') + " to " + searchParams.get('endDateValue'));
+                                                            $('#emptyRow td').eq(0).text($('#emptyRow td').eq(0).text().replace("StartDate", searchParams.get('startDateValue')));
+                                                            $('#emptyRow td').eq(0).text($('#emptyRow td').eq(0).text().replace("EndDate", searchParams.get('endDateValue')));
+                                                        }
+                                                        else {
+                                                            var dateOffset = (24 * 60 * 60 * 1000) * 35; //5 days
+                                                            var myDate = new Date();
+                                                            myDate.setTime(myDate.getTime() - dateOffset);
+                                                            $('#pageTitle').append(" " + formatDate(myDate) + " to " + formatDate(new Date()));
+                                                        }
+
+                                                        $(".order-track-button").click(function () {
+                                                            var orderId = $(this).attr("orderId");
+                                                            var url = "/orderdetails/" + orderId + "?trackView=true";
+                                                            window.location.href = url;
+                                                        });
+                                                        function formatDate(date) {
+                                                            var d = new Date(date),
+                                                                month = '' + (d.getMonth() + 1),
+                                                                day = '' + d.getDate(),
+                                                                year = d.getFullYear();
+
+                                                            if (month.length < 2)
+                                                                month = '0' + month;
+                                                            if (day.length < 2)
+                                                                day = '0' + day;
+
+                                                            return [month, day, year].join('/');
+                                                        }
+                                                        @*$('#order').DataTable({
+                                        "dom": '<"pull-left"f><"pull-right"l>t<"pull-left"i><"pull-right"p>',
+                                        language: {
+                                            search: "Find",
+                                            //searchPlaceholder: "Filter records..."
+                                        },
+                                        "bLengthChange": false
+                                    });*@
+                                            
+                                                    });
+    </script>, "js")

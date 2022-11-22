@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Localization\**" />
+    <EmbeddedResource Remove="Localization\**" />
+    <None Remove="Localization\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Inovatiqa.Core\Inovatiqa.Core.csproj" />
+    <ProjectReference Include="..\Inovatiqa.Database\Inovatiqa.Database.csproj" />
+    <PackageReference Include="NEST" Version="7.13.2" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-rc0001" />
+    <PackageReference Include="Square" Version="12.0.0" />
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.1.0" />
+    <PackageReference Include="System.ServiceModel.Duplex" Version="4.4.*" />
+    <PackageReference Include="System.ServiceModel.Http" Version="4.4.*" />
+    <PackageReference Include="System.ServiceModel.NetTcp" Version="4.4.*" />
+    <PackageReference Include="System.ServiceModel.Security" Version="4.4.*" />
+    <PackageReference Include="iTextSharp.LGPLv2.Core" Version="1.6.7" />
+    <PackageReference Include="MaxMind.GeoIP2" Version="3.2.0" />
+    <PackageReference Include="MailKit" Version="2.6.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,38 @@
+@model ProductModel
+
+    <div class="panel-body">
+        @if (Model.Id > 0)
+        {
+            if (Model.ProductAttributesExist)
+            {
+
+                if (Model.CanCreateCombinations)
+                {
+                    <nop-tabs id="productattribute-edit" asp-tab-name-to-select="tab-attributes" asp-render-selected-tab-input="false">
+                        <nop-tab asp-name="tab-attributes" asp-title="Attributes" asp-default="true">@await Html.PartialAsync("_CreateOrUpdate.ProductAttributes.Info", Model)</nop-tab>
+                        <nop-tab asp-name="tab-attribute-combinations" asp-title="Attribute combinations">@await Html.PartialAsync("_CreateOrUpdate.ProductAttributes.Combinations", Model)</nop-tab>
+                    </nop-tabs>
+                }
+                else
+                {
+                    @await Html.PartialAsync("_CreateOrUpdate.ProductAttributes.Info", Model)
+                }
+            }
+            else
+            {
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        No product attributes available. Create at least one product attribute before mapping.
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    You need to save the product before you can add attributes for this page.
+                </div>
+            </div>
+        }
+    </div>

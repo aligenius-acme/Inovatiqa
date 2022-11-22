@@ -1,0 +1,33 @@
+﻿@model CategoryNavigationModel
+@*
+<div class="block block-category-navigation well" style="max-height: 17em; overflow-y: auto;">
+    <div class="title">
+        <strong>Narrow your search results</strong>
+    </div>
+    <div class="listbox">
+        <input type="text" class="form-control" id="narrow-result-filter-text" />
+        <br />
+        <a type="button" id="narrow-result-filter-button" style="float:right;" href="#" class="btn btn-primary">Search</a>
+        @Html.Resource(@<script type="text/javascript">
+                $(document).ready(function () {
+                    searchParams = new URLSearchParams(window.location.search);
+                    if (searchParams.has('term'))
+                        $("#narrow-result-filter-text").val(searchParams.get('term'));
+                });
+
+                $("#narrow-result-filter-button").on("click", function (event) {
+                    if ($("#narrow-result-filter-text").val() == "") {
+                        alert('@Html.Raw(JavaScriptEncoder.Default.Encode("Please enter some search keyword"))');
+                        $("#narrow-result-filter-text").focus();
+                        event.preventDefault();
+                    }
+                    else {
+                        var currentLocation = window.location.origin + window.location.pathname + "?term=" + $("#narrow-result-filter-text").val();
+                        window.location.href = currentLocation;
+                    }
+                });
+        </script>, "js")
+    </div>
+</div>
+
+    *@

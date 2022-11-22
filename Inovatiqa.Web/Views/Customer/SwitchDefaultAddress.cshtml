@@ -1,0 +1,58 @@
+﻿@model ChooseAddressModel
+@{
+    Layout = "_ColumnsOne";
+
+    ViewBag.Title = "Switch Address";
+}
+<section class="container-fluid k shipping_add">
+    <div class="row">
+        <div class="container font_lato" style="background-color: #fff; box-shadow: 0px 4px 4px 0px rgb(0 0 0 / 25%);
+					border-radius: 4px;">
+            <div class="row default_spacing">
+                <div class="col-md-8">
+                    <div class="adress_selection">
+                        <h2>Select a @(Model.Type == 1 ? "Billing" : "Shipping") Address</h2>
+                        <hr class="line">
+                    </div>
+                    <div class="row">
+                        @foreach (var address in Model.AllAddresses)
+                        {
+                            <div class="col-md-3 col-sm-3">
+                                <div class="shipping_details">
+                                    <h3>#@address.Id</h3>
+                                    <h4>@(address.Company != null && address.Company != "" ? address.Company : "N/A")</h4>
+                                    <p>@address.Address1</p>
+                                    <p>@address.City, @(address.StateProvince != null ? address.StateProvince.Abbreviation : "N/A") @address.ZipPostalCode</p>
+                                    <a href="@Url.RouteUrl("SwitchAddress", new { type = Model.Type, id = address.Id})" class="btn primary edit font_roboto">@(Model.Type == 1 ? "Bill" : "Ship") to this address</a>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="adress_selection">
+                        <h2>Current Selection</h2>
+                        <hr class="line">
+                    </div>
+                    <div class="current_data">
+                        <div class="adress">
+                            <h2>Your Billing Account</h2>
+                            @if (Model.DefaultAddress != null)
+                            {
+                                <h3># @Model.DefaultAddress.Id</h3>
+                                <h4>@Model.DefaultAddress.Company</h4>
+                                <p>@Model.DefaultAddress.Address1</p>
+                                <p>@Model.DefaultAddress.City, @(Model.DefaultAddress.StateProvince != null ? Model.DefaultAddress.StateProvince.Abbreviation : "N/A")  @Model.DefaultAddress.ZipPostalCode</p>
+                            }
+                            else
+                            {
+                                <h4 style="margin-top: 5%;">No billing address found against your account.</h4>
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

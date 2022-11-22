@@ -1,0 +1,402 @@
+﻿@{
+    Layout = "_Root.Head";
+}
+@await Html.PartialAsync("_Notifications")
+@await Component.InvokeAsync("AdminHeaderLinks")
+@*<div class="master-wrapper-page container">
+    <div class="master-wrapper-content">
+        @Html.Resource(@<script type="text/javascript">
+                            var localized_data = {
+                                AjaxCartFailure: "Failed to add the product. Please refresh the page and try one more time."
+                            };
+                            AjaxCart.init(false, '.header-links .cart-qty', '.header-links .wishlist-qty', '#flyout-cart', localized_data);
+        </script>, "js")*@
+@*await Html.PartialAsync("_Header")
+    @*await Html.PartialAsync("_Menu")*@
+
+@*if (IsSectionDefined("Breadcrumb"))
+            {
+                @RenderSection("Breadcrumb")
+            }
+            @if (IsSectionDefined("additionalMeta"))
+            {
+                @section additionalMeta {
+                    @RenderSection("additionalMeta")
+                }
+            }
+            @RenderBody()
+            @*ajax loading window
+            <div class="ajax-loading-block-window" style="display: none">
+                <div class="loading-image">
+                </div>
+            </div>
+            <div class="content">
+                <div class="row">
+                    @RenderBody()
+                </div>
+            </div>
+            @Html.Resource(@<script type="text/javascript">
+                $(document).ready(function () {
+                    var cookie = Cookies.get(".Inovatiqa.Accept");
+                    if(cookie == undefined || cookie == null)
+                        $('#eu-cookie-bar-notification').show();
+                    else
+                        $('#eu-cookie-bar-notification').hide();
+                    $('#eu-cookie-ok').on('click', function () {
+                        Cookies.set('.Inovatiqa.Accept', 'true', { expires: 365, secure: true })
+                        $('#eu-cookie-bar-notification').hide();
+                        @*$.ajax({
+                            cache: false,
+                            type: "POST",
+                            url: "@Url.RouteUrl("EuCookieLawAccept")",
+                            dataType: "json",
+                            success: function (data, textStatus, jqXHR) {
+                                $('#eu-cookie-bar-notification').hide();
+                            },
+                            error: function (jqXHR, textStatus, errorThrown) {
+                                alert('Cannot store value');
+                            }
+                        });
+                    });
+                });
+            </script>, "js")
+            <div id="eu-cookie-bar-notification" class="eu-cookie-bar-notification" style="display:none">
+                <div class="content">
+                    <div class="text">Cookies help us deliver our services. By using our services, you agree to our use of cookies.</div>
+                    <div class="buttons-more">
+                        <input type="button" class="ok-button button-1 btn btn-primary" id="eu-cookie-ok" value="OK" />
+                    </div>
+                </div>
+            </div>
+            <style>
+                .footer ul.nav li a {
+                padding:2px;
+                }
+            </style>
+            <div class="footer">
+                <div class="footer-top">
+                    <div class="footer-zone row">
+                        <div class="column information col-sm-3 col-md-3">
+                            <h3>
+                                Customer Care
+                            </h3>
+                            <ul class="nav nav-list">
+                                <li><a href="@Url.RouteUrl("ContactUs")">Contact Us</a></li>
+                                @*<li><a href="@Url.RouteUrl("AboutUs")">About Us</a></li>
+                                <li><a href="@Url.RouteUrl("OrderStatus")"> Order Status</a></li>
+                                <li><a href="@Url.RouteUrl("ReturnPolicy")"> Return Policy</a></li>
+                                <li><a href="@Url.RouteUrl("ShippingPolicy")"> Shipping Policy</a></li>
+                                <li><a href="@Url.RouteUrl("PurchaseOrders")"> Purchase Orders</a></li>
+                                <li><a href="@Url.RouteUrl("PaymentOptions")"> Payment Options</a></li>
+                                <li><a href="@Url.RouteUrl("ReOrderManagement")"> Re-Order Management</a></li>
+                                <li><a href="@Url.RouteUrl("FAQHelpCenter")"> FAQ’s Help Center</a></li>
+                            </ul>
+                        </div>
+                        <div class="column customer-service col-sm-3 col-md-3">
+                            <h3> Resources </h3>
+                            <ul class="nav nav-list">
+                                @*<li style="float:none"><a href="@Url.RouteUrl("ProductSearch")">Search</a> </li>
+                                @*<li><a href="@Url.RouteUrl("NewsArchive")">News</a></li>
+                                @*<li><a href="@Url.RouteUrl("RecentlyViewedProducts")">Recently viewed products</a></li>
+            <li><a href="@Url.RouteUrl("CompareProducts")">Compare products list</a></li>
+            <li><a href="@Url.RouteUrl("NewProducts")">New Products</a></li>
+
+                                <li><a href="@Url.RouteUrl("Homepage")"> Sale Items</a></li>  @*  ?
+                                <li><a href="@Url.RouteUrl("RXPrescription")"> RX Prescription </a></li>  @*  ?
+                                <li><a href="@Url.RouteUrl("ECatalogs")"> E-Catalogs  </a></li>  @*  ?
+                                <li><a target="_blank" href="https://www.4mdmedical.com/media/assets/4MD_Medical_PO_FORM.pdf"> Order Form  </a></li>  @*  ?
+                                <li><a href="#"> Press Releases  </a></li>  @*  ?
+
+                            </ul>
+                        </div>
+                        <div class="column my-account col-sm-3 col-md-3">
+                            <h3>Services</h3>
+                            <ul class="nav nav-list">
+                                @*<li><a href="@Url.RouteUrl("CustomerAddresses")">Account</a></li>
+            <li><a href="@Url.RouteUrl("CustomerOrders")">Orders</a></li>
+                                @*<li><a href="@Url.RouteUrl("")">Addresses</a></li>
+                                @*<li><a href="@Url.RouteUrl("ShoppingCart")">Shopping cart</a></li>
+            <li><a href="@Url.RouteUrl("Wishlist")">Wishlist</a></li>
+            <li><a href="@Url.RouteUrl("ApplyVendorAccount")">Apply for vendor account</a></li>
+
+
+                                <li><a href="@Url.RouteUrl("RequestQuote")">  Request a Quote</a></li>  @*  ?
+                                <li><a href="@Url.RouteUrl("PurchaseOrders")">  Net 30 Terms</a></li>
+                                <li><a href="@Url.RouteUrl("ContractPricing")"> Contract Pricing</a></li>  @*  ?
+                                <li><a href="@Url.RouteUrl("PaymentTerms")"> Payment Terms </a></li>  @*  ?
+                                <li><a href="@Url.RouteUrl("GPOPurchasing")"> GPO Purchasing</a></li>  @*  ?
+                                <li><a href="@Url.RouteUrl("PriceMatch")"> Price Match</a></li>  @*  ?
+
+
+
+                            </ul>
+
+                        </div>
+                        <div class="column follow-us col-sm-3 col-md-3">
+                            <h3>Company Information</h3>
+                            <ul class="nav nav-list">  @*social-icons">
+                                @*Naveed Modifications
+                                @*<li class="facebook"><i class="fa fa-facebook pointer"></i><a href="https://www.facebook.com/" target="_blank">Facebook</a></li>
+            <li class="twitter"><i class="fa fa-twitter pointer"></i><a href="https://twitter.com/?lang=en" target="_blank">Twitter</a></li>
+            <li class="youtube"><i class="fa fa-youtube pointer"></i><a href="https://www.youtube.com/" target="_blank">Youtube</a></li>
+
+                                <li><a href="@Url.RouteUrl("AboutUs")">   About Us</a></li>
+                                <li><a href="@Url.RouteUrl("CustomersWeServe")">   Customers We Serve</a></li>
+                                <li><a href="@Url.RouteUrl("WhyInovatiqa")">   Why Inovatiqa?</a></li>
+                                <li><a href="@Url.RouteUrl("Testimonials")">   Testimonials </a></li>  @*Create view
+                                <li><a href="@Url.RouteUrl("Brands")">   Brands? </a></li>
+
+
+                            </ul>
+                            @*<div class="newsletter">
+                                @await Component.InvokeAsync("NewsletterBox")
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div class="footer-information">
+
+                            </div>
+                            <div class="poweredby">
+
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div class="designedby pull-right">
+                                <div class="footer-theme-credit"></div>
+                                <div class="footer-designedby"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 footer-store-theme">
+                            <div class="footer-disclaimer">
+                                Copyright © 2020 Inovatiqa. All rights reserved.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @*<div class="footer">
+                    <div class="footer-top">
+                        <div class="footer-zone row">
+                            <div class="column information col-sm-3 col-md-3">
+                                <h3>Information</h3>
+                                <ul class="nav nav-list">
+                                    <li><a href="@Url.RouteUrl("ContactUs")">Contact Us</a></li>
+                                </ul>
+                            </div>
+                            <div class="column customer-service col-sm-3 col-md-3">
+                                <h3>Customer Services</h3>
+                                <ul class="nav nav-list">
+                                    <li style="float:none"><a href="@Url.RouteUrl("ProductSearch")">Search</a> </li>
+                                    <li><a href="@Url.RouteUrl("NewsArchive")">News</a></li>
+                                    <li><a href="@Url.RouteUrl("RecentlyViewedProducts")">Recently viewed products</a></li>
+                                    <li><a href="@Url.RouteUrl("CompareProducts")">Compare products list</a></li>
+                                    <li><a href="@Url.RouteUrl("NewProducts")">New Products</a></li>
+                                    <li><a href="@Url.RouteUrl("AboutUs")">About Us</a></li>
+                                </ul>
+                            </div>
+                            <div class="column my-account col-sm-3 col-md-3">
+                                <h3>My account</h3>
+                                <ul class="nav nav-list">
+                                    <li><a href="@Url.RouteUrl("CustomerInfo")">Account</a></li>
+                                    <li><a href="@Url.RouteUrl("CustomerOrders")">Orders</a></li>
+                                    <li><a href="@Url.RouteUrl("CustomerAddresses")">Addresses</a></li>
+                                    <li><a href="@Url.RouteUrl("ShoppingCart")">Shopping cart</a></li>
+                                    <li><a href="@Url.RouteUrl("Wishlist")">Wishlist</a></li>
+                                    <li><a href="@Url.RouteUrl("ApplyVendorAccount")">Apply for vendor account</a></li>
+                                </ul>
+                            </div>
+                            <div class="column follow-us col-sm-3 col-md-3">
+                                <h3>Follow Us</h3>
+                                <ul class="nav nav-list social-icons">
+                                    Naveed Modifications
+                                    <li class="facebook"><i class="fa fa-facebook pointer"></i><a href="https://www.facebook.com/" target="_blank">Facebook</a></li>
+                                    <li class="twitter"><i class="fa fa-twitter pointer"></i><a href="https://twitter.com/?lang=en" target="_blank">Twitter</a></li>
+                                    <li class="youtube"><i class="fa fa-youtube pointer"></i><a href="https://www.youtube.com/" target="_blank">Youtube</a></li>
+                                </ul>
+                                <div class="newsletter">
+                                    @await Component.InvokeAsync("NewsletterBox")
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="footer-bottom">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-6 col-md-6">
+                                <div class="footer-information">
+
+                                </div>
+                                <div class="poweredby">
+
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-6">
+                                <div class="designedby pull-right">
+                                    <div class="footer-theme-credit"></div>
+                                    <div class="footer-designedby"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 footer-store-theme">
+                                <div class="footer-disclaimer">
+                                    Copyright © 2020 Inovatiqa. All rights reserved.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+    @await Html.PartialAsync("_WishListBox")
+    @Html.Resource(@<script type="text/javascript">
+                        $(document).ready(function () {
+                            applyMini();
+                        });
+
+                        $(window).on('resize', function () {
+                            applyMini();
+                        });
+
+                        function applyMini() {
+                            if ($(".cart-small-screen").is(":visible"))
+                                $('.nav-top').find('li').css('float', 'none');
+                            else
+                                $('.nav-top').find('li').css('float', 'left');
+                        }
+    </script>, "js")
+
+*@
+
+
+@await Html.PartialAsync("_Header")
+@*await Html.PartialAsync("_Menu")*@
+
+@if (IsSectionDefined("Breadcrumb"))
+{
+    @RenderSection("Breadcrumb")
+}
+@if (IsSectionDefined("additionalMeta"))
+{
+    @section additionalMeta {
+        @RenderSection("additionalMeta")
+    }
+}
+@RenderBody()
+<div class="ajax-loading-block-window" style="display: none">
+    <div class="loading-image">
+    </div>
+</div>
+<footer class="container-fluid">
+    <div class="row">
+        <div class="container">
+            <div class="row   main_footer">
+                <div class="col-md-12">
+                    <div class="footer_cols">
+                        <div class="footer_col">
+                            <h4>Customer Care</h4>
+                            <ul>
+                                <li><a href="@Url.RouteUrl("ContactUs")">Contact Us</a></li>
+                                <li><a href="@Url.RouteUrl("OrderStatus")">Order Tracking</a></li>
+                                <li><a href="@Url.RouteUrl("ShippingPolicy")">Shipping Policy</a></li>
+                                <li><a href="@Url.RouteUrl("ReturnPolicy")">Returns Policy</a></li>
+                                <li><a href="@Url.RouteUrl("PurchaseOrders")">Purchase Orders</a></li>
+                                <li><a href="@Url.RouteUrl("PaymentOptions")">Payment Options</a></li>
+                            </ul>
+                        </div>
+                        <div class="footer_col">
+                            <h4>Services</h4>
+                            <ul>
+                                <li><a href="@Url.RouteUrl("RequestQuote")">Request A Quote</a></li>
+                                <li><a href="@Url.RouteUrl("ContractPricing")">Contract Pricing</a></li>
+                                <li><a href="@Url.RouteUrl("PaymentTerms")">Payment Terms</a></li>
+                                <li><a href="@Url.RouteUrl("RXPrescription")">RX Prescription</a></li>
+                                <li><a href="@Url.RouteUrl("PriceMatch")">Price Match Guarantee</a></li>
+                                <li><a href="~/files/forms/Purchase Order_Form.pdf">Order Form</a></li>
+                                <li><a href="@Url.RouteUrl("ReOrderManagement")">Reorder Guide</a></li>
+                                <li><a href="@Url.RouteUrl("CompareProducts")">Compare Products</a></li>
+                            </ul>
+                        </div>
+                        <div class="footer_col">
+                            <h4>Solutions</h4>
+                            <ul>
+                                <li><a href="@Url.RouteUrl("GPOPurchasing")">Group Purchasing</a></li>
+                                <li><a href="@Url.RouteUrl("HealthAccounts")">Healthcare Accounts</a></li>
+                                <li><a href="@Url.RouteUrl("GovernmentContracts")">Government Contracts</a></li>
+                                <li><a href="@Url.RouteUrl("DistributionServices")">Distribution Services</a></li>
+                                <li><a href="@Url.RouteUrl("InternationalShipping")">International Shipping</a></li>
+                            </ul>
+                        </div>
+                        <div class="footer_col">
+                            <h4>Shop Products</h4>
+                            <div class="two_cols">
+                                <ul>
+                                    <li><a href="@Url.RouteUrl("ShopProducts")">Shop by Category</a></li>
+                                    <li><a href="@Url.RouteUrl("Brands")">Shop by Brand</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="footer_col">
+                            <h4>About Us</h4>
+                            <div class="two_cols">
+                                <ul>
+                                    <li><a href="@Url.RouteUrl("AboutUs")">Customers We Serve</a></li>
+                                    <li><a href="@Url.RouteUrl("Testimonials")">Reviews</a></li>
+                                    <li><a href="@Url.RouteUrl("FAQHelpCenter")">FAQ’s</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="footer_col">
+                            <h4>My Account</h4>
+                            <div class="two_cols">
+                                <ul>
+                                    <li><a href="@Url.RouteUrl("AccountInformation")">Account Dashboard</a></li>
+                                    <li><a href="@Url.RouteUrl("CustomerOrders")">My Orders</a></li>
+                                    <li><a href="@Url.RouteUrl("ViewWishLists")">My List</a></li>
+                                    <li><a href="@Url.RouteUrl("CustomerReturnRequests")">Return Requests</a></li>
+                                    <li><a href="@Url.RouteUrl("CustomerSuspendedCarts")">Suspended Carts</a></li>
+                                    <li><a href="@Url.RouteUrl("PaymentPortal")">Payment Portal</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row   m_b_40">
+                <div class="col-md-5">
+                    <h4>We Accept</h4>
+                    <div class="accept_logos">
+                        <img src="~/images/UIComponents/p5.png" />
+                        <img src="~/images/UIComponents/p4.png" />
+                        <img src="~/images/UIComponents/p1.png" />
+                        <img src="~/images/UIComponents/p3.png" />
+                        <img src="~/images/UIComponents/p2.png" />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <h4>Shipping Options</h4>
+                    <div class="ship_logos">
+                        <img src="~/images/UIComponents/footer-ic2.png" />
+                        <img src="~/images/UIComponents/icc1.png" />
+                        <img src="~/images/UIComponents/footer-ic.png" />
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <h4>Follow Us</h4>
+                    <div class="social_logos">
+                        <a href="#"><img src="~/images/UIComponents/Facebook1.svg" /></a>
+                        <a href="#"><img src="~/images/UIComponents/Twitter1.svg" /></a>
+                        <a href="#"><img src="~/images/UIComponents/Instagram1.svg" /></a>
+                        <a href="#"><img src="~/images/UIComponents/Linkedin1.svg" /></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+@await Html.PartialAsync("_WishListBox")

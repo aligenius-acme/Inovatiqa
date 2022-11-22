@@ -1,0 +1,465 @@
+﻿@using Inovatiqa.Web.Models.Order
+@model IList<Inovatiqa.Database.Models.WishList>
+@{
+    Layout = "_ColumnsOne";
+}
+@{
+    ViewBag.Title = "Wish list";
+}
+@*
+    @Html.Resource(@<link href="@Url.Content("https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css")" rel="stylesheet" type="text/css" />, "css")
+    @Html.Resource(@<script src="@Url.Content("https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js")" type="text/javascript"></script>, "js")
+    @Html.Resource(@<script src="@Url.Content("https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js")" type="text/javascript"></script>, "js")
+
+    <div class="page account-page order-list-page">
+        <div class="page-title panel-heading">
+            <h1>
+                My Lists
+            </h1>
+        </div>
+        <div class="page-body">
+            <div class="tableButtons" style="margin: 5px 0;float:right">
+                <input type="button" value="Create New List" class="btn_blue btn btn-default btn-primary" title="Create New List" onclick="window.location='@Url.RouteUrl("CreateWishList")'">
+                <input type="button" value="View All My Items" class="btn_green btn btn-default btn-primary" title="All Items in Every List" onclick="window.location = '@Url.RouteUrl("Wishlist")'">
+            </div>
+            <br />
+            <div>
+                <h3 class="list-header-orange">
+                    Personal Lists
+                </h3>
+                <h5>
+                    Personal Lists allow you to create and maintain lists of your frequently used items which only you can see, use, and edit.
+                </h5>
+
+                <table id="personallist" class="table table-bordered table-condensed table-striped">
+                    <thead>
+                        <tr>
+                            <th style="text-align:center">
+                                Name
+                            </th>
+                            <th style="text-align:center;width:20%">
+                                Type
+                            </th>
+                            <th style="text-align:center;width:20%">
+                                Delete
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            var PersonalLists = Model.Where(x => x.IsSharedList == false).ToList();
+                            if (PersonalLists.Count > 0)
+                            {
+                                @foreach (var list in PersonalLists)
+                                {
+                                    <tr>
+                                        <td>
+                                            <a href="/wishlistbyname/@list.Id">@list.ListName</a>
+                                        </td>
+                                        <td>
+                                            Personal
+                                        </td>
+                                        <td>
+                                            <i class="fa fa-minus-square icon-color-orange pointer" onclick="DeleteWishList(@list.Id)"></i>
+                                            @*<input type="button" value="Delete" class="btn btn-default return-items-button" onclick="DeleteWishList(@list.Id)" />@
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td>
+                                        <div class="no-data">
+                                            No lists
+                                        </div>
+                                    </td>
+                                    <td style="display:none;">
+                                    </td>
+                                    <td style="display:none;">
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <br />
+            <div>
+                <h3 class="list-header-orange">
+                    Shared Lists
+                </h3>
+                <h5>
+                    Shared lists are created and maintained for use by you and others. These lists may only be edited by the creator and/or authorized users.
+                </h5>
+                <table id="sharedlist" class="table table-bordered table-condensed table-striped">
+                    <thead>
+                        <tr>
+                            <th style="text-align:center">
+                                Name
+                            </th>
+                            <th style="text-align:center;width:20%">
+                                Type
+                            </th>
+                            <th style="text-align:center;width:20%">
+                                Delete
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            var SharedLists = Model.Where(x => x.IsSharedList == true).ToList();
+                            if (SharedLists.Count > 0)
+                            {
+                                foreach (var list in SharedLists)
+                                {
+                                    <tr>
+                                        <td>
+                                            <a href="/wishlistbyname/@list.Id">@list.ListName</a>
+                                        </td>
+                                        <td>
+                                            Shared
+                                        </td>
+                                        <td>
+                                            @*<input type="button" value="Delete" class="btn btn-default return-items-button" onclick="DeleteWishList(@list.Id)" />@
+                                            <i class="fa fa-minus-square icon-color-orange pointer" onclick="DeleteWishList(@list.Id)"></i>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td>
+                                        <div class="no-data">
+                                            No lists
+                                        </div>
+                                    </td>
+                                    <td style="display:none;">
+                                    </td>
+                                    <td style="display:none;">
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    @Html.Resource(@<script type="text/javascript">
+                        function DeleteWishList(listId) {
+                            if (confirm("Are you sure you wanted to remove this wishlist and all of its items?")) {
+                                setLoadWaiting(true);
+                                $.ajax({
+                                    cache: false,
+                                    data: { "wishListId": listId },
+                                    type: "GET",
+                                    url: "/ShoppingCart/RemoveWishList",
+                                    success: function (data, textStatus, jqXHR) {
+                                        setLoadWaiting(false);
+                                        alert("Wishlist and all of its items have been removed successfully!");
+                                        window.location.href = "/lists";
+                                    },
+                                    error: function (jqXHR, textStatus, errorThrown) {
+                                        setLoadWaiting(false);
+                                    }
+                                });
+                            }
+                        }
+                        $('#personallist').DataTable({
+                            "dom": 'tip'
+                        });
+                        $('#sharedlist').DataTable({ "dom": '<tip>' });
+    </script>, "js")
+*@
+<style>
+    .jqueryPagination{
+        display: @(Model.Count > 0 ? "flex" : "none");
+        justify-content: space-between;
+        margin: 8px 12px;
+    }
+    .paging_numbers span a {
+        margin-right: 5px;
+        cursor: pointer;
+    }
+    .paging_numbers span .current{
+        color: #000;
+    }
+    .jqueryPagination p {
+        font-family: Lato;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 13.5px;
+        letter-spacing: 0.05em;
+        color: #636363;
+    }
+</style>
+@{
+    var PersonalLists = Model.Where(x => x.IsSharedList == false).ToList();
+    var SharedLists = Model.Where(x => x.IsSharedList == true).ToList();
+}
+
+@await Component.InvokeAsync("DashboardBlueBand")
+@*@await Html.PartialAsync("_DashboardBlueBand")*@
+<section class="container-fluid deshboard_section k">
+    <div class="row">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="sidebar_menu font_lato">
+                        <h3>Inovatiqa Dashboard</h3>
+                        @await Html.PartialAsync("_DashboardSideBar", "my-lists")
+                    </div>
+                </div>
+                <div class="col-md-9  my_details">
+                    <div class="accountform-area font_lato">
+                        <div class="form-title">
+                            <h5>Personal Lists</h5>
+                            <hr class="line">
+                            <a href="#" class="conatct-btnpopup" data-toggle="modal" data-target="#contact-mform">Contact Your Account Manager</a>
+                            <p>Personal Lists allow you to create and maintain lists of your frequently used items which only you can see, use, and edit.</p>
+                        </div>
+                        <div class="list_item_order">
+                            <a href="#" id="myBtn" data-toggle="modal" data-target="#myModal_1" class="btn primary edit font_roboto danger">Create New List</a>
+                            <a href="@Url.RouteUrl("Wishlist")" class="btn primary edit font_roboto">View All Items</a>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="payment_portal_bottom font_roboto table-responsive my_list_table">
+                                    <table class="table border-collapse mb0" id="privateTable">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Owner</th>
+                                                <th>Last View Option</th>
+                                                <th style="/*display: flex; justify-content: space-around/*">Delete</th>
+                                            </tr>
+                                        </thead>
+                                        @{
+                                            if (PersonalLists.Count > 0)
+                                            {
+                                                @foreach (var list in PersonalLists)
+                                                {
+                                                    <tr>
+                                                        <td>@list.ListName</td>
+                                                        <td>Customer</td>
+                                                        <td><a href="/Wishlist?wishlistId=@list.Id">View Recently Purchased Items</a></td>
+                                                        <td style="/*display: flex; justify-content: space-around;*/"><a style="cursor: pointer; margin-left: 10px;" onclick="DeleteWishList(@list.Id)"><img src="~/images/UIComponents/Layer_minas.svg" class="images"></a></td>
+                                                    </tr>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <tr>
+                                                    <td colspan="6">No private lists. Create one to save items in it.</td>
+                                                </tr>
+                                            }
+                                        }
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accountform-area font_lato">
+                        <div class="form-title form-title1">
+                            <h5>Shared Lists</h5>
+                            <hr class="line">
+                            <p>Shared lists are created and maintained for use by you and others. These lists may only be edited by the creator and/or authorized users.</p>
+                        </div>
+                        <div class="list_item_order">
+                            <a href="#" id="myBtn1" class="btn primary edit font_roboto danger" data-toggle="modal" data-target="#myModal_1">Create New List</a>
+                            <a href="@Url.RouteUrl("Wishlist")" class="btn primary edit font_roboto">View All Items</a>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="payment_portal_bottom font_roboto table-responsive my_list_table my_list_table1 ">
+                                    <table class="table border-collapse mb0" id="publicTable">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Type</th>
+                                                <th>Owner</th>
+                                                <th>Last View Option</th>
+                                                <th style="/*display: flex; justify-content: space-around; commented due to distortion in table when paginated */">Delete</th>
+                                            </tr>
+                                        </thead>
+
+                                        @{
+                                            if (SharedLists.Count > 0)
+                                            {
+                                                foreach (var list in SharedLists)
+                                                {
+                                                    <tr>
+                                                        <td>@list.ListName</td>
+                                                        <td>Shared</td>
+                                                        <td>Customer</td>
+                                                        <td><a href="/Wishlist?wishlistid=@list.Id">View Recently Purchased Items</a></td>
+                                                        <td style="/*display: flex; justify-content: space-around;*/"><a style="cursor: pointer; margin-left: 10px;" onclick="DeleteWishList(@list.Id)"><img src="~/images/UIComponents/Layer_minas.svg" class="images"></a></td>
+                                                    </tr>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <tr>
+                                                    <td colspan="6">No public lists. Create a list to save and share items with your friends.</td>
+                                                </tr>
+                                            }
+                                        }
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<div id="myModal_1" class="modal fade filling_details" style="padding-top:unset" tabindex="-1" role="dialog">
+    <!-- Modal content -->
+    <div class="modal-dialog  modal-dialog-centered" style="width:unset">
+        <div class="modal-content font_lato">
+            <div class="modal-header">
+                <h2>Create New List</h2>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6 col-sm-6">
+                        <div class="pop_up_data">
+                            <div class="form-group">
+                                <label for="name">This list can be edited by</label>
+                                <select class="form-control" id="ListSharedType">
+                                    <option value="personal">Only You - Personal List</option>
+                                    <option value="shared">Everyone - Shared List</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <div class="pop_up_data">
+                            <div class="form-group">
+                                <label for="name">List Name</label>
+                                <input type="text" class="form-control" maxlength="25" onkeyup="countChars(this)" placeholder="Enter Your List Name" id="newListName">
+                                <p id="charNum">25 Characters left</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="title_list_for_box">
+                            <h4>This list is for</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-sm-6">
+                        <div class="pop_up_form">
+                            <div class="shipping_details">
+                                <input type="checkbox" value="unchecked-hidefrom" checked="" class="fix_left_side">
+                                <h3>This Billing Account</h3>
+                                <p>Your list will be associated to this Bling Account and accessible by all Shipping Destinations connected to this Account</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <div class="pop_up_form">
+                            <div class="shipping_details">
+                                <input type="checkbox" value="unchecked-hidefrom" checked="" class="fix_left_side">
+                                <h3>Only this Shipping Destination</h3>
+                                <p>Your list will be associated to this Bling Account and accessible by all Shipping Destinations connected to this Account</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="myBtn1" onclick="closeModal()" data-dismiss="modal" class="btn primary edit font_roboto white close1">Cancel</button>
+                <a href="#" id="createWishList" name="createWishList" class="btn primary edit font_roboto blue">Create List</a>
+            </div>
+            </div>
+        </div>
+    </div>
+    <!-- modal3 -->
+    <!-- Modal -->
+
+<form action="/FooterSendEmails" method="post" id="form">
+    <input type="text" hidden name="Method" value="@Url.RouteUrl("ViewWishLists")" />
+    @await Html.PartialAsync("_ContactAccountManagerModal")
+</form>
+
+
+    @Html.Resource(@<script type="text/javascript">
+        function closeModal() {
+            $('#myModal_1').hide();
+        }
+
+                        function countChars(obj) {
+                            var maxLength = 25;
+                            var strLength = obj.value.length;
+                            var charRemain = (maxLength - strLength);
+
+                            if (charRemain === 0) {
+                                document.getElementById("charNum").innerHTML = '<span style="color: red;">You have exceeded the limit of ' + maxLength + ' characters</span>';
+                            } else {
+                                document.getElementById("charNum").innerHTML = charRemain + ' characters remaining';
+                            }
+                        }
+
+                        function DeleteWishList(listId) {
+                            if (confirm("Are you sure you wanted to remove this wishlist and all of its items?")) {
+                                setLoadWaiting(true);
+                                $.ajax({
+                                    cache: false,
+                                    data: { "wishListId": listId },
+                                    type: "GET",
+                                    url: "/ShoppingCart/RemoveWishList",
+                                    success: function (data, textStatus, jqXHR) {
+                                        setLoadWaiting(false);
+                                        alert("Wishlist and all of its items have been removed successfully!");
+                                        window.location.href = "/My-Lists";
+                                    },
+                                    error: function (jqXHR, textStatus, errorThrown) {
+                                        setLoadWaiting(false);
+                                    }
+                                });
+                            }
+                        }
+                        $(document).ready(function () {
+                            try {
+                                $('#privateTable').DataTable({
+                                    "language": {
+                                        "info": '<p class="mb0">Showing _START_ to _END_ of _TOTAL_ entries</p>'
+                                    },
+                                    "pageLength": 5,
+                                    "dom": 't<"jqueryPagination"ip>',
+                                    'pagingType': 'numbers'
+                                });
+                            }
+                            catch (exec) {
+
+                            }
+
+                            try {
+                                $('#publicTable').DataTable({
+                                    "language": {
+                                        "info": '<p class="mb0">Showing _START_ to _END_ of _TOTAL_ entries</p>'
+                                    },
+                                    "pageLength": 5,
+                                    "dom": 't<"jqueryPagination"ip>',
+                                    'pagingType': 'numbers'
+                                });
+                            }
+                            catch (exec) {
+                                console.log(exec);
+                            }
+                            // create private lists tables
+
+                        });
+    </script>, "js")

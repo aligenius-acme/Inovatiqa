@@ -1,0 +1,778 @@
+﻿@model RegisterModel
+@{
+    Layout = "_ColumnsOne";
+}
+@{
+    ViewBag.Title = "Register";
+}
+<form asp-route="Register" asp-route-returnurl="@Context.Request.Query["ReturnUrl"]" method="post" autocomplete="off">
+    <div class="page registration-page from-panel">
+        <div class="page-title panel-heading">
+            <h1>Register</h1>
+        </div>
+        <div class="page-body form-horizontal panel-body">
+            <div asp-validation-summary="ModelOnly" class="message-error"></div>
+            <div class="inputs custom-attributes" style="text-align:center;">
+                <div class="form-group">
+                    <label class="control-label col-sm-3 col-md-4 col-xs-12" style="visibility:hidden;">Type:</label>
+                    <div class="col-sm-6 col-md-4 col-xs-12" style="text-align:center;">
+                        <ul class="option-list" style="margin-top:7px;">
+                            <li style="display:inline;">
+                                <input id="customerType" type="radio" name="RegisterType">
+                                <label for="customerType">Customer</label>
+                            </li>
+                            <li style="display:inline;margin-left:50px">
+                                <input id="vendorType" type="radio" name="RegisterType">
+                                <label for="vendorType">Vendor</label>
+                            </li>
+                        </ul>
+                    </div>
+                    @Html.Resource(@<script type="text/javascript">
+                                        $(document).ready(function () {
+                                            var url = window.location.href;
+                                            if (url.indexOf("vendor") != -1) {
+                                                $('#vendorType').attr("checked", "checked")
+                                                $('.vendorSection:not(:first)').hide();
+                                                $("#next-button").show();
+                                                $("#previous-button").hide();
+                                                $("#register-button").hide();
+                                            }
+                                            else {
+                                                $('#customerType').attr("checked", "checked")
+                                                $("#next-button").hide();
+                                                $("#previous-button").hide();
+                                            }
+                                            $('#customerType').on('click', function () {
+                                                url = url.replace("/vendor", "")
+                                                if (url.indexOf("customer") == -1) {
+                                                    var urlSplit = url.split('?');
+                                                    url = urlSplit[0] + "/customer?" + urlSplit[1];
+                                                    window.location.href = url;
+                                                }
+                                                else
+                                                    window.location.href = url;
+                                            });
+                                            $('#vendorType').on('click', function () {
+                                                url = url.replace("/customer", "")
+                                                if (url.indexOf("vendor") == -1) {
+                                                    var urlSplit = url.split('?');
+                                                    url = urlSplit[0] + "/vendor?" + urlSplit[1];
+                                                    window.location.href = url;
+                                                }
+                                                else
+                                                    window.location.href = url;
+                                            });
+                                        });
+                    </script>, "js")
+                </div>
+            </div>
+            <div id="generalInformation" class="vendorSection">
+                <div class="fieldset">
+                    <div id="legend">
+                        <legend>Personal Information</legend>
+                    </div>
+                    @if (Model.FirstNameEnabled)
+                    {
+                        <div class="form-group">
+                            <label class="control-label col-sm-3 col-md-4 col-xs-12">First name:</label>
+                            <div class="col-sm-6 col-md-4 col-xs-12">
+                                <input class="form-control" type="text" data-val="true" data-val-required="First name is required." id="FirstName" name="FirstName">
+                            </div>
+                            <div class="col-sm-3 col-md-4 col-xs-12">
+                                @if (Model.FirstNameRequired)
+                                {
+                                    <span class="required">*</span>
+                                }
+                                <span class="field-validation-valid" data-valmsg-for="FirstName" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                    }
+                    @if (Model.LastNameEnabled)
+                    {
+                        <div class="form-group">
+                            <label class="control-label col-sm-3 col-md-4 col-xs-12">Last name</label>
+                            <div class="col-sm-6 col-md-4 col-xs-12">
+                                <input class="form-control" type="text" data-val="true" data-val-required="Last name is required." id="LastName" name="LastName">
+                            </div>
+                            <div class="col-sm-3 col-md-4 col-xs-12">
+                                @if (Model.LastNameRequired)
+                                {
+                                    <span class="required">*</span>
+                                }
+                                <span class="field-validation-valid" data-valmsg-for="LastName" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                    }
+                    <div class="form-group">
+                        <label class="control-label col-sm-3 col-md-4 col-xs-12">Email:</label>
+                        <div class="col-sm-6 col-md-4 col-xs-12">
+                            <input class="form-control" type="email" data-val="true" data-val-email="Wrong email" data-val-required="Email is required." id="Email" name="Email">
+                        </div>
+                        <div class="col-sm-3 col-md-4 col-xs-12">
+                            <span class="required">*</span>
+                            <span class="field-validation-valid" data-valmsg-for="Email" data-valmsg-replace="true"></span>
+                        </div>
+                    </div>
+                    <div class="fieldset">
+                        <div id="legend">
+                            <legend>Password</legend>
+                        </div>
+                        <div class="form-fields">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-md-4 col-xs-12 control-label">Password:</label>
+                                <div class="col-sm-6 col-md-4 col-xs-12">
+                                    <input class="form-control" type="password" data-val="true" data-val-regex="<p>must meet the following rules: </p><ul><li>must have at least 6 characters</li></ul>" data-val-regex-pattern="^.{6,}$" data-val-required="Password is required." id="Password" name="Password">
+                                </div>
+                                <div class="col-sm-3 col-md-4 col-xs-12">
+                                    <span class="required">*</span>
+                                    <span class="field-validation-valid" data-valmsg-for="Password" data-valmsg-replace="true"></span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-md-4 col-xs-12 control-label">Confirm password:</label>
+                                <div class="col-sm-6 col-md-4 col-xs-12">
+                                    <input class="form-control" type="password" data-val="true" data-val-equalto="The password and confirmation password do not match." data-val-equalto-other="*.Password" data-val-required="Password is required." id="ConfirmPassword" name="ConfirmPassword">
+                                </div>
+                                <div class="col-sm-3 col-md-4 col-xs-12">
+                                    <span class="required">*</span>
+                                    <span class="field-validation-valid" data-valmsg-for="ConfirmPassword" data-valmsg-replace="true"></span>
+                                </div>
+                            </div>
+                            @if (Model.DisplayCaptcha)
+                            {
+                                <div class="form-group">
+                                    <div class="captcha-box col-sm-offset-4 col-md-offset-4 col-md-8">
+                                        <nop-captcha />
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+                @if (Model.StreetAddressEnabled ||
+             Model.StreetAddress2Enabled ||
+             Model.ZipPostalCodeEnabled ||
+             Model.CityEnabled ||
+             Model.CountyEnabled ||
+             Model.CountryEnabled)
+                {
+                    <div class="fieldset">
+                        <div id="legend">
+                            <legend>Address Information</legend>
+                        </div>
+                        @if (Model.StreetAddressEnabled)
+                        {
+                            <div class="form-group row">
+                                <label class="control-label col-sm-3 col-md-4 col-xs-12">Street address:</label>
+                                <div class="col-sm-6 col-md-4 col-xs-12">
+                                    <input class="form-control" type="text" data-val="true" data-val-required="Street address is required" id="StreetAddress" name="StreetAddress">
+                                </div>
+                                <div class="col-sm-3 col-md-4 col-xs-12">
+                                    @if (Model.StreetAddressRequired)
+                                    {
+                                        <span class="required">*</span>
+                                    }
+                                    <span class="field-validation-valid" data-valmsg-for="StreetAddress" data-valmsg-replace="true"></span>
+                                </div>
+
+                            </div>
+                        }
+                        @if (Model.ZipPostalCodeEnabled)
+                        {
+                            <div class="form-group row">
+                                <label class="control-label col-sm-3 col-md-4 col-xs-12">Zip / postal code:</label>
+                                <div class="col-sm-6 col-md-4 col-xs-12">
+                                    <input class="form-control" type="text" data-val="true" data-val-required="Zip / postal code is required" id="ZipPostalCode" name="ZipPostalCode">
+                                </div>
+                                <div class="col-sm-3 col-md-4 col-xs-12">
+                                    @if (Model.ZipPostalCodeRequired)
+                                    {
+                                        <span class="required">*</span>
+                                    }
+                                    <span class="field-validation-valid" data-valmsg-for="ZipPostalCode" data-valmsg-replace="true"></span>
+                                </div>
+                            </div>
+                        }
+                        @if (Model.CityEnabled)
+                        {
+                            <div class="form-group row">
+                                <label class="control-label col-sm-3 col-md-4 col-xs-12">City:</label>
+                                <div class="col-sm-6 col-md-4 col-xs-12">
+                                    <input class="form-control" type="text" data-val="true" data-val-required="City is required" id="City" name="City">
+                                </div>
+                                <div class="col-sm-3 col-md-4 col-xs-12">
+                                    @if (Model.CityRequired)
+                                    {
+                                        <span class="required">*</span>
+                                    }
+                                    <span class="field-validation-valid" data-valmsg-for="City" data-valmsg-replace="true"></span>
+                                </div>
+
+                            </div>
+                        }
+                        @if (Model.CountryEnabled)
+                        {
+                            <div class="form-group row">
+                                <label class="control-label col-sm-3 col-md-4 col-xs-12">Country:</label>
+                                <div class="col-sm-6 col-md-4 col-xs-12">
+                                    <select class="form-control  valid" id="CountryId" name="CountryId" data-val="true" data-val-required="The Country field is required."
+                                            data-trigger="country-select"
+                                            data-url="@(Url.RouteUrl("GetStatesByCountryId"))"
+                                            data-stateprovince="#@Html.IdFor(model => model.StateProvinceId)"
+                                            data-loading="#states-loading-progress">
+                                        <option selected="" value="0">Select country</option>
+                                        <option value="1">United States</option>
+                                        <option value="239">Afghanistan</option>
+                                        <option value="212">Albania</option>
+                                        <option value="211">Algeria</option>
+                                        <option value="210">American Samoa</option>
+                                        <option value="195">Andorra</option>
+                                        <option value="183">Angola</option>
+                                        <option value="184">Anguilla</option>
+                                        <option value="185">Antarctica</option>
+                                        <option value="186">Antigua and Barbuda</option>
+                                        <option value="154">Argentina</option>
+                                        <option value="155">Armenia</option>
+                                        <option value="156">Aruba</option>
+                                        <option value="157">Australia</option>
+                                        <option value="158">Austria</option>
+                                        <option value="159">Azerbaijan</option>
+                                        <option value="160">Bahamas</option>
+                                        <option value="187">Bahrain</option>
+                                        <option value="161">Bangladesh</option>
+                                        <option value="188">Barbados</option>
+                                        <option value="162">Belarus</option>
+                                        <option value="163">Belgium</option>
+                                        <option value="164">Belize</option>
+                                        <option value="189">Benin</option>
+                                        <option value="166">Bermuda</option>
+                                        <option value="190">Bhutan</option>
+                                        <option value="179">Bolivia</option>
+                                        <option value="167">Bosnia and Herzegowina</option>
+                                        <option value="191">Botswana</option>
+                                        <option value="192">Bouvet Island</option>
+                                        <option value="168">Brazil</option>
+                                        <option value="193">British Indian Ocean Territory</option>
+                                        <option value="194">Brunei Darussalam</option>
+                                        <option value="169">Bulgaria</option>
+                                        <option value="196">Burkina Faso</option>
+                                        <option value="209">Burundi</option>
+                                        <option value="197">Cambodia</option>
+                                        <option value="198">Cameroon</option>
+                                        <option value="153">Canada</option>
+                                        <option value="199">Cape Verde</option>
+                                        <option value="170">Cayman Islands</option>
+                                        <option value="200">Central African Republic</option>
+                                        <option value="201">Chad</option>
+                                        <option value="171">Chile</option>
+                                        <option value="172">China</option>
+                                        <option value="202">Christmas Island</option>
+                                        <option value="203">Cocos (Keeling) Islands</option>
+                                        <option value="173">Colombia</option>
+                                        <option value="204">Comoros</option>
+                                        <option value="205">Congo</option>
+                                        <option value="206">Congo (Democratic Republic of the)</option>
+                                        <option value="207">Cook Islands</option>
+                                        <option value="174">Costa Rica</option>
+                                        <option value="208">Cote D'Ivoire</option>
+                                        <option value="175">Croatia</option>
+                                        <option value="176">Cuba</option>
+                                        <option value="177">Cyprus</option>
+                                        <option value="178">Czech Republic</option>
+                                        <option value="152">Denmark</option>
+                                        <option value="122">Djibouti</option>
+                                        <option value="240">Dominica</option>
+                                        <option value="165">Dominican Republic</option>
+                                        <option value="151">East Timor</option>
+                                        <option value="135">Ecuador</option>
+                                        <option value="123">Egypt</option>
+                                        <option value="121">El Salvador</option>
+                                        <option value="119">Equatorial Guinea</option>
+                                        <option value="32">Eritrea</option>
+                                        <option value="33">Estonia</option>
+                                        <option value="34">Ethiopia</option>
+                                        <option value="35">Falkland Islands (Malvinas)</option>
+                                        <option value="36">Faroe Islands</option>
+                                        <option value="37">Fiji</option>
+                                        <option value="124">Finland</option>
+                                        <option value="125">France</option>
+                                        <option value="38">French Guiana</option>
+                                        <option value="39">French Polynesia</option>
+                                        <option value="40">French Southern Territories</option>
+                                        <option value="41">Gabon</option>
+                                        <option value="42">Gambia</option>
+                                        <option value="126">Georgia</option>
+                                        <option value="127">Germany</option>
+                                        <option value="43">Ghana</option>
+                                        <option value="128">Gibraltar</option>
+                                        <option value="129">Greece</option>
+                                        <option value="45">Greenland</option>
+                                        <option value="58">Grenada</option>
+                                        <option value="46">Guadeloupe</option>
+                                        <option value="47">Guam</option>
+                                        <option value="130">Guatemala</option>
+                                        <option value="48">Guinea</option>
+                                        <option value="49">Guinea-bissau</option>
+                                        <option value="50">Guyana</option>
+                                        <option value="51">Haiti</option>
+                                        <option value="52">Heard and Mc Donald Islands</option>
+                                        <option value="53">Honduras</option>
+                                        <option value="131">Hong Kong</option>
+                                        <option value="132">Hungary</option>
+                                        <option value="54">Iceland</option>
+                                        <option value="133">India</option>
+                                        <option value="134">Indonesia</option>
+                                        <option value="55">Iran (Islamic Republic of)</option>
+                                        <option value="56">Iraq</option>
+                                        <option value="136">Ireland</option>
+                                        <option value="149">Israel</option>
+                                        <option value="137">Italy</option>
+                                        <option value="138">Jamaica</option>
+                                        <option value="139">Japan</option>
+                                        <option value="140">Jordan</option>
+                                        <option value="141">Kazakhstan</option>
+                                        <option value="57">Kenya</option>
+                                        <option value="31">Kiribati</option>
+                                        <option value="44">Korea</option>
+                                        <option value="142">Korea, Democratic People's Republic of</option>
+                                        <option value="143">Kuwait</option>
+                                        <option value="30">Kyrgyzstan</option>
+                                        <option value="14">Lao People's Democratic Republic</option>
+                                        <option value="2">Latvia</option>
+                                        <option value="3">Lebanon</option>
+                                        <option value="4">Lesotho</option>
+                                        <option value="5">Liberia</option>
+                                        <option value="6">Libyan Arab Jamahiriya</option>
+                                        <option value="7">Liechtenstein</option>
+                                        <option value="8">Lithuania</option>
+                                        <option value="9">Luxembourg</option>
+                                        <option value="10">Macau</option>
+                                        <option value="11">Macedonia</option>
+                                        <option value="12">Madagascar</option>
+                                        <option value="13">Malawi</option>
+                                        <option value="144">Malaysia</option>
+                                        <option value="15">Maldives</option>
+                                        <option value="28">Mali</option>
+                                        <option value="16">Malta</option>
+                                        <option value="17">Marshall Islands</option>
+                                        <option value="18">Martinique</option>
+                                        <option value="19">Mauritania</option>
+                                        <option value="20">Mauritius</option>
+                                        <option value="21">Mayotte</option>
+                                        <option value="145">Mexico</option>
+                                        <option value="22">Micronesia</option>
+                                        <option value="23">Moldova</option>
+                                        <option value="24">Monaco</option>
+                                        <option value="25">Mongolia</option>
+                                        <option value="26">Montenegro</option>
+                                        <option value="27">Montserrat</option>
+                                        <option value="29">Morocco</option>
+                                        <option value="59">Mozambique</option>
+                                        <option value="60">Myanmar</option>
+                                        <option value="61">Namibia</option>
+                                        <option value="92">Nauru</option>
+                                        <option value="93">Nepal</option>
+                                        <option value="146">Netherlands</option>
+                                        <option value="94">Netherlands Antilles</option>
+                                        <option value="95">New Caledonia</option>
+                                        <option value="147">New Zealand</option>
+                                        <option value="96">Nicaragua</option>
+                                        <option value="97">Niger</option>
+                                        <option value="98">Nigeria</option>
+                                        <option value="99">Niue</option>
+                                        <option value="100">Norfolk Island</option>
+                                        <option value="101">Northern Mariana Islands</option>
+                                        <option value="148">Norway</option>
+                                        <option value="102">Oman</option>
+                                        <option value="150">Pakistan</option>
+                                        <option value="103">Palau</option>
+                                        <option value="180">Palestine</option>
+                                        <option value="104">Panama</option>
+                                        <option value="105">Papua New Guinea</option>
+                                        <option value="181">Paraguay</option>
+                                        <option value="182">Peru</option>
+                                        <option value="213">Philippines</option>
+                                        <option value="106">Pitcairn</option>
+                                        <option value="214">Poland</option>
+                                        <option value="215">Portugal</option>
+                                        <option value="216">Puerto Rico</option>
+                                        <option value="217">Qatar</option>
+                                        <option value="107">Reunion</option>
+                                        <option value="218">Romania</option>
+                                        <option value="219">Russian Federation</option>
+                                        <option value="108">Rwanda</option>
+                                        <option value="109">Saint Kitts and Nevis</option>
+                                        <option value="110">Saint Lucia</option>
+                                        <option value="111">Saint Vincent and the Grenadines</option>
+                                        <option value="112">Samoa</option>
+                                        <option value="113">San Marino</option>
+                                        <option value="114">Sao Tome and Principe</option>
+                                        <option value="220">Saudi Arabia</option>
+                                        <option value="115">Senegal</option>
+                                        <option value="238">Serbia</option>
+                                        <option value="116">Seychelles</option>
+                                        <option value="117">Sierra Leone</option>
+                                        <option value="221">Singapore</option>
+                                        <option value="222">Slovakia (Slovak Republic)</option>
+                                        <option value="223">Slovenia</option>
+                                        <option value="118">Solomon Islands</option>
+                                        <option value="91">Somalia</option>
+                                        <option value="224">South Africa</option>
+                                        <option value="90">South Georgia &amp; South Sandwich Islands</option>
+                                        <option value="89">South Sudan</option>
+                                        <option value="225">Spain</option>
+                                        <option value="74">Sri Lanka</option>
+                                        <option value="62">St. Helena</option>
+                                        <option value="63">St. Pierre and Miquelon</option>
+                                        <option value="64">Sudan</option>
+                                        <option value="65">Suriname</option>
+                                        <option value="66">Svalbard and Jan Mayen Islands</option>
+                                        <option value="67">Swaziland</option>
+                                        <option value="226">Sweden</option>
+                                        <option value="227">Switzerland</option>
+                                        <option value="68">Syrian Arab Republic</option>
+                                        <option value="228">Taiwan</option>
+                                        <option value="69">Tajikistan</option>
+                                        <option value="70">Tanzania</option>
+                                        <option value="229">Thailand</option>
+                                        <option value="71">Togo</option>
+                                        <option value="72">Tokelau</option>
+                                        <option value="73">Tonga</option>
+                                        <option value="75">Trinidad and Tobago</option>
+                                        <option value="88">Tunisia</option>
+                                        <option value="230">Turkey</option>
+                                        <option value="76">Turkmenistan</option>
+                                        <option value="77">Turks and Caicos Islands</option>
+                                        <option value="78">Tuvalu</option>
+                                        <option value="79">Uganda</option>
+                                        <option value="231">Ukraine</option>
+                                        <option value="232">United Arab Emirates</option>
+                                        <option value="233">United Kingdom</option>
+                                        <option value="234">United States minor outlying islands</option>
+                                        <option value="235">Uruguay</option>
+                                        <option value="236">Uzbekistan</option>
+                                        <option value="80">Vanuatu</option>
+                                        <option value="81">Vatican City State (Holy See)</option>
+                                        <option value="237">Venezuela</option>
+                                        <option value="82">Viet Nam</option>
+                                        <option value="83">Virgin Islands (British)</option>
+                                        <option value="84">Virgin Islands (U.S.)</option>
+                                        <option value="85">Wallis and Futuna Islands</option>
+                                        <option value="86">Western Sahara</option>
+                                        <option value="87">Yemen</option>
+                                        <option value="120">Zambia</option>
+                                        <option value="241">Zimbabwe</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-3 col-md-4 col-xs-12">
+                                    @if (Model.CountryRequired)
+                                    {
+                                        <span class="required">*</span>
+                                    }
+                                    <span class="field-validation-valid" data-valmsg-for="CountryId" data-valmsg-replace="true"></span>
+                                </div>
+                            </div>
+                        }
+                        @if (Model.CountryEnabled && Model.StateProvinceEnabled)
+                        {
+                            <div class="form-group row">
+                                <label class="control-label col-sm-3 col-md-4 col-xs-12">State / province:</label>
+                                <div class="col-sm-6 col-md-4 col-xs-12">
+                                    <select class="form-control valid" data-val="true" data-val-required="The State / province field is required." id="StateProvinceId" name="StateProvinceId" aria-describedby="StateProvinceId-error" aria-invalid="false"><option selected="" value="0">Select state</option></select>
+                                    <span id="states-loading-progress" style="display: none;" class="please-wait">Wait...</span>
+                                </div>
+                                <div class="col-sm-3 col-md-4 col-xs-12">
+                                    @if (Model.StateProvinceRequired)
+                                    {
+                                        <span class="required">*</span>
+                                    }
+                                    <span id="states-loading-progress" style="display: none;" class="please-wait">Wait...</span>
+                                    <span class="field-validation-valid" data-valmsg-for="StateProvinceId" data-valmsg-replace="true"></span>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+                @if (Model.PhoneEnabled || Model.FaxEnabled)
+                {
+                    <div class="fieldset">
+                        <div id="legend">
+                            <legend>Contact Information</legend>
+                        </div>
+                        @if (Model.PhoneEnabled)
+                        {
+                            <div class="form-group row">
+                                <label class="control-label col-sm-3 col-md-4 col-xs-12">Phone:</label>
+                                <div class="col-sm-6 col-md-4 col-xs-12">
+                                    <input class="form-control" type="tel" data-val="true" data-val-required="Phone is required" id="Phone" name="Phone">
+                                </div>
+                                <div class="col-sm-3 col-md-4 col-xs-12">
+                                    @if (Model.PhoneRequired)
+                                    {
+                                        <span class="required">*</span>
+                                    }
+                                    <span class="field-validation-valid" data-valmsg-for="Phone" data-valmsg-replace="true"></span>
+                                </div>
+                            </div>
+                        }
+                        @if (Model.FaxEnabled)
+                        {
+                            <div class="form-group row">
+                                <label class="control-label col-sm-3 col-md-4 col-xs-12">Fax:</label>
+                                <div class="col-sm-6 col-md-4 col-xs-12">
+                                    <input class="form-control" type="tel" data-val="true" data-val-required="Fax is required" id="Fax" name="Fax">
+                                </div>
+                                <div class="col-sm-3 col-md-4 col-xs-12">
+                                    @if (Model.FaxRequired)
+                                    {
+                                        <span class="required">*</span>
+                                    }
+                                    <span class="field-validation-valid" data-valmsg-for="Fax" data-valmsg-replace="true"></span>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+
+                @if (Model.NewsletterEnabled)
+                {
+                    <div class="fieldset">
+                        <div id="legend"><legend>Options</legend></div>
+                        @if (Model.NewsletterEnabled)
+                        {
+                            <div class="form-group">
+                                <label class="col-sm-3 col-md-4 col-xs-5  news-letter control-label">Newsletter:</label>
+                                <div class="col-sm-6 col-md-4 col-xs-3">
+                                    <input type="checkbox" checked="" data-val="true" data-val-required="The Newsletter field is required." id="Newsletter" name="Newsletter" value="true">
+                                </div>
+                                <span class="field-validation-valid" data-valmsg-for="Newsletter" data-valmsg-replace="true"></span>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+            @if (Model.IsCustomerRegistration == false)
+            {
+                <div class="vendorSection" id="companyInformation">
+                    @if (Model.CompanyEnabled)
+                    {
+                        <div class="fieldset">
+                            <div id="legend"><legend>Company Information</legend></div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-3 col-md-4 col-xs-12">Legal Company name:</label>
+                                <div class="col-sm-6 col-md-4 col-xs-12">
+                                    <input class="form-control" type="text" data-val="true" data-val-required="Company name is required" id="Company" name="Company">
+                                </div>
+                                <div class="col-sm-3 col-md-4 col-xs-12">
+                                    @if (Model.CompanyRequired)
+                                    {
+                                        <span class="required">*</span>
+                                    }
+                                    <span class="field-validation-valid" data-valmsg-for="Company" data-valmsg-replace="true"></span>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    @if (Model.CustomerAttributes.Count > 0)
+                    {
+                        <div class="fieldset">
+                            @*<div id="legend"><legend>Custom Fields Title 1</legend></div>*@
+                            <div class="form-fields">
+                                @if (Model.CustomerAttributes.Count > 0)
+                                {
+                                    @await Html.PartialAsync("_CustomerAttributes", Model.CustomerAttributes, new ViewDataDictionary(this.Vi‌​ewData) { { "startIndex", 0 }, { "endIndex", 5 } })
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                <div class="vendorSection" id="references">
+                    @if (Model.CustomerAttributes.Count > 0)
+                    {
+                        <div class="fieldset">
+                            <div id="legend"><legend>References</legend></div>
+                            <div class="form-fields">
+                                @if (Model.CustomerAttributes.Count > 0)
+                                {
+                                    @await Html.PartialAsync("_CustomerAttributes", Model.CustomerAttributes, new ViewDataDictionary(this.Vi‌​ewData) { { "startIndex", 6 }, { "endIndex", 13 } })
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                <div class="vendorSection" id="healthcare">
+                    @if (Model.CustomerAttributes.Count > 0)
+                    {
+                        <div class="fieldset">
+                            <div id="legend"><legend>Healthcare</legend></div>
+                            <div class="form-fields">
+                                @if (Model.CustomerAttributes.Count > 0)
+                                {
+                                    @await Html.PartialAsync("_CustomerAttributes", Model.CustomerAttributes, new ViewDataDictionary(this.Vi‌​ewData) { { "startIndex", 14 }, { "endIndex", 20 } })
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                <div class="vendorSection" id="education">
+                    @if (Model.CustomerAttributes.Count > 0)
+                    {
+                        <div class="fieldset">
+                            <div id="legend"><legend>Education</legend></div>
+                            <div class="form-fields">
+                                @if (Model.CustomerAttributes.Count > 0)
+                                {
+                                    @await Html.PartialAsync("_CustomerAttributes", Model.CustomerAttributes, new ViewDataDictionary(this.Vi‌​ewData) { { "startIndex", 21 }, { "endIndex", 21 } })
+                                }
+                            </div>
+                        </div>
+
+                    }
+                </div>
+
+                <div class="vendorSection" id="municipalities">
+                    @if (Model.CustomerAttributes.Count > 0)
+                    {
+
+                        <div class="fieldset">
+                            <div id="legend"><legend>Corporate / Municipalities</legend></div>
+                            <div class="form-fields">
+                                @if (Model.CustomerAttributes.Count > 0)
+                                {
+                                    @await Html.PartialAsync("_CustomerAttributes", Model.CustomerAttributes, new ViewDataDictionary(this.Vi‌​ewData) { { "startIndex", 22 }, { "endIndex", 22 } })
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            @if (Model.AcceptPrivacyPolicyEnabled)
+            {
+                <div class="fieldset">
+                    <div id="legend">
+                        <legend>User agreement</legend>
+                    </div>
+                    <div class="form-fields">
+                        @if (Model.AcceptPrivacyPolicyEnabled)
+                        {
+                            @Html.Resource(@<script type="text/javascript">
+                                $(document).ready(function () {
+                                    $('#register-button').on('click', function () {
+                                        if ($('#accept-consent').is(':checked')) {
+                                            //do some stuff
+                                            return true;
+                                        }
+                                        else {
+                                            //just show validation errors, dont post
+                                            alert('@Html.Raw(JavaScriptEncoder.Default.Encode("Please accept privacy policy"))');
+                                            return false;
+                                        }
+                                    });
+                                });
+                            </script>, "js")
+                            <div class="form-group">
+                                <div class="col-sm-offset-3 col-md-offset-4 col-md-8 col-xs-12">
+                                    <div class="accept-privacy-policy accept-consent">
+                                        <input id="accept-consent" type="checkbox" name="accept-consent" />
+                                        <label for="accept-consent">I accept privacy policy</label>
+                                        @if (Model.AcceptPrivacyPolicyPopup)
+                                        {
+                                            <span class="read" id="read-privacyinfo">(read)</span>
+                                            @Html.Resource(@<script type="text/javascript">
+                                                $(document).ready(function() {
+                                                    $('#read-privacyinfo').on('click', function (e) {
+                                                        displayPopupContentFromUrl('@Url.RouteUrl("TopicPopup", new { SystemName = "privacyinfo" })', "I accept privacy policy");
+                                                    });
+                                                });
+                                            </script>, "js")
+                                        }
+                                        else
+                                        {
+                                            @*<a class="read" id="read-privacyinfo" href="@Url.RouteUrl("Topic", new {SeName = Html.GetTopicSeName("privacyinfo") })">(read)</a>*@
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+            @Html.Resource(@<script type="text/javascript">
+                                $(document).ready(function () {
+                                    $('#next-button').on('click', function () {
+                                        var currentSectionId = $(".vendorSection").not(":hidden").prop("id");
+                                        var nextSectionId = "";
+                                        var previousSectionId = "";
+
+                                        if (currentSectionId == "generalInformation") {
+                                            nextSectionId = "#companyInformation";
+                                            previousSectionId = "#generalInformation";
+                                            $('#previous-button').show();
+                                        }
+                                        else {
+                                            $('#previous-button').show();
+                                            nextSectionId = "#" + $("#" + currentSectionId).next().prop("id");
+                                            previousSectionId = "#" + $("#" + currentSectionId).prop("id");
+                                        }
+
+                                        if (nextSectionId == "#municipalities") {
+                                            $(this).hide();
+                                            $('#register-button').show();
+                                        }
+
+                                        handleSection(nextSectionId, previousSectionId, "Next")
+                                    });
+
+                                    $('#previous-button').on('click', function () {
+                                        var currentSectionId = $(".vendorSection").not(":hidden").prop("id");
+                                        var nextSectionId = "";
+                                        var previousSectionId = "";
+
+                                        if (currentSectionId == "municipalities") {
+                                            nextSectionId = "#municipalities";
+                                            previousSectionId = "#education";
+                                        }
+                                        else {
+                                            $('#register-button').hide();
+                                            nextSectionId = $("#" + currentSectionId).prop("id");
+                                            previousSectionId = $("#" + currentSectionId).prev().prop("id");
+                                        }
+
+                                        if (previousSectionId == "#generalInformation") {
+                                            $(this).hide();
+                                            $('#register-button').hide();
+                                        }
+
+                                        handleSection(nextSectionId, previousSectionId, "Previous")
+                                    });
+
+                                    function handleSection(nextSectionId, previousSectionId, buttonType) {
+                                        if (buttonType == "Next") {
+                                            $(previousSectionId).hide();
+                                            $(nextSectionId).show();
+                                        }
+                                        else if (buttonType == "Previous") {
+                                            $(previousSectionId).show();
+                                            $(nextSectionId).hide();
+                                        }
+                                    }
+                                });
+            </script>, "js")
+            <div class="form-group">
+                <div class="col-sm-offset-3 col-md-offset-4 col-md-8 col-xs-12">
+                    <input type="submit" id="register-button" class="btn btn-primary register-next-step-button" value="Register" name="register-button" />
+                    <input type="button" id="previous-button" class="btn btn-primary vendor-previous-step-button" value="Previous" name="previous-button" style="display:none;" />
+                    <input type="button" id="next-button" class="btn btn-primary vendor-next-step-button" value="Next" name="next-button" style="display:none;" />
+                </div>
+            </div>
+            @*<div class="external-authentication">
+                    @await Component.InvokeAsync("ExternalMethods", "ExternalAuthentication")
+                </div>*@
+        </div>
+    </div>
+    @Html.AntiForgeryToken()
+</form>
+

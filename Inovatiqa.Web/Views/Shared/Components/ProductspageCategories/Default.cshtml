@@ -1,0 +1,32 @@
+﻿@model IList<CategoryModel>
+
+<div class="page category-page from-panel">
+    @if (Model.Count > 0)
+    {
+        var counter = 1;
+        <div class="page-title panel-heading">
+            <h1>Featured categories</h1>
+        </div>
+        <div class="page-body">
+            @foreach (var item in Model)
+            {
+                if (counter <= 6)
+                {
+                    <div class="item-box col-xs-12 col-sm-4 col-md-4">
+                        <div class="sub-category-item thumbnail">
+                            <h3 class="title">
+                                <a href="@Url.RouteUrl("Category", new { SeName = item.SeName })" title="@item.PictureModel.Title"> @item.Name</a>
+                            </h3>
+                            <div class="picture">
+                                <a href="@Url.RouteUrl("Category", new { SeName = item.SeName })" title="@item.PictureModel.Title">
+                                    <img alt="@item.PictureModel.AlternateText" src="@item.PictureModel.ImageUrl" title="@item.PictureModel.Title" />
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                }
+                counter = counter + 1;
+            }
+        </div>
+    }
+</div>

@@ -1,0 +1,130 @@
+﻿@model ShoppingCartModel
+@using Inovatiqa.Core.Interfaces
+@using Inovatiqa.Core;
+@inject IWebHelper webHelper
+<style>
+
+
+    .order-summary-content .product-essential .tab-content .product-specs-box {
+        margin-top: 10px;
+    }
+
+    .order-summary-content .product-essential .tab-content .product-tags {
+        margin-top: 10px;
+    }
+
+    .totals {
+        text-align: right;
+        color: #888;
+        font-size: 1.1em;
+        font-weight: bold;
+    }
+</style>
+<div class="order-summary-content">
+    @await Html.PartialAsync("_OrderReviewData", Model.OrderReviewData)
+    @if (@Model.Warnings.Count > 0)
+    {
+        <div class="message-error">
+            <ul>
+                @foreach (var warning in Model.Warnings)
+                {
+                    <li>@warning</li>
+                }
+            </ul>
+        </div>
+    }
+    <div class="totals">
+        <div class="col-sm-6 col-md-6">
+        </div>
+        <div class="col-sm-offset-6 col-md-offset-6 col-sm-6 col-md-6">
+            <span class="product-price order-total"><strong>@Model.Items.Count items totals @await Component.InvokeAsync("OrderTotals", new { isEditable = Model.IsEditable })</strong></span>
+        </div>
+    </div>
+    <div class="col-md-12 product-details-tabs" id="tabbed-description">
+        <div class="full-description fade tab-pane in active" id="description" style="font-family:Helvetica Neue,Helvetica,Arial,sans-serif;">
+            <form asp-route="ShoppingCart" method="post" enctype="multipart/form-data" id="shopping-cart-form">
+                <div>
+                    <table class="cart table table-bordered table-wrapper" id="shopping-cart-table">
+                        <thead>
+                            <tr class="cart-header-row">
+                                <th class="remove-from-cart" style="display:none;">
+                                </th>
+                                <th class="remove-from-cart">
+                                    Item #
+                                </th>
+                                <th class="product">
+                                    Description
+                                </th>
+                                <th class="picture product-picture">
+                                    Manufacturer
+                                </th>
+                                <th class="sku">
+                                    Mfr #
+                                </th>
+                                <th class="vendor">
+                                    UOM
+                                </th>
+                                <th class="unit-price">
+                                    Price
+                                </th>
+                                <th class="quantity">
+                                    Qty
+                                </th>
+                                <th class="end subtotal">
+                                    Total
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.Items.Count > 0)
+                            {
+                                @foreach (var item in Model.Items)
+                                {
+                                    <tr class="cart-item-row" id="@(item.Id)">
+                                        <td style="display:none;">
+                                            <span class="visible-xs hidden-lg hidden-md hidden-sm td-title" for="removefromcart@(item.Id)">Remove</span>
+                                            <input type="checkbox" name="removefromcart" id="removefromcart@(item.Id)" value="@(item.Id)" aria-label="Remove" />
+                                        </td>
+                                        <td>@item.Sku</td>
+                                        <td class="product"><a href="@Url.RouteUrl("Product", new {SeName = item.ProductSeName})" class="product-name">@item.ProductName</a></td>
+                                        <td>@item.ProductManufacturers.FirstOrDefault().Name</td>
+                                        <td>@item.ManufacturerPartNumber.Replace("Mfr#", "")</td>
+                                        <td>@item.UOM</td>
+                                        <td>@item.UnitPrice</td>
+                                        <td>@item.Quantity</td>
+                                        <td>@item.SubTotal</td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="10">
+                                        <div class="no-data">
+                                            There are no items in your cart
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    @Html.Resource(@<script type="text/javascript">
+                        $(document).ready(function () {
+                            $('#shopping-cart-table').DataTable();
+                            $("#quick_addprod").change(function () {
+                                if (this.checked) {
+
+                                }
+                            });
+                        });
+    </script>
+, "js")
+    @Html.AntiForgeryToken()
+
+</div>
+@await Html.PartialAsync("_SuspendedCartBox")

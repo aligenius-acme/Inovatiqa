@@ -1,0 +1,252 @@
+﻿@using Inovatiqa.Web.Models.Order
+@model ShipmentDetailsModel
+@{
+    Layout = "_ColumnsOne";
+}
+@{
+    ViewBag.Title = "Order shipments";
+}
+<div class="page shipment-details-page from-panel">
+    <div class="page-title panel-heading">
+        <h1>@string.Format("Shipment #{0}", Model.Id)</h1>
+    </div>
+    <div class="page-body">
+        <div class="shipment-overview row">
+            <div class="shipping-info-wrap col-sm-6 col-md-6">
+                <div class="title">
+                    <strong>Order # @Model.Order.Id</strong>
+                </div>
+                <ul class="shipping-details">
+                    <li class="shipping-method">
+                        Shipping Method: @Model.Order.ShippingMethod
+                    </li>
+                    <li class="shipped-date">
+                        Date shipped:
+                        @if (Model.ShippedDate.HasValue)
+                        {
+                            @Model.ShippedDate.Value.ToString("D")
+                        }
+                        else
+                        {
+                            ("Not yet").ToString();
+                        }
+                    </li>
+                    <li class="delivery-date">
+                        Date delivered:
+                        @if (Model.DeliveryDate.HasValue)
+                        {
+                            @Model.DeliveryDate.Value.ToString("D")
+                        }
+                        else
+                        {
+                            ("Not yet").ToString();
+                        }
+                    </li>
+                    @if (!string.IsNullOrEmpty(Model.TrackingNumber))
+                    {
+                        <li class="tracking-number">
+                            Tracking number:
+                            @if (!string.IsNullOrEmpty(Model.TrackingNumberUrl))
+                            {
+                                <a href="@Model.TrackingNumberUrl" target="_blank" class="tracking-url">@Model.TrackingNumber</a>
+                            }
+                            else
+                            {
+                                @Model.TrackingNumber
+                            }
+                        </li>
+                    }
+                </ul>
+            </div>
+            <div class="shipping-info-wrap col-sm-6 col-md-6">
+                <div class="title">
+                    <strong>Shipping Address</strong>
+                </div>
+                <ul class="shipping-address">
+                    @if (!Model.Order.PickupInStore)
+                    {
+                        <li class="name">
+                            @Model.Order.ShippingAddress.FirstName @Model.Order.ShippingAddress.LastName
+                        </li>
+                        <li class="email">
+                            Email: @Model.Order.ShippingAddress.Email
+                        </li>
+                        <li class="phone">
+                            Phone: @Model.Order.ShippingAddress.PhoneNumber
+                        </li>
+                        <li class="fax">
+                            Fax: @Model.Order.ShippingAddress.FaxNumber
+                        </li>
+                        if (!string.IsNullOrEmpty(Model.Order.ShippingAddress.Company))
+                        {
+                            <li class="company">
+                                @Model.Order.ShippingAddress.Company
+                            </li>
+                        }
+                        <li class="address1">
+                            @Model.Order.ShippingAddress.Address1
+                        </li>
+                        if (!string.IsNullOrEmpty(Model.Order.ShippingAddress.Address2))
+                        {
+                            <li class="address2">
+                                @Model.Order.ShippingAddress.Address2
+                            </li>
+                        }
+                        <li class="city-state-zip">
+                            @Model.Order.ShippingAddress.City, @Model.Order.ShippingAddress.County, @Model.Order.ShippingAddress.StateProvinceName
+                            @Model.Order.ShippingAddress.ZipPostalCode
+                        </li>
+                        if (!string.IsNullOrEmpty(Model.Order.ShippingAddress.CountryName))
+                        {
+                            <li class="country">
+                                @Model.Order.ShippingAddress.CountryName
+                            </li>
+                        }
+                    }
+                    else
+                    {
+                        <li class="title">
+                            Pickup point address
+                        </li>
+                        <li class="address1">
+                            @Model.Order.PickupAddress.Address1
+                        </li>
+                        <li class="city-state-zip">
+                            @Model.Order.PickupAddress.City, @Model.Order.PickupAddress.County, @Model.Order.PickupAddress.StateProvinceName
+                            @Model.Order.PickupAddress.ZipPostalCode
+                        </li>
+                        if (!string.IsNullOrEmpty(Model.Order.PickupAddress.CountryName))
+                        {
+                            <li class="country">
+                                @Model.Order.PickupAddress.CountryName
+                            </li>
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+        @if (Model.Items.Count > 0)
+        {
+            <div class="section products">
+                <div class="title">
+                    <strong>Shipped product(s)</strong>
+                </div>
+                <div class="panel panel-default">
+                    <table class="table table-bordered table-condensed">
+                        <colgroup>
+                            @if (Model.ShowSku)
+                            {
+                                <col width="1" />
+                            }
+                            <col />
+                            <col />
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                @if (Model.ShowSku)
+                                {
+                                    <th class="a-center sku">
+                                        SKU
+                                    </th>
+                                }
+                            <th class="a-center name">
+                                Name
+                            </th>
+                                <th class="a-center quantity">
+                                    Qty shipped
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Items)
+                            {
+                                <tr>
+                                    @if (Model.ShowSku)
+                                    {
+                                        <td class="a-left sku">
+                                            @item.Sku
+                                        </td>
+                                    }
+                                    <td class="a-left name">
+                                        <em><a href="@Url.RouteUrl("Product", new { SeName = item.ProductSeName })">@item.ProductName</a></em>
+                                        @if (!string.IsNullOrEmpty(item.AttributeInfo))
+                                        {
+                                            <div class="attributes">
+                                                @Html.Raw(item.AttributeInfo)
+                                            </div>
+                                        }
+                                        @if (!string.IsNullOrEmpty(item.RentalInfo))
+                                        {
+                                            <div class="rental-info">
+                                                @Html.Raw(item.RentalInfo)
+                                            </div>
+                                        }
+                                    </td>
+                                    <td class="a-center quantity">
+                                        @item.QuantityShipped
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        }
+        @if (Model.ShipmentStatusEvents.Count > 0)
+        {
+            <div class="section shipment-status-events">
+                <div class="title">
+                    <strong>Shipment status events</strong>
+                </div>
+                <div class="panel panel-default">
+                    <table class="table table-bordered table-condensed">
+                        <colgroup>
+                            <col />
+                            <col />
+                            <col />
+                            <col />
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th class="a-center event">
+                                    Event
+                                </th>
+                                <th class="a-center location">
+                                    Location
+                                </th>
+                                <th class="a-center country">
+                                    Country
+                                </th>
+                                <th class="a-center date">
+                                    Date
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.ShipmentStatusEvents)
+                            {
+                                <tr>
+                                    <td class="a-left event">
+                                        @item.EventName
+                                    </td>
+                                    <td class="a-left location">
+                                        @item.Location
+                                    </td>
+                                    <td class="a-left country">
+                                        @item.Country
+                                    </td>
+                                    <td class="a-left date">
+                                        @if (item.Date.HasValue)
+                                        {
+                                            @item.Date.Value.ToString("D")
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        }
+    </div>
+</div>

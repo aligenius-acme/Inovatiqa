@@ -1,0 +1,9 @@
+﻿@model String
+<ul>
+    <li><a href="@Url.RouteUrl("CustomerOrders")" class="@(Model == "order-status" ? "active" : "")">Order Status</a></li>
+    <li><a href="@Url.RouteUrl("CustomerOrderItems")" class="@(Model == "item-status" ? "active" : "")">Item Status</a></li>
+    <li><a href="@Url.RouteUrl("CustomerInvoicedOrders")" class="@(Model == "invoiced-orders" ? "active" : "")">Invoiced Orders</a></li>
+    <li><a href="@Url.RouteUrl("ReorderGuide")" class="@(Model == "reorder-guide" ? "active" : "")">Reorder Guide</a></li>
+    <li><a href="@Url.RouteUrl("CustomerSuspendedCarts")" class="@(Model == "suspended-carts" ? "active" : "")">Suspended Carts</a></li>
+    <li><a href="@Url.RouteUrl("ShoppingCart")" class="new-order"><img src="~/images/UIComponents/newpage-icon.png">Start New Order</a></li>
+</ul>

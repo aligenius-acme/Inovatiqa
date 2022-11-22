@@ -1,0 +1,276 @@
+﻿@model ShoppingCartModel
+@{
+    Layout = "_ColumnsOne";
+}
+@{
+    ViewBag.Title = "Guest Shopping Cart";
+}
+
+<style>
+    .become-customer-box {
+        box-shadow: none !important;
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+
+    .newcustomer-area {
+        padding: 0px !important;
+        background: #FFF !important;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        /*font-weight: 500 !important;*/
+    }
+
+    .segment-line {
+        border: 0.1px solid #DADADA !important;
+    }
+
+    .small-heading {
+        font-weight: 500 !important;
+    }
+
+    .heading {
+        font-family: Lato;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 22px;
+        line-height: 26px;
+        color: #000000;
+    }
+
+    .muted {
+        color: #636363 !important;
+        font-size: 14px !important;
+    }
+    th, th a {
+        font-family: Lato;
+        font-style: normal;
+        font-weight: 600 !important;
+        font-size: 14.5px;
+        line-height: 17px;
+        color: #000000;
+    }
+    thead tr {
+        border-bottom: 0.5px solid #DADADA;
+        height: 1.9em;
+        white-space: nowrap;
+    }
+    .custom-table{
+        width: 100%;
+    }
+    tbody tr {
+        height: @(Model.Items.Count > 0 ? "11em" : "unset") ;
+        border-bottom: 0.5px solid #DADADA;
+    }
+    tr th, tr td{
+        width: 15%;
+    }
+    .custom-qty-box{
+        width: 50%;
+    }
+    .p0{
+        padding: 0px;
+    }
+    .custom-summary{
+        width: 31em;
+        float: right;
+    }
+    .sub-heading {
+        font-family: Lato !important;
+        font-style: normal !important;
+        font-weight: 500 !important;
+        font-size: 14.5px !important;
+        line-height: 17px !important;
+        /* C1/A */
+
+        color: #151515;
+    }
+    .green-heading {
+        font-family: Poppins;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 19px !important;
+        line-height: 28px !important;
+        /* identical to box height */
+
+        text-align: right;
+        /* C2/A */
+
+        color: #6A983C;
+    }
+    td, .paragraph {
+        font-family: Lato;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 14.5px;
+        line-height: 20px;
+        /* or 138% */
+        /* C1/A */
+
+        color: #151515;
+    }
+
+    .jqueryPagination{
+        display: @(Model.Items.Count > 0 ? "flex" : "none");
+        justify-content: space-between;
+        margin: 8px 12px;
+    }
+    .paging_numbers span a {
+        margin-right: 5px;
+        cursor: pointer;
+        color: #636363;
+    }
+    .paging_numbers span .current{
+        color: #000;
+    }
+    .jqueryPagination p {
+        font-family: Lato;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 13.5px;
+        letter-spacing: 0.05em;
+        color: #636363;
+        margin-bottom:unset;
+    }
+
+</style>
+
+<section class="container-fluid newcustomer-area">
+    <div class="container-fluid" style="background: #F1F3F6; padding: 10px;">
+        <div class="container breadcrumb-bar">
+            <span class="muted"><a href="@Url.RouteUrl("Homepage")" class="muted">Inovatiqa</a> / </span> Your Cart
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="container">
+            <div class="row mt10">
+                <div class="col-md-12">
+                    <div class="become-customer-box" style="padding-top: 0px; padding-bottom: 80px;">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="font_lato">
+                                    <div class="customer-select">
+                                        <h4 class="heading mt25">Your Cart</h4>
+                                        <hr class="segment-line">
+                                            <table class="custom-table" id="GuestCartTable">
+                                               <thead>
+                                                    <tr>
+                                                        <th class="col-md-2">Item</th>
+                                                        <th class="col-md-2">Item Number</th>
+                                                        <th class="col-md-2">Product Description</th>
+                                                        <th class="col-md-2" style="text-align:center;">UOM</th>
+                                                        <th class="col-md-2">Quantity</th>
+                                                        <th class="col-md-2">Total</th>
+                                                        <th class="col-md-2"><a href="#" class="red" onclick="DeleteItem(-1)">Remove All Items</a></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @if (Model.Items.Count > 0)
+                                                    {
+                                                        foreach (var item in Model.Items)
+                                                        {
+                                                            <tr>
+                                                                <td class="col-md-2"><img src="@item.Picture.ImageUrl" alt="Alternate Text" /></td>
+                                                                <td class="col-md-2">@item.ProductId</td>
+                                                                <td class="col-md-2 p0" style="width:20%;">
+                                                                    <div>
+                                                                        <span class="paragraph">@item.ProductName</span>
+                                                                        <p class="paragraph mt20">@(item.ProductManufacturers.FirstOrDefault().Name == null ? "" : item.ProductManufacturers.FirstOrDefault().Name) / @item.ManufacturerPartNumber</p>
+                                                                    </div>
+                                                                </td>
+                                                                <td class="col-md-2" style="text-align:center;">@item.UOM</td>
+                                                                <td class="col-md-2 p0">
+                                                                    <div>
+                                                                        <div class="form-group custom-qty-box">
+                                                                            <a href="javascript:void(0)" class="border-button-flyoyt" onclick="AjaxCart.changeQuantity(@item.Id, 'd', '#qty_@item.Id')"><img class="sign-img" src="~/images/UIComponents/minus.svg" style="margin-top: 4px;"></a>
+                                                                            <span class="qty-text" style="transform: translateY(4px);" id="qty_@item.Id">@item.Quantity</span>
+                                                                            <a href="javascript:void(0)" class="border-button-flyoyt" onclick="AjaxCart.changeQuantity(@item.Id, 'i', '#qty_@item.Id')"><img class="sign-img" src="~/images/UIComponents/plud.svg" alt=""></a>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                                <td class="col-md-2">@item.SubTotal</td>
+                                                                <td class="col-md-2" style="padding-left: 5em;"><a href="#" onclick="DeleteItem(@item.Id)" style="cursor: pointer; color:black;">X</a></td>
+                                                            </tr>
+                                                        }
+                                                    }
+
+                                                </tbody>
+                                            </table>
+
+                                    </div>
+                                    <div class="custom-summary">
+                                        <div class="sub_total_box">
+                                            <div class="sub_list">
+                                                <p class="sub-heading">Subtotal</p>
+                                                <p>$@(Model.Items.Sum(item => Convert.ToDecimal(item.SubTotal.Replace("$", ""))))</p>
+                                            </div>
+                                            <div class="sub_list">
+                                                <p class="sub-heading">Tax</p>
+                                                <p>0 USD</p>
+                                            </div>
+                                            <div class="sub_list">
+                                                <p class="sub-heading">Shipping</p>
+                                                <p> <span id="TotalShippingFee">0</span> USD</p>
+                                            </div>
+                                            <hr class="segment-line mb0" />
+                                        </div>
+                                        <div class="final_amount mt0">
+                                            <div>
+                                                <p class="sub-heading">Total Order</p>
+                                            </div>
+                                            <div>
+                                                <h2 class="green-heading"><span id="SubTotal">$@(Model.Items.Sum(item => Convert.ToDecimal(item.SubTotal.Replace("$", ""))))</span> USD</h2>
+                                            </div>
+                                        </div>
+                                            <div class="form-group mt141" style="width: 18%; float: right;">
+                                                <a href="@Url.RouteUrl("GuestCheckout")" class="form-control btn btn-signin">Continue</a>
+                                            </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid" style="background: #F1F3F6; padding: 20px;"></div>
+    </div>
+</section>
+
+<script>
+    function DeleteItem(id) {
+        const confirmation = id > 0 ? confirm("Are you sure you wanted to remove this item?") : confirm('Are you sure you want to remove all items from cart?');
+        if (confirmation) {
+            setLoadWaiting(true);
+            $.ajax({
+                cache: false,
+                data: { "id": id },
+                type: "GET",
+                url: "/ShoppingCart/DeleteGuestCart",
+                success: function (data, textStatus, jqXHR) {
+                    setLoadWaiting(false);
+                    id > 0 ? alert("Cart item has been removed successfully!") : alert('Cart removed successfully.');
+                    window.location.href = "/Guest/Cart";
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    setLoadWaiting(false);
+                }
+            });
+        }
+    }
+
+    $(document).ready(function () {
+        const dt = $('#GuestCartTable').DataTable({
+            "language": {
+                "info": '<div class="tpage-num"><p>Showing _START_ to _END_ of _TOTAL_ Items</p></div>',
+                "emptyTable":'<p style="padding:1.2%; margin:0" class="muted">No Items in Cart.</p>'
+            },
+            "pageLength": 5,
+            "dom": 't<"jqueryPagination"ip>',
+            'pagingType': 'numbers'
+        });
+    });
+</script>

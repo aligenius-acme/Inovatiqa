@@ -1,0 +1,87 @@
+﻿@model CategoryModel
+
+@if (Model.Id > 0)
+{
+<div class="panel-body">
+    @await Html.PartialAsync("Table", new DataTablesModel
+{
+    Name = "products-grid",
+    UrlRead = new DataUrl("ProductList", "Category", new RouteValueDictionary { [nameof(Model.CategoryProductSearchModel.CategoryId)] = Model.CategoryProductSearchModel.CategoryId }),
+    UrlDelete = new DataUrl("ProductDelete", "Category", null),
+    UrlUpdate = new DataUrl("ProductUpdate", "Category", null),
+    Length = Model.CategoryProductSearchModel.PageSize,
+    LengthMenu = Model.CategoryProductSearchModel.AvailablePageSizes,
+    ColumnCollection = new List<ColumnProperty>
+        {
+            new ColumnProperty(nameof(CategoryProductModel.ProductName))
+            {
+                Title = "Product"
+            },
+            new ColumnProperty(nameof(CategoryProductModel.IsFeaturedProduct))
+            {
+                Title = "Is featured product?",
+                Width = "150",
+                ClassName = InovatiqaColumnClassDefaults.CenterAll,
+                Render = new RenderBoolean(),
+                Editable = true,
+                EditType = EditType.Checkbox
+            },
+            //new ColumnProperty(nameof(CategoryProductModel.DisplayOrder))
+            //{
+            //    Title = "Display order",
+            //    Width = "150",
+            //    ClassName = InovatiqaColumnClassDefaults.CenterAll,
+            //    Editable = true,
+            //    EditType = EditType.Number
+            //},
+            new ColumnProperty(nameof(CategoryProductModel.ProductId))
+            {
+                Title = "View",
+                Width = "150",
+                ClassName = InovatiqaColumnClassDefaults.Button,
+                Render = new RenderButtonView(new DataUrl("~/Admin/Product/Edit/", nameof(CategoryProductModel.ProductId)))
+            },
+            new ColumnProperty(nameof(CategoryProductModel.Id))
+            {
+                Title = "Edit",
+                Width = "200",
+                ClassName =  InovatiqaColumnClassDefaults.Button,
+                Render = new RenderButtonsInlineEdit()
+            },
+            new ColumnProperty(nameof(CategoryProductModel.Id))
+            {
+                Title = "Delete",
+                Width = "100",
+                Render = new RenderButtonRemove("Delete"),
+                ClassName = InovatiqaColumnClassDefaults.Button
+            }
+        }
+})
+</div>
+@*<div class="panel-footer">
+    <button type="submit" id="btnAddNewProduct"
+            onclick="javascript:OpenWindow('@(Url.Action("ProductAddPopup", "Category", new { categoryId = Model.Id, btnId = "btnRefreshProducts", formId = "category-form" }))', 800, 800, true); return false;"
+            class="btn btn-primary">
+        Add a new product
+    </button>
+    <input type="submit" id="btnRefreshProducts" style="display: none" />
+    @Html.Resource(@<script type="text/javascript">
+                        $(document).ready(function () {
+                            $('#btnRefreshProducts').click(function () {
+                                //refresh grid
+                                updateTable('#products-grid');
+
+                                //return false to don't reload a page
+                                return false;
+                            });
+                        });
+    </script>, "js")
+</div>*@
+}
+else
+{
+<div class="panel-body">
+    You need to save the category before you can add products for this category page.
+</div>
+}
+

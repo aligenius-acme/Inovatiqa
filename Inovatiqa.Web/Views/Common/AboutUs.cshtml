@@ -1,0 +1,345 @@
+﻿
+@{
+    Layout = "_ColumnsOne";
+    ViewBag.Title = "About Us";
+}
+<style>
+    html{
+        scroll-behavior: smooth !important;
+    }
+    .become-customer-box{
+        box-shadow : none !important;
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+    .newcustomer-area{
+        padding: 0px !important;
+        background: #FFF !important;
+    }
+    /*h1, h2, h3, h4, h5, h6{
+        font-weight: 500 !important;
+    }*/
+    .segment-line{
+        border: 0.1px solid #DADADA !important;
+    }
+    .custom-paragraph{
+        font-size: 16px !important;
+    }
+    .buttoned-heading{
+        width: unset !important;
+    }
+    .about-heading, .fancy-heading{
+        font-size: 21px !important;
+    }
+    .value-paragraph, .about-link{
+        font-size: 15px !important;
+    }
+    .about-us-small-paragraphs{
+        font-size: 17px !important;
+    }
+    .about-us-helper-image{
+        transform: translateX(-3.5%);
+    }
+    .fancy-heading{
+        transform: translateY(-150%);
+    }
+</style>
+<section class="container-fluid newcustomer-area">
+    <div class="container-fluid" style="background: #F1F3F6; padding: 10px;">
+        <div class="container breadcrumb-bar">
+            <a style="color: #A9A9A9;" class="muted" href="@Url.RouteUrl("HomePage")">Inovatiqa / </a> About Us
+        </div>
+    </div>
+    <div class="row">
+        <div class="container">
+            <div class="row mt10">
+                <div class="col-md-12">
+                    <div class="become-customer-box">
+                        <div class="row">
+                            <div class="col-md-7">
+                                <div class="font_lato">
+                                    <div class="customer-select">
+                                        <h4 class="about-heading">About Inovatiqa</h4>
+                                        <hr class="segment-line">
+                                        <p class="custom-paragraph mt33">Inovatiqa Corporation is a one stop shop for all medical equipment and supplies. Our core products range from Medical, Dental, Surgical to Pharmaceutical and Laboratory solutions. With over 200 healthcare manufacturer’s products available to order on one purchase order, Inovatiqa helps you remain market competitive. Bundle your purchases from manufacturers like 3M, BD, PDI, Smith & Nephew and many more!</p>
+                                        <p class="custom-paragraph">
+                                            Our diverse portfolio is supported by some of the nation’s prominent GPOs and associations in the industry we thrive in. We believe in conducting business with integrity and honesty which is becoming non-existent in today’s modern world. We are a socially responsible organization and hope to inspire future generations to follow suit.
+                                        </p>
+                                        <p class="custom-paragraph mb37">Through collaboration and innovation, our aim is to make a positive impact and continue our journey of doing the right thing at all costs.</p>
+                                    </div>
+                                </div>
+                                <div class="customer-select">
+                                    <h4 class="about-heading mt48">Mission Statement</h4>
+                                    <hr class="segment-line">
+                                    <p class="custom-paragraph mt33 mb37">Inovatiqa thrives in the vast Healthcare realm as a provider of Medical and Laboratory Equipment and supplies. Every day we strive to serve our partners beyond industry standards through value innovation. By offering a total solution for our customer needs, promoting emotional benefits in our corporate culture and believing in reshaping our industry conditions, we competitively differentiate ourselves from the lot.</p>
+                                </div>
+                                <div class="customer-select">
+                                    <h4 class="about-heading mt5">Vision Statement</h4>
+                                    <hr class="segment-line">
+                                    <p class="custom-paragraph mt33 mb37">Perceiving a world where healthcare is affordable and accessible for all.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-5" style="margin-top: 5%;">
+                                <div class="inovatiqaway-area">
+                                    <img class="about-us-helper-image" src="~/images/UIComponents/About_us_data.svg" style="height: 600px; width: 500px;">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="customer-select">
+                            <h4 class="about-heading mt5">Core Values</h4>
+                            <hr class="segment-line">
+                            <div class="core-values-area">
+                                <div class="value">
+                                    <div class="buttoned-heading">
+                                        <h4>Integrity</h4>
+                                    </div>
+                                    <p class="value-paragraph">At the heart of Inovatiqa is integrity. For us, integrity is not only a corporate responsibility rather a, personal one. We believe in conducting business with honesty and probity. Doing the right thing might be challenging, but we envision a world where everyone does.</p>
+                                </div>
+                                <div class="value">
+                                    <div class="buttoned-heading">
+                                        <h4>Personal Engagement</h4>
+                                    </div>
+                                    <p class="value-paragraph">We believe in being emotionally and physically present for our customers. Our primary focus is on value creation rather than revenue extraction. Through this, our goal is to be empathetic towards our customer needs and hence create a bond that goes deeper than just a business transaction.</p>
+                                </div>
+                                <div class="value">
+                                    <div class="buttoned-heading">
+                                        <h4>Service</h4>
+                                    </div>
+                                    <p class="value-paragraph">At Inovatiqa, we are continuously thinking of ideas and ways to innovate and provide exceptional service. To achieve this, we instill a mind set and create an environment where employees are motivated to go beyond the scope of their roles. This helps create a higher purpose and empowers our employees to deliver excellent service.</p>
+                                </div>
+                                <div class="value">
+                                    <div class="buttoned-heading">
+                                        <h4>Technology and Innovation</h4>
+                                    </div>
+                                    <p class="value-paragraph">This value is fundamental to our corporate culture, so much so, that we coined our brand after ‘Innovation’. We strive to stay abreast of all the technological developments and invest to discover avenues that will help improve our business processes consistently.  </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="customer-select">
+                            <h4 class="about-heading mt5">Customers we serve</h4>
+                            <hr class="segment-line">
+                            <div class="customer-we-serve-area" id="links">
+                                <div class="customers">
+                                    <a class="about-link mt16" href="#Ambulatory-Surgery-Centers">Ambulatory Surgery Centers</a>
+                                    <a class="about-link mt16" href="#Assisted-Living-Facilities">Assisted Living Facilities</a>
+                                    <a class="about-link mt16" href="#Community-Health-Centers">Community Health Centers</a>
+                                    <a class="about-link mt16" href="#Emergency-Medical-Services">Emergency Medical Services</a>
+                                </div>
+                                <div class="customers">
+                                    <a class="about-link mt16" href="#Government">Government</a>
+                                    <a class="about-link mt16" href="#Health-Systems-IDN">Health Systems / IDN</a>
+                                    <a class="about-link mt16" href="#Home-Health-Agencies">Home Health Agencies</a>
+                                    <a class="about-link mt16" href="#Home-Infusion-Therapy">Home Infusion Therapy</a>
+                                </div>
+                                <div class="customers">
+                                    <a class="about-link mt16" href="#Home-Medical-Equipment">Home Medical Equipment</a>
+                                    <a class="about-link mt16" href="#Hospital-Central-Labs">Hospital & Central Labs</a>
+                                    <a class="about-link mt16" href="#Long-Term-Care">Long Term Care</a>
+                                    <a class="about-link mt16" href="#Physician-Offices">Physician Offices</a>
+                                </div>
+                                <div class="customers">
+                                    <a class="about-link mt16" href="#Physician-Office-Labs">Physician Office Labs</a>
+                                    <a class="about-link mt16" href="#Retail-Ecommerce">Retail Ecommerce</a>
+                                    <a class="about-link mt16" href="#Urgent-Care-Centers">Urgent Care Centers</a>
+                                    <a class="about-link mt16" href="#Workplace-Health">Workplace Health</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="about-images">
+                            <div class="images-area" id="Ambulatory-Surgery-Centers">
+                                <img class="about-us-helper-image" src="~/images/UIComponents/About_us_1.png" >
+                                <div>
+                                    <h4 class="fancy-heading">Ambulatory Surgery Centers</h4>
+                                </div>
+                                <p class="about-us-small-paragraphs mt-45">Today’s surgery centers require more than a medical-surgical supply distributor. They need a reliable partner that can help tackle business hurdles such as managing costs and improving clinical results. At Inovatiqa, we have your medical-surgical products covered. </p>
+                                <div class="go-to-top">
+                                    <a href="#links"><img src="~/images/UIComponents/go_to_top.svg" alt=""></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="about-images mt240" id="Assisted-Living-Facilities">
+                            <div class="images-area">
+                                <img class="about-us-helper-image" src="~/images/UIComponents/About_us_2.png" >
+                                <div>
+                                    <h4 class="fancy-heading">Assisted Living Facilities</h4>
+                                </div>
+                                <p class="about-us-small-paragraphs mt-45">When it comes to helping provide quality care at assisted living facilities, Inovatiqa has you covered. We want to provide you with great products and customer service.</p>
+                                <div class="go-to-top">
+                                    <a href="#links"><img src="~/images/UIComponents/go_to_top.svg" alt=""></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="about-images mt240" id="Community-Health-Centers">
+                            <div class="images-area">
+                                <img class="about-us-helper-image" src="~/images/UIComponents/About_us_3.png" >
+                                <div>
+                                    <h4 class="fancy-heading">Community Health Centers</h4>
+                                </div>
+                                <p class="about-us-small-paragraphs mt-45 mt-45">Community health centers (CHC) have the challenge of providing the best care possible for the under-served population. With products and services to a variety of community health centers, Inovatiqa will help you stay ahead of what’s next.</p>
+                                <div class="go-to-top">
+                                    <a href="#links"><img src="~/images/UIComponents/go_to_top.svg" alt=""></a>
+                                </div>
+                            </div>
+                        </div><div class="about-images mt240" id="Emergency-Medical-Services">
+                                  <div class="images-area">
+                                      <img class="about-us-helper-image" src="~/images/UIComponents/About_us_4.png" >
+                                      <div>
+                                          <h4 class="fancy-heading">Emergency Medical Services</h4>
+                                      </div>
+                                      <p class="about-us-small-paragraphs mt-45">For emergency medical services, treatment and timing is everything. Each day, you’re in the field providing immediate care to patients while under immense pressure. We can help provide the EMS products and solutions you need so you can concentrate on what matters most, the people you serve.</p>
+                                      <div class="go-to-top">
+                                          <a href="#links"><img src="~/images/UIComponents/go_to_top.svg" alt=""></a>
+                                      </div>
+                                  </div>
+                        </div>
+                        <div class="about-images mt240" id="Government">
+                            <div class="images-area">
+                                <img class="about-us-helper-image" src="~/images/UIComponents/About_us_5.png" >
+                                <div>
+                                    <h4 class="fancy-heading">Government</h4>
+                                </div>
+                                <p class="about-us-small-paragraphs mt-45">Do you know what it means to serve? You do it every day as not only a medical provider but as one for the vast array of government departments at the federal, state, and local levels. You need cost-effective products without sacrificing quality and the support to back those products up. At Inovatiqa, we can help you.</p>
+                                <div class="go-to-top">
+                                    <a href="#links"><img src="~/images/UIComponents/go_to_top.svg" alt=""></a>
+                                </div>
+                            </div>
+                        </div><div class="about-images mt240" id="Health-Systems-IDN">
+                                  <div class="images-area">
+                                      <img class="about-us-helper-image" src="~/images/UIComponents/About_us_6.png" >
+                                      <div>
+                                          <h4 class="fancy-heading">Health Systems / IDN</h4>
+                                      </div>
+                                      <p class="about-us-small-paragraphs mt-45">Faced with supply shortages and high demand during the COVID-19 pandemic, health systems’ supply chains have had to change. To support their clinicians in providing care, supply chains have become more collaborative and innovative. Enabling your supply chain’s resilience is a responsibility we take seriously. As experts in the medical supply field, our service model and solutions can help build a flexible supply chain that meets the needs of your business, your staff, and your patients.</p>
+                                      <div class="go-to-top">
+                                          <a href="#links"><img src="~/images/UIComponents/go_to_top.svg" alt=""></a>
+                                      </div>
+                                  </div>
+                        </div><div class="about-images mt240" id="Home-Health-Agencies">
+                                  <div class="images-area">
+                                      <img class="about-us-helper-image" src="~/images/UIComponents/About_us_7.png" >
+                                      <div>
+                                          <h4 class="fancy-heading">Home Health Agencies</h4>
+                                      </div>
+                                      <p class="about-us-small-paragraphs mt-45">It’s important to have a partner that can help you stay focused on providing quality home healthcare products. We're here to help you.</p>
+                                      <div class="go-to-top">
+                                          <a href="#links"><img src="~/images/UIComponents/go_to_top.svg" alt=""></a>
+                                      </div>
+                                  </div>
+                        </div>
+                        <div class="about-images mt240" id="Home-Infusion-Therapy">
+                            <div class="images-area">
+                                <img class="about-us-helper-image" src="~/images/UIComponents/About_us_8.png" >
+                                <div>
+                                    <h4 class="fancy-heading">Home Infusion Therapy</h4>
+                                </div>
+                                <p class="about-us-small-paragraphs mt-45">Your home infusion therapy patients rely on you to be there for them, and that means having a distributor who’s there for you. That's where we come in. Let's help find the right product for you.</p>
+                                <div class="go-to-top">
+                                    <a href="#links"><img src="~/images/UIComponents/go_to_top.svg" alt=""></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="about-images mt240" id="Home-Medical-Equipment">
+                            <div class="images-area">
+                                <img class="about-us-helper-image" src="~/images/UIComponents/About_us_9.png">
+                                <div>
+                                    <h4 class="fancy-heading">Home Medical Equipment</h4>
+                                </div>
+                                <p class="about-us-small-paragraphs mt-45">At Inovatiqa, our focus is always on our customers’ success and the best possible outcomes for their patients. To learn more about how we can better serve your patients, call us today at <a class="blue" href="callto:346-229-4142">346-229-4142</a></p>
+                                <div class="go-to-top">
+                                    <a href="#links"><img src="~/images/UIComponents/go_to_top.svg" alt=""></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="about-images mt240" id="Hospital-Central-Labs">
+                            <div class="images-area">
+                                <img class="about-us-helper-image" src="~/images/UIComponents/About_us_10.png" >
+                                <div>
+                                    <h4 class="fancy-heading">Hospital & Central Labs</h4>
+                                </div>
+                                <p class="about-us-small-paragraphs mt-45">In today’s healthcare landscape, your hospital laboratory needs to perform accurately and efficiently. That’s why Inovatiqa brings you the instruments, supplies, and services you need to help improve your lab’s performance, in addition to patient satisfaction and outcomes. </p>
+                                <div class="go-to-top">
+                                    <a href="#links"><img src="~/images/UIComponents/go_to_top.svg" alt=""></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="about-images mt240" id="Long-Term-Care">
+                            <div class="images-area">
+                                <img class="about-us-helper-image" src="~/images/UIComponents/About_us_11.png" >
+                                <div>
+                                    <h4 class="fancy-heading">Long Term Care</h4>
+                                </div>
+                                <p class="about-us-small-paragraphs mt-45">Each day, Inovatiqa's goal is to provide quality products and services to our clients. We understand the need for quality medical-surgical product solutions – from advanced wound care and incontinence to housekeeping – as well as clinical and business resources to help address your biggest challenges. Long-term care is important to us.</p>
+                                <div class="go-to-top">
+                                    <a href="#links"><img src="~/images/UIComponents/go_to_top.svg" alt=""></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="about-images mt240" id="Physician-Offices">
+                            <div class="images-area">
+                                <img class="about-us-helper-image" src="~/images/UIComponents/About_us_12.png" >
+                                <div>
+                                    <h4 class="fancy-heading">Physician Offices</h4>
+                                </div>
+                                <p class="about-us-small-paragraphs mt-45">Every day, you're making a difference in patient's lives and we want to help make that easier. Let us help provide you with quality care and more with our products and services.</p>
+                                <div class="go-to-top">
+                                    <a href="#links"><img src="~/images/UIComponents/go_to_top.svg" alt=""></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="about-images mt240" id="Physician-Office-Labs">
+                            <div class="images-area">
+                                <img class="about-us-helper-image" src="~/images/UIComponents/About_us_13.png" >
+                                <div>
+                                    <h4 class="fancy-heading">Physician Office Labs</h4>
+                                </div>
+                                <p class="about-us-small-paragraphs mt-45">Inovatiqa delivers laboratory products to help your physician office lab improve efficiencies and profitability while promoting better patient outcomes.</p>
+                                <div class="go-to-top">
+                                    <a href="#links"><img src="~/images/UIComponents/go_to_top.svg" alt=""></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="about-images mt240" id="Retail-Ecommerce">
+                            <div class="images-area">
+                                <img class="about-us-helper-image" src="~/images/UIComponents/About_us_14.png" >
+                                <div>
+                                    <h4 class="fancy-heading">Retail Ecommerce</h4>
+                                </div>
+                                <p class="about-us-small-paragraphs mt-45">We make shipping healthcare products easy. While you focus on growing your business, let us handle the rest. When your customer places an order from your website, we deliver the products from our warehouse to you. Excellent service is important to us. We're here to help you.</p>
+                                <div class="go-to-top">
+                                    <a href="#links"><img src="~/images/UIComponents/go_to_top.svg" alt=""></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="about-images mt240" id="Urgent-Care-Centers">
+                            <div class="images-area">
+                                <img class="about-us-helper-image" src="~/images/UIComponents/About_us_15.png" >
+                                <div>
+                                    <h4 class="fancy-heading">Urgent Care Centers</h4>
+                                </div>
+                                <p class="about-us-small-paragraphs mt-45">
+                                    We provide our urgent care customers with unique products and services that help make purchasing products easy.
+                                </p>
+                                <div class="go-to-top">
+                                    <a href="#links"><img src="~/images/UIComponents/go_to_top.svg" alt=""></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="about-images mt240" id="Workplace-Health">
+                            <div class="images-area">
+                                <img class="about-us-helper-image" src="~/images/UIComponents/About_us_16.png" >
+                                <div>
+                                    <h4 class="fancy-heading">Workplace Health</h4>
+                                </div>
+                                <p class="about-us-small-paragraphs mt-45">At Inovatiqa, you can count on us. Keeping your workforce productive starts with keeping your employees healthy. To do that, you need a supplier with the expertise, resources, and products to support you. Get the solutions you need so you can focus on what you do best – managing the health and wellness of your employees.</p>
+                                <div class="go-to-top" style="transform: translateY(60px);">
+                                    <a href="#links"><img src="~/images/UIComponents/go_to_top.svg" alt=""></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid" style="background: #F1F3F6; padding: 20px;"></div>    
+</section>

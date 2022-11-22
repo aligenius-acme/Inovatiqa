@@ -1,0 +1,31 @@
+﻿@inject Inovatiqa.Services.Common.Interfaces.IGenericAttributeService genericAttributeService
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@removeTagHelper Microsoft.AspNetCore.Mvc.TagHelpers.InputTagHelper, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, MiniProfiler.AspNetCore.Mvc
+@addTagHelper *, Inovatiqa.Web
+@using System.Text.Encodings.Web
+@using Microsoft.AspNetCore.Mvc.ViewFeatures
+@using Microsoft.AspNetCore.Routing
+@using Microsoft.Extensions.Primitives
+@using Inovatiqa.Core
+@using Inovatiqa.Web.Extensions
+@using Inovatiqa.Web.Framework.Models
+@using Inovatiqa.Web.Areas.Admin.Models.Home
+@using Inovatiqa.Web.Areas.Admin.Models.Common
+@using Inovatiqa.Web.Framework.Models.DataTables
+@using Inovatiqa.Web.Areas.Admin.Models.Orders
+@using Inovatiqa.Web.Areas.Admin.Models.Logging
+@using Inovatiqa.Web.Areas.Admin.Models.Reports
+@using Inovatiqa.Web.Areas.Admin.Models.Customers
+@using Inovatiqa.Web.Areas.Admin.Models.ShoppingCart
+@using Inovatiqa.Core.Interfaces
+@using Inovatiqa.Services.Security.Interfaces
+@using Inovatiqa.Services.Security
+@using Inovatiqa.Services.WorkContext.Interfaces
+@using Inovatiqa.Services.Customers.Interfaces
+@using Inovatiqa.Services.Helpers.Interfaces
+@using Inovatiqa.Web.Areas.Admin.Models.Catalog
+@using Inovatiqa.Web.Areas.Admin.Models.Vendors
+@using Inovatiqa.Services.Media.Interfaces
+@using Inovatiqa.Web.Areas.Admin.Models.Settings
+@using Inovatiqa.Web.Areas.Admin.Models.Slider

@@ -1,0 +1,64 @@
+﻿@model ManufacturerNavigationModel
+@*if (Model.Manufacturers.Count > 0)
+{
+    <div class="block block-manufacturer-navigation well" style="max-height: 17em; overflow-y: auto;">
+        <div class="title">
+            <strong>Manufacturer Name</strong>
+        </div>
+        <div class="listbox">
+            <ul class="nav nav-list">
+                @foreach (var manufacturer in Model.Manufacturers)
+                {
+                    @if (manufacturer.NumberOfProducts.HasValue == false)
+                    {
+                        <li class="@(manufacturer.IsActive ? "active" : "inactive")"><a href="@Url.RouteUrl("Manufacturer", new { SeName = manufacturer.SeName })">@manufacturer.Name</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="@(manufacturer.IsActive ? "active" : "inactive")">
+                            <a href="@Url.RouteUrl("Manufacturer", new { SeName = manufacturer.SeName })">@manufacturer.Name
+                                <b>(@manufacturer.NumberOfProducts.Value)</b>
+                            </a>
+                        </li>
+                    }
+                }
+            </ul>
+            @if (Model.TotalManufacturers > Model.Manufacturers.Count && !string.IsNullOrEmpty(Context.Request.Query["all"]))
+            {
+                <div class="view-all">
+                    <a href="@Url.RouteUrl("ManufacturerList")">View all</a>
+                </div>
+            }
+        </div>
+    </div>
+}*@
+<div class="list_sec">
+ @*   @{
+        var group = Model.Manufacturers.GroupBy(man => man.Name,
+            man => new{ 
+                Id = man.Id, 
+                isSelect = man.IsSelected
+            }).ToList();
+    }*@
+    @foreach(var manufacturer in Model.Manufacturers)
+    {
+        <div class="list"><label><input type="checkbox" checked="@manufacturer.IsSelected" onclick="reloadWithManufacturer(this, '@(Convert.ToString(manufacturer.Id))')"/>@manufacturer.Name <span>@manufacturer.Count</span></label></div>
+        @*<div class="list"><label><input type="checkbox" checked="@Brand.IsSelected" onclick="reloadWithManufacturer(this, '@(Convert.ToString(Brand.Id))')"/> @Brand.Name</label></div>*@
+
+    }
+</div>
+
+
+<script>
+function reloadWithManufacturer(e, Id) {
+    const { href } = window.location;
+    console.log(href);
+    if ($(e).is(':checked')) {
+        window.location.href += `&manufectuererFilter=${Id}`;
+    }
+    else {
+        window.location.href = window.location.href.replace(`&manufectuererFilter=${encodeURI(Id)}`, '');
+    }
+}
+</script>

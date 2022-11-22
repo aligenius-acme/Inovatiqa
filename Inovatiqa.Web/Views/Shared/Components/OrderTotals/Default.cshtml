@@ -1,0 +1,10 @@
+﻿@model OrderTotalsModel
+@if (!string.IsNullOrEmpty(Model.SubTotal))
+{
+    <span>@Model.SubTotal</span>
+}
+else
+{
+    <span>$0.00</span>
+}
+

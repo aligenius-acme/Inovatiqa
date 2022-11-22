@@ -1,0 +1,630 @@
+﻿@using Inovatiqa.Core
+@model EmailModel
+@{
+    Layout = "_ColumnsOne";
+}
+
+@{
+    ViewBag.Title = "Contact Us";
+}
+@*
+
+    <style>
+        .table td, table th, table tbody tr td {
+            padding: 10px 20px;
+            font-size: 13px;
+        }
+    </style>
+    <div class="col-lg-12 col-md-12 col-sm-12 thumbnail">
+        <div class="page-title panel-heading">
+            <h1>Contact Us</h1>
+        </div>
+
+
+        <div class="col-lg-6 col-md-6 col-sm-12">
+            <form action="/FooterSendEmails" method="post">
+                <h4 style="font-weight:bold"> Email Us</h4>
+
+                <br>
+                <input type="text" hidden name="EmailSubject" value="Contact Us" asp-for="EmailSubject" />
+
+
+                <div class="form-group col-lg-12">
+                    <label asp-for="CustomerFirstName"></label>
+                    <input type="text" name="CustomerFirstName" data-val="true" autocomplete="off" data-val-required="The First Name  is required." asp-for="CustomerFirstName" class="form-control input-sm" placeholder="First Name" />
+                    <span asp-validation-for="CustomerFirstName" style="min-width: 100%;" class="text-danger"></span>
+                </div>
+
+
+
+                <div class="form-group col-lg-12">
+                    <label asp-for="CustomerLastName"></label>
+                    <input type="text" name="CustomerLastName" data-val="true" autocomplete="off" data-val-required="The Last Name  is required." asp-for="CustomerLastName" class="form-control input-sm" placeholder="Last Name" />
+                    <span asp-validation-for="CustomerLastName" style="min-width: 100%;" class="text-danger"></span>
+                </div>
+
+
+                <div class="form-group col-lg-12">
+                    <label asp-for="CustomerEmail"></label>
+                    <input type="text" name="CustomerEmail" data-val="true" autocomplete="off" data-val-required="The  Email field is required." asp-for="CustomerEmail" class="form-control input-sm" placeholder=" Email Address" />
+                    <span asp-validation-for="CustomerEmail" style="min-width: 100%;" class="text-danger"></span>
+                </div>
+
+
+                <div class="form-group col-lg-12">
+                    <label asp-for="PhoneNumber"></label>
+                    <input type="text" name="PhoneNumber" data-val="true" autocomplete="off" data-val-required="The Phone Number field is required." asp-for="PhoneNumber" class="form-control input-sm" placeholder=" Phone Number" />
+                    <span asp-validation-for="PhoneNumber" style="min-width: 100%;" class="text-danger"></span>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="col-sm-12 col-md-12 col-lg-12">Releated To <span style="color:red"> *</span></label>
+                    <div class="col-sm-12 col-md-12">
+                        @*<input placeholder="Enter your last name." type="text" required class="fullname form-control" />@
+                        <select name="relatedTo" id="relatedTo" title="Related To" value="" class="form-control" placeholder="Order">
+                            <option value="Orders">Orders</option>
+                            <option value="Product Questions">Product Question</option>
+                            <option value="Quote Request">Quote Request</option>
+                            <option value="Setup Professional Account">Setup Professional Account</option>
+                            <option value="International Orders">International Orders</option>
+                            <option value="Medicare/Medicaid/Insurance">Medicare/Medicaid/Insurance</option>
+                            <option value="General Support">General Support</option>
+                            <option value="Feedback &amp; Suggestions">Feedback &amp; Suggestion</option>
+                            <option value="Product Suggestions">Product Suggestion</option>
+                            <option value="Business Development">Business Development</option>
+                        </select>
+                    </div>
+                </div>
+                <br>
+                <br>
+                <br>
+                <div class="form-group col-lg-12">
+                    <label asp-for="OrderNumber"></label>
+                    <input type="text" name="OrderNumber" data-val="true" autocomplete="off" data-val-required="The Order Number field is required." asp-for="OrderNumber" class="form-control input-sm" placeholder="Enter your order number" />
+                    <span asp-validation-for="OrderNumber" style="min-width: 100%;" class="text-danger"></span>
+                </div>
+
+                <div class="form-group col-lg-12">
+                    <label> Comments</label>
+                    <textarea type="text" name="Message" data-val="true" autocomplete="off" data-val-required="The Message field is required." asp-for="Message" class="form-control input-sm" style="height:125px" placeholder="Type a message"></textarea>
+
+                    <span asp-validation-for="Message" style="min-width: 100%;" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-12 col-md-12 col-lg-12"></label>
+                    <div class="col-sm-12 col-md-12">
+                        @*<img style="height:70px" src="~/images/111.PNG" />@
+
+                        <div class="recaptcha checkbox-wrapper" style="overflow:hidden;position:relative;margin-bottom:10px;">
+                            <input type="checkbox" id="cb-606f48a879604" name="cb-606f48a879604" value="" class="hide required-entry" style="visibility:hidden; position:absolute; left:-1000000px">
+                            <div id="el-606f48a879604"><div style="width: 304px; height: 78px;"><div><iframe src="https://www.google.com/recaptcha/api2/anchor?ar=1&amp;k=6Le_FEAUAAAAAJnzGzfM-bEdcmOjsNA8YrH_OETN&amp;co=aHR0cHM6Ly93d3cuNG1kbWVkaWNhbC5jb206NDQz&amp;hl=en&amp;type=image&amp;v=bfvuz6tShG5aoZp4K4zPVf5t&amp;theme=light&amp;size=normal&amp;cb=82j3g96lawtp" width="304" height="78" role="presentation" name="a-67yeznpcak9q" frameborder="0" scrolling="no" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation allow-modals allow-popups-to-escape-sandbox"></iframe></div><textarea id="g-recaptcha-response" name="g-recaptcha-response" class="g-recaptcha-response" style="width: 250px; height: 40px; border: 1px solid rgb(193, 193, 193); margin: 10px 25px; padding: 0px; resize: none; display: none;"></textarea></div><iframe style="display: none;"></iframe></div>
+                            <script type="text/javascript">
+                                var onloadCallback = function () {
+                                    grecaptcha.render('el-606f48a879604', {
+                                        'sitekey': "6Le_FEAUAAAAAJnzGzfM-bEdcmOjsNA8YrH_OETN",
+                                        'theme': "light",
+                                        'type': "image",
+                                        'size': "normal",
+                                        'callback': function (response) {
+                                            if (response.length > 0) {
+                                                $('cb-606f48a879604').writeAttribute('value', 'checked');
+                                                $('cb-606f48a879604').checked = true;
+                                            }
+                                        }
+                                    });
+                                };
+                            </script>
+                            <script async="" src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&amp;render=explicit&amp;hl=en" defer="" type="text/javascript"></script>
+                        </div>
+
+
+                    </div>
+                </div>
+                <br>
+                <br>
+                <br>
+
+
+
+                <div class="form-group">
+                    <label class="col-sm-12 col-md-12 col-lg-12"></label>
+                    <div class="col-sm-12 col-md-12">
+
+
+                        <button type="submit" class="btn btn-primary" style="float:right;"> Submit   </button>
+                    </div>
+                </div>
+
+                <br>
+                <br>
+                <br>
+
+
+
+            </form>
+        </div>
+
+
+
+
+        <div class="col-lg-6 col-md-6 col-sm-12">
+            <br>       <br>
+            <div class="col-lg-12 col-md-12 col-sm-12">
+
+                <div class="col-lg-2 col-md-2 col-sm-2">
+                    <i class="fa fa-phone fa-4x" style="color:dodgerblue" aria-hidden="true">
+
+                    </i>
+                </div>
+                <div class="col-lg-10 col-md-10 col-sm-10">
+
+                    <h4 style="font-weight:bold"> Call for Immediate Service</h4>
+                    <br>
+                    <p><b>Toll Free:  </b> @InovatiqaDefaults.CompanyPhoneNo</p>
+                    <p><b>Phone:  </b> 732-905-5400</p>
+                    <p><b>Hours:  </b> Mon-Fri 9AM - 5PM EST</p>
+                    <br>
+                    <br>
+                </div>
+            </div>
+
+
+
+            <div class="col-lg-12 col-md-12 col-sm-12">
+
+                <div class="col-lg-2 col-md-2 col-sm-2">
+                    <i class="fa fa-question fa-4x" style="color:dodgerblue" aria-hidden="true">
+
+                    </i>
+                </div>
+                <div class="col-lg-10 col-md-10 col-sm-10">
+
+
+                    <h4 style="font-weight:bold"> Customer Service Center</h4>
+
+                    <a href="https://www.4mdmedical.com/return-policy/">Visit our Help Section Visit Return Policy</a>
+                    <br>
+                    <br>
+
+                </div>
+            </div>
+
+            <br>
+
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <br>
+                <br>
+                <div class="col-lg-2 col-md-2 col-sm-2">
+                    <i class="fa fa-envelope fa-4x" style="color:dodgerblue" aria-hidden="true">
+
+                    </i>
+                </div>
+                <div class="col-lg-10 col-md-10 col-sm-10">
+
+
+
+                    <h4 style="font-weight:bold"> Mail or Fax</h4>
+                    <br>
+
+                    <p><b>Fax:  </b> 	866-611-6999</p>
+
+                    <br>
+
+
+
+                    <p>
+                        <b>  Corporate Office:  </b>
+                        15 America Avenue
+                        Suite 207
+                        Lakewood, NJ 08701
+                    </p>
+
+                    <p>
+                        <b>  Distribution Center:  </b>
+                        1790 Swarthmore Avenue
+                        Unit 4
+                        Lakewood, NJ 08701
+                    </p>
+
+                </div>
+            </div>
+
+
+
+
+
+
+            <br>
+            <br>
+
+        </div>
+
+
+        <br>
+        <br>
+
+
+
+
+    </div>
+*@
+<style>
+    .heading {
+        font-family: Lato;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 20px;
+        line-height: 24px;
+        /* identical to box height */
+
+
+        color: #000000;
+    }
+
+    .input {
+        height: 40px !important;
+    }
+
+    label {
+        font-family: Lato;
+        font-style: normal !important;
+        font-weight: normal !important;
+        font-size: 14.5px !important;
+        line-height: 17px !important;
+        color: #000000 !important;
+    }
+
+    .label-small {
+        font-family: Lato;
+        font-style: normal;
+        font-weight: normal !important;
+        font-size: 12.5px !important;
+        line-height: 15px !important;
+        color: #000000;
+    }
+
+    .L2Heading {
+        font-family: Lato;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 18px;
+        line-height: 22px;
+        color: #000000;
+    }
+
+    .text {
+        font-family: Lato;
+        font-style: normal;
+        font-weight: normal !important;
+        font-size: 16px !important;
+        line-height: 19px !important;
+        color: #636363;
+    }
+
+    .li {
+        margin-top: 20px;
+    }
+
+    .grey {
+        color: #636363;
+        margin-right: 4px;
+    }
+
+    .green {
+        color: #6A983C !important;
+    }
+
+    .line:before {
+        /* content: "";
+        position: absolute;
+        right: 10px;
+        top: 80px;
+        bottom: 0px;
+        width: 1px;
+        border-right: 1px solid #C4C4C4; */
+    }
+
+    .row {
+        /*display: flex;
+        justify-content: space-between;*/
+    }
+
+    .newcustomer-area .inovatiqaway-area .account-detail ul li:before {
+        background: unset !important;
+    }
+
+    .newcustomer-area {
+        padding: 40px !important;
+    }
+
+    .normal {
+        font-family: Lato;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 20px;
+        line-height: 24px;
+        color: #000000;
+    }
+
+    #lined:before {
+        content: "";
+        position: absolute;
+        right: 100px;
+        top: 50px;
+        bottom: 0px;
+        width: 0.5px;
+        border: 0.5px solid #DADADA;
+    }
+</style>
+<script>
+    function Callback(token) {
+        if (token != undefined) {
+            $('#CaptchaCode').val(token);
+        }
+        else {
+            $('#CaptchaCode').val('');
+        }
+    }
+</script>
+<section class="container-fluid newcustomer-area">
+    <div class="row">
+        <div class="container">
+            <div class="row" id="form" style="display: none;">
+                <div class="col-md-12">
+                    <div class="become-customer-box">
+                        <h4 class="heading-price-match mt0">Contact Us</h4>
+                        <hr class="segment-line mb0" />
+                        <div class="row">
+                            <div class="col-md-7" id="lined">
+                                <div class="yourself-area font_lato">
+                                    <div class="customer-select">
+
+                                        <h5 class="heading mt25">Email Us</h5>
+                                        <p class="label-small">Submit the form below to contact Inovatiqa Corporation.</p>
+                                        @if (TempData["message"] != null && TempData["message"].ToString() != "")
+                                        {
+                                            <div class="alert @TempData["messageClass"]" role="alert">
+                                                @TempData["message"]
+                                            </div>
+                                        }
+                                        <div class="accountform-area font_lato mt53" style="display: block;">
+                                            <form action="/FooterSendEmails" method="post" id="form">
+                                                <input type="text" hidden name="EmailSubject" value="Contact Us" asp-for="EmailSubject" />
+                                                <input type="text" hidden name="Method" value="/contact-us" asp-for="Method" />
+                                                <div class="row align_center">
+                                                    <div class="col-md-4 col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="required">Contact Name</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-8 col-sm-12 col-xs-12">
+                                                        <div class="form-group flex-col">
+                                                            <input type="text" class="form-control input" name="CustomerFirstName" data-val="true" autocomplete="off" data-val-required="This field is required." asp-for="CustomerFirstName" />
+                                                            <span asp-validation-for="CustomerFirstName" class="error-label mt10 field-validation-error"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row align_center">
+                                                    <div class="col-md-4 col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="required">Email Address</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-8 col-sm-12 col-xs-12">
+                                                        <div class="form-group flex-col">
+                                                            <input type="email" class="form-control input" name="CustomerEmail" data-val="true" autocomplete="off" data-val-required="This field is required." asp-for="CustomerEmail" />
+                                                            <span asp-validation-for="CustomerEmail" class="error-label mt10 field-validation-error"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row align_center">
+                                                    <div class="col-md-4 col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="required">Phone Number</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-8 col-sm-12 col-xs-12">
+                                                        <div class="form-group flex-col">
+                                                            <input type="tel" id="phoneNumber" class="form-control" name="PhoneNumber" data-val="true" autocomplete="off" data-val-required="Phone Number is required." asp-for="PhoneNumber" />
+                                                            <span asp-validation-for="PhoneNumber" class="error-label mt10"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row align_center">
+                                                    <div class="col-md-4 col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="required">Related to</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-8 col-sm-12 col-xs-12">
+                                                        <div class="form-group flex-col">
+                                                            <select name="relatedTo" id="relatedTo" class="form-control">
+                                                                <option value="Orders">Orders</option>
+                                                                <option value="Product Questions">Product Question</option>
+                                                                <option value="Quote Request">Quote Request</option>
+                                                                <option value="Setup Professional Account">Setup Professional Account</option>
+                                                                <option value="International Orders">International Orders</option>
+                                                                <option value="Medicare/Medicaid/Insurance">Medicare/Medicaid/Insurance</option>
+                                                                <option value="General Support">General Support</option>
+                                                                <option value="Feedback &amp; Suggestions">Feedback &amp; Suggestion</option>
+                                                                <option value="Product Suggestions">Product Suggestion</option>
+                                                                <option value="Business Development">Business Development</option>
+                                                            </select>
+                                                            <span id="relatedToError" hidden class="error-label mt10"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row align_center">
+                                                    <div class="col-md-4 col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label>Order Number</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-8 col-sm-12 col-xs-12">
+                                                        <div class="form-group flex-col">
+                                                            <input type="number" class="form-control input" name="OrderNumber" data-val="true" autocomplete="off" asp-for="OrderNumber" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row align_center">
+                                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                                        <div class="form-group flex-col">
+                                                            <textarea class="form-control custom-textarea mb0" rows="8" style="max-width: unset;" name="Message" data-val="true" autocomplete="off" data-val-required="This field is required." asp-for="Message"></textarea>
+                                                            <span asp-validation-for="Message" class="error-label mt10 field-validation-error"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row align_center">
+                                                    <div class="form-group flex-col col-md-12 col-sm-12 col-xs-12">
+
+                                                        <div class="g-recaptcha mt25" data-expired-callback="Callback" data-callback="Callback" data-sitekey="6Le-btMdAAAAANaOQRxaopfuaf_xu5vhw1mrETdq"></div>
+                                                        <div style="width: 50%;">
+                                                            <input type="hidden" class="form-control ml29" id="CaptchaCode" name="CaptchaCode" data-val="true" autocomplete="off" data-val-required="Captcha is required." asp-for="CaptchaCode" />
+                                                            <span class="error-label" asp-validation-for="CaptchaCode"></span>
+                                                        </div>
+
+
+                                                    </div>
+                                                </div>
+                                                <div class="row align_center">
+                                                    <div class="col-md-12 col-sm-12 col-xs-12" style="display: flex; justify-content: flex-end;">
+                                                        <div class="signin-btn font_roboto form-group flex-col">
+                                                            <input type="submit" onclick="SubmitForm(event)" value="Submit" class="btn btn-signin" style="width: 80px; height: 38px;" />
+                                                            @*<input type="button" onclick="SubmitForm(event)" value="Submit" class="btn btn-signin" style="width: 80px; height: 38px;" />
+                                                                <input type="submit" hidden id="submit" />*@
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="inovatiqaway-area">
+                                    <div class="account-detail font_lato">
+                                        <h4 class="heading mt25">Contact Information</h4>
+                                        <p class="label-small">Inovatiqa’s contact information is listed below.</p>
+                                    </div>
+                                    <div class="account-detail business-account font_lato">
+                                        <h4 class="L2Heading">Contact</h4>
+                                        <ul style="list-style: none;">
+                                            <li class="text pl0 li"><span class="grey">Company Name </span> Inovatiqa Corporation</li>
+                                            <li class="text pl0 li"><span class="grey">Address</span> 12815 Capricorn St, Stafford, TX, 77477   </li>
+                                            <li class="text pl0 li"><span class="grey">Phone Number</span> 346-229-4142</li>
+                                            <li class="text pl0 li"><span class="grey">Fax Number</span> 281-220-1350</li>
+                                            <li class="text pl0 li"><span class="grey">Email</span> <a href="mailto:customerservice@inovatiqa.com" class="blue">customerservice@inovatiqa.com</a></li>
+                                        </ul>
+                                        <hr class="segment-line" />
+                                    </div>
+                                    <div class="account-detail business-account font_lato">
+                                        <h4 class="L2Heading mt55">Business Hours</h4>
+                                        <p class="text">Inovatiqa Corporation’s normal business hours are Monday/Friday 8AM - 5PM CST</p>
+                                        <p class="text">Customer Service is available at any time between 8AM - 5PM CST</p>
+                                        <p class="text">For more information, call 346-229-4142</p>
+                                        <hr class="segment-line" />
+                                    </div>
+                                    <div class="account-detail business-account font_lato">
+                                        <h4 class="L2Heading mt55">Customer Service Center</h4>
+                                        <p class="text mt20">For more information, visit our <a href="@Url.RouteUrl("ReturnPolicy")" class="green">Return Policy</a> page</p>
+                                    </div>
+                                    <div class="account-detail business-account font_lato">
+                                        <h4 class="L2Heading mt55">Corporate Office & Distribution Center</h4>
+                                        <p class="text">Inovatiqa’s corporate office and distribution center is located in Stafford, Texas. </p>
+                                        <p class="text"><span class="grey">Address</span> 12815 Capricorn St, Stafford, TX, 77477 </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" id="thankYou" style="display: none;">
+                <div class="col-md-12">
+                    <div class="become-customer-box">
+                        <h4 class="heading-price-match mt0">Thank You</h4>
+                        <hr class="segment-line mb0" />
+                        <div class="row" id="form">
+                            <div class="col-md-7">
+                                <div class="yourself-area font_lato" style="max-width: unset;">
+                                    <div class="customer-select">
+                                        <p class="normal mt25">We have received your email. A representative from Inovatiqa will contact you.</p>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="inovatiqaway-area">
+                                    <div class="account-detail font_lato">
+                                        <h4 class="heading mt25">Contact Information</h4>
+                                        <p class="label-small">Inovatiqa’s contact information is listed below.</p>
+                                    </div>
+                                    <div class="account-detail business-account font_lato">
+                                        <h4 class="L2Heading">Contact</h4>
+                                        <ul style="list-style: none;">
+                                            <li class="text pl0 li"><span class="grey">Company Name </span> Inovatiqa Corporation</li>
+                                            <li class="text pl0 li"><span class="grey">Address</span> 12815 Capricorn St, Stafford, TX, 77477   </li>
+                                            <li class="text pl0 li"><span class="grey">Phone Number</span> 346-229-4142</li>
+                                            <li class="text pl0 li"><span class="grey">Fax Number</span> 281-220-1350</li>
+                                            <li class="text pl0 li"><span class="grey">Email</span> <a href="mailto:customerservice@inovatiqa.com" class="blue">customerservice@inovatiqa.com</a></li>
+                                        </ul>
+                                        <hr class="segment-line" />
+                                    </div>
+                                    <div class="account-detail business-account font_lato">
+                                        <h4 class="L2Heading mt55">Business Hours</h4>
+                                        <p class="text">Inovatiqa Corporation’s normal business hours are Monday/Friday 8AM - 5PM CST</p>
+                                        <p class="text">Customer Service is available at any time between 8AM - 5PM CST</p>
+                                        <p class="text">For more information, call 346-229-4142</p>
+                                        <hr class="segment-line" />
+                                    </div>
+                                    <div class="account-detail business-account font_lato">
+                                        <h4 class="L2Heading mt55">Customer Service Center</h4>
+                                        <p class="text mt20">For more information, visit our <a href="@Url.RouteUrl("ReturnPolicy")" class="green">Return Policy</a> page</p>
+                                    </div>
+                                    <div class="account-detail business-account font_lato">
+                                        <h4 class="L2Heading mt55">Corporate Office & Distribution Center</h4>
+                                        <p class="text">Inovatiqa’s corporate office and distribution center is located in Stafford, Texas. </p>
+                                        <p class="text"><span class="grey">Address</span> 12815 Capricorn St, Stafford, TX, 77477 </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function () {
+        $.validator.setDefaults({
+            ignore: ""
+        });
+        
+        if (document.location.href.toLowerCase() == 'https://localhost:44368/common/contact-us') {
+            $('#form').hide();
+            $('#thankYou').show();
+        }
+        else {
+            $('#form').show();
+            $('#thankYou').hide();
+        }
+
+        $('relatedTo').on('change', function (e) {
+            if (e.target.value === "") {
+                $('#relatedToError').show();
+            }
+        });
+    });
+    function SubmitForm(e) {
+        if (grecaptcha.getResponse() == '') {
+            $('#humanError').show();
+        }
+        else {
+            $('#humanError').hide();
+            $('#submit').click();
+        }
+    }
+</script>

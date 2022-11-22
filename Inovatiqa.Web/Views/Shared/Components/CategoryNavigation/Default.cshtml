@@ -1,0 +1,88 @@
+﻿@model CategoryNavigationModel
+@*if (Model.Categories.Count > 0)
+    {
+        <div class="block block-category-navigation well" style="max-height: 17em; overflow-y: auto;">
+            <div class="title">
+                <strong>
+                    @{
+                        if (string.IsNullOrEmpty(Model.CurrentCategoryName))
+                        {
+                            <span>All Categories</span>
+                        }
+                        else
+                        {
+                            <span>
+                                @Model.CurrentCategoryName
+                            </span>
+                        }
+                    }
+                </strong>
+            </div>
+            <div class="listbox">
+                <ul class="nav nav-list">
+                    @foreach (var category in Model.Categories)
+                    {
+                        var categoryLineModel = new CategoryNavigationModel.CategoryLineModel
+                        {
+                            CurrentCategoryId = Model.CurrentCategoryId,
+                            Category = category
+                        };
+                        @await Html.PartialAsync("_CategoryLine.Navigation", categoryLineModel)
+                    }
+                </ul>
+            </div>
+        </div>
+    }
+    @@await Html.PartialAsync("_ManufacturerNavigation")*@
+@*@await Html.PartialAsync("_VendorNavigation")*@
+
+@if (Model.Categories.Count > 0)
+{
+    <div class="list_box m_t_40">
+        @if (string.IsNullOrEmpty(Model.CurrentCategoryName))
+        {
+        <h4>All Categories</h4>
+        }
+        else
+        {
+        <h4>@Model.CurrentCategoryName</h4>
+        }
+        @if (!string.IsNullOrEmpty(Model.CurrentCategoryName))
+        {
+            <div class="list_sec">
+                @foreach (var category in Model.Categories)
+                {
+                    var categoryLineModel = new CategoryNavigationModel.CategoryLineModel
+                    {
+                        CurrentCategoryId = Model.CurrentCategoryId,
+                        Category = category
+                    };
+
+                    @await Html.PartialAsync("_CategoryLine.Navigation", categoryLineModel)
+
+                }
+            </div>
+        }
+        else
+        {
+            <div class="list_sec">
+                @foreach (var category in Model.CategoryCount)
+                {
+                    var categoryLineModel = new CategoryNavigationModel.CategoryLineModel
+                    {
+                        CurrentCategoryId = Model.CurrentCategoryId,
+                        Category = new CategorySimpleModel
+                        {
+                            Name = category.Key,
+                            NumberOfProducts = category.Value,
+                            SeName = category.Key.Replace(" ", "-")
+                        }
+                    };
+
+                    @await Html.PartialAsync("_CategoryLine.Navigation", categoryLineModel)
+
+                }
+            </div>
+        }
+    </div>
+        }

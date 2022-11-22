@@ -1,0 +1,290 @@
+﻿@model Inovatiqa.Web.Models.Common.EmailModel
+@{
+    Layout = "_ColumnsOne";
+}
+@*
+<style>
+    .table td, table th, table tbody tr td {
+        padding: 10px 20px;
+        font-size: 13px;
+    }
+</style>
+<script src="~/lib/jquery/jquery-3.4.1.js"></script>
+<div class="col-lg-12 col-md-12 col-sm-12 thumbnail">
+    <div class="page-title panel-heading">
+        <h1> Order Status   </h1>
+    </div>
+
+    <div class="col-lg-6 col-md-6 col-sm-12">
+
+
+        <h4 style="font-weight:bold"> ORDER INFORMATION </h4>
+        <hr />
+        <form action="/FooterSendEmails" method="post">
+
+            <input type="text" hidden name="EmailSubject" value="Order Status" asp-for="EmailSubject" />
+            <div class="form-group col-lg-12">
+                <label asp-for="OrderNumber"></label>
+                <input type="text" name="OrderNumber" data-val="true" autocomplete="off" data-val-required="The Order Number field is required." asp-for="OrderNumber" class="form-control input-sm" placeholder="Order Number" />
+                <span asp-validation-for="OrderNumber" style="min-width: 100%;" class="text-danger"></span>
+            </div>
+
+            <br>
+
+            <div class="form-group">
+                <label class="col-sm-12 col-md-12 col-lg-12">Find Order By <span style="color:red"> *</span></label>
+                <div class="col-sm-12 col-md-12">
+                    @*<input placeholder="Enter your last name." type="text" required class="fullname form-control" />@
+                    <select name="relatedTo" id="relatedTo" title="Related To" class="form-control" placeholder="Order">
+                        <option value="Email">Email Address</option>
+                        <option value="ZipCode">ZIP Code</option>
+                    </select>
+                </div>
+            </div>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+
+
+            <div id="emailDiv" class="form-group col-lg-12">
+                <label asp-for="CustomerEmail"></label>
+                <input type="email" name="CustomerEmail" data-val="true" autocomplete="off" data-val-required="The Email field is required." asp-for="CustomerEmail" class="form-control input-sm" placeholder="Email Address" />
+                <span asp-validation-for="CustomerEmail" style="min-width: 100%;" class="text-danger"></span>
+            </div>
+            <div id="zipcodeDiv" hidden class="form-group col-lg-12">
+                <label asp-for="ZipCode"></label>
+                <input type="text" name="ZipCode" data-val="true" autocomplete="off" data-val-required="The Zip Code field is required." asp-for="ZipCode" class="form-control input-sm" placeholder="Zip Code" />
+                <span asp-validation-for="ZipCode" style="min-width: 100%;" class="text-danger"></span>
+            </div>
+
+
+
+
+
+            <div class="form-group">
+                <label class="col-sm-12 col-md-12 col-lg-12"></label>
+                <div class="col-sm-12 col-md-12">
+
+
+                    <button type="submit" class="btn btn-primary" style="float:right;"> Continue   </button>
+                </div>
+            </div>
+            <br>
+            <br>
+            <br>
+
+        </form>
+
+
+        <br>
+
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-12">
+
+    </div>
+</div>
+
+<script type="text/javascript">
+    $('#relatedTo').change(function () {
+        
+        if (this.value === 'ZipCode') {
+            $("#emailDiv").fadeOut("slow");
+            $("#zipcodeDiv").fadeIn("slow");
+        } else {
+            $("#emailDiv").fadeIn("slow");
+            $("#zipcodeDiv").fadeOut("slow");
+        }
+    });
+
+    
+</script>
+*@
+
+
+<style>
+    .become-customer-box{
+        box-shadow : none !important;
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+    .newcustomer-area{
+        padding: 0px !important;
+        background: #FFF !important;
+    }
+    .segment-line{
+        border: 0.1px solid #DADADA !important;
+    }
+    .price-match-helper-text{
+        font-size: 17px !important;
+    }
+    .newcustomer-area .accountform-area .form-group input, select{
+        max-width: 90% !important;
+    }
+    .label-small {
+        max-width: unset !important;
+        width: 175%;
+        font-family: Lato;
+        font-style: normal;
+        font-weight: normal !important;
+        font-size: 12.5px !important;
+        line-height: 15px !important;
+    }
+    input[type=text], input[type=email]{
+        height: 40px !important;
+    }
+    .btn-signin {
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 12px;
+        line-height: 14px;
+        /* identical to box height */
+
+
+        color: #FFFFFF;
+    }
+</style>
+<section class="container-fluid newcustomer-area">
+    <div class="container-fluid" style="background: #F1F3F6; padding: 10px;">
+        <div class="container breadcrumb-bar">
+            <span class="muted"><a style="color: #A9A9A9;" href="@Url.RouteUrl("Homepage")">Inovatiqa</a> / </span> Order Tracking
+        </div>
+    </div>
+    <div class="row">
+        <div class="container">
+            <div class="row mt20">
+                <div class="col-md-12">
+                    <div class="become-customer-box">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="font_lato">
+                                    <div class="customer-select">
+                                        <img src="~/images/UIComponents/order_tracking.png" style="width: 100%;">
+                                        <div>
+                                            <h4 class="fancy-heading">Order Tracking</h4>
+                                        </div>
+                                        <h4 class="heading-price-match mt0">Order Information</h4>
+                                        <hr class="segment-line" style="margin-bottom: 0px !important;">
+                                        <div class="col-md-6 pl0">
+                                    <div class="accountform-area font_lato" style="display: block;">
+                                        <form class="createaccount-form" action="/FooterSendEmails" method="post">
+                                            @*<form class="createaccount-form">*@
+                                            <input type="text" hidden name="EmailSubject" value="Order Status" asp-for="EmailSubject" />
+                                            <input type="text" name="Method" value="@Url.RouteUrl("OrderStatus")" asp-for="Method" hidden />
+                                            <div class="row align_center mt35">
+                                                @if (TempData["message"] != null && TempData["message"].ToString() != "")
+                                                {
+                                                    <div class="col-md-4 col-sm-12 col-xs-12"></div>
+                                                    <div class="col-md-8 col-sm-12 col-xs-12" style="padding: 0">
+                                                        <div class="alert @TempData["messageClass"]" role="alert" style="margin:20px 53px 20px 15px;">
+                                                            @TempData["message"]
+                                                        </div>
+                                                    </div>
+                                                }
+                                                <div class="col-md-4 col-sm-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="required">Order ID</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8 col-sm-12 col-xs-12">
+                                                    <div class="form-group flex-col">
+                                                        <input class="form-control" type="text" name="OrderNumber" data-val="true" autocomplete="off" data-val-required="Order Number is required." asp-for="OrderNumber" />
+                                                        <label class="label-small mt10">Enter the billing last name and email / postal code as in the order billing address.</label>
+                                                        <span asp-validation-for="OrderNumber" class="error-label mt10"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 col-sm-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="required">Billing Last Name</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8 col-sm-12 col-xs-12">
+                                                    <div class="form-group flex-col">
+                                                        <input type="text" class="form-control" name="CustomerFirstName" data-val="true" autocomplete="off" data-val-required="Contact Name is required." asp-for="CustomerFirstName" />
+
+                                                        <span asp-validation-for="CustomerFirstName" class="error-label mt10"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 col-sm-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="required">Find Order By</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8 col-sm-12 col-xs-12">
+                                                    <div class="form-group flex-col">
+                                                        <select class="form-control" name="relatedTo" id="relatedTo" title="Related To">
+                                                            <option value="Email">Email Address</option>
+                                                            <option value="ZipCode">Postal Code</option>
+                                                        </select>
+                                                        <span id="findOrderBy" hidden class="error-label mt10"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 col-sm-12 col-xs-12" id="emailDiv">
+                                                    <div class="form-group">
+                                                        <label class="required">Email Address</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8 col-sm-12 col-xs-12" id="emailDiv">
+                                                    <div class="form-group flex-col">
+                                                        <input class="form-control" type="email" name="CustomerEmail" data-val="true" autocomplete="off" data-val-required="The Email field is required." asp-for="CustomerEmail" />
+                                                        <span asp-validation-for="CustomerEmail" class="error-label mt10"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 col-sm-12 col-xs-12" id="zipcodeDiv" style="display: none;">
+                                                    <div class="form-group">
+                                                        <label class="required">Postal Code</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8 col-sm-12 col-xs-12" id="zipcodeDiv" style="display: none;">
+                                                    <div class="form-group flex-col">
+                                                        <input class="form-control" type="text" name="ZipCode" data-val="true" autocomplete="off" data-val-required="The Postal Code field is required." asp-for="ZipCode" />
+                                                        <span asp-validation-for="ZipCode" class="error-label mt10"></span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-11 col-sm-12 col-xs-12 mt20" style="padding-right: 0px;">
+                                                    <div class="pwd-btn text-right">
+                                                        <input type="submit" value="Continue" class="btn btn-signin" style="height: 32px !important;">
+                                                    </div>
+                                                </div>
+                                            </div>
+</form>
+                                    </div>
+                                </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid" style="background: #F1F3F6; padding: 20px;"></div> 
+</section>
+<script type="text/javascript">
+    $('#relatedTo').change(function () {
+        
+        if (this.value === 'ZipCode') {
+            document.querySelectorAll('#emailDiv')[0].style.display = 'none';
+            document.querySelectorAll('#emailDiv')[1].style.display = 'none';
+
+            document.querySelectorAll('#zipcodeDiv')[0].style.display = '';
+            document.querySelectorAll('#zipcodeDiv')[1].style.display = '';
+        } else if (this.value === 'Email') {
+            document.querySelectorAll('#zipcodeDiv')[0].style.display = 'none';
+            document.querySelectorAll('#zipcodeDiv')[1].style.display = 'none';
+
+            document.querySelectorAll('#emailDiv')[0].style.display = '';
+            document.querySelectorAll('#emailDiv')[1].style.display = '';
+        }
+        else {
+            $('#findOrderBy').show();
+        }
+    });
+
+    
+</script>

@@ -1,0 +1,1833 @@
+﻿@model RegisterModel
+@{
+    Layout = "_ColumnsOne";
+}
+@{
+    ViewBag.Title = "Register";
+}
+
+@*
+<div class="content-container">
+    <div class="container">
+        <form asp-route="Register" asp-route-returnurl="@Context.Request.Query["ReturnUrl"]" enctype="multipart/form-data" method="post" id="basicUserInfo" autocomplete="off">
+            <div class="registration-page" style="margin-top:100px">
+                <div asp-validation-summary="ModelOnly" class="message-error"></div>
+            </div>
+            <div id="step1" class="row">
+                <div class="col-xs-12 col-md-8 col-lg-8">
+                    <div class="panel panel-default">
+                        <div>
+                            <h1>Yes! I would like to Become a Customer.</h1>
+                            <div class="form-group ">
+                                <label for="CustomerType" class="control-label">Tell us about yourself</label>
+                                <select id="CustomerType" asp-for="@Model.CustomerType" name="CustomerType" class="form-control">
+                                    <option value=""> Please Select One...</option>
+                                    <option id="vendorType" value="vendorType"> I'm a Medical Professional or Administrator</option>
+                                    <option id="customerType" value="customerType"> I'm a Customer that is ordering for personal use</option>
+                                </select>
+                            </div>
+                            <div class="form-group  error-group-fullName">
+                                <label for="FirstName" class="control-label ">Full Name </label><span class="required">*</span><span class="field-validation-valid pull-right" data-valmsg-for="FirstName" data-valmsg-replace="true"></span>
+                                <input type="text" class="form-control" value="@Model.FirstName" name="FirstName" id="FirstName" data-val="true" data-val-required="Name is required." maxlength="30" />
+                            </div>
+                            <div class="form-group  error-group-email">
+                                <label for="email" class="control-label ">Email Address </label><span class="required">*</span><span class="field-validation-valid pull-right" data-valmsg-for="Email" data-valmsg-replace="true"></span>
+                                <input class="form-control" type="email" data-val="true" value="@Model.Email" data-val-email="Wrong email" data-val-required="Email is required." id="Email" name="Email">
+
+                            </div>
+                            <div class="form-group  error-group-password">
+                                <label for="phone" class="control-label">Password </label><span class="required">*</span><span class="field-validation-valid pull-right" data-valmsg-for="Password" data-valmsg-replace="true"></span>
+                                <input class="form-control" type="password" data-val="true" value="@Model.Password" data-val-regex="<ul><li>must have at least 6 characters</li></ul>" data-val-regex-pattern="^.{6,}$" data-val-required="Password is required." id="Password" name="Password">
+                            </div>
+                            <div class="form-group  error-group-Con-password">
+                                <label for="phone" class="control-label">Confirm Password </label><span class="required">*</span><span class="field-validation-valid pull-right" data-valmsg-for="Confirm Password" data-valmsg-replace="true"></span>
+                                <input class="form-control" type="password" data-val="true" value="@Model.ConfirmPassword" data-val-equalto="The password and confirmation password do not match." data-val-equalto-other="*.Password" data-val-required="Confirm Password is required" id="Confirm_Password" name="Confirm Password">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-4 col-lg-4">
+                    <div class="panel panel-raised">
+                        <div class="panel-heading">
+                            <button type="button" name="progBtn" id="progBtn" class="btn btn-action btn-block btn-lg btn-primary">Continue</button>
+                        </div>
+                        <div class="list-group">
+                            <a class="list-group-item">
+                                <h5 class="text-primary">Contact Information</h5>
+                                <span class="help-block">Tell us who you are.</span>
+                            </a>
+                            <a class="list-group-item disabled">
+                                <h5 class="">Tell us about your business</h5>
+                                <span class="help-block">Register an existing account or create a new one</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="step2" class="row">
+                <div class="col-xs-12 col-md-8 col-lg-8">
+                    <div class="panel panel-default">
+                        <div>
+                            <div class="form-group">
+                                <label for="StreetAddress" class="control-label control-optional">Street Address </label><span class="required">*</span><span class="field-validation-valid pull-right" data-valmsg-for="StreetAddress" data-valmsg-replace="true"></span>
+                                <input type="text" class="form-control" value="@Model.StreetAddress" data-val="true" data-val-required="Street Address is required" name="StreetAddress" id="StreetAddress" />
+                            </div>
+                            <div class="form-group">
+                                <label for="City" class="control-label ">City </label><span class="required">*</span><span class="field-validation-valid pull-right" data-valmsg-for="City" data-valmsg-replace="true"></span>
+                                <input type="text" class="form-control" name="City" value="@Model.City" data-val="true" data-val-required="City is required" maxlength="95" />
+                            </div>
+                            <div class="form-group">
+                                <label for="ZipPostalCode" class="control-label ">Zip Code </label><span class="required">*</span><span class="field-validation-valid pull-right" data-valmsg-for="ZipPostalCode" data-valmsg-replace="true"></span>
+                                <input type="text" class="form-control" name="ZipPostalCode" data-val="true" data-val-required="Zip Code is required" value="@Model.ZipPostalCode" maxlength="12" />
+                            </div>
+                            <div class="form-group">
+                                <label for="Phone" class="control-label ">Phone </label><span class="required">*</span><span class="field-validation-valid pull-right" data-valmsg-for="Phone" data-valmsg-replace="true"></span>
+                                <input type="text" class="form-control" name="Phone" data-val-regex-pattern="^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$" data-val-regex="Not a valid phone number" id="Phone" data-val="true" data-val-required="Phone is required" value="@Model.Phone" />
+                            </div>
+                            <div class="form-group">
+                                <label for="CountryId" class="control-label ">Country </label><span class="required">*</span><span class="field-validation-valid pull-right" data-valmsg-for="CountryId" data-valmsg-replace="true"></span>
+                                <select class="form-control  valid" id="CountryId" name="CountryId" data-val="true" data-val-required="The Country field is required."
+                                        data-trigger="country-select"
+                                        data-url="@(Url.RouteUrl("GetStatesByCountryId"))"
+                                        data-stateprovince="#@Html.IdFor(model => model.StateProvinceId)"
+                                        data-loading="#states-loading-progress">
+                                    <option selected="" value="0">Select country</option>
+                                    <option value="1">United States</option>
+                                    <option value="239">Afghanistan</option>
+                                    <option value="212">Albania</option>
+                                    <option value="211">Algeria</option>
+                                    <option value="210">American Samoa</option>
+                                    <option value="195">Andorra</option>
+                                    <option value="183">Angola</option>
+                                    <option value="184">Anguilla</option>
+                                    <option value="185">Antarctica</option>
+                                    <option value="186">Antigua and Barbuda</option>
+                                    <option value="154">Argentina</option>
+                                    <option value="155">Armenia</option>
+                                    <option value="156">Aruba</option>
+                                    <option value="157">Australia</option>
+                                    <option value="158">Austria</option>
+                                    <option value="159">Azerbaijan</option>
+                                    <option value="160">Bahamas</option>
+                                    <option value="187">Bahrain</option>
+                                    <option value="161">Bangladesh</option>
+                                    <option value="188">Barbados</option>
+                                    <option value="162">Belarus</option>
+                                    <option value="163">Belgium</option>
+                                    <option value="164">Belize</option>
+                                    <option value="189">Benin</option>
+                                    <option value="166">Bermuda</option>
+                                    <option value="190">Bhutan</option>
+                                    <option value="179">Bolivia</option>
+                                    <option value="167">Bosnia and Herzegowina</option>
+                                    <option value="191">Botswana</option>
+                                    <option value="192">Bouvet Island</option>
+                                    <option value="168">Brazil</option>
+                                    <option value="193">British Indian Ocean Territory</option>
+                                    <option value="194">Brunei Darussalam</option>
+                                    <option value="169">Bulgaria</option>
+                                    <option value="196">Burkina Faso</option>
+                                    <option value="209">Burundi</option>
+                                    <option value="197">Cambodia</option>
+                                    <option value="198">Cameroon</option>
+                                    <option value="153">Canada</option>
+                                    <option value="199">Cape Verde</option>
+                                    <option value="170">Cayman Islands</option>
+                                    <option value="200">Central African Republic</option>
+                                    <option value="201">Chad</option>
+                                    <option value="171">Chile</option>
+                                    <option value="172">China</option>
+                                    <option value="202">Christmas Island</option>
+                                    <option value="203">Cocos (Keeling) Islands</option>
+                                    <option value="173">Colombia</option>
+                                    <option value="204">Comoros</option>
+                                    <option value="205">Congo</option>
+                                    <option value="206">Congo (Democratic Republic of the)</option>
+                                    <option value="207">Cook Islands</option>
+                                    <option value="174">Costa Rica</option>
+                                    <option value="208">Cote D'Ivoire</option>
+                                    <option value="175">Croatia</option>
+                                    <option value="176">Cuba</option>
+                                    <option value="177">Cyprus</option>
+                                    <option value="178">Czech Republic</option>
+                                    <option value="152">Denmark</option>
+                                    <option value="122">Djibouti</option>
+                                    <option value="240">Dominica</option>
+                                    <option value="165">Dominican Republic</option>
+                                    <option value="151">East Timor</option>
+                                    <option value="135">Ecuador</option>
+                                    <option value="123">Egypt</option>
+                                    <option value="121">El Salvador</option>
+                                    <option value="119">Equatorial Guinea</option>
+                                    <option value="32">Eritrea</option>
+                                    <option value="33">Estonia</option>
+                                    <option value="34">Ethiopia</option>
+                                    <option value="35">Falkland Islands (Malvinas)</option>
+                                    <option value="36">Faroe Islands</option>
+                                    <option value="37">Fiji</option>
+                                    <option value="124">Finland</option>
+                                    <option value="125">France</option>
+                                    <option value="38">French Guiana</option>
+                                    <option value="39">French Polynesia</option>
+                                    <option value="40">French Southern Territories</option>
+                                    <option value="41">Gabon</option>
+                                    <option value="42">Gambia</option>
+                                    <option value="126">Georgia</option>
+                                    <option value="127">Germany</option>
+                                    <option value="43">Ghana</option>
+                                    <option value="128">Gibraltar</option>
+                                    <option value="129">Greece</option>
+                                    <option value="45">Greenland</option>
+                                    <option value="58">Grenada</option>
+                                    <option value="46">Guadeloupe</option>
+                                    <option value="47">Guam</option>
+                                    <option value="130">Guatemala</option>
+                                    <option value="48">Guinea</option>
+                                    <option value="49">Guinea-bissau</option>
+                                    <option value="50">Guyana</option>
+                                    <option value="51">Haiti</option>
+                                    <option value="52">Heard and Mc Donald Islands</option>
+                                    <option value="53">Honduras</option>
+                                    <option value="131">Hong Kong</option>
+                                    <option value="132">Hungary</option>
+                                    <option value="54">Iceland</option>
+                                    <option value="133">India</option>
+                                    <option value="134">Indonesia</option>
+                                    <option value="55">Iran (Islamic Republic of)</option>
+                                    <option value="56">Iraq</option>
+                                    <option value="136">Ireland</option>
+                                    <option value="149">Israel</option>
+                                    <option value="137">Italy</option>
+                                    <option value="138">Jamaica</option>
+                                    <option value="139">Japan</option>
+                                    <option value="140">Jordan</option>
+                                    <option value="141">Kazakhstan</option>
+                                    <option value="57">Kenya</option>
+                                    <option value="31">Kiribati</option>
+                                    <option value="44">Korea</option>
+                                    <option value="142">Korea, Democratic People's Republic of</option>
+                                    <option value="143">Kuwait</option>
+                                    <option value="30">Kyrgyzstan</option>
+                                    <option value="14">Lao People's Democratic Republic</option>
+                                    <option value="2">Latvia</option>
+                                    <option value="3">Lebanon</option>
+                                    <option value="4">Lesotho</option>
+                                    <option value="5">Liberia</option>
+                                    <option value="6">Libyan Arab Jamahiriya</option>
+                                    <option value="7">Liechtenstein</option>
+                                    <option value="8">Lithuania</option>
+                                    <option value="9">Luxembourg</option>
+                                    <option value="10">Macau</option>
+                                    <option value="11">Macedonia</option>
+                                    <option value="12">Madagascar</option>
+                                    <option value="13">Malawi</option>
+                                    <option value="144">Malaysia</option>
+                                    <option value="15">Maldives</option>
+                                    <option value="28">Mali</option>
+                                    <option value="16">Malta</option>
+                                    <option value="17">Marshall Islands</option>
+                                    <option value="18">Martinique</option>
+                                    <option value="19">Mauritania</option>
+                                    <option value="20">Mauritius</option>
+                                    <option value="21">Mayotte</option>
+                                    <option value="145">Mexico</option>
+                                    <option value="22">Micronesia</option>
+                                    <option value="23">Moldova</option>
+                                    <option value="24">Monaco</option>
+                                    <option value="25">Mongolia</option>
+                                    <option value="26">Montenegro</option>
+                                    <option value="27">Montserrat</option>
+                                    <option value="29">Morocco</option>
+                                    <option value="59">Mozambique</option>
+                                    <option value="60">Myanmar</option>
+                                    <option value="61">Namibia</option>
+                                    <option value="92">Nauru</option>
+                                    <option value="93">Nepal</option>
+                                    <option value="146">Netherlands</option>
+                                    <option value="94">Netherlands Antilles</option>
+                                    <option value="95">New Caledonia</option>
+                                    <option value="147">New Zealand</option>
+                                    <option value="96">Nicaragua</option>
+                                    <option value="97">Niger</option>
+                                    <option value="98">Nigeria</option>
+                                    <option value="99">Niue</option>
+                                    <option value="100">Norfolk Island</option>
+                                    <option value="101">Northern Mariana Islands</option>
+                                    <option value="148">Norway</option>
+                                    <option value="102">Oman</option>
+                                    <option value="150">Pakistan</option>
+                                    <option value="103">Palau</option>
+                                    <option value="180">Palestine</option>
+                                    <option value="104">Panama</option>
+                                    <option value="105">Papua New Guinea</option>
+                                    <option value="181">Paraguay</option>
+                                    <option value="182">Peru</option>
+                                    <option value="213">Philippines</option>
+                                    <option value="106">Pitcairn</option>
+                                    <option value="214">Poland</option>
+                                    <option value="215">Portugal</option>
+                                    <option value="216">Puerto Rico</option>
+                                    <option value="217">Qatar</option>
+                                    <option value="107">Reunion</option>
+                                    <option value="218">Romania</option>
+                                    <option value="219">Russian Federation</option>
+                                    <option value="108">Rwanda</option>
+                                    <option value="109">Saint Kitts and Nevis</option>
+                                    <option value="110">Saint Lucia</option>
+                                    <option value="111">Saint Vincent and the Grenadines</option>
+                                    <option value="112">Samoa</option>
+                                    <option value="113">San Marino</option>
+                                    <option value="114">Sao Tome and Principe</option>
+                                    <option value="220">Saudi Arabia</option>
+                                    <option value="115">Senegal</option>
+                                    <option value="238">Serbia</option>
+                                    <option value="116">Seychelles</option>
+                                    <option value="117">Sierra Leone</option>
+                                    <option value="221">Singapore</option>
+                                    <option value="222">Slovakia (Slovak Republic)</option>
+                                    <option value="223">Slovenia</option>
+                                    <option value="118">Solomon Islands</option>
+                                    <option value="91">Somalia</option>
+                                    <option value="224">South Africa</option>
+                                    <option value="90">South Georgia &amp; South Sandwich Islands</option>
+                                    <option value="89">South Sudan</option>
+                                    <option value="225">Spain</option>
+                                    <option value="74">Sri Lanka</option>
+                                    <option value="62">St. Helena</option>
+                                    <option value="63">St. Pierre and Miquelon</option>
+                                    <option value="64">Sudan</option>
+                                    <option value="65">Suriname</option>
+                                    <option value="66">Svalbard and Jan Mayen Islands</option>
+                                    <option value="67">Swaziland</option>
+                                    <option value="226">Sweden</option>
+                                    <option value="227">Switzerland</option>
+                                    <option value="68">Syrian Arab Republic</option>
+                                    <option value="228">Taiwan</option>
+                                    <option value="69">Tajikistan</option>
+                                    <option value="70">Tanzania</option>
+                                    <option value="229">Thailand</option>
+                                    <option value="71">Togo</option>
+                                    <option value="72">Tokelau</option>
+                                    <option value="73">Tonga</option>
+                                    <option value="75">Trinidad and Tobago</option>
+                                    <option value="88">Tunisia</option>
+                                    <option value="230">Turkey</option>
+                                    <option value="76">Turkmenistan</option>
+                                    <option value="77">Turks and Caicos Islands</option>
+                                    <option value="78">Tuvalu</option>
+                                    <option value="79">Uganda</option>
+                                    <option value="231">Ukraine</option>
+                                    <option value="232">United Arab Emirates</option>
+                                    <option value="233">United Kingdom</option>
+                                    <option value="234">United States minor outlying islands</option>
+                                    <option value="235">Uruguay</option>
+                                    <option value="236">Uzbekistan</option>
+                                    <option value="80">Vanuatu</option>
+                                    <option value="81">Vatican City State (Holy See)</option>
+                                    <option value="237">Venezuela</option>
+                                    <option value="82">Viet Nam</option>
+                                    <option value="83">Virgin Islands (British)</option>
+                                    <option value="84">Virgin Islands (U.S.)</option>
+                                    <option value="85">Wallis and Futuna Islands</option>
+                                    <option value="86">Western Sahara</option>
+                                    <option value="87">Yemen</option>
+                                    <option value="120">Zambia</option>
+                                    <option value="241">Zimbabwe</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="StateProvinceId" class="control-label ">State / province </label><span class="required">*</span><span class="field-validation-valid pull-right" data-valmsg-for="StateProvinceId" data-valmsg-replace="true"></span>
+                                <select class="form-control valid" id="StateProvinceId" name="StateProvinceId" aria-describedby="StateProvinceId-error" aria-invalid="false"><option selected="" value="0">Select state</option></select>
+                                <span id="states-loading-progress" style="display: none;" class="please-wait">Wait...</span>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-md-4 col-lg-4">
+                    <div class="panel panel-raised">
+                        @*<div class="panel-heading">
+                                <button type="submit" name="register" id="register" style="width:90%" class="btn btn-action btn-block btn-lg btn-primary">Continue</button>
+                            </div>@
+                        <div class="list-group">
+                            <a class="list-group-item disabled">
+                                <h5 class="">Contact Information</h5>
+                                <span class="help-block">Tell us who you are.</span>
+                            </a>
+                            <a class="list-group-item">
+                                <h5 class="text-primary">Tell us about your business</h5>
+                                <span class="help-block">Register an existing account or create a new one</span>
+                            </a>
+                            <div class="panel-heading">
+                                <button type="submit" name="register" id="register" class="btn btn-action btn-block btn-lg btn-primary">Register</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="Venstep2" class="row">
+                <div class="col-xs-12 col-md-8 col-lg-8">
+                    <div class="panel panel-default">
+                        <div>
+                            <ol class="opc" id="checkout-steps">
+                                <li id="comInfo" class="tab-section allow active">
+                                    <div class="step-title">
+                                        <span class="number">1</span>
+                                        <h2>Company Information</h2>
+                                    </div>
+                                    <div id="companyInfo" style="margin-left:20px;margin-top:14px;margin-right:20px">
+                                        <div class="form-fields">
+                                            @if (Model.CustomerAttributes.Count > 0)
+                                            {
+                                                @await Html.PartialAsync("_CustomerAttributes", Model.CustomerAttributes, new ViewDataDictionary(this.Vi‌​ewData) { { "startIndex", 0 }, { "endIndex", 2 } })
+                                            }
+                                        </div>
+                                        <div class="buttons" style="display:inline">
+                                            <input id="Cont_companyInfo" style="margin-right: 2%;margin-bottom: 2%;float: right;" type="button" class="btn btn-primary" value="Continue" />
+                                            <span id="please-wait" class="please-wait" style="display: none;">Loading next step...</span>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li id="billInfo" class="tab-section allow">
+                                    <div class="step-title">
+                                        <span class="number">2</span>
+                                        <h2>Billing Information</h2>
+                                    </div>
+                                    <div id="billingInfo" style="margin-left:20px;margin-top:14px;margin-right:20px">
+                                        <div class="form-group row">
+                                            <label class="control-label col-sm-3 col-md-4 col-xs-12"></label>
+                                            <div class="col-sm-6 col-md-4 col-xs-12">
+                                                <input type="checkbox" checked="checked" id="IsSameShipToAddress" name="IsSameShipToAddress" value="true">
+                                                <input type="hidden" name="IsSameShipToAddress" value="false" />
+                                                <label for="IsSameShipToAddress">Ship to the same address</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="control-label col-sm-3 col-md-4 col-xs-12">Street Address:</label>
+                                            <div class="col-sm-6 col-md-4 col-xs-12">
+                                                <input class="form-control" type="text" data-val="true" data-val-required="Street Address is required" value="@Model.BillToStreetAddress" id="BillToStreetAddress" name="BillToStreetAddress">
+                                            </div>
+                                            <div class="col-sm-3 col-md-4 col-xs-12">
+                                                <span class="required">*</span>
+                                                <span class="field-validation-valid" data-valmsg-for="BillToStreetAddress" data-valmsg-replace="true"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="control-label col-sm-3 col-md-4 col-xs-12">City:</label>
+                                            <div class="col-sm-6 col-md-4 col-xs-12">
+                                                <input class="form-control" type="text" data-val="true" data-val-required="City is required" value="@Model.BillToCity" id="BillToCity" name="BillToCity">
+                                            </div>
+                                            <div class="col-sm-3 col-md-4 col-xs-12">
+                                                <span class="required">*</span>
+                                                <span class="field-validation-valid" data-valmsg-for="City" data-valmsg-replace="true"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="control-label col-sm-3 col-md-4 col-xs-12">Zip / postal code:</label>
+                                            <div class="col-sm-6 col-md-4 col-xs-12">
+                                                <input class="form-control" type="text" data-val="true" data-val-required="Zip / postal code is required" value="@Model.BillToZipPostalCode" id="BillToZipPostalCode" name="BillToZipPostalCode">
+                                            </div>
+                                            <div class="col-sm-3 col-md-4 col-xs-12">
+                                                <span class="required">*</span>
+                                                <span class="field-validation-valid" data-valmsg-for="ZipPostalCode" data-valmsg-replace="true"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="control-label col-sm-3 col-md-4 col-xs-12">Phone No:</label>
+                                            <div class="col-sm-6 col-md-4 col-xs-12">
+                                                <input class="form-control" type="text" data-val="true" data-val-required="Phone No is required" value="@Model.BillToPhone" data-val-regex-pattern="^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$" data-val-regex="Not a valid phone number" id="BillToPhone" name="BillToPhone">
+                                            </div>
+                                            <div class="col-sm-3 col-md-4 col-xs-12">
+                                                <span class="required">*</span>
+                                                <span class="field-validation-valid" data-valmsg-for="BillToPhone" data-valmsg-replace="true"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="control-label col-sm-3 col-md-4 col-xs-12">Country</label>
+                                            <div class="col-sm-6 col-md-4 col-xs-12">
+                                                <select class="form-control  valid" id="BillToCountryId" name="BillToCountryId" data-val="true" data-val-required="The Country field is required."
+                                                        data-trigger="country-select"
+                                                        data-url="@(Url.RouteUrl("GetStatesByCountryId"))"
+                                                        data-stateprovince="#@Html.IdFor(model => model.BillToStateProvinceId)"
+                                                        data-loading="#states-loading-progress">
+                                                    <option selected="" value="0">Select country</option>
+                                                    <option value="1">United States</option>
+                                                    <option value="239">Afghanistan</option>
+                                                    <option value="212">Albania</option>
+                                                    <option value="211">Algeria</option>
+                                                    <option value="210">American Samoa</option>
+                                                    <option value="195">Andorra</option>
+                                                    <option value="183">Angola</option>
+                                                    <option value="184">Anguilla</option>
+                                                    <option value="185">Antarctica</option>
+                                                    <option value="186">Antigua and Barbuda</option>
+                                                    <option value="154">Argentina</option>
+                                                    <option value="155">Armenia</option>
+                                                    <option value="156">Aruba</option>
+                                                    <option value="157">Australia</option>
+                                                    <option value="158">Austria</option>
+                                                    <option value="159">Azerbaijan</option>
+                                                    <option value="160">Bahamas</option>
+                                                    <option value="187">Bahrain</option>
+                                                    <option value="161">Bangladesh</option>
+                                                    <option value="188">Barbados</option>
+                                                    <option value="162">Belarus</option>
+                                                    <option value="163">Belgium</option>
+                                                    <option value="164">Belize</option>
+                                                    <option value="189">Benin</option>
+                                                    <option value="166">Bermuda</option>
+                                                    <option value="190">Bhutan</option>
+                                                    <option value="179">Bolivia</option>
+                                                    <option value="167">Bosnia and Herzegowina</option>
+                                                    <option value="191">Botswana</option>
+                                                    <option value="192">Bouvet Island</option>
+                                                    <option value="168">Brazil</option>
+                                                    <option value="193">British Indian Ocean Territory</option>
+                                                    <option value="194">Brunei Darussalam</option>
+                                                    <option value="169">Bulgaria</option>
+                                                    <option value="196">Burkina Faso</option>
+                                                    <option value="209">Burundi</option>
+                                                    <option value="197">Cambodia</option>
+                                                    <option value="198">Cameroon</option>
+                                                    <option value="153">Canada</option>
+                                                    <option value="199">Cape Verde</option>
+                                                    <option value="170">Cayman Islands</option>
+                                                    <option value="200">Central African Republic</option>
+                                                    <option value="201">Chad</option>
+                                                    <option value="171">Chile</option>
+                                                    <option value="172">China</option>
+                                                    <option value="202">Christmas Island</option>
+                                                    <option value="203">Cocos (Keeling) Islands</option>
+                                                    <option value="173">Colombia</option>
+                                                    <option value="204">Comoros</option>
+                                                    <option value="205">Congo</option>
+                                                    <option value="206">Congo (Democratic Republic of the)</option>
+                                                    <option value="207">Cook Islands</option>
+                                                    <option value="174">Costa Rica</option>
+                                                    <option value="208">Cote D'Ivoire</option>
+                                                    <option value="175">Croatia</option>
+                                                    <option value="176">Cuba</option>
+                                                    <option value="177">Cyprus</option>
+                                                    <option value="178">Czech Republic</option>
+                                                    <option value="152">Denmark</option>
+                                                    <option value="122">Djibouti</option>
+                                                    <option value="240">Dominica</option>
+                                                    <option value="165">Dominican Republic</option>
+                                                    <option value="151">East Timor</option>
+                                                    <option value="135">Ecuador</option>
+                                                    <option value="123">Egypt</option>
+                                                    <option value="121">El Salvador</option>
+                                                    <option value="119">Equatorial Guinea</option>
+                                                    <option value="32">Eritrea</option>
+                                                    <option value="33">Estonia</option>
+                                                    <option value="34">Ethiopia</option>
+                                                    <option value="35">Falkland Islands (Malvinas)</option>
+                                                    <option value="36">Faroe Islands</option>
+                                                    <option value="37">Fiji</option>
+                                                    <option value="124">Finland</option>
+                                                    <option value="125">France</option>
+                                                    <option value="38">French Guiana</option>
+                                                    <option value="39">French Polynesia</option>
+                                                    <option value="40">French Southern Territories</option>
+                                                    <option value="41">Gabon</option>
+                                                    <option value="42">Gambia</option>
+                                                    <option value="126">Georgia</option>
+                                                    <option value="127">Germany</option>
+                                                    <option value="43">Ghana</option>
+                                                    <option value="128">Gibraltar</option>
+                                                    <option value="129">Greece</option>
+                                                    <option value="45">Greenland</option>
+                                                    <option value="58">Grenada</option>
+                                                    <option value="46">Guadeloupe</option>
+                                                    <option value="47">Guam</option>
+                                                    <option value="130">Guatemala</option>
+                                                    <option value="48">Guinea</option>
+                                                    <option value="49">Guinea-bissau</option>
+                                                    <option value="50">Guyana</option>
+                                                    <option value="51">Haiti</option>
+                                                    <option value="52">Heard and Mc Donald Islands</option>
+                                                    <option value="53">Honduras</option>
+                                                    <option value="131">Hong Kong</option>
+                                                    <option value="132">Hungary</option>
+                                                    <option value="54">Iceland</option>
+                                                    <option value="133">India</option>
+                                                    <option value="134">Indonesia</option>
+                                                    <option value="55">Iran (Islamic Republic of)</option>
+                                                    <option value="56">Iraq</option>
+                                                    <option value="136">Ireland</option>
+                                                    <option value="149">Israel</option>
+                                                    <option value="137">Italy</option>
+                                                    <option value="138">Jamaica</option>
+                                                    <option value="139">Japan</option>
+                                                    <option value="140">Jordan</option>
+                                                    <option value="141">Kazakhstan</option>
+                                                    <option value="57">Kenya</option>
+                                                    <option value="31">Kiribati</option>
+                                                    <option value="44">Korea</option>
+                                                    <option value="142">Korea, Democratic People's Republic of</option>
+                                                    <option value="143">Kuwait</option>
+                                                    <option value="30">Kyrgyzstan</option>
+                                                    <option value="14">Lao People's Democratic Republic</option>
+                                                    <option value="2">Latvia</option>
+                                                    <option value="3">Lebanon</option>
+                                                    <option value="4">Lesotho</option>
+                                                    <option value="5">Liberia</option>
+                                                    <option value="6">Libyan Arab Jamahiriya</option>
+                                                    <option value="7">Liechtenstein</option>
+                                                    <option value="8">Lithuania</option>
+                                                    <option value="9">Luxembourg</option>
+                                                    <option value="10">Macau</option>
+                                                    <option value="11">Macedonia</option>
+                                                    <option value="12">Madagascar</option>
+                                                    <option value="13">Malawi</option>
+                                                    <option value="144">Malaysia</option>
+                                                    <option value="15">Maldives</option>
+                                                    <option value="28">Mali</option>
+                                                    <option value="16">Malta</option>
+                                                    <option value="17">Marshall Islands</option>
+                                                    <option value="18">Martinique</option>
+                                                    <option value="19">Mauritania</option>
+                                                    <option value="20">Mauritius</option>
+                                                    <option value="21">Mayotte</option>
+                                                    <option value="145">Mexico</option>
+                                                    <option value="22">Micronesia</option>
+                                                    <option value="23">Moldova</option>
+                                                    <option value="24">Monaco</option>
+                                                    <option value="25">Mongolia</option>
+                                                    <option value="26">Montenegro</option>
+                                                    <option value="27">Montserrat</option>
+                                                    <option value="29">Morocco</option>
+                                                    <option value="59">Mozambique</option>
+                                                    <option value="60">Myanmar</option>
+                                                    <option value="61">Namibia</option>
+                                                    <option value="92">Nauru</option>
+                                                    <option value="93">Nepal</option>
+                                                    <option value="146">Netherlands</option>
+                                                    <option value="94">Netherlands Antilles</option>
+                                                    <option value="95">New Caledonia</option>
+                                                    <option value="147">New Zealand</option>
+                                                    <option value="96">Nicaragua</option>
+                                                    <option value="97">Niger</option>
+                                                    <option value="98">Nigeria</option>
+                                                    <option value="99">Niue</option>
+                                                    <option value="100">Norfolk Island</option>
+                                                    <option value="101">Northern Mariana Islands</option>
+                                                    <option value="148">Norway</option>
+                                                    <option value="102">Oman</option>
+                                                    <option value="150">Pakistan</option>
+                                                    <option value="103">Palau</option>
+                                                    <option value="180">Palestine</option>
+                                                    <option value="104">Panama</option>
+                                                    <option value="105">Papua New Guinea</option>
+                                                    <option value="181">Paraguay</option>
+                                                    <option value="182">Peru</option>
+                                                    <option value="213">Philippines</option>
+                                                    <option value="106">Pitcairn</option>
+                                                    <option value="214">Poland</option>
+                                                    <option value="215">Portugal</option>
+                                                    <option value="216">Puerto Rico</option>
+                                                    <option value="217">Qatar</option>
+                                                    <option value="107">Reunion</option>
+                                                    <option value="218">Romania</option>
+                                                    <option value="219">Russian Federation</option>
+                                                    <option value="108">Rwanda</option>
+                                                    <option value="109">Saint Kitts and Nevis</option>
+                                                    <option value="110">Saint Lucia</option>
+                                                    <option value="111">Saint Vincent and the Grenadines</option>
+                                                    <option value="112">Samoa</option>
+                                                    <option value="113">San Marino</option>
+                                                    <option value="114">Sao Tome and Principe</option>
+                                                    <option value="220">Saudi Arabia</option>
+                                                    <option value="115">Senegal</option>
+                                                    <option value="238">Serbia</option>
+                                                    <option value="116">Seychelles</option>
+                                                    <option value="117">Sierra Leone</option>
+                                                    <option value="221">Singapore</option>
+                                                    <option value="222">Slovakia (Slovak Republic)</option>
+                                                    <option value="223">Slovenia</option>
+                                                    <option value="118">Solomon Islands</option>
+                                                    <option value="91">Somalia</option>
+                                                    <option value="224">South Africa</option>
+                                                    <option value="90">South Georgia &amp; South Sandwich Islands</option>
+                                                    <option value="89">South Sudan</option>
+                                                    <option value="225">Spain</option>
+                                                    <option value="74">Sri Lanka</option>
+                                                    <option value="62">St. Helena</option>
+                                                    <option value="63">St. Pierre and Miquelon</option>
+                                                    <option value="64">Sudan</option>
+                                                    <option value="65">Suriname</option>
+                                                    <option value="66">Svalbard and Jan Mayen Islands</option>
+                                                    <option value="67">Swaziland</option>
+                                                    <option value="226">Sweden</option>
+                                                    <option value="227">Switzerland</option>
+                                                    <option value="68">Syrian Arab Republic</option>
+                                                    <option value="228">Taiwan</option>
+                                                    <option value="69">Tajikistan</option>
+                                                    <option value="70">Tanzania</option>
+                                                    <option value="229">Thailand</option>
+                                                    <option value="71">Togo</option>
+                                                    <option value="72">Tokelau</option>
+                                                    <option value="73">Tonga</option>
+                                                    <option value="75">Trinidad and Tobago</option>
+                                                    <option value="88">Tunisia</option>
+                                                    <option value="230">Turkey</option>
+                                                    <option value="76">Turkmenistan</option>
+                                                    <option value="77">Turks and Caicos Islands</option>
+                                                    <option value="78">Tuvalu</option>
+                                                    <option value="79">Uganda</option>
+                                                    <option value="231">Ukraine</option>
+                                                    <option value="232">United Arab Emirates</option>
+                                                    <option value="233">United Kingdom</option>
+                                                    <option value="234">United States minor outlying islands</option>
+                                                    <option value="235">Uruguay</option>
+                                                    <option value="236">Uzbekistan</option>
+                                                    <option value="80">Vanuatu</option>
+                                                    <option value="81">Vatican City State (Holy See)</option>
+                                                    <option value="237">Venezuela</option>
+                                                    <option value="82">Viet Nam</option>
+                                                    <option value="83">Virgin Islands (British)</option>
+                                                    <option value="84">Virgin Islands (U.S.)</option>
+                                                    <option value="85">Wallis and Futuna Islands</option>
+                                                    <option value="86">Western Sahara</option>
+                                                    <option value="87">Yemen</option>
+                                                    <option value="120">Zambia</option>
+                                                    <option value="241">Zimbabwe</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-sm-3 col-md-4 col-xs-12">
+                                                <span class="required">*</span>
+                                                <span class="field-validation-valid" data-valmsg-for="BillToCountryId" data-valmsg-replace="true"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="control-label col-sm-3 col-md-4 col-xs-12">State / province:</label>
+                                            <div class="col-sm-6 col-md-4 col-xs-12">
+                                                <select class="form-control valid" data-val="true" data-val-required="The State / province field is required." id="BillToStateProvinceId" name="BillToStateProvinceId" aria-describedby="StateProvinceId-error" aria-invalid="false"><option selected="" value="0">Select state</option></select>
+                                                <span id="states-loading-progress" style="display: none;" class="please-wait">Wait...</span>
+                                            </div>
+                                            <div class="col-sm-3 col-md-4 col-xs-12">
+                                                <span class="required">*</span>
+                                                <span id="states-loading-progress" style="display: none;" class="please-wait">Wait...</span>
+                                                <span class="field-validation-valid" data-valmsg-for="BillToStateProvinceId" data-valmsg-replace="true"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="buttons" style="display:inline">
+                                            <p class="back-link" style="margin-right: 2%;margin-bottom: 2%;float: left;">
+                                                <a href="#" id="comBack"><small>&laquo; </small>Back</a>
+                                            </p>
+                                            <input id="ship" type="button" style="margin-right: 2%;margin-bottom: 2%;float: right;" class="btn btn-primary" value="Continue" />
+                                            <span id="shipping-method-please-wait" class="please-wait" style="display: none;">Loading next step...</span>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li id="shipInfo" class="tab-section allow">
+                                    <div class="step-title">
+                                        <span class="number">3</span>
+                                        <h2>Shipping Information</h2>
+                                    </div>
+                                    <div id="shippingInfo" style="margin-left:20px;margin-top:14px;margin-right:20px">
+                                        <div class="form-group row">
+                                            <label class="control-label col-sm-3 col-md-4 col-xs-12">Street Address:</label>
+                                            <div class="col-sm-6 col-md-4 col-xs-12">
+                                                <input class="form-control" type="text" data-val="true" data-val-required="Street Address is required" value="@Model.ShipToStreetAddress" id="ShipToStreetAddress" name="ShipToStreetAddress">
+                                            </div>
+                                            <div class="col-sm-3 col-md-4 col-xs-12">
+                                                <span class="required">*</span>
+                                                <span class="field-validation-valid" data-valmsg-for="ShipToStreetAddress" data-valmsg-replace="true"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="control-label col-sm-3 col-md-4 col-xs-12">City:</label>
+                                            <div class="col-sm-6 col-md-4 col-xs-12">
+                                                <input class="form-control" type="text" data-val="true" data-val-required="City is required" value="@Model.ShipToCity" id="ShipToCity" name="ShipToCity">
+                                            </div>
+                                            <div class="col-sm-3 col-md-4 col-xs-12">
+                                                <span class="required">*</span>
+                                                <span class="field-validation-valid" data-valmsg-for="ShipToCity" data-valmsg-replace="true"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="control-label col-sm-3 col-md-4 col-xs-12">Zip / postal code:</label>
+                                            <div class="col-sm-6 col-md-4 col-xs-12">
+                                                <input class="form-control" type="text" data-val="true" data-val-required="Zip / postal code is required" value="@Model.ShipToZipPostalCode" id="ShipToZipPostalCode" name="ShipToZipPostalCode">
+                                            </div>
+                                            <div class="col-sm-3 col-md-4 col-xs-12">
+                                                <span class="required">*</span>
+                                                <span class="field-validation-valid" data-valmsg-for="ShipToZipPostalCode" data-valmsg-replace="true"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="control-label col-sm-3 col-md-4 col-xs-12">Phone No:</label>
+                                            <div class="col-sm-6 col-md-4 col-xs-12">
+                                                <input class="form-control" type="text" data-val="true" data-val-required="Phone No is required" value="@Model.ShipToPhone" data-val-regex-pattern="^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$" data-val-regex="Not a valid phone number" id="ShipToPhone" name="ShipToPhone">
+                                            </div>
+                                            <div class="col-sm-3 col-md-4 col-xs-12">
+                                                <span class="required">*</span>
+                                                <span class="field-validation-valid" data-valmsg-for="ShipToPhone" data-valmsg-replace="true"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="control-label col-sm-3 col-md-4 col-xs-12">Country</label>
+                                            <div class="col-sm-6 col-md-4 col-xs-12">
+                                                <select class="form-control  valid" id="ShipToCountryId" name="ShipToCountryId" data-val="true" data-val-required="The Country field is required."
+                                                        data-trigger="country-select"
+                                                        data-url="@(Url.RouteUrl("GetStatesByCountryId"))"
+                                                        data-stateprovince="#@Html.IdFor(model => model.ShipToStateProvinceId)"
+                                                        data-loading="#states-loading-progress">
+                                                    <option selected="" value="0">Select country</option>
+                                                    <option value="1">United States</option>
+                                                    <option value="239">Afghanistan</option>
+                                                    <option value="212">Albania</option>
+                                                    <option value="211">Algeria</option>
+                                                    <option value="210">American Samoa</option>
+                                                    <option value="195">Andorra</option>
+                                                    <option value="183">Angola</option>
+                                                    <option value="184">Anguilla</option>
+                                                    <option value="185">Antarctica</option>
+                                                    <option value="186">Antigua and Barbuda</option>
+                                                    <option value="154">Argentina</option>
+                                                    <option value="155">Armenia</option>
+                                                    <option value="156">Aruba</option>
+                                                    <option value="157">Australia</option>
+                                                    <option value="158">Austria</option>
+                                                    <option value="159">Azerbaijan</option>
+                                                    <option value="160">Bahamas</option>
+                                                    <option value="187">Bahrain</option>
+                                                    <option value="161">Bangladesh</option>
+                                                    <option value="188">Barbados</option>
+                                                    <option value="162">Belarus</option>
+                                                    <option value="163">Belgium</option>
+                                                    <option value="164">Belize</option>
+                                                    <option value="189">Benin</option>
+                                                    <option value="166">Bermuda</option>
+                                                    <option value="190">Bhutan</option>
+                                                    <option value="179">Bolivia</option>
+                                                    <option value="167">Bosnia and Herzegowina</option>
+                                                    <option value="191">Botswana</option>
+                                                    <option value="192">Bouvet Island</option>
+                                                    <option value="168">Brazil</option>
+                                                    <option value="193">British Indian Ocean Territory</option>
+                                                    <option value="194">Brunei Darussalam</option>
+                                                    <option value="169">Bulgaria</option>
+                                                    <option value="196">Burkina Faso</option>
+                                                    <option value="209">Burundi</option>
+                                                    <option value="197">Cambodia</option>
+                                                    <option value="198">Cameroon</option>
+                                                    <option value="153">Canada</option>
+                                                    <option value="199">Cape Verde</option>
+                                                    <option value="170">Cayman Islands</option>
+                                                    <option value="200">Central African Republic</option>
+                                                    <option value="201">Chad</option>
+                                                    <option value="171">Chile</option>
+                                                    <option value="172">China</option>
+                                                    <option value="202">Christmas Island</option>
+                                                    <option value="203">Cocos (Keeling) Islands</option>
+                                                    <option value="173">Colombia</option>
+                                                    <option value="204">Comoros</option>
+                                                    <option value="205">Congo</option>
+                                                    <option value="206">Congo (Democratic Republic of the)</option>
+                                                    <option value="207">Cook Islands</option>
+                                                    <option value="174">Costa Rica</option>
+                                                    <option value="208">Cote D'Ivoire</option>
+                                                    <option value="175">Croatia</option>
+                                                    <option value="176">Cuba</option>
+                                                    <option value="177">Cyprus</option>
+                                                    <option value="178">Czech Republic</option>
+                                                    <option value="152">Denmark</option>
+                                                    <option value="122">Djibouti</option>
+                                                    <option value="240">Dominica</option>
+                                                    <option value="165">Dominican Republic</option>
+                                                    <option value="151">East Timor</option>
+                                                    <option value="135">Ecuador</option>
+                                                    <option value="123">Egypt</option>
+                                                    <option value="121">El Salvador</option>
+                                                    <option value="119">Equatorial Guinea</option>
+                                                    <option value="32">Eritrea</option>
+                                                    <option value="33">Estonia</option>
+                                                    <option value="34">Ethiopia</option>
+                                                    <option value="35">Falkland Islands (Malvinas)</option>
+                                                    <option value="36">Faroe Islands</option>
+                                                    <option value="37">Fiji</option>
+                                                    <option value="124">Finland</option>
+                                                    <option value="125">France</option>
+                                                    <option value="38">French Guiana</option>
+                                                    <option value="39">French Polynesia</option>
+                                                    <option value="40">French Southern Territories</option>
+                                                    <option value="41">Gabon</option>
+                                                    <option value="42">Gambia</option>
+                                                    <option value="126">Georgia</option>
+                                                    <option value="127">Germany</option>
+                                                    <option value="43">Ghana</option>
+                                                    <option value="128">Gibraltar</option>
+                                                    <option value="129">Greece</option>
+                                                    <option value="45">Greenland</option>
+                                                    <option value="58">Grenada</option>
+                                                    <option value="46">Guadeloupe</option>
+                                                    <option value="47">Guam</option>
+                                                    <option value="130">Guatemala</option>
+                                                    <option value="48">Guinea</option>
+                                                    <option value="49">Guinea-bissau</option>
+                                                    <option value="50">Guyana</option>
+                                                    <option value="51">Haiti</option>
+                                                    <option value="52">Heard and Mc Donald Islands</option>
+                                                    <option value="53">Honduras</option>
+                                                    <option value="131">Hong Kong</option>
+                                                    <option value="132">Hungary</option>
+                                                    <option value="54">Iceland</option>
+                                                    <option value="133">India</option>
+                                                    <option value="134">Indonesia</option>
+                                                    <option value="55">Iran (Islamic Republic of)</option>
+                                                    <option value="56">Iraq</option>
+                                                    <option value="136">Ireland</option>
+                                                    <option value="149">Israel</option>
+                                                    <option value="137">Italy</option>
+                                                    <option value="138">Jamaica</option>
+                                                    <option value="139">Japan</option>
+                                                    <option value="140">Jordan</option>
+                                                    <option value="141">Kazakhstan</option>
+                                                    <option value="57">Kenya</option>
+                                                    <option value="31">Kiribati</option>
+                                                    <option value="44">Korea</option>
+                                                    <option value="142">Korea, Democratic People's Republic of</option>
+                                                    <option value="143">Kuwait</option>
+                                                    <option value="30">Kyrgyzstan</option>
+                                                    <option value="14">Lao People's Democratic Republic</option>
+                                                    <option value="2">Latvia</option>
+                                                    <option value="3">Lebanon</option>
+                                                    <option value="4">Lesotho</option>
+                                                    <option value="5">Liberia</option>
+                                                    <option value="6">Libyan Arab Jamahiriya</option>
+                                                    <option value="7">Liechtenstein</option>
+                                                    <option value="8">Lithuania</option>
+                                                    <option value="9">Luxembourg</option>
+                                                    <option value="10">Macau</option>
+                                                    <option value="11">Macedonia</option>
+                                                    <option value="12">Madagascar</option>
+                                                    <option value="13">Malawi</option>
+                                                    <option value="144">Malaysia</option>
+                                                    <option value="15">Maldives</option>
+                                                    <option value="28">Mali</option>
+                                                    <option value="16">Malta</option>
+                                                    <option value="17">Marshall Islands</option>
+                                                    <option value="18">Martinique</option>
+                                                    <option value="19">Mauritania</option>
+                                                    <option value="20">Mauritius</option>
+                                                    <option value="21">Mayotte</option>
+                                                    <option value="145">Mexico</option>
+                                                    <option value="22">Micronesia</option>
+                                                    <option value="23">Moldova</option>
+                                                    <option value="24">Monaco</option>
+                                                    <option value="25">Mongolia</option>
+                                                    <option value="26">Montenegro</option>
+                                                    <option value="27">Montserrat</option>
+                                                    <option value="29">Morocco</option>
+                                                    <option value="59">Mozambique</option>
+                                                    <option value="60">Myanmar</option>
+                                                    <option value="61">Namibia</option>
+                                                    <option value="92">Nauru</option>
+                                                    <option value="93">Nepal</option>
+                                                    <option value="146">Netherlands</option>
+                                                    <option value="94">Netherlands Antilles</option>
+                                                    <option value="95">New Caledonia</option>
+                                                    <option value="147">New Zealand</option>
+                                                    <option value="96">Nicaragua</option>
+                                                    <option value="97">Niger</option>
+                                                    <option value="98">Nigeria</option>
+                                                    <option value="99">Niue</option>
+                                                    <option value="100">Norfolk Island</option>
+                                                    <option value="101">Northern Mariana Islands</option>
+                                                    <option value="148">Norway</option>
+                                                    <option value="102">Oman</option>
+                                                    <option value="150">Pakistan</option>
+                                                    <option value="103">Palau</option>
+                                                    <option value="180">Palestine</option>
+                                                    <option value="104">Panama</option>
+                                                    <option value="105">Papua New Guinea</option>
+                                                    <option value="181">Paraguay</option>
+                                                    <option value="182">Peru</option>
+                                                    <option value="213">Philippines</option>
+                                                    <option value="106">Pitcairn</option>
+                                                    <option value="214">Poland</option>
+                                                    <option value="215">Portugal</option>
+                                                    <option value="216">Puerto Rico</option>
+                                                    <option value="217">Qatar</option>
+                                                    <option value="107">Reunion</option>
+                                                    <option value="218">Romania</option>
+                                                    <option value="219">Russian Federation</option>
+                                                    <option value="108">Rwanda</option>
+                                                    <option value="109">Saint Kitts and Nevis</option>
+                                                    <option value="110">Saint Lucia</option>
+                                                    <option value="111">Saint Vincent and the Grenadines</option>
+                                                    <option value="112">Samoa</option>
+                                                    <option value="113">San Marino</option>
+                                                    <option value="114">Sao Tome and Principe</option>
+                                                    <option value="220">Saudi Arabia</option>
+                                                    <option value="115">Senegal</option>
+                                                    <option value="238">Serbia</option>
+                                                    <option value="116">Seychelles</option>
+                                                    <option value="117">Sierra Leone</option>
+                                                    <option value="221">Singapore</option>
+                                                    <option value="222">Slovakia (Slovak Republic)</option>
+                                                    <option value="223">Slovenia</option>
+                                                    <option value="118">Solomon Islands</option>
+                                                    <option value="91">Somalia</option>
+                                                    <option value="224">South Africa</option>
+                                                    <option value="90">South Georgia &amp; South Sandwich Islands</option>
+                                                    <option value="89">South Sudan</option>
+                                                    <option value="225">Spain</option>
+                                                    <option value="74">Sri Lanka</option>
+                                                    <option value="62">St. Helena</option>
+                                                    <option value="63">St. Pierre and Miquelon</option>
+                                                    <option value="64">Sudan</option>
+                                                    <option value="65">Suriname</option>
+                                                    <option value="66">Svalbard and Jan Mayen Islands</option>
+                                                    <option value="67">Swaziland</option>
+                                                    <option value="226">Sweden</option>
+                                                    <option value="227">Switzerland</option>
+                                                    <option value="68">Syrian Arab Republic</option>
+                                                    <option value="228">Taiwan</option>
+                                                    <option value="69">Tajikistan</option>
+                                                    <option value="70">Tanzania</option>
+                                                    <option value="229">Thailand</option>
+                                                    <option value="71">Togo</option>
+                                                    <option value="72">Tokelau</option>
+                                                    <option value="73">Tonga</option>
+                                                    <option value="75">Trinidad and Tobago</option>
+                                                    <option value="88">Tunisia</option>
+                                                    <option value="230">Turkey</option>
+                                                    <option value="76">Turkmenistan</option>
+                                                    <option value="77">Turks and Caicos Islands</option>
+                                                    <option value="78">Tuvalu</option>
+                                                    <option value="79">Uganda</option>
+                                                    <option value="231">Ukraine</option>
+                                                    <option value="232">United Arab Emirates</option>
+                                                    <option value="233">United Kingdom</option>
+                                                    <option value="234">United States minor outlying islands</option>
+                                                    <option value="235">Uruguay</option>
+                                                    <option value="236">Uzbekistan</option>
+                                                    <option value="80">Vanuatu</option>
+                                                    <option value="81">Vatican City State (Holy See)</option>
+                                                    <option value="237">Venezuela</option>
+                                                    <option value="82">Viet Nam</option>
+                                                    <option value="83">Virgin Islands (British)</option>
+                                                    <option value="84">Virgin Islands (U.S.)</option>
+                                                    <option value="85">Wallis and Futuna Islands</option>
+                                                    <option value="86">Western Sahara</option>
+                                                    <option value="87">Yemen</option>
+                                                    <option value="120">Zambia</option>
+                                                    <option value="241">Zimbabwe</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-sm-3 col-md-4 col-xs-12">
+                                                <span class="required">*</span>
+                                                <span class="field-validation-valid" data-valmsg-for="ShipToCountryId" data-valmsg-replace="true"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="control-label col-sm-3 col-md-4 col-xs-12">State / province:</label>
+                                            <div class="col-sm-6 col-md-4 col-xs-12">
+                                                <select class="form-control valid" data-val="true" data-val-required="The State / province field is required." id="ShipToStateProvinceId" name="ShipToStateProvinceId" aria-describedby="StateProvinceId-error" aria-invalid="false"><option selected="" value="0">Select state</option></select>
+                                                <span id="states-loading-progress" style="display: none;" class="please-wait">Wait...</span>
+                                            </div>
+                                            <div class="col-sm-3 col-md-4 col-xs-12">
+                                                <span class="required">*</span>
+                                                <span id="states-loading-progress" style="display: none;" class="please-wait">Wait...</span>
+                                                <span class="field-validation-valid" data-valmsg-for="ShipToStateProvinceId" data-valmsg-replace="true"></span>
+                                            </div>
+                                        </div>
+                                        <div class="buttons" style="display:inline">
+                                            <p class="back-link">
+                                                <a href="#" style="margin-right: 2%;margin-bottom: 2%;float: left;" id="billBack"><small>&laquo; </small>Back</a>
+                                            </p>
+                                            <input id="cus" style="margin-right: 2%;margin-bottom: 2%;float: right;" type="button" class="btn btn-primary" value="Continue" />
+                                            <span class="please-wait" style="display: none;">Loading next step...</span>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li id="cusInfo" class="tab-section allow">
+                                    <div class="step-title">
+                                        <span class="number">4</span>
+                                        <h2>Customer Information</h2>
+                                    </div>
+                                    <div id="customerInfo" style="margin-left:20px;margin-top:14px;margin-right:20px">
+                                        <div class="form-fields">
+                                            @if (Model.CustomerAttributes.Count > 0)
+                                            {
+                                                @await Html.PartialAsync("_CustomerAttributes", Model.CustomerAttributes, new ViewDataDictionary(this.Vi‌​ewData) { { "startIndex", 3 }, { "endIndex", 6 } })
+                                            }
+                                        </div>
+                                        <div class="buttons" style="display:inline;">
+                                            <p style="float: left;" class="back-link">
+                                                <a href="#" style="margin-right: 2%;margin-bottom: 2%;float: left;" id="shipBack"><small>&laquo; </small>Back</a>
+                                            </p>
+                                            <input type="button" style="margin-right: 2%;margin-bottom: 2%;float: right;" class="btn btn-primary" id="care" value="Continue" />
+                                            <span id="shipping-method-please-wait" class="please-wait" style="display: none;">Loading next step...</span>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li id="careSet" class="tab-section allow">
+                                    <div class="step-title">
+                                        <span class="number">5</span>
+                                        <h2>Care Settings</h2>
+                                    </div>
+                                    <div id="careSettings" style="margin-left:20px;margin-top:14px;margin-right:20px">
+                                        <div class="form-fields">
+                                            @if (Model.CustomerAttributes.Count > 0)
+                                            {
+                                                @await Html.PartialAsync("_CustomerAttributes", Model.CustomerAttributes, new ViewDataDictionary(this.Vi‌​ewData) { { "startIndex", 7 }, { "endIndex", 7 } })
+                                            }
+                                        </div>
+                                        <div class="buttons" style="display:inline">
+                                            <p style=" margin-top:2%;margin-right: 2%;margin-bottom: 2%;float: right;" class="back-link">
+                                                <a href="#" id="cusBack"><small>&laquo; </small>Back</a>
+                                            </p>
+                                            <span id="shipping-method-please-wait" class="please-wait" style="display: none;">Loading next step...</span>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-4 col-lg-4">
+                    <div class="panel panel-raised">
+                        @*<div class="panel-heading">
+                                <button type="submit" name="register" id="register" style="width:90%" class="btn btn-action btn-block btn-lg btn-primary">Continue</button>
+                            </div>@
+                        <div class="list-group">
+                            <a class="list-group-item disabled">
+                                <h5 class="">Contact Information</h5>
+                                <span class="help-block">Tell us who you are.</span>
+                            </a>
+                            <a class="list-group-item">
+                                <h5 class="text-primary">Tell us about your business</h5>
+                                <span class="help-block">Register an existing account or create a new one</span>
+                            </a>
+                            <div class="panel-heading">
+                                <button type="submit" name="register" id="register1" class="btn btn-action btn-block btn-lg btn-primary">Register</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @*<div id="step5">
+                    <div class="col-xs-12 col-md-8 col-lg-8">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <h1>New Account Request Received</h1>
+                                <h4>Thank you for your interest in Inovatiqa Medical&#45;Surgical</h4>
+                                <p> Your information has been sent to our New Account Team. They will contact you within 5 days to complete your application.</p>
+                                <hr>
+                                <div class="row xtra-bottom">
+                                    <div class="col-xs-12 col-md-6 col-lg-6">
+                                        <h4>Contact</h4>
+                                        <div>abc</div>
+                                        <div>abd@inovatiqa.com</div>
+                                        <div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-md-6 col-lg-6">
+                                        &nbsp;
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-6 col-lg-6">
+                                        <h4>Existing Account Information</h4>
+                                        <div><b>Account ID</b>&nbsp;</div>
+                                        <div><b>Recent Order/Invoice Number</b>&nbsp;</div>
+                                    </div>
+                                    <div class="col-xs-12 col-md-6 col-lg-6">
+                                        &nbsp;
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-4 col-lg-4">
+                        <div class="panel panel-raised">
+                            <div class="panel-heading">
+                                <button type="submit"
+                                        class="btn btn-primary btn-block btn-lg">
+                                    Finished
+                                </button>
+
+                            </div>
+                            <div class="panel-body">
+
+
+                                <p><b>Important Notice:</b></p>
+                                <p>To ensure you receive our emails, please add the following email address to your trusted/safe senders list: <a href="mailto:customer.systems@inovatiqa.com">customer.systems@inovatiqa.com</a> (consult your email administrator for instructions).</p>
+                                <p>
+                                    If you submitted your application more than 5 business days ago and have not heard from us, please contact us at     (800) 422-0280
+                                    .
+                                </p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>@
+            @Html.Resource(@<script type="text/javascript">
+                                $(document).ready(function () {
+                                    $("#step1").show();
+                                    $("#step2").hide();
+                                    $("#step5").hide();
+                                    $("#Venstep2").hide();
+
+                                });
+
+                                $("#progBtn").on("click", function () {
+                                    if ($('#basicUserInfo').valid()) {
+                                        var type = $("#CustomerType").val();
+                                        if (type == "vendorType") {
+                                            $("#step1").hide();
+                                            $("#step2").hide();
+                                            $("#step5").hide();
+                                            $("#Venstep2").show();
+                                            $("#companyInfo").show();
+                                            $("#comInfo").addClass("active");
+                                            $("#billingInfo").hide();
+                                            $("#shippingInfo").hide();
+                                            $("#customerInfo").hide();
+                                            $("#careSettings").hide();
+
+                                        }
+                                        else if (type == "customerType") {
+                                            $("#step1").hide();
+                                            $("#step2").show();
+                                            $("#Venstep2").hide();
+                                            $("#step5").hide();
+
+                                        }
+                                        else {
+                                            $("#step1").show();
+                                            $("#step2").hide();
+                                            $("#Venstep2").hide();
+                                            $("#step5").hide();
+
+                                        }
+                                    }
+                                    else {
+                                        return false;
+                                    }
+                                });
+                                $("#comBack").on("click", function () {
+                                    $("#companyInfo").show();
+                                    $("#billingInfo").hide();
+                                    $("#comInfo").addClass("active");
+                                    $("#billInfo").removeClass("active");
+
+                                }); $("#Cont_companyInfo").on("click", function () {
+                                    if ($('#basicUserInfo').valid()) {
+                                        $("#companyInfo").hide();
+                                        $("#billingInfo").show();
+                                        $("#comInfo").removeClass("active");
+                                        $("#billInfo").addClass("active");
+                                    }
+                                }); $("#billBack").on("click", function () {
+                                    $("#billingInfo").show();
+                                    $("#shippingInfo").hide();
+                                    $("#billInfo").addClass("active");
+                                    $("#shipInfo").removeClass("active");
+                                });
+                                $("#ship").on("click", function () {
+                                    if ($('#basicUserInfo').valid()) {
+                                        if ($('#IsSameShipToAddress').prop("checked") == false) {
+                                            $("#billingInfo").hide();
+                                            $("#shippingInfo").show();
+                                            $("#billInfo").removeClass("active");
+                                            $("#shipInfo").addClass("active");
+                                        }
+                                        else {
+                                            $("#billingInfo").hide();
+                                            $("#customerInfo").show();
+                                            $("#billInfo").removeClass("active");
+                                            $("#cusInfo").addClass("active");
+                                        }
+                                    }
+                                });
+                                $("#shipBack").on("click", function () {
+                                    if ($('#IsSameShipToAddress').prop("checked") == false) {
+                                        $("#shippingInfo").show();
+                                        $("#customerInfo").hide();
+                                        $("#shipInfo").addClass("active");
+                                        $("#cusInfo").removeClass("active");
+                                    }
+                                    else {
+                                        $("#customerInfo").hide();
+                                        $("#billingInfo").show();
+                                        $("#billInfo").addClass("active");
+                                        $("#cusInfo").removeClass("active");
+                                    }
+                                });
+                                $("#cus").on("click", function () {
+                                    if ($('#basicUserInfo').valid()) {
+                                        $("#shippingInfo").hide();
+                                        $("#customerInfo").show();
+                                        $("#shipInfo").removeClass("active");
+                                        $("#cusInfo").addClass("active");
+                                    }
+                                });
+                                $("#cusBack").on("click", function () {
+                                    $("#customerInfo").show();
+                                    $("#careSettings").hide();
+                                    $("#cusInfo").addClass("active");
+                                    $("#careSet").removeClass("active");
+
+                                }); $("#care").on("click", function () {
+                                    if ($('#basicUserInfo').valid()) {
+                                        $("#customerInfo").hide();
+                                        $("#careSettings").show();
+                                        $("#cusInfo").removeClass("active");
+                                        $("#careSet").addClass("active");
+                                    }
+                                });
+            </script>, "js")
+            @Html.AntiForgeryToken()
+        </form>
+    </div>
+</div>
+
+    *@
+<script>
+    function Callback(token) {
+        if (token != undefined) {
+            $('#CaptchaCode').val(token);
+        }
+        else {
+            $('#CaptchaCode').val('');
+        }
+    }
+</script>
+
+<section class="container-fluid newcustomer-area">
+    <div class="row">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="become-customer-box">
+                        <form asp-route="Register" asp-route-returnurl="@Context.Request.Query["ReturnUrl"]" enctype="multipart/form-data" method="post" autocomplete="off">
+                            <div class="row">
+                                <div class="col-md-7">
+                                    <div class="yourself-area font_lato">
+                                        <div class="customer-select">
+                                            <h4>I would like to Become a Customer!</h4>
+                                            <div class="form-group">
+                                                <label for="name">Tell us about yourself</label>
+                                                <select id="CustomerType" asp-for="@Model.CustomerType" name="CustomerType" class="form-control">
+                                                    <option value=""> Please Select One...</option>
+                                                    <option id="vendorType" value="vendorType"> I'm a Medical Professional or Administrator</option>
+                                                    <option id="customerType" value="customerType"> I'm a Customer that is ordering for personal use</option>
+                                                </select>
+                                            </div>
+                                            <div class="btn-continue font_roboto text-right">
+                                                <input type="button" value="Continue" style="background-color: #C4C4C4 !important;" class="btn btn-signin" id="formcontinue" />
+                                            </div>
+                                        </div>
+                                        <div class="accountform-area font_lato" id="account-details">
+                                            <div class="form-title">
+                                                <h5>Account Details</h5>
+                                            </div>
+                                            <div class="row align_center">
+                                                <div class="col-md-4 col-sm-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="required">First Name</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8 col-sm-12 col-xs-12">
+                                                    <div class="form-group flex-col" style="margin-bottom: 20px;">
+                                                        <input type="text" class="form-control" asp-for="FirstName" value="@Model.FirstName" name="FirstName" id="FirstName" data-val="true" data-val-required="First Name is required." maxlength="30" />
+                                                        <span class="error-label mt10" asp-validation-for="FirstName"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row align_center">
+                                                <div class="col-md-4 col-sm-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="required">Last Name</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8 col-sm-12 col-xs-12">
+                                                    <div class="form-group flex-col" style="margin-bottom: 20px;">
+                                                        <input type="text" class="form-control" asp-for="LastName" value="@Model.LastName" name="LastName" id="LastName" data-val="true" data-val-required="Last Name is required." maxlength="30" />
+                                                        <span class="error-label mt10" asp-validation-for="LastName"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row align_center">
+                                                <div class="col-md-4 col-sm-12 col-xs-12" id="company">
+                                                    <div class="form-group">
+                                                        <label class="required">Company</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8 col-sm-12 col-xs-12" id="companyField">
+                                                    <div class="form-group flex-col" style="margin-bottom: 20px;">
+                                                        <input type="text" class="form-control" asp-for="Company" value="@Model.Company" name="Company" id="Company" data-val="true" data-val-required="Company is required." />
+                                                        <span class="error-label mt10" asp-validation-for="Company"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row align_center">
+                                                <div class="col-md-4 col-sm-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="required">Email Address</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8 col-sm-12 col-xs-12">
+                                                    <div class="form-group flex-col" style="margin-bottom: 20px;">
+                                                        @*<input type="email" asp-for="Email" autocomplete="off" class="form-control" data-val="true" value="@Model.Email" data-val-email="Wrong email" data-val-required="Email is required." id="Email" name="Email" />
+                                                        <span class="error-label mt10" asp-validation-for="Email"></span>*@
+                                                        <input type="email" onblur="userNameAvailable(this.value)" onkeydown = "userNameChange()" asp-for="Email" autocomplete="off" class="form-control" data-val="true" value="@Model.Email" data-val-email="Wrong email" data-val-required="Email is required." id="Email" name="Email" />
+                                                        <span class="error-label mt10" asp-validation-for="Email"></span>
+                                                        <span class="error-label mt10" hidden id="userNamevalidationError">Email has been already registered.</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row align_center">
+                                                <div class="col-md-4 col-sm-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="required">Phone Number</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8 col-sm-12 col-xs-12">
+                                                    <div class="form-group flex-col" style="margin-bottom: 20px;">
+                                                        <input type="tel" asp-for="BillToPhone" class="form-control" data-val="true" data-val-required="Phone No is required" value="@Model.BillToPhone" id="BillToPhone" name="BillToPhone" />
+                                                        <span class="error-label mt10" id="PhoneNumberVal" asp-validation-for="BillToPhone"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row align_center">
+                                                <div class="col-md-4 col-sm-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label>Fax</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8 col-sm-12 col-xs-12">
+                                                    <div class="form-group flex-col" style="margin-bottom: 20px;">
+                                                        <input type="text" class="form-control" name="Fax" asp-for="Fax" id="Fax" data-val="true" value="@Model.Fax" />
+                                                        <span class="error-label mt10" asp-validation-for="Fax"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row align_center">
+                                                <div class="col-md-4 col-sm-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label>Deliver to the ATTN of</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8 col-sm-12 col-xs-12">
+                                                    <div class="form-group flex-col" style="margin-bottom: 20px;">
+                                                        <input type="text" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row align_center">
+                                                <div class="col-md-4 col-sm-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="required">Address Line 1</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8 col-sm-12 col-xs-12">
+                                                    <div class="form-group flex-col" style="margin-bottom: 20px;">
+                                                        <input type="text" asp-for="BillToStreetAddress" class="form-control" data-val="true" data-val-required="Street Address is required" value="@Model.BillToStreetAddress" id="BillToStreetAddress" name="BillToStreetAddress" />
+                                                        <span class="error-label mt10" asp-validation-for="BillToStreetAddress"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row align_center">
+                                                <div class="col-md-4 col-sm-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label>Address Line 2</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8 col-sm-12 col-xs-12">
+                                                    <div class="form-group flex-col" style="margin-bottom: 20px;">
+                                                        <input type="text" class="form-control" asp-for="StreetAddress2" name="StreetAddress2" id="StreetAddress2" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row align_center">
+                                                <div class="col-md-4 col-sm-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="required">City</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8 col-sm-12 col-xs-12">
+                                                    <div class="form-group flex-col" style="margin-bottom: 20px;">
+                                                        <input type="text" class="form-control" data-val="true" autocomplete="off" data-val-required="City is required" value="@Model.BillToCity" id="BillToCity" name="BillToCity" asp-for="BillToCity" />
+                                                        <span class="error-label mt10" asp-validation-for="BillToCity"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row align_center">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label class="required">Country</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8 col-sm-12 col-xs-12">
+                                                    <div class="form-group flex-col" style="margin-bottom: 20px;">
+                                                        <select class="form-control valid" id="BillToCountryId" name="BillToCountryId" data-val="true" data-val-required="The Country field is required."
+                                                                data-trigger="country-select"
+                                                                data-url="@(Url.RouteUrl("GetStatesByCountryId"))"
+                                                                data-stateprovince="#@Html.IdFor(model => model.BillToStateProvinceId)"
+                                                                data-loading="#states-loading-progress"
+                                                                asp-for="BillToCountryId">
+                                                            @foreach (var country in Model.AvailableCountries)
+                                                            {
+                                                                <option value="@(country.Value == "0" ? "" : country.Value)" selected="@country.Selected" disabled="@country.Disabled">@country.Text</option>
+                                                            }
+                                                        </select>
+                                                        <span class="error-label mt10" asp-validation-for="BillToCountryId"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row align_center">
+                                                <div class="col-md-4 col-sm-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="required">Region / State</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8 col-sm-12 col-xs-12">
+                                                    <div class="form-group flex-col" style="margin-bottom: 20px;">
+                                                        <select asp-for="BillToStateProvinceId" class="form-control valid" data-val="true" data-val-required="The State / province field is required." id="BillToStateProvinceId" name="BillToStateProvinceId" aria-describedby="StateProvinceId-error" aria-invalid="false">
+
+                                                            <option selected="" value="">Select state</option>
+                                                        </select>
+                                                        <span class="error-label mt10" asp-validation-for="BillToStateProvinceId"></span>
+
+                                                        <span id="states-loading-progress" style="display: none;" class="please-wait">Wait...</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row align_center">
+                                                <div class="col-md-4 col-sm-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="required">Postal Code</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8 col-sm-12 col-xs-12">
+                                                    <div class="form-group flex-col" style="margin-bottom: 20px;">
+                                                        <input type="text" class="form-control" data-val="true" data-val-required="Zip / postal code is required" value="@Model.BillToZipPostalCode" id="BillToZipPostalCode" name="BillToZipPostalCode" asp-for="BillToZipPostalCode" />
+                                                        <span class="error-label mt10" asp-validation-for="BillToZipPostalCode"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row align_center">
+                                                <div class="col-md-4 col-sm-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="required">Sales Tax Exempt</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8 col-sm-12 col-xs-12">
+                                                    <div class="form-group flex-col" style="margin-bottom: 20px;">
+                                                        <select class="form-control" name="IsTaxExempt" data-val-required="Sales Tax Exempt is required" asp-for="IsTaxExempt">
+                                                            <option value="" selected></option>
+                                                            <option value="0">No</option>
+                                                            <option value="1">Yes</option>
+                                                        </select>
+                                                        <span class="error-label mt10" asp-validation-for="IsTaxExempt"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="accountform-area change-pwd-area change-pwd-gray font_lato" id="passwordArea">
+                                            <div class="form-title">
+                                                <h5 style="color: #000;">Choose a Password</h5>
+                                            </div>
+                                            <div class="form-deatil">
+                                                <p style="color: #000;">Please choose a password that includes a mix of uppercase letters, lowercase letters, numbers and symbols for maximum security.</p>
+                                            </div>
+                                            <div class="row align_center">
+                                                <div class="col-md-4 col-sm-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="required" style="color: #000;">Password</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8 col-sm-12 col-xs-12">
+                                                    <div class="form-group flex-col" style="margin-bottom: 20px;">
+                                                        <input type="password" class="form-control" data-val="true" value="@Model.Password" data-val-regex="<ul><li>must have at least 6 characters</li></ul>" data-val-regex-pattern="^.{6,}$" data-val-required="Password is required." id="Password" name="Password" asp-for="Password" />
+                                                        <span class="error-label mt10" asp-validation-for="Password"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row align_center">
+                                                <div class="col-md-4 col-sm-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="required" style="color: #000;">Confirm</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8 col-sm-12 col-xs-12">
+                                                    <div class="form-group flex-col" style="margin-bottom: 20px;">
+                                                        <input type="password" class="form-control" data-val="true" value="@Model.ConfirmPassword" data-val-equalto="The password and confirmation password do not match." data-val-equalto-other="*.Password" data-val-required="Confirm Password is required" id="Confirm_Password" name="ConfirmPassword" asp-for="ConfirmPassword" />
+                                                        <span class="error-label mt10" asp-validation-for="ConfirmPassword"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8 col-md-offset-4 col-sm-12 col-xs-12">
+                                                    <div class="notrobot-check">
+                                                        <p class="mb0" style="color: #000;">Please check the box below to proceed.</p>
+                                                        <div class="robot-captcha col-md-6" style="padding: 0;">
+
+                                                            @*<div class="g-recaptcha" data-sitekey="@Inovatiqa.Core.InovatiqaDefaults.CaptchaSiteKey"></div>*@
+                                                            <div class="g-recaptcha" data-expired-callback="Callback" data-callback="Callback" data-sitekey="@Inovatiqa.Core.InovatiqaDefaults.CaptchaSiteKey"></div>
+                                                            <div style="width: 100%;">
+                                                                <input type="hidden" class="form-control ml29" id="CaptchaCode" name="CaptchaCode" data-val="true" autocomplete="off" data-val-required="Captcha is required." asp-for="CaptchaCode" />
+                                                                <span class="error-label mt10" asp-validation-for="CaptchaCode"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row align_center">
+                                                <div class="col-md-4 col-sm-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label class="required" style="color: #000;">Agreement</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8 col-sm-12 col-xs-12">
+                                                    <div class="pwd-checkbox form-group flex-col" style="margin-bottom: 20px;">
+                                                        <label class="mb0" style="color: #000; margin-top: 3px;">
+                                                            <input type="checkbox" asp-for="termsCheckbox" data-val="true" data-val-required="Please accept terms and conditions." id="termsCheckbox" /><span style="font-weight: 500;"> I &nbsp; agree to the &nbsp; Terms&nbsp; & &nbsp;Conditions</span>
+                                                        </label>
+                                                        <input type="hidden" asp-for="termsCheckbox" data-val="true" data-val-required="Please accept terms and conditions." id="termsCheckbox" />
+                                                        <span class="error-label mt10" asp-validation-for="termsCheckbox"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row align_center">
+                                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="pwd-btn text-right mt30">
+                                                        <input type="submit" id="submit" value="Create Account" style="background-color: #0068A3 !important" class="btn btn-signin" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="inovatiqaway-area">
+                                        <div class="inovatiqa-title font_teko">
+                                            <h4>THE INOVATIQA WAY</h4>
+                                        </div>
+                                        <div class="inovatiqa-detail">
+                                            <div class="row">
+                                                <div class="col-md-6 col-sm-6">
+                                                    <div class="inovatiqa-offers font_lato">
+                                                        <h4>Free Delivery</h4>
+                                                        <p>For orders over $99</p>
+                                                        <h4>Competitive Pricing</h4>
+                                                        <p>Contact us for discounts and pricing</p>
+                                                        <h4>Online Ordering Simplified</h4>
+                                                        <p>Easy to use and order products</p>
+                                                        <h4>Friendly Support</h4>
+                                                        <p>Customer Service: <span>(346) 229-4142</span></p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-sm-6">
+                                                    <div class="inovatiqa-img">
+                                                        <img src="~/images/UIComponents/new-customer-img.png" class="img-responsive">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="account-detail font_lato">
+                                            <h5>Why Create Account?</h5>
+                                            <p>With a few easy steps, you can take advantage of all the benefits of being a registered Inovatiqa customer.</p>
+                                            <ul>
+                                                <li>Faster checkout</li>
+                                                <li>Track order & history</li>
+                                                <li>Auto Reorder</li>
+                                                <li>Easy to use site</li>
+                                            </ul>
+                                        </div>
+                                        <div class="account-detail business-account font_lato">
+                                            <h5>Inovatiqa Business Account</h5>
+                                            <ul>
+                                                <li>Healthcare Professional Pricing</li>
+                                                <li>Personalized Account Services</li>
+                                                <li>Great pricing</li>
+                                                <li>Net Customer payment method</li>
+                                                <li>GSA contract pricing</li>
+                                                <li>GPO contract pricing</li>
+                                                <li class="pdf-img"><a href="/files/forms/Credit Application_Form.pdf">Credit Application Form</a></li>
+                                            </ul>
+                                        </div>
+                                        <div class="accountform-area font_lato" id="alternate_shipping_form">
+                                            <div class="form-title">
+                                                <h5>Alternate Shipping Address</h5>
+                                            </div>
+                                            <div class="checkbox">
+                                                <label><input type="checkbox" value="false" class="click-check_a" checked="checked" id="IsSameShipToAddress" name="IsSameShipToAddress"> Check here if you have a separate shipping address.</label>
+                                                <input type="hidden" name="IsSameShipToAddress" value="true" />
+                                            </div>
+                                            <div class="createaccount-form unchecked-hidefrom_a">
+                                                <div class="row align_center">
+                                                    <div class="col-md-4 col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="required">Phone Number</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-8 col-sm-12 col-xs-12">
+                                                        <div class="form-group flex-col" style="margin-bottom: 20px;">
+
+                                                            <input type="text" class="form-control" id="ShipToPhone" asp-for="ShipToPhone" value="@Model.ShipToPhone" data-val="true" autocomplete="off" data-val-required="Phone No. is required" />
+                                                            <span class="error-label mt10" asp-validation-for="ShipToPhone"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row align_center">
+                                                    <div class="col-md-4 col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="required">Address Line 1</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-8 col-sm-12 col-xs-12">
+                                                        <div class="form-group flex-col" style="margin-bottom: 20px;">
+                                                            <input type="text" data-val="true" autocomplete="off" class="form-control" asp-for="ShipToStreetAddress" data-val-required="Street Address is required" value="@Model.ShipToStreetAddress" />
+                                                            <span class="error-label mt10" asp-validation-for="ShipToStreetAddress"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row align_center">
+                                                    <div class="col-md-4 col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="required">City</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-8 col-sm-12 col-xs-12">
+                                                        <div class="form-group flex-col" style="margin-bottom: 20px;">
+                                                            <input type="text" class="form-control" id="shipToCity" data-val="true" data-val-required="City is required." autocomplete="off" asp-for="ShipToCity"  value="@Model.ShipToCity" />
+                                                            <span class="error-label mt10" asp-validation-for="ShipToCity"></span>
+                                                            <span class="error-label mt10" hidden id="shipToCitySpan">City is required.</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row align_center">
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label class="required">Country</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-8 col-sm-12 col-xs-12">
+                                                        <div class="form-group flex-col" style="margin-bottom: 20px;">
+                                                            <select class="form-control  valid" id="ShipToCountryId" name="ShipToCountryId" data-val="true" data-val-required="The Country is required."
+                                                                    data-trigger="country-select"
+                                                                    data-url="@(Url.RouteUrl("GetStatesByCountryId"))"
+                                                                    data-stateprovince="#@Html.IdFor(model => model.ShipToStateProvinceId)"
+                                                                    data-loading="#states-loading-progress-second"
+                                                                    asp-for="ShipToCountryId">
+                                                                @foreach (var country in Model.AvailableCountries)
+                                                                {
+                                                                    @*<option value="@(country.Value == "0" ? "" : country.Value)" selected="@country.Selected" disabled="@country.Disabled">@country.Text</option>*@
+                                                                    <option value="@(country.Value == "0" ? "-1" : country.Value)" selected="@country.Selected" disabled="@country.Disabled">@country.Text</option>
+                                                                }
+                                                            </select>
+                                                            <span class="error-label mt10" asp-validation-for="ShipToCountryId"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row align_center">
+                                                    <div class="col-md-4 col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="required">Region / State</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-8 col-sm-12 col-xs-12">
+                                                        <div class="form-group flex-col" style="margin-bottom: 20px;">
+                                                            <select class="form-control valid" data-val="true" data-val-required="The State / province is required." id="ShipToStateProvinceId" asp-for="ShipToStateProvinceId" name="ShipToStateProvinceId" aria-describedby="StateProvinceId-error" aria-invalid="false"><option selected="" value="-1">Select state</option></select>
+                                                            <span class="error-label mt10" asp-validation-for="ShipToStateProvinceId"></span>
+                                                            <span id="states-loading-progress-second" style="display: none;" class="please-wait">Wait...</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row align_center">
+                                                    <div class="col-md-4 col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                            <label class="required">Postal Code</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-8 col-sm-12 col-xs-12">
+                                                        <div class="form-group flex-col" style="margin-bottom: 20px;">
+                                                            <input type="text" class="form-control valid" data-val="true" data-val-required="Ship To Zip Postal Code is required." value="@Model.ShipToZipPostalCode" id="ShipToZipPostalCode" name="ShipToZipPostalCode" asp-for="ShipToZipPostalCode" />
+                                                            <span class="error-label mt10" asp-validation-for="ShipToZipPostalCode"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
+                            @Html.AntiForgeryToken()
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+
+    $(document).ready(function(){
+        $('#agreement').click(function () {
+            if ($(this).is(':checked')) {
+                $('#termsCheckbox').val('Accepted');
+            }
+            else {
+                $('#termsCheckbox').val('');
+            }
+        });
+        $('select').on('change', function (e) {
+            if (e.target.value !== "") {
+                $('#formcontinue').removeAttr("style");
+            }
+            else {
+                $('#formcontinue').attr("style", "background-color: #C4C4C4 !important");
+                $('#account-details').hide();
+                $('#passwordArea').hide();
+                $('#alternate_shipping_form').hide();
+            }
+        });
+        //if ($('#IsSameShipToAddress').prop("checked") == true) {
+        //    $('#submit').click(function(e) {
+        //        e.preventDefault();
+        //        if ($('#shipToCity').value == "")
+        //            $('#shipToCitySpan').show();
+
+        //    });
+        //}
+    });
+</script>
+
+<script>
+    function userNameAvailable(value){
+        console.log(value)
+        var userNameAvail = {username:value};
+            $.ajax({
+                cache: false,
+                url: '@Url.Action("UserNameAvailable", "Customer")',
+                data: userNameAvail,
+                success: function(resp) {
+                    if(resp == false){
+                        $('#userNamevalidationError').show();
+                    }
+                }
+            });
+    }
+    function userNameChange() {
+        console.log('false')
+        $('#userNamevalidationError').hide();
+    }
+$(document).ready(() => {
+    //$('#Email').on('blur', () => {
+    //    var value = $('#Email').val;
+    //    console.log(value)
+    //    userNameAvailable(value);
+    //});
+
+});
+</script>

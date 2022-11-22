@@ -1,0 +1,144 @@
+﻿@model Inovatiqa.Web.Models.Payment.PaymentShipmentModel
+@{
+    Layout = "_ColumnsOne";
+}
+@{
+    ViewBag.Title = "Order Details";
+}
+@*
+    @Html.Resource(@<link href="@Url.Content("https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css")" rel="stylesheet" type="text/css" />, "css")
+    @Html.Resource(@<script src="@Url.Content("https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js")" type="text/javascript"></script>, "js")
+    @Html.Resource(@<script src="@Url.Content("https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js")" type="text/javascript"></script>, "js")
+    @Html.Resource(@<script src="@Url.Content("https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js")" type="text/javascript"></script>, "js")
+    @Html.Resource(@<link href="@Url.Content("https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css")" rel="stylesheet" type="text/css" />, "css")
+    @Html.Resource(@<script src="@Url.Content("https://cdnjs.cloudflare.com/ajax/libs/jquery.tipsy/1.0.3/jquery.tipsy.min.js")" type="text/javascript"></script>, "js")
+    @Html.Resource(@<link href="@Url.Content("https://cdnjs.cloudflare.com/ajax/libs/jquery.tipsy/1.0.3/jquery.tipsy.min.css")" rel="stylesheet" type="text/css" />, "css")
+    @Html.Resource(@<script src="@Url.Content("https://cdn.datatables.net/rowreorder/1.2.7/js/dataTables.rowReorder.min.js")" type="text/javascript"></script>, "js")
+    @Html.Resource(@<script src="@Url.Content("https://cdn.datatables.net/responsive/2.2.6/js/dataTables.responsive.min.js")" type="text/javascript"></script>, "js")
+    @Html.Resource(@<link href="@Url.Content("https://cdn.datatables.net/rowreorder/1.2.7/css/rowReorder.dataTables.min.css")" rel="stylesheet" type="text/css" />, "css")
+    @Html.Resource(@<link href="@Url.Content("https://cdn.datatables.net/responsive/2.2.6/css/responsive.dataTables.min.css")" rel="stylesheet" type="text/css" />, "css")
+
+    <style>
+        #TotalsRow:hover {
+            cursor: pointer;
+            background-color: #ECF2F4;
+        }
+
+        .bgcolor{
+            background: #f0f6fb;
+        }
+
+        .borderclr {
+            border-right: 1px solid #ddd;
+            padding-right: 12px;
+        }
+    </style>
+
+    <div class="page account-page order-list-page from-panel">
+        <div class="page-title panel-heading">
+            <h1 id="pageTitle">Unapplied Cash</h1>
+        </div>
+
+
+
+        <div id="v" class="col-lg-12 col-md-12">
+            <div class="  borderclr bgcolor col-lg-6 col-md-6">
+                <h4>
+                    Unapplied Cash
+                </h4>
+                <p>
+                    This is a list of all the unapplied cash entries.
+                </p>
+                <p>
+                    For Accounts Receivable, please contact the phone number on your invoice.
+                </p>
+            </div>
+            <div class=" borderclr bgcolor col-lg-3 col-md-3">
+                <h4>
+                    Billing Account
+                </h4>
+                <p>
+                    @Model.BillingAddress.Id
+                </p>
+                <p>
+                    @Model.BillingAddress.FirstName  @Model.BillingAddress.LastName
+                </p>
+            </div>
+            <div class=" bgcolor col-lg-3 col-md-3">
+                <h4>
+                    Billing Address
+                </h4>
+                <p>
+                    @Model.BillingAddress.Address1  @Model.BillingAddress.Address2
+                </p>
+                <p>
+                    @Model.BillingAddress.City  @Model.BillingAddress.ZipPostalCode
+                </p>
+            </div>
+        </div>
+
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br>
+        <div id="asv" style="padding: 10px 0 10px 20px" class=" borderclr bgcolor  col-lg-12 col-md-12">
+            <p>
+                You do not currently have any unapplied cash entries.
+            </p>
+        </div>
+
+
+
+    </div>
+*@
+
+@await Component.InvokeAsync("DashboardBlueBand")
+@*@await Html.PartialAsync("_DashboardBlueBand")*@
+<section class="container-fluid deshboard_section k">
+    <div class="row">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="sidebar_menu font_lato">
+                        <h3>Inovatiqa Dashboard</h3>
+                        @await Html.PartialAsync("_DashboardSideBar", "payment-portal")
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="payment_portal_top">
+                        <div class="payment_type_list">
+                            <ul>
+                                <li><a href="@Url.RouteUrl("PaymentPortal")">Home</a></li>
+                                <li><a href="@Url.RouteUrl("OpenInvoices")">Open Invoices</a></li>
+                                <li><a href="@Url.RouteUrl("UnappliedCash")" class="active">Unapplied Cash</a></li>
+                                <li><a href="@Url.RouteUrl("PaidInvoices")">Paid Invoices</a></li>
+                            </ul>
+                        </div>
+                        <hr class="line">
+                        <h2>Unapplied Cash</h2>
+                        <div class="details_off_amount open_invoices">
+                            <div class="boxss">
+                                <h4>Select & Pay Past Due Invoices</h4>
+                                <p>To pay an outstanding balance, please select one or more invoices. Selection totals must be greater than zero. For Accounts Receivable, please contact the phone number on your invoice.</p>
+                            </div>
+                            <div class="boxss">
+                                <h4>Billing Account</h4>
+                                <p>57833404 <br> HAMNA LLC</p>
+                            </div>
+                            <div class="boxss">
+                                <h4>Billing Address</h4>
+                                <p>12815 CAPRICORN ST <br> STAFFORD, TX 77477</p>
+                            </div>
+                        </div>
+                        <div class="details_off_amount open_invoices_amount text-center">
+                            <span class="boxss" style="font-size: 12px;">You do not currently have any unapplied cash entries.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

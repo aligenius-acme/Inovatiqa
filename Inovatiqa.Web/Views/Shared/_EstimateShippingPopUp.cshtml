@@ -1,0 +1,116 @@
+﻿@model EstimateShippingModel
+@{
+    @Html.Resource(@<script src="@Url.Content("~/js/public.estimateshipping.popup.js")" type="text/javascript"></script>, "js")
+    @Html.Resource(@<script src="@Url.Content("~/lib/magnific-popup/jquery.magnific-popup.min.js")" type="text/javascript"></script>, "js")
+    @Html.Resource(@<link rel="stylesheet" href="@Url.Content("~/lib/magnific-popup/magnific-popup.css")" />, "css")
+}
+
+<div class="ship-to-title">
+    <strong>Ship to</strong>
+</div>
+
+<div class="shipping-address row">
+    <div class="fieldset form-horizontal">
+        <div class="col-12 col-xs-12 col-sm-4 col-md-4 col-lg-4">
+            <div class="form-group">
+                <div class="estimate-shipping-row-item address-item">
+                    <div class="col-sm-11 col-md-11">
+                        <select id="CountryId"
+                                name="CountryId"
+                                class="estimate-shipping-address-control form-control"
+                                data-trigger="country-select"
+                                data-url="@(Url.RouteUrl("GetStatesByCountryId"))"
+                                data-stateprovince="#@Html.IdFor(model => model.StateProvinceId)"
+                                data-loading="#estimate-shipping-loading-progress"
+                                placeholder="Country">
+                                @foreach (var country in Model.AvailableCountries)
+                                {
+                                    if (country.Selected)
+                                    {
+                                        <option selected="selected" value="@country.Value">@country.Text</option>
+                                    }
+                                    else
+                                    { 
+                                        <option value="@country.Value">@country.Text</option>
+                                    }
+                                }
+                        </select>
+                    </div>
+                    <div class="col-sm-1 col-md-1">
+                        <div class="form-title-rquired"><span class="required">*</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-xs-12 col-sm-4 col-md-4 col-lg-4">
+            <div class="form-group">
+                <div class="estimate-shipping-row-item address-item">
+                    <div class="col-sm-12 col-md-12">
+                        <select id="StateProvinceId"
+                                name="StateProvinceId"
+                                class="estimate-shipping-address-control form-control"
+                                placeholder="State / province">
+                                @foreach (var state in Model.AvailableStates)
+                                {
+                                    if (state.Selected)
+                                    {
+                                        <option selected="selected" value="@state.Value">@state.Text</option>
+                                    }
+                                    else
+                                    { 
+                                        <option value="@state.Value">@state.Text</option>
+                                    }
+                                }
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-xs-12 col-sm-4 col-md-4 col-lg-4">
+            <div class="form-group">
+                <div class="estimate-shipping-row-item address-item">
+                    <div class="col-sm-11 col-md-11">
+                        <input id="ZipPostalCode"
+                               name="ZipPostalCode"
+                               class="estimate-shipping-address-control form-control"
+                               value="@Model.ZipPostalCode"
+                               placeholder="Zip / postal code" />
+                    </div>
+                    <div class="col-sm-1 col-md-1">
+                        <div class="form-title-rquired"><span class="required">*</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="choose-shipping-title">
+    <strong>Shipping Method</strong>
+</div>
+
+<div class="shipping-options">
+    <div class="shipping-options-header">
+        <div class="estimate-shipping-row">
+            <div class="estimate-shipping-row-item-radio">
+            </div>
+            <div class="estimate-shipping-row-item shipping-item shipping-header-item">
+                Name
+            </div>
+            <div class="estimate-shipping-row-item shipping-item shipping-header-item">
+                Estimated Delivery
+            </div>
+            <div class="estimate-shipping-row-item shipping-item shipping-header-item">
+                Price
+            </div>
+        </div>
+    </div>
+    <div class="shipping-options-body">
+        <div class="no-shipping-options">No shipping options</div>
+    </div>
+</div>
+
+<div class="apply-shipping-button-container">
+    <input type="button" value="Apply" class="btn btn-primary apply-shipping-button" />
+    <div class="message-failure"></div>
+</div>

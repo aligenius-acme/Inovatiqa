@@ -1,0 +1,25 @@
+﻿@model NewsItemModel
+@{
+    Layout = "_ColumnsTwo";
+}
+@{
+    ViewBag.Title = !string.IsNullOrEmpty(Model.MetaTitle) ? Model.MetaTitle : "";
+}
+@section additionalMeta {
+    <meta name="title" content="@ViewBag.Title" />
+    <meta name="keywords" content="@Model.MetaKeywords" />
+    <meta name="description" content="@Model.MetaDescription" />
+}
+<div class="page news-item-page from-panel">
+    <div class="page-title panel-heading">
+        <h1>@Model.Title</h1>
+    </div>
+    <div class="page-body">
+        <div class="news-date">
+            @Model.CreatedOn.ToString("D")
+        </div>
+        <div class="news-body">
+            @Html.Raw(Model.Full)
+        </div>
+    </div>
+</div>

@@ -1,0 +1,843 @@
+﻿@using Inovatiqa.Core
+@model Inovatiqa.Web.Models.Payment.PaymentShipmentModel
+@{
+    Layout = "_ColumnsOne";
+}
+@{
+    ViewBag.Title = "Open Invoices";
+    var tempvalue = 1;
+}
+@*
+    <script src="~/lib/jquery/jquery-3.4.1.min.js"></script>
+    @Html.Resource(@<link href="@Url.Content("https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css")" rel="stylesheet" type="text/css" />, "css")
+    @Html.Resource(@<script src="@Url.Content("https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js")" type="text/javascript"></script>, "js")
+    @Html.Resource(@<script src="@Url.Content("https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js")" type="text/javascript"></script>, "js")
+    @Html.Resource(@<script src="@Url.Content("https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js")" type="text/javascript"></script>, "js")
+    @Html.Resource(@<link href="@Url.Content("https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css")" rel="stylesheet" type="text/css" />, "css")
+    @Html.Resource(@<script src="@Url.Content("https://cdnjs.cloudflare.com/ajax/libs/jquery.tipsy/1.0.3/jquery.tipsy.min.js")" type="text/javascript"></script>, "js")
+    @Html.Resource(@<link href="@Url.Content("https://cdnjs.cloudflare.com/ajax/libs/jquery.tipsy/1.0.3/jquery.tipsy.min.css")" rel="stylesheet" type="text/css" />, "css")
+    @Html.Resource(@<script src="@Url.Content("https://cdn.datatables.net/rowreorder/1.2.7/js/dataTables.rowReorder.min.js")" type="text/javascript"></script>, "js")
+    @Html.Resource(@<script src="@Url.Content("https://cdn.datatables.net/responsive/2.2.6/js/dataTables.responsive.min.js")" type="text/javascript"></script>, "js")
+    @Html.Resource(@<link href="@Url.Content("https://cdn.datatables.net/rowreorder/1.2.7/css/rowReorder.dataTables.min.css")" rel="stylesheet" type="text/css" />, "css")
+    @Html.Resource(@<link href="@Url.Content("https://cdn.datatables.net/responsive/2.2.6/css/responsive.dataTables.min.css")" rel="stylesheet" type="text/css" />, "css")
+
+    <style>
+        #TotalsRow:hover {
+            cursor: pointer;
+            background-color: #ECF2F4;
+        }
+
+        .bgcolor {
+            background: #f0f6fb;
+            background-color: #f0f6fb;
+            padding: 1%;
+        }
+
+        .borderclr {
+            border-right: 1px solid #ddd;
+            padding-right: 12px;
+        }
+    </style>
+
+    <div class="page account-page order-list-page from-panel">
+        <div class="page-title panel-heading">
+            <h1 id="pageTitle">Open Invoices</h1>
+        </div>
+
+
+        @@await Html.PartialAsync("_AlertBox")@
+
+
+
+
+        @if (TempData["success"] != null)
+        {
+            <div class="container" style=" margin: 15px; max-width: 1100px; ">
+
+                <div class="alert alert-success alert-dismissible">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>Success!</strong>    @TempData["success"]
+                </div>
+            </div>
+
+        }
+        @if (TempData["error"] != null)
+        {
+            <div class="container" style=" margin: 15px; max-width: 1100px; ">
+                <div class="alert alert-danger alert-dismissible">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>Error!</strong>  @TempData["error"]
+                </div>
+            </div>
+
+
+        }
+
+
+        <div id="v" class="col-lg-12 bgcolor col-md-12">
+            <div class="  borderclr bgcolor col-lg-6 col-md-6">
+                <h4>
+                    Select & Pay Past Due Invoices
+                </h4>
+                <p>
+                    To pay an outstanding balance, please select one or more invoices. Selection totals must be greater than zero. For Accounts Receivable, please contact the phone number on your invoice.
+                </p>
+            </div>
+            <div class=" borderclr bgcolor col-lg-3 col-md-3">
+                <h4>
+                    Billing Account
+                </h4>
+                <p>
+                    @Model.BillingAddress.Id
+                </p>
+                <p>
+                    @Model.BillingAddress.FirstName  @Model.BillingAddress.LastName
+                </p>
+            </div>
+            <div class=" bgcolor col-lg-3 col-md-3">
+                <h4>
+                    Billing Address
+                </h4>
+                <p>
+                    @Model.BillingAddress.Address1  @Model.BillingAddress.Address2
+                </p>
+                <p>
+                    @Model.BillingAddress.City  @Model.BillingAddress.ZipPostalCode
+                </p>
+            </div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+
+
+        <div id="v" class="col-lg-12 bgcolor col-md-12">
+            <div class="  borderclr bgcolor col-lg-2 col-md-2">
+                <p>
+                    Invoiced Amount
+
+                </p>
+                <h4>
+                    @Model.CustomerTotalInvoicedAmount
+                </h4>
+
+            </div>
+
+            <div class=" borderclr bgcolor col-lg-2 col-md-2">
+                <p>
+                    Credits
+                </p>
+                <h4>
+                    $0.00
+                </h4>
+
+            </div>
+
+            <div class=" borderclr bgcolor col-lg-2 col-md-2">
+                <p>
+                    Unapplied Cash
+                </p>
+                <h4>
+                    $0.00
+                </h4>
+
+            </div>
+
+            <form action="/MakePayment" method="post">
+                <div class=" borderclr bgcolor col-lg-3 col-md-3">
+                    <p>
+                        Total Payment
+                        <input type="hidden" readonly name="totalPayment" id="totalPayment" value="@Model.CustomerTotalInvoicedAmount" />
+                        <input type="hidden" readonly name="invoiceIdsAmounts" id="invoiceIdsAmounts" value="" />
+                        <input type="hidden" readonly name="invoiceIds" id="invoiceIds" value="" />
+                    </p>
+                    <input type="text" readonly name="amountToPay" id="amountToPay" value="0" />
+                </div>
+
+                <div class=" bgcolor col-lg-3 col-md-3">
+                    <button type="button" onclick="checktotalPayment()" class="btn btn-success">Continue to Payment</button>
+                    <button type="submit" style="display:none;" id="submitbtn"> </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <br>
+    @*<div  class=" bgcolor col-lg-12 col-md-12">
+            <input style="padding-left:500px" type="checkbox" id="select-all" name="" value="" />
+            <span>SELECT ALL</span>
+
+        </div>@
+
+
+    <div class=" page-body" style="margin-top:25px">
+        <div class="shipment-list k-overflow-container">
+            <div class="col-md-12 product-details-tabs" id="tabbed-description">
+                <table id="tblShipment" class="table table-bordered table-condensed table-striped" style="width:100%;">
+                    <thead>
+                        <tr>
+                            <th style="text-align:center;white-space:nowrap">
+                                Invoice #
+                            </th>
+                            <th style="text-align:center;white-space:nowrap">
+                                Description
+                            </th>
+                            <th style="text-align:center;white-space:nowrap">
+                                Invoice Date
+                            </th>
+                            <th style="text-align:center;white-space:nowrap">
+                                Due Date
+                            </th>
+                            <th style="text-align:center;white-space:nowrap">
+                                Order #
+                            </th>
+                            <th style="text-align:center;white-space:nowrap">
+                                Purchase Order #
+                            </th>
+                            <th style="text-align:center;white-space:nowrap">
+                                Original Amount
+                            </th>
+                            <th style="text-align:center;">
+                                Payments/ Adjustments
+                            </th>
+                            <th style="text-align:center;">
+                                Open Amount
+                            </th>
+                            <th style="text-align:center;">
+                                Pay Full Amount
+                            </th>
+                            <th style="text-align:center;white-space:nowrap">
+                                Amount to Pay
+                            </th>
+
+                        </tr>
+                    </thead>
+                    <tbody class="all shippedorder" style="display: table-row-group;">
+                        @if (Model != null)
+                        {
+                            @if (Model.PaymentShipmentListModel.Count > 0)
+                            {
+                                @foreach (var item in Model.PaymentShipmentListModel)
+                                {
+                                    if (item.PaymentStatusId != (int)PaymentStatus.Paid)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <a target="_blank" href="@Url.RouteUrl("PdfInvoice", new { orderId = item.OrderId, shipmentId = item.Id })">@item.Id</a>
+                                            </td>
+                                            <td>
+                                                Invoice
+                                            </td>
+                                            <td>
+                                                @item.CreatedDate
+                                            </td>
+                                            <td>
+                                                @(item.InvoiceDueDate.HasValue ? item.InvoiceDueDate.ToString() : "")
+                                            </td>
+                                            <td>@item.CustomOrderNumber</td>
+                                            <td>@item.PurchaseOrderNumber</td>
+                                            <td>@item.TotalShipmentAmount.Replace(",", "")</td>
+                                            <td>
+                                                -
+                                            </td>
+                                            <td id="max-value-@tempvalue">
+                                                @{
+                                                    var value101 = item.TotalShipmentOpenAmount;
+                                                    var split = value101.Split("$");
+                                                    value101 = split[1].Replace(",", "");
+                                                }
+                                                @value101
+                                            </td>
+                                            <td>
+                                                <input type="checkbox" onclick="addamount(@tempvalue)" id="payFullAmount_@tempvalue" name="checkboxtest" value="@value101" />
+
+                                                <input type="hidden" id="totalamount_@tempvalue" value="@value101" />
+                                                <input type="hidden" id="orderid_@tempvalue" value="@item.OrderId" />
+                                                <input type="hidden" id="invoiceid_@tempvalue" value="@item.Id" />
+                                            </td>
+                                            <td>
+                                                <input data-id="@tempvalue" type="text" class="amount_to_pay" style="width:100px; text-align:end;" placeholder="0.00"
+                                                       id="amountToPay_@tempvalue" name="" value="" />
+                                                @*<input type="text" hidden id="amountEntered_@tempvalue" name="" value="" />@
+                                            </td>
+
+                                        </tr>
+                                        tempvalue++;
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            <tr id="emptyRow">
+                                <td colspan="8">
+                                    <div class="no-data">
+                                        no items found.
+                                    </div>
+                                </td>
+                                <td style="display: none;"></td>
+                                <td style="display: none;"></td>
+                                <td style="display: none;"></td>
+                                <td style="display: none;"></td>
+                                <td style="display: none;"></td>
+                                <td style="display: none;"></td>
+                                <td style="display: none;"></td>
+                                <td style="display: none;"></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+    <script>
+
+        function ManualAmountAdded(tempval) {
+            var totalval = document.getElementById("amountToPay").value;
+
+            var checkvalue = document.getElementById("amountToPay_" + tempval).value;
+            var secondvalue = document.getElementById("totalamount_" + tempval).value;
+
+            if (parseFloat(checkvalue) <= parseFloat(secondvalue)) {
+                //var manualamount = document.getElementById("amountToPay_" + tempval).value;
+                ////document.getElementById("OrderId").value = document.getElementById("orderid_" + tempval).value;
+                ////document.getElementById("InvoiceId").value = document.getElementById("invoiceid_" + tempval).value;
+                ////// document.getElementById("amountToPay_" + tempval).value = manualamount+".00"
+                document.getElementById("amountToPay").value = parseFloat(totalval) + parseFloat(checkvalue);
+            }
+            else {
+                alert("Amount Should be less then or equal to the total amount.");
+                document.getElementById("amountToPay_" + tempval).value = "";
+                document.getElementById("payFullAmount_" + tempval).checked = false;
+            }
+        }
+
+        function addamount(value1) {
+            document.getElementById("amountToPay").value = "";
+            // var temp = document.getElementById("invoices_");
+
+            if (document.getElementById("payFullAmount_" + value1).checked == true) {
+                document.getElementById("amountToPay_" + value1).value = document.getElementById("totalamount_" + value1).value;
+                //document.getElementById("OrderId").value = document.getElementById("orderid_" + value1).value;
+                //document.getElementById("InvoiceId").value = document.getElementById("invoiceid_" + value1).value;
+
+                //if (document.getElementById("MultiValuesOrderIds").value == "") {
+                //    document.getElementById("MultiValuesOrderIds").value = document.getElementById("OrderId").value;
+                //} else {
+                //    document.getElementById("MultiValuesOrderIds").value = document.getElementById("MultiValuesOrderIds").value + "," + document.getElementById("orderid_" + value1).value;
+                //}
+
+            }
+
+            else {
+                document.getElementById("amountToPay_" + value1).value = "";
+                //document.getElementById("OrderId").value = 0;
+                //document.getElementById("InvoiceId").value = 0;
+
+            }
+
+            var favorite = 0;
+            $.each($("input[name='checkboxtest']:checked"), function () {
+                favorite += parseFloat($(this).val());
+            });
+
+
+            calculate_sum();
+            //document.getElementById("amountToPay").value = favorite;
+
+
+
+
+        }
+
+        function checktotalPayment() {
+            var value = document.getElementById("amountToPay").value;
+            if (value == 0 || value == "") {
+                alert("Total Payment cannot be null");
+            }
+            else {
+
+
+                var value1 = document.getElementById("totalPayment").value;
+
+                var MultiValuesAmounts = "";
+                var MultiValuesInvoices = "";
+
+                for (var i = 0; i < @tempvalue; i++) {
+                    var val1 = document.getElementById("amountToPay_" + i);
+
+                    if (val1 != null && val1.value != "") {
+                        if (MultiValuesInvoices == "") {
+                            MultiValuesInvoices = document.getElementById("invoiceid_" + i).value;
+                            MultiValuesAmounts = document.getElementById("amountToPay_" + i).value;
+                        } else {
+                            MultiValuesInvoices = MultiValuesInvoices +","+ document.getElementById("invoiceid_" + i).value;
+                            MultiValuesAmounts = MultiValuesAmounts + "," + document.getElementById("amountToPay_" + i).value;
+                        }
+                    }
+                }
+                document.getElementById("invoiceIdsAmounts").value = MultiValuesAmounts;
+                document.getElementById("invoiceIds").value = MultiValuesInvoices ;
+
+
+                //$.ajax({
+                //    type: "POST",
+                //    contentType: "application/json; charset=utf-8",
+                //    data: MultiValuesAmounts,
+
+                //    url: "/Payment/MakePayment1" ,
+                //    success: function (storagelocation) {
+                //        console.log(storagelocation);
+                //    },
+                //    error: function (ex) {
+                //        console.log(ex);
+                //    }
+                //});
+
+              document.getElementById("submitbtn").click();
+
+            }
+
+        }
+
+        function calculate_sum() {
+            var total = 0.0;
+
+            $(".amount_to_pay").each(function (index) {
+                if (!validate_max($(this))) {
+                    //return false;
+                }
+                else {
+                    if ($(this).val() && !isNaN($(this).val())) {
+                        total = parseFloat(total) + parseFloat($(this).val());
+                    }
+                }
+
+            });
+            if (isNaN(total)) {
+                total = 0.0;
+            }
+            $("#amountToPay").val(total.toFixed(2));
+
+        }
+
+        $(".amount_to_pay").keyup(function () {
+            calculate_sum();
+        });
+
+        function validate_max(obj) {
+            console.log($("#amountToPay_" + obj.data('id')).val());
+           // console.log(parseFloat($("#max-value-" + obj.data('id'))));
+
+            if (parseFloat($("#max-value-" + obj.data('id')).html()) < parseFloat(obj.val())) {
+                alert('Entered amount should be less then or equal to the open amount.');
+                console.log("here");
+                ($("#amountToPay_" + obj.data('id')).val(0));
+
+                return false;
+            }
+            return true;
+        }
+    </script>
+*@
+
+<style>
+    .jqueryPagination {
+        display: flex;
+        justify-content: space-between;
+        margin: 8px 12px;
+    }
+
+    .paging_numbers span a {
+        margin-right: 5px;
+        cursor: pointer;
+        color: #636363;
+    }
+
+    .paging_numbers span .current {
+        color: #000;
+    }
+
+    .jqueryPagination p {
+        font-family: Lato;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 13.5px;
+        letter-spacing: 0.05em;
+        color: #636363;
+        margin-bottom: unset;
+    }
+</style>
+
+
+@await Component.InvokeAsync("DashboardBlueBand")
+@*@await Html.PartialAsync("_DashboardBlueBand")*@
+
+<section class="container-fluid deshboard_section k">
+    <div class="row">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="sidebar_menu font_lato">
+                        <h3>Inovatiqa Dashboard</h3>
+                        @await Html.PartialAsync("_DashboardSideBar", "payment-portal")
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="payment_portal_top">
+                        <div class="payment_type_list">
+                            <ul>
+                                <li><a href="@Url.RouteUrl("PaymentPortal")">Home</a></li>
+                                <li><a href="@Url.RouteUrl("OpenInvoices")" class="active">Open Invoices</a></li>
+                                <li><a href="@Url.RouteUrl("UnappliedCash")">Unapplied Cash</a></li>
+                                <li><a href="@Url.RouteUrl("PaidInvoices")">Paid Invoices</a></li>
+                            </ul>
+                        </div>
+                        <hr class="line">
+                        <h2>Open Invoices</h2>
+                        @if (TempData["success"] != null)
+                        {
+                            <div class="container" style="margin: 0px; padding: 0px">
+
+                                <div class="alert alert-success alert-dismissible">
+                                    @TempData["success"]
+                                </div>
+                            </div>
+
+                        }
+                        @if (TempData["error"] != null)
+                        {
+                            <div class="container" style=" margin: 15px; max-width: 1100px; ">
+                                <div class="alert alert-danger alert-dismissible">
+                                    @TempData["error"]
+                                </div>
+                            </div>
+                        }
+                        <div class="details_off_amount open_invoices">
+                            <div class="boxss">
+                                <h4>Select & Pay Past Due Invoices</h4>
+                                <p>To pay an outstanding balance, please select one or more invoices. Selection totals must be greater than zero. For Accounts Receivable, please contact the phone number on your invoice.</p>
+                            </div>
+                            <div class="boxss">
+                                <h4>Billing Account</h4>
+                                <p>@Model.BillingAddress.Id <br> @Model.BillingAddress.FirstName @Model.BillingAddress.LastName</p>
+                            </div>
+                            <div class="boxss">
+                                <h4>Billing Address</h4>
+                                <p>@Model.BillingAddress.Address1 <br> @Model.BillingAddress.City, @Model.BillingAddress.StateProvinceName @Model.BillingAddress.ZipPostalCode</p>
+                            </div>
+                        </div>
+                        <div class="details_off_amount open_invoices_amount text-center">
+                            <div class="boxss">
+                                <h4>Invoiced Amount</h4>
+                                <p>@Model.CustomerTotalInvoicedAmount</p>
+                            </div>
+                            <div class="boxss">
+                                <h4>Credits</h4>
+                                <p>$0.00</p>
+                            </div>
+                            <div class="boxss">
+                                <h4>Unapplied Cash</h4>
+                                <p>$0.00</p>
+                            </div>
+                            <form action="/MakePayment" method="post" class="flex-row">
+                                <div class="boxss" style="border-right: 1px solid #DADADA">
+                                    <h4>Total Payment</h4>
+                                    <p id="totalText">$0.00</p>
+                                    <input type="hidden" readonly name="totalPayment" id="totalPayment" value="@Model.CustomerTotalInvoicedAmount" />
+                                    <input type="hidden" readonly name="invoiceIdsAmounts" id="invoiceIdsAmounts" value="" />
+                                    <input type="hidden" readonly name="invoiceIds" id="invoiceIds" value="" />
+                                    <input type="hidden" name="amountToPay" id="amountToPay" />
+                                </div>
+                                <div class="boxss mt10">
+                                    <a onclick="checktotalPayment()" class="btn primary edit font_roboto">Continue to Payment</a>
+                                    <button type="submit" style="display:none;" id="submitbtn"> </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="checkbox k">
+
+                                <label><input type="checkbox" id="selectAll" name="" value="" class="click-check" /> Select All</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="payment_portal_bottom font_roboto table-responsive payment_portal_bottom_open_invoice">
+                        <table class="table border-collapse mb0" id="openInvoicesTable">
+                            <thead>
+                                <tr>
+                                    <th>Invoice Number</th>
+                                    <th>Description</th>
+                                    <th>Invoice Date</th>
+                                    <th>Due Date</th>
+                                    <th>Order Number</th>
+                                    <th>Purchase Order Number</th>
+                                    <th>Original Amount</th>
+                                    <th>Payments / Adjustments</th>
+                                    <th>Open Amount</th>
+                                    <th>Pay Full Amount</th>
+                                    <th>Amount to Pay </th>
+                                </tr>
+                            </thead>
+                            @if (Model != null)
+                            {
+                                @if (Model.PaymentShipmentListModel.Count > 0)
+                                {
+                                    @foreach (var item in Model.PaymentShipmentListModel)
+                                    {
+                                        if (item.PaymentStatusId != (int)PaymentStatus.Paid)
+                                        {
+                                            <tr>
+                                                <td><a href="@Url.RouteUrl("PdfInvoice", new { orderId = item.OrderId, shipmentId = item.Id })">@item.Id</a></td>
+                                                <td>Invoice</td>
+                                               <td>@item.CreatedDate?.ToString("dd/MM/yyyy hh:mm tt")</td>
+                                                <td>@(item.InvoiceDueDate.HasValue ? item.InvoiceDueDate?.ToString("dd/MM/yyyy hh:mm tt") : "")</td>
+                                                <td>@item.CustomOrderNumber</td>
+                                                <td>@item.PurchaseOrderNumber</td>
+                                                <td>@item.TotalShipmentAmount.Replace(",", "")</td>
+                                                <td>-</td>
+                                                <td id="max-value-@tempvalue">
+                                                    @{
+                                                        var value101 = item.TotalShipmentOpenAmount;
+                                                        var split = value101.Split("$");
+                                                        value101 = split[1].Replace(",", "");
+                                                    }
+                                                    @value101
+                                                </td>
+                                                <td>
+                                                    <input type="checkbox" onclick="addamount(@tempvalue)" id="payFullAmount_@tempvalue" name="checkboxtest" value="@value101" class="click-check" />
+                                                    <input type="hidden" id="totalamount_@tempvalue" value="@value101" />
+                                                    <input type="hidden" id="orderid_@tempvalue" value="@item.OrderId" />
+                                                    <input type="hidden" id="invoiceid_@tempvalue" value="@item.Id" />
+
+                                                </td>
+                                                <td>
+                                                    <input data-id="@tempvalue" type="text" class="form-control amount_to_pay" style="width:100px; text-align:end;" placeholder="0.00"
+                                                           id="amountToPay_@tempvalue" />
+                                                </td>
+                                            </tr>
+                                        }
+                                        tempvalue++;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td>No data available in table</td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    function ManualAmountAdded(tempval) {
+        var totalval = document.getElementById("amountToPay").value;
+
+        var checkvalue = document.getElementById("amountToPay_" + tempval).value;
+        var secondvalue = document.getElementById("totalamount_" + tempval).value;
+
+        if (parseFloat(checkvalue) <= parseFloat(secondvalue)) {
+            //var manualamount = document.getElementById("amountToPay_" + tempval).value;
+            ////document.getElementById("OrderId").value = document.getElementById("orderid_" + tempval).value;
+            ////document.getElementById("InvoiceId").value = document.getElementById("invoiceid_" + tempval).value;
+            ////// document.getElementById("amountToPay_" + tempval).value = manualamount+".00"
+            //document.getElementById("amountToPay").value = parseFloat(totalval) + parseFloat(checkvalue);
+            const c = parseFloat(totalval) + parseFloat(checkvalue);
+            document.getElementById("amountToPay").value = c;
+            $('#totalText').html(c);
+        }
+        else {
+            alert("Amount Should be less then or equal to the total amount.");
+            document.getElementById("amountToPay_" + tempval).value = "";
+            document.getElementById("payFullAmount_" + tempval).checked = false;
+        }
+    }
+
+    function addamount(value1) {
+        document.getElementById("amountToPay").value = "";
+        // var temp = document.getElementById("invoices_");
+
+        if (document.getElementById("payFullAmount_" + value1).checked == true) {
+            document.getElementById("amountToPay_" + value1).value = document.getElementById("totalamount_" + value1).value;
+            //document.getElementById("OrderId").value = document.getElementById("orderid_" + value1).value;
+            //document.getElementById("InvoiceId").value = document.getElementById("invoiceid_" + value1).value;
+
+            //if (document.getElementById("MultiValuesOrderIds").value == "") {
+            //    document.getElementById("MultiValuesOrderIds").value = document.getElementById("OrderId").value;
+            //} else {
+            //    document.getElementById("MultiValuesOrderIds").value = document.getElementById("MultiValuesOrderIds").value + "," + document.getElementById("orderid_" + value1).value;
+            //}
+        }
+        else {
+            document.getElementById("amountToPay_" + value1).value = "";
+            //document.getElementById("OrderId").value = 0;
+            //document.getElementById("InvoiceId").value = 0;
+        }
+        var favorite = 0;
+        $.each($("input[name='checkboxtest']:checked"), function () {
+            favorite += parseFloat($(this).val());
+        });
+        calculate_sum();
+        //document.getElementById("amountToPay").value = favorite;
+    }
+
+    function checktotalPayment() {
+        var value = document.getElementById("amountToPay").value;
+        if (value == 0 || value == "") {
+            alert("Total Payment cannot be null");
+        }
+        else {
+
+
+            var value1 = document.getElementById("totalPayment").value;
+
+            var MultiValuesAmounts = "";
+            var MultiValuesInvoices = "";
+
+            for (var i = 0; i < @tempvalue; i++) {
+                var val1 = document.getElementById(`amountToPay_${i+1}`);
+
+                if (val1 != null && val1.value != "") {
+                    if (MultiValuesInvoices == "") {
+                        MultiValuesInvoices = document.getElementById(`invoiceid_${i+1}`).value;
+                        MultiValuesAmounts = document.getElementById(`amountToPay_${i+1}`).value;
+                    } else {
+                        MultiValuesInvoices = MultiValuesInvoices +","+ document.getElementById(`invoiceid_${i+1}`).value;
+                        MultiValuesAmounts = MultiValuesAmounts + "," + document.getElementById(`amountToPay_${i+1}`).value;
+                    }
+                }
+            }
+            document.getElementById("invoiceIdsAmounts").value = MultiValuesAmounts;
+            document.getElementById("invoiceIds").value = MultiValuesInvoices ;
+
+
+            //$.ajax({
+            //    type: "POST",
+            //    contentType: "application/json; charset=utf-8",
+            //    data: MultiValuesAmounts,
+
+            //    url: "/Payment/MakePayment1" ,
+            //    success: function (storagelocation) {
+            //        console.log(storagelocation);
+            //    },
+            //    error: function (ex) {
+            //        console.log(ex);
+            //    }
+            //});
+
+            document.getElementById("submitbtn").click();
+
+        }
+
+    }
+
+    function calculate_sum() {
+        var total = 0.0;
+        $(".amount_to_pay").each(function (index) {
+            if (!validate_max($(this))) {
+                //return false;
+            }
+            else {
+                if ($(this).val() && !isNaN($(this).val())) {
+                    total = parseFloat(total) + parseFloat($(this).val());
+                }
+            }
+        });
+        if (isNaN(total)) {
+            total = 0.0;
+        }
+        $("#amountToPay").val(total.toFixed(2));
+        $('#totalText').html(`$${total.toFixed(2)}`);
+    }
+    $(".amount_to_pay").keyup(function () {
+        calculate_sum();
+    });
+    function validate_max(obj) {
+        // console.log($("#amountToPay_" + obj.data('id')).val());
+        // console.log(parseFloat($("#max-value-" + obj.data('id'))));
+        if (parseFloat($("#max-value-" + obj.data('id')).html()) < parseFloat(obj.val())) {
+            alert('Entered amount should be less then or equal to the open amount.');
+            console.log("here");
+            ($("#amountToPay_" + obj.data('id')).val(0));
+            return false;
+        }
+        return true;
+    }
+
+    $('#selectAll').click(function (event) {
+        var $this = $(this);
+        console.log($this.is(':checked'));
+        //$this.prop('checked', !$this.is(':checked'));
+        $(':checkbox').each(function () {
+            
+            if($(this).prop('id') != 'selectAll') {
+            //    this.checked = $this.is(':checked');
+                this.click();
+            }
+            //$('input:checkbox').not(this).prop('checked', this.checked);
+            //this.click();
+        });
+
+
+    });
+
+    $(document).ready(function () {
+        $('#openInvoicesTable').DataTable({
+            "language": {
+                "info": '<div class="tpage-num"><p>Showing _START_ to _END_ of _TOTAL_ Items</p></div>'
+            },
+            "pageLength": 5,
+            "order": [[3,'desc']],
+            "dom": 't<"jqueryPagination"ip>',
+            'pagingType': 'numbers'
+        });
+    });
+
+
+    function banksavebtn() {
+        $.ajax({
+            url: '/Payment/MakeAchPayment',
+            cache: false,
+            async: false,
+            data: {},
+            success: function (res) {
+                console.log(res);
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+    }
+
+</script>

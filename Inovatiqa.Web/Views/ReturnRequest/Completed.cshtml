@@ -1,0 +1,283 @@
+﻿@using Inovatiqa.Web.Models.Order
+@model ReturnRequestItemsSelectionModel
+@{
+    Layout = "_ColumnsOne";
+}
+@{
+    ViewBag.Title = "Return requests";
+}
+@*
+    @Html.Resource(@<script src="@Url.Content("https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js")" type="text/javascript"></script>, "js")
+    @Html.Resource(@<link href="@Url.Content("https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css")" rel="stylesheet" type="text/css" />, "css")
+    @Html.Resource(@<script src="@Url.Content("https://cdnjs.cloudflare.com/ajax/libs/jquery.tipsy/1.0.3/jquery.tipsy.min.js")" type="text/javascript"></script>, "js")
+    @Html.Resource(@<link href="@Url.Content("https://cdnjs.cloudflare.com/ajax/libs/jquery.tipsy/1.0.3/jquery.tipsy.min.css")" rel="stylesheet" type="text/css" />, "css")
+    @Html.Resource(@<link rel="stylesheet" href="@Url.Content("https://pro.fontawesome.com/releases/v5.10.0/css/all.css")" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />, "css")
+    <style>
+        .content-component {
+            border: 1px solid #ccc !important;
+            margin-bottom: 10px !important;
+            border-radius: 3px !important;
+            background: #fff !important;
+            color: #333 !important;
+            box-shadow: 0 2px 1px rgba(0,0,0,0.1) !important;
+            border-top: 1px solid #ddd !important;
+        }
+
+        .main-header {
+            background: #f2f2f2 !important;
+            padding: 2px !important;
+            cursor: pointer !important;
+        }
+
+            .main-header .main {
+                overflow: auto !important;
+                list-style: none !important;
+            }
+
+                .main-header .main > * {
+                    display: block !important;
+                    float: left !important;
+                    margin-right: 20px !important;
+                    font-weight: bold !important;
+                    padding: 1px 0 !important;
+                    color: #999 !important;
+                }
+
+        .po-header-detail {
+            padding: 5px 10px 5px 20px !important;
+            border: 1px solid #eee !important;
+            background: #fff !important;
+            -moz-border-radius: 5px !important;
+        }
+
+        ul.return-total li {
+            clear: both !important;
+        }
+
+        .po-header-detail ul li {
+            float: none !important;
+            margin: 0 !important;
+            font-size: 11px !important;
+            color: #333 !important;
+            font-weight: normal !important;
+        }
+
+        .component-body {
+            padding: 10px !important;
+        }
+
+        .tblSimple {
+            width: 100% !important;
+            border-spacing: 0px !important;
+            clear: both !important;
+            margin-bottom: 5px !important;
+        }
+
+            .tblSimple thead {
+                background: #fafafa !important;
+            }
+
+            .tblSimple > tbody > tr > td {
+                vertical-align: middle !important;
+            }
+
+            .tblSimple td {
+                padding: 4px 2px !important;
+                border-top: 1px solid #ddd !important;
+            }
+
+        .cursor-pointer {
+            cursor: pointer !important;
+        }
+
+        .header-component {
+            width: 120px !important;
+            display: inline !important;
+        }
+
+        .null {
+            border: 1px solid red;
+        }
+    </style>
+    <div class="page account-page return-request-list-page from-panel">
+        <div class="page-title panel-heading">
+            <h1>Completed Return Request</h1>
+        </div>
+
+
+        <br>
+        <div class="page-body">
+            <br />
+            <div>
+                <div class="rowTitle dontprint" style="overflow:auto;">
+                    <table width="100%">
+                        <tbody>
+                            <tr>
+                                <td align="left"><h3 style="color:#888;">Step 5 of 5: Request Completed Successfully</h3></td>
+                                <td>
+                                    <div>
+                                        <input type="button" value="Finish" class="btn btn-primary" style="margin-right:0;" onclick="window.location.href='/returnrequest/history'">
+                                        <input type="button" class="btn btn_green" style="margin-right:0;" value="Print" onclick="window.print()">
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <br />
+            <div class="order-list">
+
+                <div class="content-component">
+                    <div class="component-body">
+                        <table class="tblSimple highlight-body">
+                            <thead>
+                                <tr>
+                                    <th>Return #</th>
+                                    <th>Date & Time</th>
+                                    <th>Completed By</th>
+                                    <th>Total Pending Credit</th>
+                                </tr>
+                            </thead>
+                            <tbody class="cursor-pointer" title="Click to View Detail">
+                                <tr>
+                                    <td><b>@Model.ReturnNo</b></td>
+                                    <td><b>@Model.CreatedOn</b></td>
+                                    <td><b>@Model.User</b></td>
+                                    <td><b style="color: green;">$ @Model.SelectedItemsPrice</b></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div style="width: 100%; border: 2px solid grey;">
+                    <div style="margin-left: 15px;">
+                        <h4>What You Should Expect</h4>
+                        <ul>
+                            <li>Return may require review and approval. If your return requires additional information or your return denied, customer support will contact you.</li>
+                            <li>Inovatiqa will email return labels to <b>@Model.Email1</b></li>
+                            <li>Credit will be issued to your accound upon reciept of the item(s) into our warehouse</li>
+                            <li>If you have any questions, please contact customer support at 0800 00 00 00</li>
+                        </ul>
+                        <h4>Shipping Options</h4>
+                        <ul>
+                            <li>Inovatiqa (If you recieve your shipments using Inovatiqa delivery truck ) - Inovatiqa Delivery drivers are able to pick up returns on your next scheduled delivery day - Simply attach the shipping label and give the package to delivery boy. It's that simple</li>
+                            <li>UPS - You don't need to schedule a separate UPS pickup. Simply atach the label and give to box to any UPS driver when they make their next delivery. You also have the option of dropping off the shipment at your local UPS store or UPS mail services store such as mail boxes etc. </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+*@
+<style>
+    td {
+        padding: 9px !important;
+    }
+</style>
+
+@await Component.InvokeAsync("DashboardBlueBand")
+@*@await Html.PartialAsync("_DashboardBlueBand")*@
+
+<section class="container-fluid orderstatus-area">
+    <div class="row">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="dashboard-area">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="sidebar_menu font_lato">
+                                    <h3>Inovatiqa Dashboard</h3>
+                                    @await Html.PartialAsync("_DashboardSideBar", "inovatiqa-returns")
+                                </div>
+                            </div>
+
+                            <div class="col-md-9">
+                                <div class="order-deatil-area s step-one submitrequest step-four">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="tabs font_lato" style="max-width: unset;">
+                                                <ul>
+                                                    <li><a href="#" class="previous-check active">Step One</a></li>
+                                                    <li><a href="#" class="previous-check active" data-toggle="modal" data-target="#step-returnpopup" data-backdrop="false">Step Two</a></li>
+                                                    <li><a href="#" class="previous-check active">Step Three</a></li>
+                                                    <li><a href="#" class="previous-check active">Step Four</a></li>
+                                                    <li><a href="#" class="previous-check active">Step Five</a></li>
+                                                </ul>
+
+                                                <hr>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="order-content">
+
+
+                                                <div class="cancel-req-btns font_roboto text-right">
+                                                    <a href="@Url.RouteUrl("CustomerReturnRequests")" class="btn continue-btn">Finish</a>
+                                                </div>
+
+                                                <div class="items-table-area table-responsive font_roboto">
+                                                    <table class="table">
+                                                        <thead>
+                                                            <tr>
+                                                                <td style="width: 20%; padding-left: 38px !important;">Return Number</td>
+                                                                <td style="width: 165px;">Date & Time</td>
+                                                                <td>Invoice Date</td>
+                                                                <td>Completed By</td>
+                                                                <td style="width: 165px;">Total Pending Credit</td>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td style="padding-left: 38px !important;">@Model.ReturnNo</td>
+                                                                <td style="max-width: 90px;">@DateTime.Now.ToString().ToUpper()</td>
+                                                                <td>@Model.InvoiceDate</td>
+                                                                <td>Inovatiqa Admin</td>
+                                                                <td>$ @Model.SelectedItemsPrice.ToString("#.##")</td>
+
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+
+
+
+                                                <div>
+                                                    <h5>What you should expect</h5>
+                                                    <div class="category_box" style="border: none;">
+                                                        <ul>
+                                                            <li style="color: black; text-transform: none;">Return may require review and approval. If your return requires additional information or your return denied, customer support will contact you.</li>
+                                                            <li style="color: black; text-transform: none;">Inovatiqa will email return labels</li>
+                                                            <li style="color: black; text-transform: none;">Credit will be issued to your account upon receipt of the item(s) into our warehouse</li>
+                                                            <li style="color: black; text-transform: none;">If you have any questions, please contact customer support at 0800 00 00 00</li>
+                                                        </ul>
+
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <h5>Shipping Options</h5>
+                                                    <div class="category_box" style="border: none;">
+                                                        <ul>
+                                                            <li style="color: black; text-transform: none;">Return Inovatiqa (If you recieve your shipments using Inovatiqa delivery truck ) - Inovatiqa Delivery drivers are able to pick up returns on your next scheduled delivery day - Simply attach the shipping label and give the package to delivery boy. It's that simple</li>
+                                                            <li style="color: black; text-transform: none;">UPS - You don't need to schedule a separate UPS pickup. Simply atach the label and give to box to any UPS driver when they make their next delivery. You also have the option of dropping off the shipment at your local UPS store or UPS mail services store such as mail boxes etc.</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>

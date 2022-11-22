@@ -1,0 +1,135 @@
+﻿@{
+    Layout = "_ColumnsOne";
+    ViewBag.Title = "Scheduled Orders";
+}
+
+@await Component.InvokeAsync("DashboardBlueBand")
+@*@await Html.PartialAsync("_DashboardBlueBand")*@
+<section class="container-fluid orderstatus-area">
+    <div class="row">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="dashboard-area">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="sidebar_menu font_lato">
+                                    <h3>Inovatiqa Dashboard</h3>
+                                    @await Html.PartialAsync("_DashboardSideBar", "inovatiqa-orders")
+                                </div>
+                            </div>
+
+                            <div class="col-md-9">
+                                <div class="order-deatil-area">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="tabs font_lato">
+                                                @await Html.PartialAsync("_OrderNewTopBar", "reorder-guide")
+                                                <hr>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="order-content">
+
+                                                <div class="tab-content" style="border: none !important;">
+                                                    <div class="contact-manager text-right font_roboto">
+                                                        <a href="#" class="btn conatct-btnpopup" data-toggle="modal" data-target="#contact-mform">Contact Your Account Manager</a>
+                                                    </div>
+                                                    <div style="display: flex; justify-content: space-between; width: 40%; margin-bottom: 5vh;">
+                                                        <a href="/order/history"><h4 style="color: #767676;">Current Order Status</h4></a>
+                                                        <a href="@Url.RouteUrl("ScheduledOrders")" style="color: #000000;"><h4>Scheduled Order</h4></a>
+                                                    </div>
+                                                    <div class="item-btns font_lato">
+                                                        <a class="btn btn-items ordertabs" href="#AllOrders" value="0" data-toggle="tab" onclick="reloadwithParams()">All Orders <span>[12]</span></a>
+                                                        <a class="btn btn-items ordertabs" href="#OpenOrders" value="10" data-toggle="tab" onclick="reloadwithParams()">Open Orders <span>[2]</span></a>
+                                                        <a class="btn btn-items ordertabs" href="#BackOrders" value="50" data-toggle="tab" onclick="reloadwithParams()">Backordered <span>[8]</span></a>
+                                                        <a class="btn btn-items ordertabs" href="#ShippedOrders" value="30" data-toggle="tab" onclick="reloadwithParams()">Shipped Orders <span>[2]</span></a>
+                                                    </div>
+
+                                                    <div class="order-find-area">
+                                                        <div class="find-fields font_lato">
+                                                            <div class="form-group">
+                                                                <label>Find</label>
+                                                                <input type="text" class="form-control" id="searchFromTable">
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label>In</label>
+                                                                <select class="form-control">
+                                                                    <option>All Fields</option>
+                                                                    <option>Ship to</option>
+                                                                    <option>City</option>
+                                                                    <option>State</option>
+                                                                    <option>Ship to Number</option>
+                                                                    <option>Order Total</option>
+                                                                    <option>Order Number</option>
+                                                                    <option>PO</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="date-fileds font_lato">
+                                                            <div class="form-group">
+                                                                <label>From</label>
+                                                                <input type="text" id="fromDate" value="@DateTime.Today.AddDays(-35).ToString("MM/dd/yyyy")" class="form-control date-picker" placeholder="Start">
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label>To</label>
+                                                                <input type="text" id="toDate" value="@DateTime.Today.ToString("MM/dd/yyyy")" class="form-control date-picker" placeholder="End">
+                                                            </div>
+
+                                                            <div class="find-btn font_roboto">
+                                                                <input type="submit" value="Find" class="btn btn-signin" />
+                                                                <input type="submit" value="Clear" class="btn btn-signin" />
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="print-fileds font_lato">
+                                                            <div class="print-button font_roboto">
+                                                                <a href="#" class="btn btn-print"><img src="~/images/UIComponents/print-btn-img.svg">Print</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="items-table-area table-responsive font_roboto">
+                                                        <table class="table">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>PO / Cart Name</th>
+                                                                    <th>Cart Number</th>
+                                                                    <th>Ship to</th>
+                                                                    <th>Ship to Name</th>
+                                                                    <th>Owner</th>
+                                                                    <th>Last Placed</th>
+                                                                    <th>Next Date</th>
+                                                                    <th>Frequency</th>
+                                                                    <th>Orders Left</th>
+                                                                </tr>
+                                                            </thead>
+
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td><p>There are no orders in your current cart</p></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@await Html.PartialAsync("_ContactAccountManagerModal")

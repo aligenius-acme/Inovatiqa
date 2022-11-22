@@ -1,0 +1,216 @@
+﻿@model CustomerInfoModel
+@{
+    Layout = "_ColumnsOne";
+
+    ViewBag.Title = "Account";
+}
+@*<style>
+        .pdf_links img {
+            width: 100px;
+            vertical-align: middle;
+            margin-bottom: 20px;
+            cursor: pointer;
+        }
+
+        .payment_pdfs .payment_pdf_content {
+            display: inline-block;
+        }
+
+        .payment_content {
+            color: #000;
+            padding: 10px 10px 10px 40px;
+        }
+
+        .payment_pdf_content div {
+            display: inline-block;
+        }
+
+        .payment_pdfs .payment_pdf_content {
+            display: inline-block;
+        }
+    </style>*@
+@*<div>
+        <h3>Edit Account Information</h3>
+        <small class="text-muted">Account Information</small>
+    </div>
+    <div style="width: 50%;">
+        <form asp-action="accountinfo" method="post" asp-controller="Customer">
+            <div class="alert alert-@Model.MessageClass" role="alert" @(Model.Message == "" ? "hidden" : null)>
+                @Model.Message
+            </div>
+            <div class="form-group">
+                <label for="firstName">First Name</label>
+                <input type="text" class="form-control" id="firsName" name="FirstName" placeholder="Your First Name" value="@Model.FirstName" required>
+            </div>
+            <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <input type="text" class="form-control" id="lastname" name="LastName" placeholder="Your Last Name" value="@Model.LastName">
+            </div>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="changeEmail" onclick="handleEmailVisibility()">
+                <label class="form-check-label" for="changeEmail">Change Email</label>
+            </div>
+            <div class="form-group" style="display: none;" id="emailDiv">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" name="Email" value="@Model.Email" placeholder="Your Email" disabled>
+            </div>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="changePassword" onclick="handlePasswordVisibility()">
+                <label class="form-check-label" for="changePassword">Change Password</label>
+            </div>
+            <div class="form-group" style="display: none;" id="passwordDiv">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" name="Password" id="password" placeholder="Your Password" disabled>
+            </div>
+            <div class="form-group" style="display: none;" id="confirmPasswordDiv">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="confirmPassword" name="ConfirmPassword" placeholder="Confirm Password" disabled>
+            </div>
+            <input type="submit" class="btn btn-primary" id="saveBtn" value="Save"/>
+        </form>
+
+
+        <div style="margin-top: 10px" class="page  from-panel">
+            <div class="page-title panel-heading">
+                <h1>Payment Terms</h1>
+            </div>
+            <div style="margin:10px">
+                <div class="">
+                    <div class="payment_content">
+                        <div class="payment_pdfs">
+                            <div id="payment_pdf_content1" class="payment_pdf_content">
+                                <div id="pdf_link1" class="pdf_links"><img src="https://inovatiqa.com/pub/media/wysiwyg/PDF_downaloadfile-01.png" alt=""></div>
+                                <div class="pdf_data">Customer Application<br>form.</div>
+                            </div>
+                            <div id="payment_pdf_content2" class="payment_pdf_content">
+                                <div id="pdf_link2" class="pdf_links"><img src="https://inovatiqa.com/pub/media/wysiwyg/PDF_downaloadfile-01.png" alt=""></div>
+                                <div class="pdf_data">Customer Set up &amp;<br>Authorization for ACH</div>
+                            </div>
+                        </div>
+                        <h2><b>Terms of Sale</b></h2>
+                        <div class="terms_cnt_start">The terms and conditions of this invoice apply to all products ("Products") and/or services ("Services") purchased by Buyer from Seller. These Terms of Sale supersede the terms and conditions of any written agreement between the parties, unless such written agreement is executed by an authorized representative of Seller, any Buyer purchase order or other document, or any oral agreement between the parties. In the event of any conflict or inconsistency between these Terms of Sale and a separate document signed by both parties, the terms of the separate document signed by both parties shall control. No provision in either party's purchase order or in any other business form employed by either party, excluding a separate document signed by both parties, will supersede these Terms of Sale. No prior course of dealing or usage of trade shall affect this invoice or be admissible to explain, modify, or contradict this invoice and the agreement arising therefrom (collectively "Agreement"). For purposes of this Agreement, the term "Supplier" means a manufacturer, vendor, or other supplier of a Product that is purchased by Seller for distribution.</div>
+                        <div class="terms_cnts">Credit and Payment. All payments for Products and/or Services must be received by Seller Net within thirty (30) days from the date of invoice, unless otherwise agreed to by the parties. Any invoiced amount remaining unpaid after thirty (30) days shall be "past due." Past due balances are subject to an interest charge of three and half percent (3.5%) per month. Any interest charged and collected in excess of applicable state law shall be returned. If Buyer fails to pay any or all of the invoiced amount when due or if Buyer's credit or financial status erodes or otherwise renders Seller insecure, Seller may, in its sole discretion, without further notice immediately:</div>
+                        <div class="terms_cnts">(i) suspend Seller's performance or cancel all or any part of an order hereunder, (ii) change any payment term (including imposing the requirement of cash payment upon delivery); (iii) pay any incentives, rebates, fees, or other discount arrangements net of any amounts due hereunder, and any unauthorized deductions and service charges and terminate and/or declare Buyer ineligible for any incentives, rebates, fees, or other discount arrangements; (iv) declare immediately due and payable all other amounts invoiced by Seller to Buyer regardless of when such payments would otherwise be due from Buyer, and/or (v) increase the prices for Products and/or Services. Any discrepancy between any order placed by</div>
+                        <div class="terms_cnts">Buyer and Seller 's corresponding shipment(s) must be reported to Seller for resolution within ten (10) days of Seller's invoice date, except for price or payment discrepancies or any claims for reimbursement, which must be reported to Seller for resolution within thirty (30) days of Seller's invoice date. Seller shall have no obligation to resolve and Buyer shall hold Seller harmless and waives any rights to any discrepancy or to issue any credit or refund, or to replace any goods if claim therefore is not made within said applicable ten (10) or thirty (30) day period. All requests for proof of delivery for reasons other than shipment, price or payment disputes must be made within sixty (60) days of Seller's invoice date. Ifthe payment term due date falls on a weekend day or holiday, payment is due and payable on the succeeding business day.</div>
+                    </div>
+
+                    <br>
+                    <br>
+                    <br>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            if (!isUserLoggedIn === true) {
+                document.location.href('/');
+            }
+        });
+        function handlePasswordVisibility() {
+            $('#passwordDiv').toggle();
+            $('#password').prop('disabled') ? $('#password').prop('disabled', false) : $('#password').prop('disabled', true);
+            $('#confirmPasswordDiv').toggle();
+            $('#confirmPassword').prop('disabled') ? $('#confirmPassword').prop('disabled', false) : $('#confirmPassword').prop('disabled', true);
+        }
+        function handleEmailVisibility() {
+            $('#emailDiv').toggle();
+            $('#email').prop('disabled') ? $('#email').prop('disabled', false) : $('#email').prop('disabled', true);
+        }
+    </script>*@
+@await Component.InvokeAsync("DashboardBlueBand")
+@*@await Html.PartialAsync("_DashboardBlueBand")*@
+<section class="container-fluid deshboard_section">
+    <div class="row">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="sidebar_menu font_lato">
+                        <h3>Inovatiqa Dashboard</h3>
+                        @await Html.PartialAsync("_DashboardSideBar", "my-account")
+                    </div>
+                </div>
+                <div class="col-md-9 newcustomer-area billing_chang_addres">
+                    <div class="accountform-area font_lato" id="account-deatil">
+                        <div class="form-title">
+                            <h5>Account Information</h5>
+                        </div>
+                        <hr class="line">
+                        <form class="createaccount-form" asp-action="EditAccountInfo" asp-controller="Customer" method="post">
+                            @if (TempData["Message"] != null)
+                            {
+                                <div class="alert alert-success" role="alert" style="display: flex; justify-content: center; border-radius: 0px;">
+                                    Your account information has been updated successfully.
+                                </div>
+                                TempData.Remove("Message");
+                            }
+                            <div class="row flex_col align_center">
+                                <div class="col-md-3 col-sm-3 col-xs-12">
+                                    <div class="form-group">
+                                        <label class="">First Name</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-9 col-sm-9 col-xs-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" value="@Model.FirstName" name="firstName">
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-sm-3 col-xs-12">
+                                    <div class="form-group">
+                                        <label class="">Last Name</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-9 col-sm-9 col-xs-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" value="@Model.LastName" name="lastName">
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-sm-3 col-xs-12">
+                                    <div class="form-group">
+                                        <label class="">Phone Number</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-9 col-sm-9 col-xs-12">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" value="@Model.Phone" name="phone">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="checkbox" style="margin-bottom: 0px;">
+                                        <label>
+                                            <input type="checkbox" id="customCheck1" onchange="toggleEmailVisibility(this)"> Change Email Address
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div style="display: none; width: 100%; margin-top: 5%;" id="chageEmailField">
+                                    <div class="col-md-7">
+                                        <div class="form-group">
+                                            <input type="email" class="form-control" value="@Model.Email" name="email">
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="mt10" style="margin-left:15px;">
+                                    <div class="form-group font_roboto">
+                                        <input type="submit" name="" value="Save Changes" class="btn btn-signin" />
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@Html.Resource(@<script>
+                    function toggleEmailVisibility(checkbox) {
+                        document.getElementById('chageEmailField').style.display = checkbox.checked ? 'block' : 'none';
+                    }
+</script>, "js")

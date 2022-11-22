@@ -1,0 +1,402 @@
+﻿@model ProductOverviewModel
+@using Inovatiqa.Core
+@using Inovatiqa.Services
+@using Inovatiqa.Database.Models
+@using System.Text.RegularExpressions
+@{
+    //prepare "Add to cart" AJAX link
+    var addtocartlink = "";
+    var shoppingCartTypeId = (int)ShoppingCartType.ShoppingCart;
+    var quantity = 1;
+    if (Model.ProductPrice.ForceRedirectionAfterAddingToCart)
+    {
+        addtocartlink = Url.RouteUrl("AddProductToCart-Catalog", new { productId = Model.Id, shoppingCartTypeId = shoppingCartTypeId, quantity = quantity, forceredirection = Model.ProductPrice.ForceRedirectionAfterAddingToCart, wishListId = 0 });
+    }
+    else
+    {
+        addtocartlink = Url.RouteUrl("AddProductToCart-Catalog", new { productId = Model.Id, shoppingCartTypeId = shoppingCartTypeId, quantity = quantity, wishListId = 0 });
+    }
+
+    var addtowishlistlink = Url.RouteUrl("AddProductToCart-Catalog", new { productId = Model.Id, shoppingCartTypeId = (int)ShoppingCartType.Wishlist, quantity = quantity, wishListId = 0 });
+    var addtocomparelink = Url.RouteUrl("AddProductToCompare", new { productId = Model.Id });
+}
+@*<div class="product-item clearfix" data-productid="@Model.Id">
+    <div class="item-definition" style="position:relative;">
+        <table class="item-detail">
+            <tbody>
+                <tr>
+                    <td>
+                        <input type="checkbox" class="compare-checkbox" onchange="AjaxCart.addorremovefromcomaprelist('@Model.Id')" />
+                    </td>
+                    <td>
+                        <div>
+                            <div>#@Model.Sku</div>
+                            <div><b>  @Model.ProductManufacturers.FirstOrDefault().Name  </b></div>
+                            <div>#Mfr @Model.ManufacturerPartNumber.Replace("Mfr#", "").Trim()</div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="item-detail-image">
+                        <a href="@Url.RouteUrl("Product", new { SeName = Model.SeName })" title="@Model.SeName">
+                            <img src="@Model.DefaultPictureModel.ImageUrl.Replace("\"", "'")" class="rewards-logo" title="McKesson Preferred Rewards">
+                        </a>
+                    </td>
+                    <td>
+                        <div class="item-description"><a href="@Url.RouteUrl("Product", new { SeName = Model.SeName })" title="Click for detail">@Model.SeName</a></div>
+                        @{
+                            Match m = Regex.Match(Model.ShortDescription, "((" + Regex.Escape("</li>") + ").*?){" + 3 + "}");
+                            int index = -1;
+                            if (!string.IsNullOrEmpty(Model.ShortDescription) && m.Success)
+                            {
+                                index = m.Groups[2].Captures[3 - 1].Index;
+                                <div class="features-list" onclick="location.href='@Url.RouteUrl("Product", new { SeName = Model.SeName })';">@Html.Raw(Model.ShortDescription.Substring(0, index) + "</li></ul>")</div>
+                            }
+                            else
+                            {
+                                <div class="features-list" onclick="location.href='@Url.RouteUrl("Product", new { SeName = Model.SeName })';">@Html.Raw(Model.ShortDescription)</div>
+                            }
+                        }
+                    </td>
+                </tr>
+                @{
+                    var uomattribute = Model.ProductAttributes.Where(x => x.Name == "UOM").FirstOrDefault();
+                }
+                <tr>
+                    <td class="middle">
+                    </td>
+                    <td>
+                        <ul class="categoriesproductfooter" id="product-details-form_@Model.Id">
+                            <li><i class="fa fa-lg fa-list-ul pointer" style="margin-left: 8px;" onclick="AjaxCart.addproducttocart_details('@Url.RouteUrl("AddProductToCart-Details", new {productId = Model.Id, shoppingCartTypeId = (int)ShoppingCartType.Wishlist, wishListId = 0})', '#product-details-form_'+@Model.Id, @((int)ShoppingCartType.Wishlist));return false;" title="Add to wish list"></i></li>
+                            <li><i class="fa fa-lg fa-cart-plus pointer" title="Add to Cart" style="margin-left: 8px; color: #393;" onclick="AjaxCart.addproducttocart_productlisting('@Url.RouteUrl("AddProductToCart-ProductListing", new { productId = Model.Id,quantity=1 })');return false;"></i></li>
+
+                            <li><label>Qty&nbsp;</label><input class="form-control qty" id="product_enteredQuantity_@Model.Id" name="@(string.Format("{0}{1}{2}", "addtocart_", Model.Id, ".EnteredQuantity"))" type="text" value="1" style="width: 70%; display: inline;" maxlength="4" size="2" />@*<input name="item.qty" type="text" class="form-control" maxlength="4" size="2" value="" style="width: 70%; display: inline;" />@</li>
+                            <li style="width:200px;">
+                                @if (uomattribute != null)
+                                {
+                                    var controlId = $"{InovatiqaDefaults.ProductAttributePrefix}{uomattribute.Id}";
+                                    <label>UOM&nbsp;</label><select name="@(controlId)" id="@(controlId)" class="btn-dropdown form-control uom" style="width: 77%; display: inline;">
+                                        @foreach (var attributeValue in uomattribute.Values)
+                                        {
+                                            if (attributeValue == uomattribute.Values.First())
+                                            {
+                                                <option selected="@attributeValue.IsPreSelected" value="@attributeValue.Id" msku="@attributeValue.MSku">@attributeValue.Name  @Model.ProductPrice.Price</option>
+                                            }
+                                            else
+                                            {
+                                                <option selected="@attributeValue.IsPreSelected" value="@attributeValue.Id" msku="@attributeValue.MSku">@attributeValue.Name  $@Decimal.Round(@Convert.ToDecimal(Model.ProductPrice.PriceValue) + @Convert.ToDecimal(attributeValue.PriceAdjustmentValue), 2)</option>
+                                            }
+
+                                        }
+                                    </select>
+                                }
+
+                            </li>
+
+
+                        </ul>
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+*@
+
+
+@*<div class="picture">
+                <a href="@Url.RouteUrl("Product", new { SeName = Model.SeName })" title="@Model.DefaultPictureModel.Title">
+                    <img alt="@Model.DefaultPictureModel.AlternateText" src="@Model.DefaultPictureModel.ImageUrl" title="@Model.DefaultPictureModel.Title" />
+                </a>
+            </div>
+            <div class="caption">
+                <div class="details">
+                    <h3 class="product-title" style="white-space: normal;">
+                        <a href="@Url.RouteUrl("Product", new {SeName = Model.SeName})">@Model.Name</a>
+                    </h3>
+                    @if (InovatiqaDefaults.ShowSkuOnCatalogPages && !string.IsNullOrEmpty(Model.Sku))
+                    {
+                        <div class="sku">
+                            @Model.Sku
+                        </div>
+                    }
+                    @if (Model.ReviewOverviewModel.AllowCustomerReviews)
+                    {
+                        var ratingPercent = 0;
+                        if (Model.ReviewOverviewModel.TotalReviews != 0)
+                        {
+                            ratingPercent = ((Model.ReviewOverviewModel.RatingSum * 100) / Model.ReviewOverviewModel.TotalReviews) / 5;
+                        }
+                        <div class="product-rating-box" title="@string.Format("{0} review(s)", Model.ReviewOverviewModel.TotalReviews)">
+                            <div class="rating">
+                                <div style="width: @(ratingPercent)%">
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    <div class="description" style="color:#808080;">
+                        @Html.Raw(Model.ShortDescription)
+                    </div>
+                    <div class="add-info">
+                        <div class="prices">
+                            @if (!string.IsNullOrEmpty(Model.ProductPrice.OldPrice))
+                            {
+                                <span class="price old-price">@Model.ProductPrice.OldPrice</span>
+                            }
+                            <span class="price actual-price">@Model.ProductPrice.Price</span>
+                            @if (Model.ProductPrice.DisplayTaxShippingInfo)
+                                {
+                                    var inclTax = workContext.TaxDisplayType == TaxDisplayType.IncludingTax;
+                                    //tax info is already included in the price (incl/excl tax). that's why we display only shipping info here
+                                    //of course, you can modify appropriate locales to include VAT info there
+                                    <span class="tax-shipping-info">
+                                        @T(inclTax ? "Products.Price.TaxShipping.InclTax" : "Products.Price.TaxShipping.ExclTax", Url.RouteUrl("Topic", new { SeName = Html.GetTopicSeName("shippinginfo") }))
+                                    </span>
+                                }
+                            @if (!string.IsNullOrEmpty(Model.ProductPrice.BasePricePAngV))
+                            {
+                                <div class="base-price-pangv">
+                                    @Model.ProductPrice.BasePricePAngV
+                                </div>
+                            }
+                        </div>
+                        <div class="buttons">
+                            <input type="button" value="@T("Products.Details")" class="button-1 product-box-detail-button" onclick="setLocation('@Url.RouteUrl("Product", new { SeName = Model.SeName })')" />
+                            @if (!Model.ProductPrice.DisableBuyButton)
+                            {
+                                var addToCartText = "Add to cart";
+                                //if (Model.ProductPrice.IsRental)
+                                //{
+                                //    addToCartText = T("ShoppingCart.Rent").Text;
+                                //}
+                                //if (Model.ProductPrice.AvailableForPreOrder)
+                                //{
+                                //    addToCartText = T("ShoppingCart.PreOrder").Text;
+                                //}
+                                <input type="button" value="@(addToCartText)" class="btn btn-primary product-box-add-to-cart-button" onclick="AjaxCart.addproducttocart_catalog('@addtocartlink', @((int)ShoppingCartType.ShoppingCart));return false;" />
+                            }
+                            @if (!Model.ProductPrice.DisableAddToCompareListButton)
+                            {
+                                <input type="button" value=" " title="Add to compare list" class="button-2 add-to-compare-list-button" onclick="AjaxCart.addproducttocomparelist('@addtocomparelink');return false;" />
+                            }
+                            @if (!Model.ProductPrice.DisableWishlistButton)
+                            {
+                                <input type="button" value=" " title="Add to wishlist" class="button-2 add-to-wishlist-button" onclick="AjaxCart.addproducttocart_catalog('@addtowishlistlink', @((int)ShoppingCartType.Wishlist));return false;" />
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+
+*@
+<style>
+    #qty_box {
+        position: relative;
+        display: flex;
+        align-items: center;
+        box-shadow: none;
+        width: 60%;
+
+    }
+        #qty_box::-webkit-inner-spin-button,
+        #qty_box::-webkit-outer-spin-button{
+            opacity: 0;
+        }
+        #qty_box:focus {
+        }
+    #label {
+        padding-right: 10px;
+        font-family: Poppins;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 18px;
+        line-height: 27px;
+        color: #151515;
+    }
+    #qty_div{
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .qtyArrow::-webkit-outer-spin-button,
+    .qtyArrow::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+</style>
+<div class="col-md-12">
+    <div class="product_list">
+        <div class="row">
+            <div class="col-md-4 col-sm-5">
+                <input type="checkbox" class="compare-checkbox" onchange="AjaxCart.addorremovefromcomaprelist('@Model.Id')" checked="@Model.IsInCompareList"/>
+                <img alt="@Model.DefaultPictureModel.AlternateText" src="@Model.DefaultPictureModel.ImageUrl" title="@Model.DefaultPictureModel.Title" class="product_img" width="187" height="184"/>
+            </div>
+            <div class="col-md-8 col-sm-7">
+                <h2  onclick="window.location.href='@Url.RouteUrl("Product", new {SeName = Model.SeName})'" class="title_product" style="cursor: pointer;">@Model.Name.Replace("-", " ")</h2>
+
+                <div class="row">
+                    <div class="col-md-8 col-xs-12 description">
+                        @{ 
+                            var elements = Model.ShortDescription.Replace("<ul>", "").Replace("</ul>", "").Split("<li>");
+                            var max = elements.Length < 4 ? elements.Length : 4;
+                        }
+                        <ul>
+                           @for (int i = 0; i<max; i++)
+                           {
+
+                               if (!string.IsNullOrWhiteSpace(elements[i]))
+                               {
+                                    <li>@elements[i].Replace("</li>","")</li>
+                                }
+                            }
+                        </ul>
+                        <div class="row m0">
+                            <div class="col-md-4 col-xs-6">
+                                <p><span>SKU #</span></p>
+                            </div>
+                            <div class="col-md-8  col-xs-6">
+                                <p>#@Model.Sku</p>
+                            </div>
+                        </div>
+                        <div class="row m0">
+                            <div class="col-md-4  col-xs-6">
+                                <p><span>MPN #</span></p>
+                            </div>
+                            <div class="col-md-8  col-xs-6">
+                                <p>@Model.ManufacturerPartNumber</p>
+                            </div>
+                        </div>
+                        <div class="row m0">
+                            <div class="col-md-4  col-xs-6">
+                                <p><span>Brand</span></p>
+                            </div>
+                            <div class="col-md-8  col-xs-6">
+                                <p><span class="green_text">@Model.ProductManufacturers.FirstOrDefault().Name</span></p>
+                            </div>
+                        </div>
+                        <div class="row m0">
+                            <div class="col-md-4  col-xs-6">
+                                <p><span>Stock</span></p>
+                            </div>
+                            <div class="col-md-8  col-xs-6">
+                                @if (Model.quantity <= 0)
+                                {
+                                    <p><span style="color: red;">@Model.stockStatus</span></p>
+                                }
+                                else
+                                {
+                                    <p><span style="color: #6A983C;">@Model.stockStatus</span></p>
+                                }
+                            </div>
+                        </div>
+                        <div class="row m0">
+                            <div class="col-md-4  col-xs-6">
+                                <p><span>Quantity</span></p>
+                            </div>
+                            <div class="col-md-8  col-xs-6">
+                                @if(Model.quantity >= 0){
+                                    <p><span>@Model.quantity</span></p>
+                                }
+                                else
+                                {
+                                    <p><span>0</span></p>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <form method="post" class="col-md-4 col-xs-12 price_box" id="product-details-form_@Model.Id">
+                        <div class="p_box_width">
+                            <h2  style="white-space: nowrap;"><span id="priceChange_@Model.Id">@Model.ProductPrice.Price</span> @InovatiqaDefaults.CurrencyCode</h2>
+                            <div class="uom_box mb10 m_t_20">
+                                <label class="p_l_10">UOM</label>
+                                <img src="~/images/UIComponents/downarrow2.svg" class="options_pane_down_arrow">
+                                @{
+                                    var uomattribute = Model.ProductAttributes.Where(x => x.Name == "UOM").FirstOrDefault();
+                                    var controlId = $"{InovatiqaDefaults.ProductAttributePrefix}{uomattribute.Id}";
+                                }
+                                <select class="form-control uom_@Model.Id" name="@controlId" id="@(controlId)" onchange="checkBoxChange(this.options[this.selectedIndex].getAttribute('change-val'), @Model.Id)" style="border-radius: 5px; padding-left: 0px;">
+                                    @foreach (var attributeValue in uomattribute.Values)
+                                    {
+                                        if (attributeValue == uomattribute.Values.First())
+                                        {
+                                            <option selected="@attributeValue.IsPreSelected" change-val="@Model.ProductPrice.Price" value="@attributeValue.Id" msku="@attributeValue.MSku">@attributeValue.Name</option>
+                                        }
+                                        else
+                                        {
+                                            <option selected="@attributeValue.IsPreSelected" change-val="$@Decimal.Round(Convert.ToDecimal(Model.ProductPrice.PriceValue) + Convert.ToDecimal(attributeValue.PriceAdjustmentValue), 2)" value="@attributeValue.Id" msku="@attributeValue.MSku">@attributeValue.Name</option>
+
+                                        }
+
+                                    }
+                                </select>
+                            </div>
+                            <div class="m_b_30 form-group" id="qty_div">
+                                <label class="p_l_10" id="label">QTY </label>
+                                <img src="~/images/UIComponents/up_arrow.svg" style="position: absolute; left: 143px; top: 109px; z-index: 9;" onclick="$('.qty_@Model.Id').val(parseInt($('.qty_@Model.Id').val()) + 1)" />
+                                <img src="~/images/UIComponents/down_arrow.svg" style="position: absolute; left: 143px; top: 117px; z-index: 9;" onclick="$('.qty_@Model.Id').val($('.qty_@Model.Id').val() - 1)" />
+                                <input type="number" id="product_enteredQuantity_@Model.Id" name="@(string.Format("{0}{1}{2}", "addtocart_", Model.Id, ".EnteredQuantity"))" value="1" class="qtyArrow form-control qty_@Model.Id" style="border-radius: 5px; text-align: center; padding-right: 0px;" min="1" />
+                            </div>
+                            @if (!Model.ProductPrice.DisableBuyButton)
+                            {
+                                if (Model.quantity == 0)
+                                {
+                                    <a style="cursor:pointer;" disabled class="btn btn-default m_b_10"> <img src="~/images/UIComponents/ic-actions-add-simple.png"> Add To Cart</a>
+                                }
+                                else
+                                {
+                                    <a href="" onclick="AjaxCart.addproducttocart_productlisting('@Url.RouteUrl("AddProductToCart-ProductListing", new { productId = Model.Id,quantity=1 })', @Model.Id); return false;" class="btn btn-default m_b_10"> <img src="~/images/UIComponents/ic-actions-add-simple.png"> Add To Cart</a>
+                                }
+                            }
+                            @if (!Model.ProductPrice.DisableWishlistButton)
+                            {
+                                <a href="#" class="btn btn-default m_b_10" onclick="AjaxCart.addproducttocart_details('@Url.RouteUrl("AddProductToCart-Details", new { productId = Model.Id, shoppingCartTypeId = (int)ShoppingCartType.Wishlist, wishListId = 0 })', '#product-details-form_@Model.Id', @((int)ShoppingCartType.Wishlist));return false;"> <img src="~/images/UIComponents/heart_black.png"> Add To Wishlist</a>
+                            }
+                            <a href="@Url.RouteUrl("Product", new { SeName = Model.SeName })" class="btn btn-primary  ">Product Details <img src="~/images/UIComponents/a.png" style="margin-left: 3px;"></a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function checkBoxChange(changedPrice, id) {
+        $(`#priceChange_${id}`).html(changedPrice);
+    }
+</script>
+
+@*
+<ul class="categoriesproductfooter" id="product-details-form_@Model.Id">
+    <li><i class="fa fa-lg fa-list-ul pointer" style="margin-left: 8px;" onclick="AjaxCart.addproducttocart_details('@Url.RouteUrl("AddProductToCart-Details", new {productId = Model.Id, shoppingCartTypeId = (int)ShoppingCartType.Wishlist, wishListId = 0})', '#product-details-form_'+@Model.Id, @((int)ShoppingCartType.Wishlist));return false;" title="Add to wish list"></i></li>
+    <li><i class="fa fa-lg fa-cart-plus pointer" title="Add to Cart" style="margin-left: 8px; color: #393;" onclick="AjaxCart.addproducttocart_productlisting('@Url.RouteUrl("AddProductToCart-ProductListing", new { productId = Model.Id,quantity=1 })');return false;"></i></li>
+    <li><label>Qty&nbsp;</label></li>
+    <li><input class="form-control qty" id="product_enteredQuantity_@Model.Id" name="@(string.Format("{0}{1}{2}", "addtocart_", Model.Id, ".EnteredQuantity"))" type="text" value="4"  maxlength="4" size="2" /></li>
+    <li style="width:200px;">
+        @if (uomattribute != null)
+        {
+            var controlId2 = $"{InovatiqaDefaults.ProductAttributePrefix}{uomattribute.Id}";
+            <label>UOM&nbsp;</label>
+            <select name="@(controlId2)" id="@(controlId2)" class="btn-dropdown form-control uom" style="width: 77%; display: inline;">
+                @foreach (var attributeValue in uomattribute.Values)
+                {
+                    if (attributeValue == uomattribute.Values.First())
+                    {
+                        <option selected="@attributeValue.IsPreSelected" value="@attributeValue.Id" msku="@attributeValue.MSku">@attributeValue.Name  @Model.ProductPrice.Price</option>
+                    }
+                    else
+                    {
+                        <option selected="@attributeValue.IsPreSelected" value="@attributeValue.Id" msku="@attributeValue.MSku">@attributeValue.Name  $@Decimal.Round(@Convert.ToDecimal(Model.ProductPrice.PriceValue) + @Convert.ToDecimal(attributeValue.PriceAdjustmentValue), 2)</option>
+                    }
+
+                }
+            </select>
+        }
+    </li>
+</ul>
+disabled for testing only by ALi Ahmad, quantity is not corrent when adding item to wishlist
+
+*@

@@ -1,0 +1,64 @@
+﻿@model IList<CategoryModel>
+@*if (Model.Count > 0)
+{
+    <div class="home-page-category-grid row">
+        @foreach (var item in Model)
+        {
+            <div class="item-box col-xs-12 col-sm-4 col-md-4">
+                <div class="thumbnail">
+                    <div class="category-item">
+                        <h3 class="title">
+                            <a href="@Url.RouteUrl("Category", new { SeName = item.SeName })" title="@item.PictureModel.Title"> @item.Name</a>
+                        </h3>
+                        <div class="picture">
+                            <a href="@Url.RouteUrl("Category", new { SeName = item.SeName })" title="@item.PictureModel.Title">
+                                <img alt="@item.PictureModel.AlternateText" src="@item.PictureModel.ImageUrl" title="@item.PictureModel.Title" />
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}*@
+
+<section class="container-fluid">
+    <div class="row">
+        <div class="container">
+            <div class="row flex_col m_t_30 m_b_20">
+                <div class="col-md-12 title_text font_lato m_b_10">
+                    <div class="row flex_col align_center">
+                        <div class="col-md-8 col-sm-6 col-xs-12"><h2><strong>Top</strong> Categories</h2></div>
+                        <div class="col-md-4 col-sm-6 col-xs-12 text-right show_all"><a href="@Url.RouteUrl("ShopProducts")">Shop All Categories <img src="\images\UIComponents\Polygon 1.svg"></a></div>
+                    </div>
+
+                </div>
+                <div class="col-md-12">
+                    <div class="row flex_col">
+                        @if (Model.Count > 0)
+                        {
+                            foreach (var item in Model)
+                            {
+                                <div class="col-md-4 col-sm-6 col-xs-12 flex_col">
+                                    <div class="category_box">
+                                        <img @item.PictureModel.AlternateText src="@item.PictureModel.ImageUrl" title="@item.PictureModel.Title" />
+                                        <div>
+                                            <h4>@item.Name</h4>
+                                            <ul>
+                                                @foreach(var child in item.childCategoriesLinks)
+                                                {
+                                                    <li><a href="@Url.RouteUrl("Category", new { SeName = child.SeName })">@child.Name</a></li>
+                                                }
+                                            </ul>
+                                            <a href="@Url.RouteUrl("Category", new { SeName = item.SeName })" class="btn btn-default">View All</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

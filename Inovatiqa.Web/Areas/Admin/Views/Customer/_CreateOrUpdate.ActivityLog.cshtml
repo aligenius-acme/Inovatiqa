@@ -1,0 +1,34 @@
+@model CustomerModel
+
+<div class="panel-body">
+    @await Html.PartialAsync("Table", new DataTablesModel
+    {
+        Name = "activitylog-grid",
+        UrlRead = new DataUrl("ListActivityLog", "Customer", new RouteValueDictionary { [nameof(Model.CustomerActivityLogSearchModel.CustomerId)] = Model.CustomerActivityLogSearchModel.CustomerId }),
+        Length = Model.CustomerActivityLogSearchModel.PageSize,
+        LengthMenu = Model.CustomerActivityLogSearchModel.AvailablePageSizes,
+        ColumnCollection = new List<ColumnProperty>
+        {
+            new ColumnProperty(nameof(CustomerActivityLogModel.ActivityLogTypeName))
+            {
+                Title = "Activity Log Type",
+                Width = "300"
+            },
+            new ColumnProperty(nameof(CustomerActivityLogModel.IpAddress))
+            {
+                Title = "IP address",
+                Width = "100"
+            },
+            new ColumnProperty(nameof(CustomerActivityLogModel.Comment))
+            {
+                Title = "Comment"
+            },
+            new ColumnProperty(nameof(CustomerActivityLogModel.CreatedOn))
+            {
+                Title = "Created on",
+                Width = "200",
+                Render = new RenderDate()
+            }
+        }
+    })   
+</div>

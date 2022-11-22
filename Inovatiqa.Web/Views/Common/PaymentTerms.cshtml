@@ -1,0 +1,147 @@
+﻿@using Inovatiqa.Core
+@{
+    Layout = "_ColumnsOne";
+    ViewBag.Title = "Payment Terms";
+}
+@*
+<style>
+    .pdf_links img {
+        width: 100px;
+        vertical-align: middle;
+        margin-bottom: 20px;
+        cursor: pointer;
+    }
+    .payment_pdfs .payment_pdf_content {
+        display: inline-block;
+    }
+    .payment_content {
+        color: #000;
+        padding: 10px 10px 10px 40px;
+    }
+    .payment_pdf_content div {
+        display: inline-block;
+    }
+    .payment_pdfs .payment_pdf_content {
+        display: inline-block;
+    }
+
+</style>
+<div class="page  from-panel">
+    <div class="page-title panel-heading">
+        <h1>Payment Terms</h1>
+    </div>
+    <div style="margin:10px">
+        <div class="">
+            <div class="payment_content">
+                <div class="payment_pdfs">
+                    <div id="payment_pdf_content1" class="payment_pdf_content">
+                        <div id="pdf_link1" class="pdf_links"><img src="https://inovatiqa.com/pub/media/wysiwyg/PDF_downaloadfile-01.png" alt=""></div>
+                        <div class="pdf_data">Customer Application<br>form.</div>
+                    </div>
+                    <div id="payment_pdf_content2" class="payment_pdf_content">
+                        <div id="pdf_link2" class="pdf_links"><img src="https://inovatiqa.com/pub/media/wysiwyg/PDF_downaloadfile-01.png" alt=""></div>
+                        <div class="pdf_data">Customer Set up &amp;<br>Authorization for ACH</div>
+                    </div>
+                </div>
+ <h2><b>Terms of Sale</b></h2>
+                <div class="terms_cnt_start">The terms and conditions of this invoice apply to all products ("Products") and/or services ("Services") purchased by Buyer from Seller. These Terms of Sale supersede the terms and conditions of any written agreement between the parties, unless such written agreement is executed by an authorized representative of Seller, any Buyer purchase order or other document, or any oral agreement between the parties. In the event of any conflict or inconsistency between these Terms of Sale and a separate document signed by both parties, the terms of the separate document signed by both parties shall control. No provision in either party's purchase order or in any other business form employed by either party, excluding a separate document signed by both parties, will supersede these Terms of Sale. No prior course of dealing or usage of trade shall affect this invoice or be admissible to explain, modify, or contradict this invoice and the agreement arising therefrom (collectively "Agreement"). For purposes of this Agreement, the term "Supplier" means a manufacturer, vendor, or other supplier of a Product that is purchased by Seller for distribution.</div>
+                <div class="terms_cnts">Credit and Payment. All payments for Products and/or Services must be received by Seller Net within thirty (30) days from the date of invoice, unless otherwise agreed to by the parties. Any invoiced amount remaining unpaid after thirty (30) days shall be "past due." Past due balances are subject to an interest charge of three and half percent (3.5%) per month. Any interest charged and collected in excess of applicable state law shall be returned. If Buyer fails to pay any or all of the invoiced amount when due or if Buyer's credit or financial status erodes or otherwise renders Seller insecure, Seller may, in its sole discretion, without further notice immediately:</div>
+                <div class="terms_cnts">(i) suspend Seller's performance or cancel all or any part of an order hereunder, (ii) change any payment term (including imposing the requirement of cash payment upon delivery); (iii) pay any incentives, rebates, fees, or other discount arrangements net of any amounts due hereunder, and any unauthorized deductions and service charges and terminate and/or declare Buyer ineligible for any incentives, rebates, fees, or other discount arrangements; (iv) declare immediately due and payable all other amounts invoiced by Seller to Buyer regardless of when such payments would otherwise be due from Buyer, and/or (v) increase the prices for Products and/or Services. Any discrepancy between any order placed by</div>
+                <div class="terms_cnts">Buyer and Seller 's corresponding shipment(s) must be reported to Seller for resolution within ten (10) days of Seller's invoice date, except for price or payment discrepancies or any claims for reimbursement, which must be reported to Seller for resolution within thirty (30) days of Seller's invoice date. Seller shall have no obligation to resolve and Buyer shall hold Seller harmless and waives any rights to any discrepancy or to issue any credit or refund, or to replace any goods if claim therefore is not made within said applicable ten (10) or thirty (30) day period. All requests for proof of delivery for reasons other than shipment, price or payment disputes must be made within sixty (60) days of Seller's invoice date. Ifthe payment term due date falls on a weekend day or holiday, payment is due and payable on the succeeding business day.</div>
+            </div>
+
+            <br>
+            <br>
+            <br>
+
+        </div>
+    </div>
+</div>
+    *@
+<style>
+     .become-customer-box{
+        box-shadow : none !important;
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+    .newcustomer-area{
+        padding: 0px !important;
+        background: #FFF !important;
+    }
+   /* h1, h2, h3, h4, h5, h6{
+        font-weight: 500 !important;
+    } */
+    .segment-line{
+        border: 0.1px solid #DADADA !important;
+    }
+    .custom-color, .custom-links, .custom-link{
+        font-size: 17px !important;
+    }
+    /*.custom-heading{
+        font-size: 21px !important;
+        font-weight: 400 !important;
+    }
+    .custom-bold-heading{
+        font-size: 19px !important;
+        margin-top: 41px !important;
+        font-weight: 600 !important;
+    }*/
+    .phone-link{
+        font-size: 17px !important;
+    }
+        .phone-link:hover, .phone-link:focus {
+            color: #0068A3;
+        }
+</style>
+<section class="container-fluid newcustomer-area">
+    <div class="container-fluid" style="background: #F1F3F6; padding: 10px;">
+        <div class="container breadcrumb-bar">
+            <span class="muted"><a href="@Url.RouteUrl("Homepage")" style="color: #A9A9A9;">Inovatiqa</a> / </span> Payment Terms
+        </div>
+    </div>
+    <div class="row">
+        <div class="container">
+            <div class="row mt10">
+                <div class="col-md-12">
+                    <div class="become-customer-box">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="font_lato">
+                                    <div class="customer-select">
+                                        <h4 class="custom-heading">Payment Terms</h4>
+                                        <hr class="segment-line">
+                                        <h4 class="custom-bold-heading mt25">Credit Card</h4>
+                                        <p class="custom-color">We accept the following credit cards: MasterCard, Visa, American Express, and Discover. We do not accept Diners Club. We do not allow multiple credit card payments for web orders. Credit card authorization for the order total occurs at the time the order is placed. Credit Cards will be charged in full at the time of purchase.</p>
+
+                                        <h4 class="custom-bold-heading">Purchase Orders</h4>
+                                        <p class="custom-color">Inovatiqa Corporation offers open accounts, net 30 day terms to government entities, public school systems, universities, and colleges. Please allow 2 to 5 days for your terms account application to be processed.</p>
+                                        <div class="mt5">
+                                            <a href="~/files/forms/Credit Application_Form.pdf" class="custom-links">Public Sector Accounts</a>
+                                            <a href="~/files/forms/Medical_Credit_App_Medical.pdf" class="custom-links">For Medical Facilities (Hospitals, Nursing Homes)</a>
+                                            <a href="~/files/forms/Prescription Drug Authorization Form.pdf" class="custom-links">W9 form: Inovatiqa Corporation signed W9 Form for your records, Federal ID # 01-0010010</a>
+                                        </div>
+
+                                        <h4 class="custom-bold-heading">Wire Transfer</h4>
+                                        <p class="custom-color">You may place an order by phone and pay via wire transfer. Please contact Customer Service to obtain Inovatiqa Corporation’s wire transfer information.</p>
+
+                                        <h4 class="custom-bold-heading">Check</h4>
+                                        <p class="custom-color">To pay by check or COD, please place your order by phone at 346-229-4142. (US customers only).</p>
+
+                                        <h4 class="custom-bold-heading">Contact Us</h4>
+
+                                        <div class="flex-col">
+                                            <a href="callto:@InovatiqaDefaults.CompanyPhoneNo" class="phone-link">Phone: 346-229-4142</a>
+                                            <a class="phone-link mt2">Fax: @InovatiqaDefaults.CompanyFaxNo</a>
+                                            <a href="mailto:@InovatiqaDefaults.CustomerServiceEmail" class="phone-link mt2">Email: @InovatiqaDefaults.CustomerServiceEmail</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid" style="background: #F1F3F6; padding: 20px;"></div> 
+</section>

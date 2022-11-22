@@ -1,0 +1,40 @@
+@model ReturnRequestActionModel
+
+@{
+    //page title
+    ViewBag.PageTitle = "Edit return request action details";
+}
+
+
+<form asp-controller="ReturnRequest" asp-action="ReturnRequestActionEdit" method="post">
+    <div class="content-header clearfix">
+        <h1 class="pull-left">
+            Edit return request action details - @Model.Name
+            <small>
+                <i class="fa fa-arrow-circle-left"></i>
+                <a asp-action="ReturnRequestActionList">back to return request action list</a>
+            </small>
+        </h1>
+        <div class="pull-right">
+            <button type="submit" name="save" class="btn bg-blue">
+                <i class="fa fa-floppy-o"></i>
+                Save
+            </button>
+            <button type="submit" name="save-continue" class="btn bg-blue">
+                <i class="fa fa-floppy-o"></i>
+                Save and Continue Edit
+            </button>
+            <span id="returnrequestaction-delete" class="btn bg-red">
+                <i class="fa fa-trash-o"></i>
+                Delete
+            </span>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="form-horizontal">
+            @await Html.PartialAsync("_CreateOrUpdate.ReturnRequestAction", Model)
+        </div>
+    </div>
+</form>
+<nop-delete-confirmation asp-model-id="@Model.Id" asp-button-id="returnrequestaction-delete" asp-action="ReturnRequestActionDelete"/>

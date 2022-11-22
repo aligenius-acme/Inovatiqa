@@ -1,0 +1,19 @@
+﻿@model ProductDetailsModel
+@using Inovatiqa.Core
+<div class="container">
+    <form asp-route="Product" method="post" id="Quick-product-details-form">
+        <div class="form-group" style="display:inline-flex" data-productid="@Model.Id">
+            <input type="hidden" name="selectItem" id="selectItem" value="" />
+            <input name="@(string.Format("{0}{1}{2}", "addtocart_",Model.Id ,".EnteredQuantity"))" id="product_enteredQuantity_@Model.Id" style="margin: 0px;width: 60px;" class="qty-input form-control" value="1" type="text" maxlength="4" />
+            <input id="actionAddItem" style="margin-left: 5px;float: left;" type="button" onclick="return AjaxCart.validateQuantity(@((int)ShoppingCartType.ShoppingCart));" value="Add Item" class="btn btn-default btn_green">
+            <input type="button" id="actionAddItem" name="saveList" value="Add Item" onclick="AjaxCart.addproducttocart_details('@Url.RouteUrl("AddProductToCart-Details", new { productId = Model.Id, shoppingCartTypeId = (int)ShoppingCartType.ShoppingCart, wishListId = 0 })', '#Quick-product-details-form', @((int)ShoppingCartType.ShoppingCart));return false;" class="btn btn-primary add-to-cart-button">
+            <input class="checkbox" type="checkbox" id="quick_addprod" name="quick_addprod" style="float:left;margin:10px" title="QuickADD" value="Quick Add" />
+            <label for="quick_addprod" style="margin:7px;margin-left:-5px;">Quick Add</label>
+            <div style="display:none;">
+                @{ var dataDictAttributes = new ViewDataDictionary(ViewData);
+                    dataDictAttributes.TemplateInfo.HtmlFieldPrefix = $"attributes_{Model.Id}";
+                    @await Html.PartialAsync("../Product/_ProductAttributes", Model.ProductAttributes, dataDictAttributes)}
+            </div>
+        </div>
+    </form>
+</div>

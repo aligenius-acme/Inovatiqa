@@ -1,0 +1,519 @@
+﻿@using Inovatiqa.Web.Models.Order
+@model OrderApprovalCompositeModel
+@{
+    Layout = "_ColumnsOne";
+}
+@{
+    ViewBag.Title = "Orders";
+}
+@*
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <div>
+
+        <div class="page account-page address-list-page">
+            @if (Model.showApprovalTable)
+            {
+                <h3>Orders Waiting For Approval</h3>
+                <table class="table">
+                    <tr>
+                        <th>Email</th>
+                        <th>Name</th>
+                        <th>Total Items</th>
+                        <th>Items Qty</th>
+                        <th>Grand Total</th>
+                        <th>Options</th>
+                    </tr>
+                    @if (Model.OrdersWaitingForApproval.Count > 0)
+                    {
+                        foreach (var order in Model.OrdersWaitingForApproval)
+                        {
+                            <tr>
+                                <td>@order.Email</td>
+                                <td>@order.Name</td>
+                                <td>@order.Items.Count</td>
+                                <td>@order.TotalItemsQuantity</td>
+                                <td>@order.TotalPrice</td>
+                                <td class="table-secondary">
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#@order.Id">
+                                        View Items
+                                    </button>
+                                    <input type="button" class="btn btn-success" value="Approve" onclick="ApproveOrder(@order.Id)" style="margin-right: 5%;">
+                                    <input type="button" class="btn btn-danger" value="Reject" onclick="RejectOrder(@order.Id)" />
+                                </td>
+                            </tr>
+                        }
+                        <tr>
+                            <td colspan="5">
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        <tr>
+                            <td>
+                                <div class="alert alert-warning" role="alert">
+                                    <span><i class="fa fa-exclamation-triangle"></i></span> There are no orders waiting for approval
+                                </div>
+                            </td>
+                        </tr>
+
+                    }
+                </table>
+            }
+        </div>
+        @if (Model.showQueueTable)
+        {
+            <h3>Your Orders</h3>
+            <table class="table">
+                <tr>
+                    <th>#</th>
+                    <th>Status</th>
+                    <th>Total Items</th>
+                    <th>Items Qty</th>
+                    <th>Grand Total</th>
+                    <th>Options</th>
+                </tr>
+                @if (Model.customerOrdersInQueue.Count > 0)
+                {
+                    var i = 0;
+                    foreach (var order in Model.customerOrdersInQueue)
+                    {
+                        i++;
+                        <tr>
+                            <td>@i</td>
+                            <td class="@(order.IsApproved ? "text-success" : "text-danger")">@(order.IsApproved ? "Approved" : "Un Approved")</td>
+                            <td>@order.TotalItems</td>
+                            <td>@order.TotalQunaity</td>
+                            <td>@order.TotalPrice</td>
+                            <td>
+                                <button class="btn btn-primary" data-toggle="modal" data-target="#customer-@order.Id">View Items</button>
+                                <button class="btn btn-success" @(order.IsApproved ? null : "disabled") @(order.IsApproved ? "onClick=Purchase("+ order.Id +")" : null)>Purchase</button>
+                            </td>
+                        </tr>
+                    }
+                }
+
+            </table>
+            @if (Model.showQueueTable && Model.customerOrdersInQueue.Count() == 0)
+            {
+                <table>
+                    <tr>
+                        <td>
+                            <span><i class="fa fa-exclamation-triangle"></i> There are no order in Approval Queue</span>
+                        </td>
+                    </tr>
+                </table>
+            }
+
+        }
+    </div>
+    @if (Model.OrdersWaitingForApproval.Count > 0)
+    {
+        foreach (var order in Model.OrdersWaitingForApproval)
+        {
+
+            <div class="modal fade" id="@order.Id" tabindex="-1" role="dialog" aria-labelledby="viewitems" aria-hidden="true">
+                <div class="modal-dialog" style="width: 60vw;" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">View Order Items</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Quantity</th>
+                                        <th scope="col">Unit Price</th>
+                                        <th scope="col">Total Price</th>
+                                    </tr>
+                                </thead>
+                                @for (int i = 0; i < order.Items.Count; i++)
+                                {
+                                    <tr>
+                                        <td>@(i+1)</td>
+                                        <td>@order.Items[i].Name</td>
+                                        <td>@order.Items[i].Quantity</td>
+                                        <td>@order.Items[i].UnitPrice</td>
+                                        <td>@order.Items[i].TotalPrice</td>
+                                    </tr>
+                                }
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+    }
+
+
+    @if (Model.customerOrdersInQueue.Count > 0)
+    {
+        foreach (var order in Model.customerOrdersInQueue)
+        {
+
+            <div class="modal fade" id="customer-@order.Id" tabindex="-1" role="dialog" aria-labelledby="viewitems" aria-hidden="true">
+                <div class="modal-dialog" style="width: 60vw;" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">View Order Items</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Quantity</th>
+                                        <th scope="col">Unit Price</th>
+                                        <th scope="col">Total Price</th>
+                                    </tr>
+                                </thead>
+                                @for (int i = 0; i < order.Items.Count; i++)
+                                {
+                                    <tr>
+                                        <td>@(i+1)</td>
+                                        <td>@order.Items[i].Name</td>
+                                        <td>@order.Items[i].Quantity</td>
+                                        <td>@order.Items[i].UnitPrice</td>
+                                        <td>@order.Items[i].TotalPrice</td>
+                                    </tr>
+                                }
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+    }
+*@
+
+<style>
+    .tableStyle{
+        display:flex;
+        justify-content:space-between;
+        font-size:15px;
+        font-weight:bold;
+        margin-left:20px;
+
+    }
+</style>
+
+
+@await Component.InvokeAsync("DashboardBlueBand")
+@*@await Html.PartialAsync("_DashboardBlueBand")*@
+<section class="container-fluid deshboard_section">
+    <div class="row">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="sidebar_menu font_lato">
+                        <h3>Inovatiqa Dashboard</h3>
+                        @await Html.PartialAsync("_DashboardSideBar", "waiting-for-approval")
+                    </div>
+                </div>
+                @if (Model.showApprovalTable)
+                {
+                    <div class="col-md-9 newcustomer-area billing_chang_addres ">
+                        <div class="accountform-area font_lato" id="account-deatil">
+                            <div class="form-title">
+                                <h5>Orders Waiting for Approval</h5>
+                            </div>
+                            <hr class="line" style="margin-bottom:20px">
+                            <div class="row">
+                                <div class="table tableStyle">
+                                    <span style="width: 25%;">Email Address</span>
+                                    <span style="width: 20%;">Name</span>
+                                    <span style="width: 15%;">Total Items</span>
+                                    <span style="width: 15%;">Item Quantity</span>
+                                    <span style="width: 15%;">Grand Total</span>
+                                    <span style="width: 30%;">Options</span>
+                                </div>
+                                <hr class="line" style="margin-bottom:10px">
+                                @if (Model.OrdersWaitingForApproval.Count > 0)
+                                {
+                                    foreach (var order in Model.OrdersWaitingForApproval)
+                                    {
+                                        <div class="table tableStyle " style="font-weight:unset;">
+                                            <span style="width: 25%; height:1px">@order.Email</span>
+                                            <span style="width: 20%;height:1px; white-space:nowrap">@order.Name</span>
+                                            <span style="width: 15%; height:1px">@order.Items.Count</span>
+                                            <span style="width: 15%;height:1px">@order.TotalItemsQuantity</span>
+                                            <span style="width: 15%; height:1px">@order.TotalPrice</span>
+                                            <span style="width: 30%; margin-bottom:-10px" class="form-group">
+                                                <div class="col-md-5 col-sm-5">
+                                                    <div class="option_select" style="display: flex;">
+                                                        <a onclick="RejectOrder(@order.Id)" class="btn primary edit font_roboto danger">Reject</a>
+                                                        <a onclick="ApproveOrder(@order.Id)" class="btn primary edit font_roboto">Approve</a>
+                                                        <button class="btn edit font_roboto btn-info" data-toggle="modal" data-target="#@order.Id">View Items</button>
+                                                    </div>
+                                                </div>
+                                            </span>
+                                        </div>
+                                        <hr class="line" style="margin-bottom:10px" />
+                                    }
+                                }
+
+                                else
+                                {
+                                    <div class="table">
+                                        <div style="display: flex; justify-content: space-between;">
+                                            @*<span class="col-md-4" style="border: 1px solid #D1D1D1; border-radius: 1px; background-color: #F0FFDD;">
+                                                <img src="~/images/fi_alert-triangle.png" alt=""> There are no orders waiting for approval.
+                                            </span>*@
+                                            <span class="col-md-4" style="border: 1px solid #D1D1D1; border-radius: 1px; background-color: #F0FFDD;">
+                                                <span style="padding-right:10px;"><i class="fa fa-exclamation-triangle"></i></span>There are no orders waiting for approval.
+                                            </span>
+                                            <span></span>
+                                            <span></span>
+                                            <span></span>
+                                            <span></span>
+                                            <span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                }
+
+
+                            </div>
+                        </div>
+                    </div>
+                }
+                @if (Model.showQueueTable)
+                {
+                    <div class="col-md-9 newcustomer-area billing_chang_addres mt30">
+                        <div class="accountform-area font_lato" id="account-deatil">
+                            <div class="form-title">
+                                <h5 style="margin-top:100px">Your Orders</h5>
+                            </div>
+                            <hr class="line" style="margin-bottom:20px">
+                            <div class="row">
+                                <div class="table tableStyle">
+                                    <span style="width: 25%;">Status</span>
+                                    <span style="width: 15%;">Total Items</span>
+                                    <span style="width: 15%;">Items Quantity</span>
+                                    <span style="width: 15%;">Grand Total</span>
+                                    <span style="width: 30%;">Options</span>
+                                </div>
+                                <hr class="line" style="margin-bottom:10px" />
+
+                                @if (Model.customerOrdersInQueue.Count > 0)
+                                {
+
+                                    foreach (var order in Model.customerOrdersInQueue)
+                                    {
+
+                                        <div class="table tableStyle" style="font-weight:unset;">
+                                            <span style="width: 25%; height: 1px" class="@(order.IsApproved ? "text-success" : "text-danger")">@(order.IsApproved ? "Approved" : "Un Approved")</span>
+
+                                            <span style="width: 15%; height: 1px">@order.TotalItems</span>
+                                            <span style="width: 15%; height: 1px">@order.TotalQunaity</span>
+                                            <span style="width: 15%; height: 1px">@order.TotalPrice</span>
+                                            <span style="width: 30%; margin-bottom: -10px" class="form-group">
+                                                <div class="col-md-5 col-sm-5">
+                                                    <div class="option_select" style="display: flex;">
+                                                        <a @(order.IsApproved ? null : "disabled") @(order.IsApproved ? "onClick=Purchase(" + order.Id + ")" : null) class="btn primary edit font_roboto">Purchase</a>
+                                                        <button class="btn edit font_roboto btn-info" data-toggle="modal" data-target="#customer-@order.Id">View Items</button>
+                                                    </div>
+                                                </div>
+                                            </span>
+                                        </div>
+                                        <hr class="line" style="margin-bottom:10px;" />
+                                    }
+                                }
+                                @if (Model.showQueueTable && Model.customerOrdersInQueue.Count() == 0)
+                                {
+                                    <div class="table  ">
+                                        <div style="display: flex; justify-content: space-between;">
+                                            <span class="col-md-4" style="border: 1px solid #D1D1D1; border-radius: 1px; background-color: #F0FFDD;">
+                                                <span style="padding-right:10px;"><i class="fa fa-exclamation-triangle"></i></span>There are no orders waiting for approval.
+                                            </span>
+                                            <span></span>
+                                            <span></span>
+                                            <span></span>
+                                            <span></span>
+                                            <span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                }
+
+
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+@if (Model.OrdersWaitingForApproval.Count > 0)
+{
+    foreach (var order in Model.OrdersWaitingForApproval)
+    {
+
+        <div class="modal fade" id="@(order.Id)" tabindex="-1" role="dialog" aria-labelledby="viewitems" aria-hidden="true">
+            <div class="modal-dialog" style="width: 60vw;" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">View Order Items</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Quantity</th>
+                                    <th scope="col">Unit Price</th>
+                                    <th scope="col">Total Price</th>
+                                </tr>
+                            </thead>
+                            @for (int i = 0; i < order.Items.Count; i++)
+                            {
+                                <tr>
+                                    <td>@(i+1)</td>
+                                    <td>@order.Items[i].Name</td>
+                                    <td>@order.Items[i].Quantity</td>
+                                    <td>@order.Items[i].UnitPrice</td>
+                                    <td>@order.Items[i].TotalPrice</td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+}
+
+
+@if (Model.customerOrdersInQueue.Count > 0)
+{
+    foreach (var order in Model.customerOrdersInQueue)
+    {
+
+        <div class="modal fade" id="customer-@order.Id" tabindex="-1" role="dialog" aria-labelledby="viewitems" aria-hidden="true">
+            <div class="modal-dialog" style="width: 60vw;" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">View Order Items</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Quantity</th>
+                                    <th scope="col">Unit Price</th>
+                                    <th scope="col">Total Price</th>
+                                </tr>
+                            </thead>
+                            @for (int i = 0; i < order.Items.Count; i++)
+                            {
+                                <tr>
+                                    <td>@(i+1)</td>
+                                    <td>@order.Items[i].Name</td>
+                                    <td>@order.Items[i].Quantity</td>
+                                    <td>@order.Items[i].UnitPrice</td>
+                                    <td>@order.Items[i].TotalPrice</td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+}
+
+<script>
+    function RejectOrder(id) {
+        $.ajax({
+            url: '/order/RejectOrder',
+            data: { ID: id },
+            async: false,
+            cache: false,
+            success: function (res) {
+                if (res) {
+                    alert('Order Rejected Successfully.');
+                    window.location.reload();
+                }
+                else {
+                    alert('Server Error Occured While Rejecting Order');
+                }
+            },
+            error: function (err) {
+                console.log(err);
+                alert('Something Went Wrong! We could not Reject Order.');
+            }
+        });
+    }
+    function ApproveOrder(id) {
+        $.ajax({
+            url: '/order/MarkAsApproved',
+            data: { ID: id },
+            async: false,
+            cache: false,
+            success: function (res) {
+                alert('Order Approved Successfully');
+                window.location.reload();
+            },
+            error: function (err) {
+                alert('Something Went Wrong While Approving Order');
+                console.log(err);
+            }
+        });
+    }
+    function Purchase(id) {
+        if (confirm('Please note that items in your current cart will be discarded.\nWe Recommend you to move them in suspended cart for later use.')) {
+            $.ajax({
+                url: '/order/PurchaseOrder',
+                data: { ID: id },
+                async: false,
+                cache: false,
+                success: function (res) {
+                    console.log(res);
+                    window.location.reload();
+                },
+                error: function (err) {
+                    console.log(err);
+                    alert('There is some error while purchasing the order.');
+                }
+            });
+        }
+
+    }
+</script>

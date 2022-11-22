@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html lang="en" class="html-home-page">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link rel="icon" type="image/x-icon" href="/images/UIComponents/fav.svg">
+    @RenderSection("additionalMeta", false)
+    <link href="~/Themes/CoreTheme/Content/css/theme-styles-responsive.css" rel="stylesheet">
+    <link href="~/Themes/CoreTheme/Content/css/theme-styles.css" rel="stylesheet">
+    <link href="~/Themes/CoreTheme/Content/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Themes/CoreTheme/Content/css/font-awesome.min.css" rel="stylesheet">
+    <link href="~/lib/jquery-ui/jquery-ui-1.12.1.custom/jquery-ui.min.css" rel="stylesheet">
+
+    <!--NEW UI STYLES BELOW-->
+    <link rel="stylesheet" href="~/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/font-awesome.css" />
+    <link rel="stylesheet" href="~/css/owl.carousel.css" />
+    <link rel="stylesheet" href="~/css/animate.css" />
+    <link rel="stylesheet" href="~/css/style.css" />
+    <link rel="stylesheet" href="~/css/style2.css" />
+    <link rel="stylesheet" href="~/css/style3.css" />
+    <link rel="stylesheet" href="~/css/style_test.css" />
+    <link rel="stylesheet" href="~/css/style.scss" />
+
+    @Html.RenderResources("css")
+</head>
+<body>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script src="~/lib/jquery/jquery-3.4.1.min.js" type="text/javascript"></script>
+    <script src="~/js/owl.carousel.js" type="text/javascript"></script>
+    <script src="~/lib/jquery-ui/jquery-ui-1.12.1.custom/jquery-ui.min.js" type="text/javascript"></script>
+    <script src="~/lib/jquery-migrate/jquery-migrate-3.1.0.min.js" type="text/javascript"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js" type="text/javascript"></script>
+    <script src="~/js/bootstrap.min.js" type="text/javascript"></script>
+    @RenderSection("Breadcrumb", false)
+    @RenderBody()
+    <script src="~/js/CustomPagination.js" type="text/javascript"></script>
+    <script src="~/js/wow.js" type="text/javascript"></script>
+    <script src="~/lib/jquery-validate/jquery.validate-v1.19.1/jquery.validate.min.js" type="text/javascript"></script>
+    <script src="~/lib/jquery-validate/jquery.validate.unobtrusive-v3.2.11/jquery.validate.unobtrusive.min.js" type="text/javascript"></script>
+    <script src="~/js/public.common.js" type="text/javascript"></script>
+    <script src="~/js/public.ajaxcart.js" type="text/javascript"></script>
+    <script src="~/js/public.countryselect.js" type="text/javascript"></script>
+    <script src="~/lib/magnific-popup/jquery.magnific-popup.min.js" type="text/javascript"></script>
+    <script src="~/js/public.estimateshipping.popup.js" type="text/javascript"></script>
+    @*<script src="~/Themes/CoreTheme/Content/js/bootstrap.min.js" type="text/javascript"></script>*@  <!-- Disabled for conflicting with Modal of Return Request -->
+    <script src="~/Themes/CoreTheme/Content/js/custom.js" type="text/javascript"></script>
+    <script src="~/Themes/CoreTheme/Content/js/head.min.js" type="text/javascript"></script>
+    <script src="~/lib/cookie/js.cookie.min.js" type="text/javascript"></script>
+    
+    <script src="~/js/custom_script.js" type="text/javascript"></script>
+    @Html.RenderResources("js")
+</body>
+</html>

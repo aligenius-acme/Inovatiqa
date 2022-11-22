@@ -1,0 +1,163 @@
+﻿USE [Inovatiqa]
+GO
+
+/****** Object:  Table [dbo].[WishList]    Script Date: 10/1/2020 1:08:20 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[WishList](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[ListName] [nvarchar](200) NOT NULL,
+	[IsSharedList] [bit] NOT NULL,
+	[CustomerId] [int] NOT NULL,
+ CONSTRAINT [PK_WishList] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE dbo.ShoppingCartItem ADD
+WishListId INT NULL
+
+ALTER TABLE dbo.Setting ADD
+TypeId INT NULL
+
+ALTER TABLE dbo.Product ADD
+TotalViews INT NOT NULL
+
+ALTER TABLE dbo.Manufacturer ADD
+ShowOnHomepage BIT NOT NULL
+
+ALTER TABLE Product
+ADD IsCovid19Product BIT NOT NULL DEFAULT 'false'
+
+ALTER TABLE Product
+ADD ShowCovid19OnHomepage BIT NOT NULL DEFAULT 'false'
+
+ALTER TABLE Product
+ADD MSku INT NOT NULL
+
+ALTER TABLE dbo.OrderItem
+ADD ReorderDateUtc DATETIME2(7) NULL
+
+ALTER TABLE dbo.ShoppingCartItem
+ALTER COLUMN Reordered BIT NOT NULL
+
+ALTER TABLE dbo.Product  
+ALTER COLUMN Name NVARCHAR(800) NOT NULL
+
+ALTER TABLE dbo.UrlRecord  
+ALTER COLUMN Slug NVARCHAR(800) NOT NULL
+
+ALTER TABLE ShoppingCartItem
+ADD SuspendedCartId INT NULL
+
+ALTER TABLE ShoppingCartItem
+ADD ParentSuspendedItemId INT NULL
+
+ALTER TABLE dbo.Picture
+ALTER COLUMN SeoFilename NVARCHAR(800) NULL
+
+CREATE TABLE [dbo].[SuspendedCart](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[CustomerId] [int] NOT NULL,
+	[POName] [nvarchar](max) NULL,
+	[ShipToCompanyName] [nvarchar](max) NULL,
+	[ShipToFirstName] [nvarchar](max) NULL,
+	[ShipToLastName] [nvarchar](max) NULL,
+	[Lines] [int] NULL,
+	[LastModifiedDateUtc] [datetime2](7) NOT NULL,
+ CONSTRAINT [PK_SuspendedCart] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+
+ALTER TABLE Customer
+ADD PaymentTermsId INT NULL
+
+ALTER TABLE Customer
+ADD CreditLimit DECIMAL(18, 4) NULL
+
+ALTER TABLE Customer
+ADD PaymentModeId INT NULL
+
+ALTER TABLE Manufacturer
+ADD ProductCount INT NULL
+
+ALTER TABLE Category
+ADD ProductCount INT NULL
+
+insert into [dbo].[CustomerAttribute] values('DEA Number',0,4,0)
+insert into [dbo].[CustomerAttribute] values('HIN Number',0,4,0)
+insert into [dbo].[CustomerAttribute] values('Medical License and Staff Number',0,4,0)
+insert into [dbo].[CustomerAttribute] values('Federal Tax - ID Number',0,4,0)
+insert into [dbo].[CustomerAttribute] values('Federal Tax - ID Number ($)',0,4,0)
+insert into [dbo].[CustomerAttribute] values('Primary Bank / Financial Institute',0,4,0)
+insert into [dbo].[CustomerAttribute] values('Attachment',0,30,0)
+insert into [dbo].[CustomerAttribute] values('Account Number',0,4,0)
+
+
+CREATE TABLE [dbo].[CustomerReturnRequest](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[CustomerId] [int] NULL,
+	[ShippingLabel] [int] NULL,
+	[PrimaryContantEmail] [nvarchar](50) NULL,
+	[SecondaryContactEmail] [nvarchar](50) NULL,
+	[CreatedDateUtc] [datetime] NOT NULL,
+	[UpdatedDateUtc] [datetime] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE ReturnRequest ADD
+CustomerReturnRequestId INT NULL
+
+ALTER TABLE Shipment ADD
+PaymentStatusId INT NULL
+
+ALTER TABLE Shipment ADD
+TotalAmount DECIMAL(18, 4) NULL
+
+ALTER TABLE Shipment ADD
+AmountPaid DECIMAL(18, 4) NULL
+
+ALTER TABLE Shipment ADD
+InvoiceDueDateUtc DATETIME2(7) NULL
+
+ALTER TABLE Shipment ADD
+InvoicePayedDateUtc DATETIME2(7) NULL
+
+ALTER TABLE Customer ADD
+ParentId INT NULL
+
+ALTER TABLE Address ADD
+ParentAddressId INT NULL
+
+ALTER TABLE Customer ADD
+MaxOrderApprovalValue decimal(18,4) NULL
+
+ALTER TABLE Customer ADD
+MaxOrderWithoutApproval decimal(18,4) NULL
+
+ALTER TABLE SuspendedCart ADD
+SuspendedCartTypeId INT NULL
+
+ALTER TABLE Customer ADD
+CanPurchaseCart Bit NULL Default 0
+
+ALTER TABLE dbo.Shipment
+ADD CONSTRAINT df_paid
+DEFAULT 0.00 FOR AmountPaid;
+
+Notes: 	Please index TotalViews Column if performance degrades.
+	Add B2B role
+	Add PO role

@@ -1,0 +1,58 @@
+﻿@model RegisterResultModel
+@{
+    Layout = "_ColumnsOne";
+}
+@{
+    ViewBag.Title = "Register";
+}
+    <form asp-route="RegisterResult" asp-route-returnurl="@Context.Request.Query["ReturnUrl"]" method="post">
+        <div asp-validation-summary="ModelOnly" class="message-error"></div>
+        @*<div class="page registration-result-page from-panel">
+            <div class="page-title panel-heading">
+                <h1>Register</h1>
+            </div>
+            <div class="page-body panel-body">
+                <div class="description alert alert-success">
+                    @Model.Result
+                </div>
+                <div class="buttons">
+                    <input type="submit" name="register-continue" class="btn btn-primary register-continue-button" value="Continue" />
+                </div>
+            </div>
+        </div>*@
+        <div class="panel panel-default">
+            <div>
+                <h1>New Account Request Received</h1>
+                <h4>Thank you for your interest in Inovatiqa Medical&#45;Surgical</h4>
+                <p> Your information has been sent to our New Account Team. They will contact you within 5 days to complete your application.</p>
+                <hr>
+                <br/>
+                <div class="row xtra-bottom">
+                    <div class="col-xs-12 col-md-6 col-lg-6">
+                        <h4>Contact</h4>
+                        <div>Administrator</div>
+                        <div>admin@inovatiqa.com</div>
+                        <div>
+
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-6 col-lg-6">
+                        &nbsp;
+                    </div>
+                </div>
+                <br />
+                <br />
+                @*<div class="row">
+                    <div class="col-xs-12 col-md-6 col-lg-6">
+                        <h4>Existing Account Information</h4>
+                        <div><b>Account ID</b>&nbsp;</div>
+                        <div><b>Recent Order/Invoice Number</b>&nbsp;</div>
+                    </div>
+                    <div class="col-xs-12 col-md-6 col-lg-6">
+                        &nbsp;
+                    </div>
+                </div>*@
+            </div>
+
+        </div>
+    </form>

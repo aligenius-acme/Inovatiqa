@@ -1,0 +1,100 @@
+﻿@model CheckoutPaymentMethodModel
+    @*
+    <div class="checkout-data">
+        <div class="section payment-method">
+            @if (Model.PaymentMethods.Count > 0)
+            {
+                <ul class="method-list" id="payment-method-block">
+                    @for (var i = 0; i < Model.PaymentMethods.Count; i++)
+                    {
+                        var paymentMethod = Model.PaymentMethods[i];
+                        var paymentMethodName = paymentMethod.Name;
+                        if (!string.IsNullOrEmpty(paymentMethod.Fee))
+                        {
+                            paymentMethodName = ("{0} ({1})", paymentMethodName, paymentMethod.Fee).ToString();
+                        }
+                        <li>
+                            <div class="method-name">
+                                @if (!string.IsNullOrEmpty(paymentMethod.LogoUrl))
+                                {
+                                    <div class="payment-logo">
+                                        <label for="paymentmethod_@(i)">
+                                            <img src="@paymentMethod.LogoUrl" alt="@paymentMethodName" />
+                                        </label>
+                                    </div>
+                                }
+                                <div class="payment-details">
+                                    <input id="paymentmethod_@(i)" type="radio" name="paymentmethod" value="@(paymentMethod.PaymentMethodSystemName)" checked="@paymentMethod.Selected" />
+                                    <label for="paymentmethod_@(i)">@paymentMethodName</label>
+                                    @if (!string.IsNullOrEmpty(paymentMethod.Description))
+                                    {
+                                        <div class="payment-description">@paymentMethod.Description</div>
+                                    }
+                                </div>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <div class="message-error">
+                    No payment methods available
+                </div>
+            }
+        </div>
+    </div>
+        *@
+
+    <div class="steps_box step_3 m_t_50">
+        <div class="row flex_col align_center">
+            <div class="col-md-8">
+                <h2>Payment method</h2>
+                <p>Please enter your Payment method</p>
+            </div>
+            <div class="col-md-4 text-right">
+                <p>Step 3 of 5</p>
+            </div>
+        </div>
+        @if (Model.PaymentMethods.Count > 0)
+        {
+            @for (var i = 0; i < Model.PaymentMethods.Count; i++)
+            {
+                var paymentMethod = Model.PaymentMethods[i];
+                var paymentMethodName = paymentMethod.Name;
+                if (!string.IsNullOrEmpty(paymentMethod.Fee))
+                {
+                    paymentMethodName = ("{0} ({1})", paymentMethodName, paymentMethod.Fee).ToString();
+                }
+                <div class="row flex_col m_t_20">
+                    <div class="col-md-12">
+                        <div class="payment_box" style="padding-top: 10px; padding-bottom: 10px;">
+                            <div class="payment_head" style="margin-bottom: 0px;">
+                                <label>
+                                    <input id="paymentmethod_@(i)" type="radio" name="paymentmethod" value="@(paymentMethod.PaymentMethodSystemName)" @*checked="@paymentMethod.Selected"*@ onchange="PaymentMethod.save()" />
+                                    @paymentMethodName
+                                </label>
+                                @if(paymentMethodName == "Credit Card")
+                                {
+                                    <div class="accept_logos">
+                                        <img src="~/images/UIComponents/p5.png">
+                                        <img src="~/images/UIComponents/p4.png">
+                                        <img src="~/images/UIComponents/p1.png">
+                                        <img src="~/images/UIComponents/p3.png">
+                                        <img src="~/images/UIComponents/p2.png">
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="alert alert-danger" role="alert">
+                No Payment Methods Available
+            </div>
+        }
+
+    </div>

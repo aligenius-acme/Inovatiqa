@@ -1,0 +1,34 @@
+﻿@model IList<ProductOverviewModel>
+@if (Model.Count > 0)
+{
+    <div class="block block-recently-viewed-products well" style="background-color:#fff;">
+        <div class="page-title panel-heading">
+            <h1>Recently viewed products</h1>
+        </div>
+        <div class="product-grid home-page-recently-viewed-products-grid row">
+            @*<ul class="list">*@
+            @for (var i = 0; i < Model.Count; i++)
+            {
+                var product = Model[i];
+                @*<li @(i == Model.Count - 1 ? @Html.Raw(" class=\"last\"") : null)>*@
+                @if (!string.IsNullOrEmpty(product.DefaultPictureModel.ImageUrl))
+                {
+                    <div class="item-box product-grid col-xs-12 col-sm-4 col-md-3 product-align clearfix">
+                        <div class="thumbnail">
+                            @await Html.PartialAsync("_ProductBox", product)
+                        </div>
+                    </div>
+
+                    @*<div class="product-picture" style="width:80px;">
+                    <a href="@Url.RouteUrl("Product", new { SeName = product.SeName })" title="@product.DefaultPictureModel.Title">
+                        <img alt="@product.DefaultPictureModel.AlternateText" src="@product.DefaultPictureModel.ImageUrl" title="@product.DefaultPictureModel.Title" />
+                    </a>
+                </div>*@
+                }
+                @*<a href="@Url.RouteUrl("Product", new { SeName = product.SeName })" class="product-name" style="width:80%">@product.Name</a>*@
+                @*</li>*@
+            }
+            @*</ul>*@
+        </div>
+    </div>
+}

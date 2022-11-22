@@ -1,0 +1,27 @@
+@model OrderAddressModel
+
+@{
+    //page title
+    ViewBag.PageTitle = "Edit address";
+}
+
+<form asp-controller="Order" asp-action="AddressEdit"
+      asp-route-addressId="@Context.Request.Query["addressId"]"
+      asp-route-orderId="@Context.Request.Query["orderId"]">
+    <div class="content-header clearfix">
+        <h1 class="pull-left">
+            Edit address
+            <small>
+                <i class="fa fa-arrow-circle-left"></i>
+                <a asp-action="Edit" asp-route-id="@Model.OrderId">back to order details</a>
+            </small>
+        </h1>
+        <div class="pull-right">
+            <button type="submit" name="save" class="btn bg-blue">
+                <i class="fa fa-floppy-o"></i>
+                Save
+            </button>
+        </div>
+    </div>
+    @await Html.PartialAsync("_CreateOrUpdateAddress", Model)
+</form>

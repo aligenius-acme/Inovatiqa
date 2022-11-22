@@ -1,0 +1,67 @@
+﻿@{
+    Layout = "_ColumnsOne";
+    ViewBag.Title = "Health Accounts";
+}
+<style>
+    .become-customer-box{
+        box-shadow : none !important;
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+    .newcustomer-area{
+        padding: 0px !important;
+        background: #FFF !important;
+    }
+    h1, h2, h3, h4, h5, h6{
+        font-weight: 500 !important;
+    }
+    .segment-line{
+        border: 0.1px solid #DADADA !important;
+    }
+    .fancy-heading, .heading-price-match {
+        font-size: 21px !important;
+    }
+    .price-match-helper-text{
+        font-size: 17px !important;
+    }
+</style>
+<section class="container-fluid newcustomer-area">
+    <div class="container-fluid" style="background: #F1F3F6; padding: 10px;">
+        <div class="container breadcrumb-bar">
+            <span class="muted"><a style="color: #A9A9A9;" href="@Url.RouteUrl("Homepage")">Inovatiqa</a> / </span> Health Accounts
+        </div>
+    </div>
+    <div class="row">
+        <div class="container">
+            <div class="row mt10">
+                <div class="col-md-12">
+                    <div class="become-customer-box">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="font_lato">
+                                    <div class="customer-select">
+                                        <img src="~/images/UIComponents/HealthAccounts.png" style="width: 100%;">
+                                        <div>
+                                            <h4 class="fancy-heading">Health Savings Accounts</h4>
+                                        </div>
+                                        <h4 class="heading-price-match">Health Accounts</h4>
+                                        <hr class="segment-line">
+                                        <p class="price-match-helper-text mt25">Committed Representative, Customer Satisfaction, and Discounted Pricing</p>
+                                        <ul class="unmuted-list">
+                                            <li class="price-match-helper-text mt25">Committed Representative: Inovatiqa saves you time and money by having your account managed by a representative from our company.</li>
+                                            <li class="price-match-helper-text mt16">Customer Satisfaction: Your shopping experience is important to us. We can help you select the right products.</li>
+                                            <li class="price-match-helper-text mt16">Competitive Pricing: Sign into your account for immediate pricing and check out in minutes. </li>
+                                        </ul>
+
+                                        <p class="mt25 price-match-helper-text">If you have any questions, please email us at <a href="mailto:customerservice@inovatiqa.com" class="blue">customerservice@inovatiqa.com</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid" style="background: #F1F3F6; padding: 20px;"></div> 
+</section>

@@ -1,0 +1,637 @@
+@model OrderModel
+
+<div class="panel-body">
+    <div class="panel panel-default sub-panel">
+        <div class="panel-body">
+            <div class="col-md-6">
+                <div class="row">
+                    <table class="table table-hover table-bordered" style="max-width: 500px;">
+                        <thead>
+                            <tr>
+                                <th colspan="2">
+                                    <strong>Billing address</strong>
+                                </th>
+                            </tr>
+                        </thead>
+                        @if (Model.BillingAddress.FirstNameEnabled || Model.BillingAddress.LastNameEnabled)
+                        {
+                            <tr>
+                                <td>
+                                    Full name
+                                </td>
+                                <td>
+                                    @Model.BillingAddress.FirstName @Model.BillingAddress.LastName
+                                </td>
+                            </tr>
+                        }
+                        @if (Model.BillingAddress.EmailEnabled)
+                        {
+                            <tr>
+                                <td>
+                                    Email
+                                </td>
+                                <td>
+                                    @Model.BillingAddress.Email
+                                </td>
+                            </tr>
+                        }
+                        @if (Model.BillingAddress.PhoneEnabled)
+                        {
+                            <tr>
+                                <td>
+                                    Phone
+                                </td>
+                                <td>
+                                    @Model.BillingAddress.PhoneNumber
+                                </td>
+                            </tr>
+                        }
+                        @if (Model.BillingAddress.FaxEnabled)
+                        {
+                            <tr>
+                                <td>
+                                    Fax
+                                </td>
+                                <td>
+                                    @Model.BillingAddress.FaxNumber
+                                </td>
+                            </tr>
+                        }
+                        @if (Model.BillingAddress.CompanyEnabled)
+                        {
+                            <tr>
+                                <td>
+                                    Company
+                                </td>
+                                <td>
+                                    @Model.BillingAddress.Company
+                                </td>
+                            </tr>
+                        }
+                        @if (Model.BillingAddress.StreetAddressEnabled)
+                        {
+                            <tr>
+                                <td>
+                                    Address 1
+                                </td>
+                                <td>
+                                    @Model.BillingAddress.Address1
+                                </td>
+                            </tr>
+                        }
+                        @if (Model.BillingAddress.StreetAddress2Enabled)
+                        {
+                            <tr>
+                                <td>
+                                    Address 2
+                                </td>
+                                <td>
+                                    @Model.BillingAddress.Address2
+                                </td>
+                            </tr>
+                        }
+                        @if (Model.BillingAddress.CityEnabled)
+                        {
+                            <tr>
+                                <td>
+                                    City
+                                </td>
+                                <td>
+                                    @Model.BillingAddress.City
+                                </td>
+                            </tr>
+                        }
+                        @if (Model.BillingAddress.CountyEnabled)
+                        {
+                            <tr>
+                                <td>
+                                    County / region
+                                </td>
+                                <td>
+                                    @Model.BillingAddress.County
+                                </td>
+                            </tr>
+                        }
+                        @if (Model.BillingAddress.StateProvinceEnabled)
+                        {
+                            <tr>
+                                <td>
+                                    State / province
+                                </td>
+                                <td>
+                                    @Model.BillingAddress.StateProvinceName
+                                </td>
+                            </tr>
+                        }
+                        @if (Model.BillingAddress.ZipPostalCodeEnabled)
+                        {
+                            <tr>
+                                <td>
+                                    Zip / postal code
+                                </td>
+                                <td>
+                                    @Model.BillingAddress.ZipPostalCode
+                                </td>
+                            </tr>
+                        }
+                        @if (Model.BillingAddress.CountryEnabled)
+                        {
+                            <tr>
+                                <td>
+                                    Country
+                                </td>
+                                <td>
+                                    @Model.BillingAddress.CountryName
+                                </td>
+                            </tr>
+                        }
+                        @if (!string.IsNullOrEmpty(Model.BillingAddress.FormattedCustomAddressAttributes))
+                        {
+                            <tr>
+                                <td colspan="2">
+                                    @Html.Raw(Model.BillingAddress.FormattedCustomAddressAttributes)
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+                <div class="row">
+                    @if (!Model.IsLoggedInAsVendor)
+                    {
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <a asp-action="AddressEdit" asp-route-addressId="@Model.BillingAddress.Id" asp-route-orderId="@Model.Id" class="btn btn-primary">Edit</a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            @if (Model.IsShippable)
+            {
+                if (!Model.PickupInStore && Model.ShippingAddress != null)
+                {
+                    <div class="col-md-6">
+                        <div class="row">
+                            <table class="table table-hover table-bordered" style="max-width: 500px;">
+                                <tr>
+                                    <th colspan="2">
+                                        <strong>Shipping address</strong>
+                                    </th>
+                                </tr>
+                                @if (Model.ShippingAddress.FirstNameEnabled || Model.ShippingAddress.LastNameEnabled)
+                                {
+                                    <tr>
+                                        <td>
+                                            Full name
+                                        </td>
+                                        <td>
+                                            @Model.ShippingAddress.FirstName @Model.ShippingAddress.LastName
+                                        </td>
+                                    </tr>
+                                }
+                                @if (Model.ShippingAddress.EmailEnabled)
+                                {
+                                    <tr>
+                                        <td>
+                                            Email
+                                        </td>
+                                        <td>
+                                            @Model.ShippingAddress.Email
+                                        </td>
+                                    </tr>
+                                }
+                                @if (Model.ShippingAddress.PhoneEnabled)
+                                {
+                                    <tr>
+                                        <td>
+                                            Phone
+                                        </td>
+                                        <td>
+                                            @Model.ShippingAddress.PhoneNumber
+                                        </td>
+                                    </tr>
+                                }
+                                @if (Model.ShippingAddress.FaxEnabled)
+                                {
+                                    <tr>
+                                        <td>
+                                            Fax
+                                        </td>
+                                        <td>
+                                            @Model.ShippingAddress.FaxNumber
+                                        </td>
+                                    </tr>
+                                }
+                                @if (Model.ShippingAddress.CompanyEnabled)
+                                {
+                                    <tr>
+                                        <td>
+                                            Company
+                                        </td>
+                                        <td>
+                                            @Model.ShippingAddress.Company
+                                        </td>
+                                    </tr>
+                                }
+                                @if (Model.ShippingAddress.StreetAddressEnabled)
+                                {
+                                    <tr>
+                                        <td>
+                                            Address 1
+                                        </td>
+                                        <td>
+                                            @Model.ShippingAddress.Address1
+                                        </td>
+                                    </tr>
+                                }
+                                @if (Model.ShippingAddress.StreetAddress2Enabled)
+                                {
+                                    <tr>
+                                        <td>
+                                            Address 2
+                                        </td>
+                                        <td>
+                                            @Model.ShippingAddress.Address2
+                                        </td>
+                                    </tr>
+                                }
+                                @if (Model.ShippingAddress.CityEnabled)
+                                {
+                                    <tr>
+                                        <td>
+                                            City
+                                        </td>
+                                        <td>
+                                            @Model.ShippingAddress.City
+                                        </td>
+                                    </tr>
+                                }
+                                @if (Model.ShippingAddress.CountyEnabled)
+                                {
+                                    <tr>
+                                        <td>
+                                            County / region
+                                        </td>
+                                        <td>
+                                            @Model.ShippingAddress.County
+                                        </td>
+                                    </tr>
+                                }
+                                @if (Model.ShippingAddress.StateProvinceEnabled)
+                                {
+                                    <tr>
+                                        <td>
+                                            State / province
+                                        </td>
+                                        <td>
+                                            @Model.ShippingAddress.StateProvinceName
+                                        </td>
+                                    </tr>
+                                }
+                                @if (Model.ShippingAddress.ZipPostalCodeEnabled)
+                                {
+                                    <tr>
+                                        <td>
+                                            Zip / postal code
+                                        </td>
+                                        <td>
+                                            @Model.ShippingAddress.ZipPostalCode
+                                        </td>
+                                    </tr>
+                                }
+                                @if (Model.ShippingAddress.CountryEnabled)
+                                {
+                                    <tr>
+                                        <td>
+                                            Country
+                                        </td>
+                                        <td>
+                                            @Model.ShippingAddress.CountryName
+                                        </td>
+                                    </tr>
+                                }
+                                @if (!string.IsNullOrEmpty(Model.ShippingAddress.FormattedCustomAddressAttributes))
+                                {
+                                    <tr class="custom-attributes-view">
+                                        <td colspan="2">
+                                            @Html.Raw(Model.ShippingAddress.FormattedCustomAddressAttributes)
+                                        </td>
+                                    </tr>
+                                }
+                                <tr>
+                                    <td colspan="2">
+                                        <img alt="google maps" src="@Url.Content("~/css/admin/images/google-maps.gif")" />
+                                        <a href="@Html.Raw(Model.ShippingAddressGoogleMapsUrl)" style="margin-bottom: 10px;" target="_blank">View address on Google Maps</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="row">
+                            @if (!Model.IsLoggedInAsVendor)
+                            {
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <a asp-action="AddressEdit" asp-route-addressId="@Model.ShippingAddress.Id" asp-route-orderId="@Model.Id" class="btn btn-primary">Edit</a>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+
+                if (Model.PickupInStore && Model.PickupAddress != null)
+                {
+                    <div class="col-md-6">
+                        <div class="row">
+                            <table class="table table-hover table-bordered" style="max-width: 500px;">
+                                <tr>
+                                    <th colspan="2">
+                                        <strong>Pickup point address</strong>
+                                    </th>
+                                </tr>
+                                @if (!string.IsNullOrEmpty(Model.PickupAddress.Address1))
+                                {
+                                    <tr>
+                                        <td>
+                                            Address 1
+                                        </td>
+                                        <td>
+                                            @Model.PickupAddress.Address1
+                                        </td>
+                                    </tr>
+                                }
+                                @if (!string.IsNullOrEmpty(Model.PickupAddress.City))
+                                {
+                                    <tr>
+                                        <td>
+                                            City
+                                        </td>
+                                        <td>
+                                            @Model.PickupAddress.City
+                                        </td>
+                                    </tr>
+                                }
+                                @if (!string.IsNullOrEmpty(Model.PickupAddress.County))
+                                {
+                                    <tr>
+                                        <td>
+                                            County / region
+                                        </td>
+                                        <td>
+                                            @Model.PickupAddress.County
+                                        </td>
+                                    </tr>
+                                }
+                                @if (!string.IsNullOrEmpty(Model.PickupAddress.CountryName))
+                                {
+                                    <tr>
+                                        <td>
+                                            Country
+                                        </td>
+                                        <td>
+                                            @Model.PickupAddress.CountryName
+                                        </td>
+                                    </tr>
+                                }
+                                @if (!string.IsNullOrEmpty(Model.PickupAddress.ZipPostalCode))
+                                {
+                                    <tr>
+                                        <td>
+                                            Zip / postal code
+                                        </td>
+                                        <td>
+                                            @Model.PickupAddress.ZipPostalCode
+                                        </td>
+                                    </tr>
+                                }
+                                <tr>
+                                    <td colspan="2">
+                                        <img alt="google maps" src="@Url.Content("~/css/admin/images/google-maps.gif")" />
+                                        <a href="@Html.Raw(Model.PickupAddressGoogleMapsUrl)" style="margin-bottom: 10px;" target="_blank">View address on Google Maps</a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="col-md-6">
+                    Shipping not required
+                </div>
+            }
+        </div>
+    </div>
+    @if (Model.IsShippable)
+    {
+        <div class="panel panel-default sub-panel">
+            <div class="panel-body">
+                <div class="form-group">
+                    <div class="col-md-3">
+                        <nop-label asp-for="ShippingMethod" />
+                    </div>
+                    <div class="col-md-9">
+                        @if (!Model.IsLoggedInAsVendor)
+                        {
+                            @*@Html.Resource(@<script type="text/javascript">
+                                $(document).ready(function () {
+                                    toggleEditShippingMethod(false);
+                                });
+
+                                function toggleEditShippingMethod(editmode) {
+                                    if (editmode) {
+                                        $('#lblShippingMethod').hide();
+                                        $('#divShippingMethod').show();
+                                        $('#btnEditShippingMethod').hide();
+                                        $('#btnSaveShippingMethod').show();
+                                        $('#btnCancelShippingMethod').show();
+                                    } else {
+                                        $('#lblShippingMethod').show();
+                                        $('#divShippingMethod').hide();
+                                        $('#btnEditShippingMethod').show();
+                                        $('#btnSaveShippingMethod').hide();
+                                        $('#btnCancelShippingMethod').hide();
+                                    }
+                                }
+                            </script>, "js")
+                            <div class="input-group input-group-short">
+                                <div id="lblShippingMethod" class="input-group-text">
+                                    <div class="form-text-row">@Model.ShippingMethod</div>
+                                </div>
+                                <div id="divShippingMethod">
+                                    <nop-editor asp-for="ShippingMethod" />
+                                </div>
+                                <span class="input-group-btn">
+                                    <button type="submit" onclick="toggleEditShippingMethod(true);return false;" id="btnEditShippingMethod" class="btn btn-primary">
+                                        Edit
+                                    </button>
+
+                                    <button type="submit" id="btnSaveShippingMethod" name="save-shipping-method" class="btn btn-primary">
+                                        Save
+                                    </button>
+                                    <nop-action-confirmation asp-button-id="btnSaveShippingMethod" />
+
+                                    <button type="submit" onclick="toggleEditShippingMethod(false);return false;" id="btnCancelShippingMethod" class="btn bg-teal">
+                                        Cancel
+                                    </button>
+                                </span>
+                            </div>*@
+                            <div id="lblShippingMethod">
+                                <div class="form-text-row">@Model.ShippingMethod</div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div id="lblShippingMethod">
+                                <div class="form-text-row">@Model.ShippingMethod</div>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                @if (!Model.IsLoggedInAsVendor)
+                {
+                    <div class="form-group">
+                        <div class="col-md-3">
+                            <nop-label asp-for="ShippingStatus" />
+                        </div>
+                        <div class="col-md-9">
+                            <div class="form-text-row">@Model.ShippingStatus.Replace("NotYetShipped", "Not yet shipped").Replace("ShippingNotRequired", "Shipping not required").Replace("PartiallyShipped", "Partially shipped")</div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="panel panel-default sub-panel">
+            <div class="panel-heading">
+                Shipments
+            </div>
+            <div class="panel-body">
+                @await Html.PartialAsync("Table", new DataTablesModel
+                {
+                    Name = "shipments-grid",
+                    UrlRead = new DataUrl("ShipmentsByOrder", "Order", new RouteValueDictionary { [nameof(OrderShipmentSearchModel.OrderId)] = Model.Id }),
+                    PrimaryKeyColumn = nameof(ShipmentModel.Id),
+                    Length = Model.OrderShipmentSearchModel.PageSize,
+                    LengthMenu = Model.OrderShipmentSearchModel.AvailablePageSizes,
+                    ColumnCollection = new List<ColumnProperty>
+                    {
+                        new ColumnProperty(null)
+                        {
+                            Render = new RenderChildCaret(),
+                            Width = "5",
+                            Searchable = false,
+                            ClassName =  InovatiqaColumnClassDefaults.ChildControl
+                        },
+                        new ColumnProperty(nameof(ShipmentModel.Id))
+                        {
+                            Title = "Shipment #",
+                            Width = "50"
+                        },
+                        new ColumnProperty(nameof(ShipmentModel.CustomOrderNumber))
+                        {
+                            Title = "Order #",
+                            Width = "100"
+                        },
+                        new ColumnProperty(nameof(ShipmentModel.TrackingNumber))
+                        {
+                            Title = "Tracking number",
+                            Width = "100"
+                        },new ColumnProperty(nameof(ShipmentModel.TotalWeight))
+                        {
+                            Title = "Total weight",
+                            Width = "100",
+                            Visible = false
+                        },
+                        new ColumnProperty(nameof(ShipmentModel.ShippedDate))
+                        {
+                            Title = "Date shipped",
+                            Width = "100"
+                        },
+                        new ColumnProperty(nameof(ShipmentModel.DeliveryDate))
+                        {
+                            Title = "Date delivered",
+                            Width = "100",
+                            Visible = false
+                        },
+                        new ColumnProperty(nameof(ShipmentModel.Id))
+                        {
+                            Title = "View",
+                            Width = "50",
+                            Render = new RenderButtonView(new DataUrl("~/Admin/Order/ShipmentDetails/"))
+                        },
+                        new ColumnProperty(nameof(OrderModel.Id))
+                        {
+                            Title = "Invoice (PDF)",
+                            Width = "100",
+                            ClassName = InovatiqaColumnClassDefaults.Button,
+                            Render = new RenderButtonViewAjax("Invoice (PDF)")
+                        }
+                    },
+                    ChildTable = new DataTablesModel
+                    {
+                        Name = "shipment-items-grid",
+                        UrlRead = new DataUrl("ShipmentsItemsByShipmentId", "Order", null),
+                        IsChildTable = true,
+                        Length = Model.OrderShipmentSearchModel.PageSize,
+                        LengthMenu = Model.OrderShipmentSearchModel.AvailablePageSizes,
+                        Filters = new List<FilterParameter>
+                        {
+                            new FilterParameter(nameof(ShipmentItemSearchModel.ShipmentId), nameof(ShipmentModel.Id), true)
+                        },
+                        ColumnCollection = new List<ColumnProperty>
+                        {
+                            new ColumnProperty(nameof(ShipmentItemModel.ProductName))
+                            {
+                                Title = "Product",
+                                Width = "400"
+                            },
+                            new ColumnProperty(nameof(ShipmentItemModel.ShippedFromWarehouse))
+                            {
+                                Title = "Warehouse",
+                                Width = "150"
+                            },
+                            new ColumnProperty(nameof(ShipmentItemModel.QuantityInThisShipment))
+                            {
+                                Title = "Qty shipped",
+                                Width = "150"
+                            },
+                            new ColumnProperty(nameof(ShipmentItemModel.ItemWeight))
+                            {
+                                Title = "Item weight",
+                                Width = "150"
+                            },
+                            new ColumnProperty(nameof(ShipmentItemModel.ItemDimensions))
+                            {
+                                Title = "Item dimensions",
+                                Width = "150"
+                            }
+                        }
+                    }
+                })
+            </div>
+            
+            @if (Model.CanAddNewShipments)
+            {
+                <div class="panel-footer">
+                    <button type="submit" id="btnAddNewShipment" name="btnAddNewShipment" onclick="javascript:setLocation('@(Url.Action("AddShipment", "Order", new { id = Model.Id }))'); return false;" class="btn btn-primary">
+                        Add shipment
+                    </button>
+                </div>
+            }
+        </div>
+    }
+</div>
+<script>
+    function table_getdata_shipments_grid(data) {
+        var shipmentId = data;
+        $('#shipments-grid > tbody > tr').each(function (index, tr) {
+            if ($(this).find('td').eq(1).text() == shipmentId) {
+                var orderId = $(this).find('td').eq(2).text();
+                var redirectURL = '/Admin/Order/PdfInvoice?orderId=' + orderId + '&shipmentId=' + shipmentId;
+                window.open(redirectURL)
+            }
+        });
+    }
+</script>
