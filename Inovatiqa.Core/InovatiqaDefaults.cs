@@ -37,11 +37,11 @@ namespace Inovatiqa.Core
         public static int StoreId => 0;
 
         public static int PrimaryStoreId => 1;
-        //public static string StoreUrl => "https://app-inovatiqa-prod-01.azurewebsites.net/";
+        public static string StoreUrl => "https://app-inovatiqa-prod-01.azurewebsites.net/";
 
         //public static string StoreUrl => "https://inovatiqadev.azurewebsites.net/";
 
-        public static string StoreUrl => "https://localhost:44355/";
+        //public static string StoreUrl => "https://localhost:44355/";
 
         //public static string StoreUrl => "https://inovatiqa-stg.azurewebsites.net/";
 
