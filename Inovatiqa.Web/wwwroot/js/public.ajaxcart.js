@@ -341,7 +341,7 @@
     },
 
     success_process: function (response) {
-        console.log(response);
+        //console.log(response);
         AjaxCart.displayProductInflyout(response.flyout);
         if (window.location.href.indexOf("cart") != -1)
             location.reload();
@@ -386,9 +386,10 @@
             }
             return false;
         }
-        if (response.samePageRedirect) {
-            window.location.reload();
-        }
+        //commented out because its reload on compare and add wishlist
+        //if (response.samePageRedirect) {
+        //    window.location.reload();
+        //}
         if (response.redirect) {
             location.href = response.redirect;
             return true;

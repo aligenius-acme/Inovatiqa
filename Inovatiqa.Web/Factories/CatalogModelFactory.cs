@@ -32,6 +32,7 @@ namespace Inovatiqa.Web.Factories
         private readonly IProductAttributeService _productAttributeService;
         private readonly ILoggerService _loggerService;
         private readonly IWorkContextService _workContextService;
+        private readonly ICompareProductsService _compareProductsService;
 
 
         #endregion
@@ -47,7 +48,8 @@ namespace Inovatiqa.Web.Factories
             IElasticClient elasticClient,
             IProductAttributeService productAttributeService,
             ILoggerService loggerService,
-            IWorkContextService workContextService)
+            IWorkContextService workContextService,
+            ICompareProductsService compareProductsService)
         {
             _categoryService = categoryService;
             _urlRecordService = urlRecordService;
@@ -58,7 +60,8 @@ namespace Inovatiqa.Web.Factories
             _client = elasticClient;
             _productAttributeService = productAttributeService;
             _loggerService = loggerService;
-            _workContextService = workContextService; 
+            _workContextService = workContextService;
+            _compareProductsService = compareProductsService;
         }
 
         #endregion
@@ -1465,11 +1468,12 @@ namespace Inovatiqa.Web.Factories
             //    }
             //}
 
-            ///////
+            var ComprisonList = _compareProductsService.GetComparedProducts();
             var list = new List<KeyValuePair<string, int>>();
             foreach (var cat in elasticProducts.Documents)
             {
-                foreach(var ccat in cat.ProductCategories.Select(s => s.childCategory))
+                cat.IsInCompareList = ComprisonList.Where(prod => prod.Id == cat.Id).ToList().Count > 0;
+                foreach (var ccat in cat.ProductCategories.Select(s => s.childCategory))
                 {
                     list.AddRange(ccat.Select(s => new KeyValuePair<string, int>(s.Key, s.Value)).ToList());
                 }

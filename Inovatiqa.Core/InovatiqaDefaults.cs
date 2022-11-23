@@ -698,7 +698,7 @@ namespace Inovatiqa.Core
 
         public static bool ShowOnForgotPasswordPage => false;
 
-        public static string CaptchaSiteKey => "REDACTED_RECAPTCHA_SITE_KEY_OLD";
+        public static string CaptchaSiteKey => "REDACTED_RECAPTCHA_SITE_KEY";
 
         public static string CaptchaPrivateKey => "REDACTED_RECAPTCHA_PRIVATE_KEY";
 
@@ -1089,7 +1089,7 @@ namespace Inovatiqa.Core
         #region "Shipping Origin Address"
 
         // Always query Setting Table to look for shippingsettings.shippingoriginaddressid and update Id below.
-        public const int ShippingOriginAddressId = 5;
+        public const int ShippingOriginAddressId = 1;
 
         #endregion
 

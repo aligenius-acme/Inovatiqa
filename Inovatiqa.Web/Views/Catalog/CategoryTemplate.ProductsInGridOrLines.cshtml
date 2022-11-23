@@ -423,7 +423,7 @@
                         <div class="col-md-8  col-xs-12">
                             <div class="row">
                                 <div class="col-md-10 first_a  ">
-                                    <a href="/compareproducts" class="compare pointer"><img src="~/images/UIComponents/ic-actions-check2.png" width="20" height="20" /> <span class="comp-button"> Compare Selected Items ( @Model.Products.Where(product => product.IsInCompareList).ToList().Count ) </span></a>
+                                    <a href='@Url.RouteUrl("CompareProducts")' class="compare pointer"><img src="~/images/UIComponents/ic-actions-check2.png" width="20" height="20" /> <span class="comp-button"> Compare Selected Items ( @Model.Products.Where(product => product.IsInCompareList).ToList().Count ) </span></a>
                                     <a onclick="AjaxCart.clearcomparelistwithoutredirect('@Url.RouteUrl("ClearCompareListWithoutRedirect")');return false;" style="cursor: pointer;"><img src="~/images/UIComponents/ic-actions-remove.svg" /> Clear list</a>
                                 
                                 </div>
