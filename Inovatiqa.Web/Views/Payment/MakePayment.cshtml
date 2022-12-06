@@ -9,23 +9,13 @@
     @Html.Resource(@<script src="@Url.Content("~/js/public.accordion.js")" type="text/javascript"></script>, "js")
     @Html.Resource(@<script src="@Url.Content("~/js/public.onepagecheckout.js")" type="text/javascript"></script>, "js")
     @Html.Resource(@<script src="@Url.Content(Model.WebPaymentsSdkUrl)" type="text/javascript"></script>, "js")
-    @Html.Resource(@<script type="text/javascript">
-
-                                                                                        window.applicationId = "@Model.ApplicationId";
-                                                                                        window.locationId = "@Model.LocationId";
-                                                                                        window.country = "@Model.Country";
-                                                                                        window.currency = "@Model.Currency";
-                                                                                        window.amount = "@Model.AmountToPay";
-                                                                                        window.invoiceIds = "@Model.InvoiceIds";
-                                                                                        window.AmountsToPay = "@Model.invoiceIdsAmounts";
-
-        </script>, "js")
+    @Html.Resource(@<script type="text/javascript"></script>, "js")
 
     @Html.Resource(@<script type="text/javascript" src="@Url.Content("~/js/sq-ach.js")"></script>, "js")
     @Html.Resource(@<script type="text/javascript" src="@Url.Content("~/js/sq-apple-pay.js")"></script>, "js")
     @Html.Resource(@<script type="text/javascript" src="@Url.Content("~/js/sq-google-pay.js")"></script>, "js")
     @Html.Resource(@<script type="text/javascript" src="@Url.Content("~/js/sq-card-pay.js")"></script>, "js")
-    @Html.Resource(@<script type="text/javascript" src="@Url.Content("~/js/sq-payment-flow.js")"></script>, "js")
+    //@Html.Resource(@<script type="text/javascript" src="@Url.Content("~/js/sq-payment-flow.js")"></script>, "js")
 
     @if (InovatiqaDefaults.UseSandbox)
     {
@@ -88,151 +78,228 @@
     .square-input--error {
         outline: #e4434b;
     }
+    .sq-card-iframe-container{
+        height : 48px !important;
+    }
 </style>
 
-
-<script type="text/javascript">
-        $(document).ready(function () {
-            $('#@Html.IdFor(model => model.StoredCardId)').on('change', toggleStoredCard);
-            toggleStoredCard();
-
-            var submitForm = false;
-            var onePageCheckout = @InovatiqaDefaults.OnePageCheckoutEnabled.ToString().ToLower();
-            var use3ds = @InovatiqaDefaults.Use3ds.ToString().ToLower();
-
-            var paymentForm = new SqPaymentForm({
-                applicationId: '@InovatiqaDefaults.ApplicationId',
-                locationId: '@InovatiqaDefaults.LocationId',
-                inputClass: 'square-input',
-                inputStyles: [{
-                    fontSize: '15px'
-                }],
-                cardNumber: {
-                    elementId: 'square-card-number',
-                    placeholder: '•••• •••• •••• ••••'
-                },
-                expirationDate: {
-                    elementId: 'square-expiration-date',
-                    placeholder: 'MM/YY'
-                },
-                cvv: {
-                    elementId: 'square-cvv',
-                    placeholder: 'CVV'
-                },
-                postalCode: {
-                    elementId: 'square-postal-code'
-                },
-                callbacks: {
-                    cardNonceResponseReceived: function (errors, nonce, cardData) {
-                        if (errors) {
-                            errors.forEach(function (error) {
-                                var currentErrorvalue = $('#@Html.IdFor(model => model.Errors)').val();
-                                $('#@Html.IdFor(model => model.Errors)').val(currentErrorvalue + '|' + error.message);
-                            });
-                            paymentForm.destroy();
-                            paymentForm = null;
-                            submitForm = true;
-                            $('input.payment-info-next-step-button').trigger("click");
-                            PaymentInfoSecond.save();
-                        }
-                        else if (use3ds) {
-                            verifyBuyer(nonce);
-                        }
-                        else {
-                            $('#@Html.IdFor(model => model.CardNonce)').val(nonce);
-                            submitForm = true;
-                            $('input.payment-info-next-step-button').trigger("click");
-                            PaymentInfoSecond.save();
-                        }
-                    },
-
-                    unsupportedBrowserDetected: function () {
-                        console.log('Browser is not supported');
-                    },
-
-                    paymentFormLoaded: function () {
-                        if (paymentForm) {
-                            paymentForm.setPostalCode('@Model.PostalCode');
-                        }
-                    }
-                }
-            });
-            if (paymentForm) {
-                paymentForm.build();
-            }
-
-            $('input.payment-info-next-step-button').on('click', function (data) {
-                if (!submitForm) {
-                    if (paymentForm) {
-                        var selectedStoredCardId = $('#@Html.IdFor(model => model.StoredCardId)').val();
-                        if ((!selectedStoredCardId || selectedStoredCardId == '@(Guid.Empty.ToString())')) {
-                            paymentForm.requestCardNonce();
-                            document.getElementById('CardNonce').value = nonce;
-                            return false;
-                        } else if (use3ds) {
-                            verifyBuyer(selectedStoredCardId);
-                            return false;
-                        } else if (onePageCheckout) {
-                            PaymentInfoSecond.save();
-                        }
-                    }
-                    PaymentInfoSecond.save();
-                }
-                else if (onePageCheckout) {
-                    submitForm = false;
-                    PaymentInfoSecond.save();
-                }
-            });
-
-            function verifyBuyer(nonce) {
-                document.getElementById('CardNonce').value = nonce;
-                const verificationDetails = {
-                    intent: 'STORE',
-                    amount: '@Model.AmountToPay',
-                    currencyCode: '@Model.Currency',
-                    billingContact: {
-                        givenName: '@Model.BillingFirstName',
-                        familyName: '@Model.BillingLastName',
-                        email: '@Model.BillingEmail',
-                        country: '@Model.BillingCountry',
-                        region: '@Model.BillingState',
-                        city: '@Model.BillingCity',
-                        postalCode: '@Model.BillingPostalCode'
-                    }
-                };
-                paymentForm.requestCardNonce();
-                paymentForm.verifyBuyer(nonce, verificationDetails,
-                    function(err, verificationResult) {
-                        if (err) {
-                            $('#@Html.IdFor(model => model.Errors)').val($('#@Html.IdFor(model => model.Errors)').val() + '|' + err.message);
-                            paymentForm.destroy();
-                            paymentForm = null;
-                        }
-                        else {
-                            if (nonce.indexOf('cnon:') === 0) {
-                                $('#@Html.IdFor(model => model.CardNonce)').val(nonce);
-                            }
-
-                            $('#@Html.IdFor(model => model.Token)').val(verificationResult.token);
-                        }
-                        submitForm = true;
-                        $('input.payment-info-next-step-button').trigger("click");
-                    }
-                );
-            }
+<script>
+    async function initializeCard(payments){
+        const card = await payments.card({
+            "postalCode" : "@Model.BillingPostalCode",
         });
+        await card.attach('#card-container');
+        return card;
+    }
 
+    async function initializeACH(payments) {
+        const ach = await payments.ach();
+        return ach;
+    }
 
+    async function tokenize(paymentMethod, options = {}) {
+        displayAjaxLoading(false);
+        const tokenResult = await paymentMethod.tokenize(options);
+        if (tokenResult.status === 'OK') {
+            return tokenResult.token;
+        }
+        else {
+            let errorMessage = `Tokenization failed-status: ${tokenResult.status}`;
+            if (tokenResult.errors) {
+                errorMessage += ` and errors: ${JSON.stringify(
+                    tokenResult.errors
+                )}`;
+            }
+            throw new Error(errorMessage);
+        }
+    }
 
-        function toggleStoredCard() {
-            var selectedStoredCardId = $('#@Html.IdFor(model => model.StoredCardId)').val();
-            if (!selectedStoredCardId || selectedStoredCardId == '@(Guid.Empty.ToString())') {
-                $('#square-card-details').show();
-            } else {
-                $('#square-card-details').hide();
+    async function createPayment(token) {
+        let showMessage = document.getElementById('payment-flow-message');
+        try {
+            $.ajax({
+                url: 'process-payment',
+                data: { Token: token, Amount: @Model.AmountToPay , InvoiceIds: '@Model.InvoiceIds', AmountsToPay: '@Model.invoiceIdsAmounts' },
+                async: false,
+                cache: false,
+                success: function(data) {
+                    if (data.errors && data.errors.length > 0) {
+                        if (data.errors[0].detail) {
+                            displayAjaxLoading(false);
+                            showMessage.classList.add('alert-danger');
+                            showMessage.innerText = data.errors[0].detail;
+                        }
+                        else {
+                            displayAjaxLoading(false);
+                            showMessage.classList.add('alert-danger');
+                            showMessage.innerText = 'Payment Failed!';
+                        }
+                    }
+                    else {
+                        displayAjaxLoading(false);
+                        showMessage.classList.add('alert-success');
+                        showMessage.innerText = 'Payment Successful!';
+                        setTimeout(window.location.href = "/Open-Invoices" , 5000);
+                    }
+                },
+                error: function(error) {
+                    displayAjaxLoading(false);
+                    console.log(error);
+                    alert('Payment Processing Failed');
+                }
+            });
+        }
+        catch (error) {
+            console.error('Error:', error);
+        }
+    }
+
+    async function verifyBuyer(nonce, payments) {
+        const verificationDetails = {
+            intent: 'STORE',
+            amount: '@Model.AmountToPay',
+            currencyCode: '@Model.Currency',
+            billingContact: {
+                givenName: '@Model.BillingFirstName',
+                familyName: '@Model.BillingLastName',
+                email: '@Model.BillingEmail',
+                country: '@Model.BillingAddress.County',
+                region: '@Model.BillingAddress.StateProvinceName',
+                city: '@Model.BillingCity',
+                postalCode: '@Model.BillingPostalCode'
+            }
+        };
+        const verificationResult = await payments.verifyBuyer(nonce, verificationDetails);
+        return verificationResult.token;
+    }
+
+    function displayPaymentResults(status) {
+        const statusContainer = document.getElementById(
+            'payment-status-container'
+        );
+        if (status === 'SUCCESS') {
+            //statusContainer.classList.remove('is-failure');
+            //statusContainer.classList.add('is-success');
+        }
+        else{
+            //statusContainer.classList.remove('is-success');
+            //statusContainer.classList.add('is-failure');
+        }
+        //statusContainer.style.visibility = 'visible';
+    }
+
+    function getBillingContact(form) {
+       const formData = new FormData(form);
+        //It is expected that the developer performs form field validation
+        //which does not occur in this example.
+       return {
+         givenName: formData.get('givenName'),
+         familyName: formData.get('familyName'),
+       };
+     }
+
+    function getACHOptions(form) {
+       const billingContact = getBillingContact(form);
+       const accountHolderName = `${billingContact.givenName} ${billingContact.familyName}`;
+
+       return { accountHolderName };
+     }
+
+    document.addEventListener('DOMContentLoaded', async function() {
+        $('#@Html.IdFor(model => model.StoredCardId)').on('change', toggleStoredCard);
+        toggleStoredCard();
+        if (!window.Square) {
+            throw new Error('Square.js failed to load properly');
+        }
+
+        const payments = window.Square.payments('@InovatiqaDefaults.ApplicationId', '@InovatiqaDefaults.LocationId');
+        let card;
+        let ach;
+        try {
+            card = await initializeCard(payments);
+            ach = await initializeACH(payments);
+        }
+        catch (e) {
+            console.error('Initializing Card failed', e);
+            return;
+        }
+        async function handlePaymentMethodSubmission(event, paymentMethod, paymentMethodName, options) {
+            const use3DSecure = @InovatiqaDefaults.Use3ds.ToString().ToLower()
+                event.preventDefault();
+            try {
+                cardButton.disabled = true;
+                achButton.disabled = true;
+                 //get Card Nonce
+                const token = await tokenize(paymentMethod, options);
+                if (paymentMethodName === 'ach') {
+                    displayAjaxLoading(true);
+                    await createPayment(token);
+                }
+                else if (paymentMethodName === 'card'){
+                    $('#@Html.IdFor(model => model.CardNonce)').val(token);
+                    // verify Buyer and add token
+                    if (use3DSecure) {
+                        const verificationResult = await verifyBuyer(token, payments);
+                        $('#@Html.IdFor(model => model.Token)').val(verificationResult);
+                    }
+                    // save payment
+                    PaymentInfoSecond.save();
+                    displayPaymentResults('SUCCESS');
+                    console.debug('Payment Success', paymentResults);
+                }
+            }
+            catch (e) {
+                cardButton.disabled = false;
+                displayPaymentResults('FAILURE');
+                console.error(e.message);
             }
         }
+
+        const cardButton = document.getElementById('card-button');
+        //$('#card-button').removeAttr('onclick');
+        cardButton.addEventListener('click', async function(event) {
+            await handlePaymentMethodSubmission(event, card, 'card');
+        });
+
+        const achButton = document.getElementById('ach-button');
+        achButton.addEventListener('click', async function (event) {
+            displayAjaxLoading(true);
+            const paymentForm = document.getElementById('payment-form');
+            const achOptions = getACHOptions(paymentForm);
+            await handlePaymentMethodSubmission(event, ach, 'ach', achOptions);   //tokenize
+             //ACH with the `accountHolderName` as an option.
+        });
+
+        ach.addEventListener('ontokenization', async function(event) {
+            const { tokenResult, error } = event.verificationDetails;
+            if (error) {
+                cardButton.disabled = false;
+                achButton.disabled = false;  //Add this line.
+                 //add code here to handle errors
+            }
+            else if (tokenResult.status === 'OK') {
+                try {
+                    const paymentResults = await createPayment(token, payments);
+                }
+                catch (e) {
+                    cardButton.disabled = false;
+                    achButton.disabled = false;
+                    // add code here to handle errors
+                }
+            }
+        });
+    });
+
+    function toggleStoredCard() {
+        var selectedStoredCardId = $('#@Html.IdFor(model => model.StoredCardId)').val();
+        if (!selectedStoredCardId || selectedStoredCardId == '@(Guid.Empty.ToString())') {
+            $('#square-card-details').show();
+        } else {
+            $('#square-card-details').hide();
+        }
+    }
 </script>
+
 
 @await Component.InvokeAsync("DashboardBlueBand")
 @*@await Html.PartialAsync("_AlertBox");*@
@@ -580,7 +647,6 @@
                     </div>
                 </div>
 
-
                 <div class="col-md-9 newcustomer-area billing_chang_addres mt19">
                     <div class="accountform-area font_lato" id="account-deatil">
                         <div class="form-title">
@@ -591,23 +657,23 @@
                             <div class="row flex_col align_center">
                                 @if (!Model.IsGuest && Model.StoredCards.Any())
                                 {
-                                <div class="col-md-3 col-sm-3 col-xs-12">
-                                    <div class="form-group">
-                                        <label class="">Saved Cards</label>
+                                    <div class="col-md-3 col-sm-3 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="">Saved Cards</label>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-md-9 col-sm-9 col-xs-12">
-                                    <div class="form-group">
-                                        <form action="/MakingPayment" method="post">
-                                            <select asp-for="StoredCardId" asp-items="Model.StoredCards" class="square-input form-control"></select>
-                                            <input type="hidden" name="invoiceIdsAmounts" value="@Model.invoiceIdsAmounts" />
-                                            <input type="hidden" name="AmountToPay" value="@Model.AmountToPay" />
-                                            <input type="hidden" name="OrderId" id="OrderId" value="@Model.OrderIds" />
-                                            <input type="hidden" name="InvoiceIds" id="InvoiceIds" value="@Model.InvoiceIds" />
-                                            <button type="submit" hidden id="btnsubmit"></button>
-                                        </form>
+                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                        <div class="form-group">
+                                            <form action="/MakingPayment" method="post">
+                                                <select asp-for="StoredCardId" asp-items="Model.StoredCards" class="square-input form-control"></select>
+                                                <input type="hidden" name="invoiceIdsAmounts" value="@Model.invoiceIdsAmounts" />
+                                                <input type="hidden" name="AmountToPay" value="@Model.AmountToPay" />
+                                                <input type="hidden" name="OrderId" id="OrderId" value="@Model.OrderIds" />
+                                                <input type="hidden" name="InvoiceIds" id="InvoiceIds" value="@Model.InvoiceIds" />
+                                                <button type="submit" hidden id="btnsubmit"></button>
+                                            </form>
+                                        </div>
                                     </div>
-                                </div>
                                 }
                                 <div class="col-md-3 col-sm-3 col-xs-12">
                                     <div class="form-group">
@@ -624,7 +690,59 @@
                                     </div>
                                 </div>
                                 <div id="ACHBankPayment" hidden>
-                                    <form id="fast-checkout">
+                                    <form id="payment-form">
+                                        <div class="col-md-3 col-sm-3 col-xs-12"></div>
+                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                            <span id="payment-flow-message" class="alert"></span>
+                                            <span id="ach-message" class="alert"></span>
+                                        </div>
+                                        <div class="col-md-3 col-sm-3 col-xs-12">
+                                            <div class="form-group" style="line-height:55px;">
+                                                <label for="ach-account-holder-name">First Name</label>
+                                                <label for="ach-account-holder-name">Last Name</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                            <div class="form-group">
+                                                <fieldset class="buyer-inputs">
+                                                    <input
+                                                     type="text"
+                                                     class="form-control"
+                                                     autocomplete="given-name"
+                                                     aria-required="true"
+                                                     aria-label="First Name"
+                                                     required="required"
+                                                     value="@Model.BillingFirstName" 
+                                                     placeholder="Given Name"
+                                                     name="givenName"
+                                                     spellcheck="false"
+                                                   />
+                                                   <br />
+                                                   <input
+                                                     type="text"
+                                                     class="form-control"
+                                                     autocomplete="family-name"
+                                                     aria-required="true"
+                                                     aria-label="Last Name"
+                                                     required="required"
+                                                     value="@Model.BillingLastName"
+                                                     placeholder="Family Name"
+                                                     name="familyName"
+                                                     spellcheck="false"
+                                                   />
+                                                </fieldset>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3 col-sm-3 col-xs-12"></div>
+                                        <div class="col-md-9 col-sm-9 col-xs-12">
+                                            <div class="form-group font_roboto">
+                                                <button type="button" class="btn btn-signin" id="ach-button">Pay with Bank Account</button>
+                                            </div>
+                                        </div>
+                                    
+                                     </form> 
+
+                                    @*<form id="fast-checkout">
                                         <div class="col-md-3 col-sm-3 col-xs-12"></div>
                                         <div class="col-md-9 col-sm-9 col-xs-12">
                                             <span id="payment-flow-message" class="alert"></span>
@@ -648,81 +766,31 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </form>
+                                    </form>*@
                                 </div>
-                                <div id="Carddiv" style="display: none;">
-                                    <form id="co-payment-info-form" method="post">
-                                        <input type="hidden" asp-for="CardNonce" />
-                                        <input type="hidden" asp-for="Errors" />
-                                        <input type="hidden" asp-for="Token" />
-                                        @*<button id="btnsubmitnew" hidden type="submit"> </button>*@
-                                    </form>
-                                    <div id="square-card-details">
-                                        <div>
-                                            <div class="col-md-3 col-sm-3 col-xs-12">
-                                                <div class="form-group">
-                                                    <label for="square-card-number">Card number</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-9 col-sm-9 col-xs-12">
-                                                <div class="form-group">
-                                                    <div id="square-card-number" style="width:165px;"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <div class="col-md-3 col-sm-3 col-xs-12">
-                                                <div class="form-group">
-                                                    <label for="square-card-number">Expiration Date</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-9 col-sm-9 col-xs-12">
-                                                <div class="form-group">
-                                                    <div id="square-expiration-date"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <div class="col-md-3 col-sm-3 col-xs-12">
-                                                <div class="form-group">
-                                                    <label for="square-card-number">CVV Code</label>
-                                                </div>
-                                            </div>
-                                             <div class="col-md-9 col-sm-9 col-xs-12">
-                                                <div class="form-group">
-                                                    <div id="square-cvv" style="width:60px;"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <div class="col-md-3 col-sm-3 col-xs-12">
-                                                <div class="form-group">
-                                                    <label asp-for="PostalCode">Postal code</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-9 col-sm-9 col-xs-12">
-                                                <div class="form-group">
-                                                    <div id="square-postal-code"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                            </div>
+                            <div id="Carddiv" hidden style="height:50px;">
+                                <form id="co-payment-info-form" method="post">
+                                    <input type="hidden" asp-for="CardNonce" />
+                                    <input type="hidden" asp-for="Errors" />
+                                    <input type="hidden" asp-for="Token" />
+                                </form>
+                                <div id="square-card-details" style="height:50px;">
+                                    <div id="card-container"></div>
                                     <div id="payment_info" class="tab-section">
                                         <div id="checkout-step-payment-info" class="step a-item">
-                                            @*<form id="co-payment-info-form">
-                                            </form>*@
                                             @Html.Resource(@<script type="text/javascript">
-                                                                                        PaymentInfoSecond.init('#co-payment-info-form', '@(InovatiqaDefaults.StoreUrl)Payment/SavePaymentInfo/');
-                                                                                    </script>, "js")
+                                                                                                                            PaymentInfoSecond.init('#co-payment-info-form', '@(InovatiqaDefaults.StoreUrl)Payment/SavePaymentInfo/');
+                                                                                                                        </script>, "js")
                                             <div class="buttons" id="payment-info-buttons-container">
                                                 <div class="col-md-8 col-sm-8 col-xs-12">
-                                                <div class="form-group font_lato">
-                                                    <a class="btn primary edit font_roboto" style="margin-top: 0px;" onclick="Cancelbtn();">Cancel</a>
-                                                </div>
+                                                    <div class="form-group font_lato">
+                                                        <a class="btn primary edit font_roboto" style="margin-top: 0px;" onclick="Cancelbtn();">Cancel</a>
+                                                    </div>
                                                 </div>
                                                 <div class="col-md-4 col-sm-4 col-xs-12">
                                                     <div class="form-group font_lato">
-                                                        <input type="button" class="btn btn-signin payment-info-next-step-button" value="Save Card" />
+                                                        <input type="button" style="max-width:150%;" id="card-button" class="btn btn-signin payment-info-next-step-button" value="Save Card" />
                                                     </div>
                                                 </div>
                                                 <br />

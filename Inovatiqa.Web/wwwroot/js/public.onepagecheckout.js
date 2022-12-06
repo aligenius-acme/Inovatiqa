@@ -483,7 +483,6 @@ var PaymentInfoSecond = {
 
     save: function () {
         if (Checkout.loadWaiting !== false) return;
-
         Checkout.setLoadWaiting('payment-info');
         $.ajax({
             cache: false,

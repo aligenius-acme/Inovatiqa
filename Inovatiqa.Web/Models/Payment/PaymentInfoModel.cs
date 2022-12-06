@@ -2,6 +2,9 @@
 using Inovatiqa.Web.Models.Common;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Square;
+using Square.Models;
+using Square.Exceptions;
+using System.Threading.Tasks;
 using Inovatiqa.Core;
 namespace Inovatiqa.Web.Models.Payment
 {

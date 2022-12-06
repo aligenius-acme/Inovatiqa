@@ -10,10 +10,10 @@ async function SquarePaymentFlow() {
   GooglePay(document.getElementById('google-pay-button'));
 
   // Create ACH payment
-  ACHPay(document.getElementById('ach-button'));
+  /*ACHPay(document.getElementById('ach-button'));*/
 }
 
-window.payments = Square.payments(window.applicationId, window.locationId);
+window.payments = Square.payments('sandbox-sq0idb-W03tSWuQwZpjRo6rl3rSxg', 'L99HYK1A9TSV8');
 
 window.paymentFlowMessageEl = document.getElementById('payment-flow-message');
 
@@ -29,7 +29,7 @@ window.showError = function(message) {
   window.paymentFlowMessageEl.innerText = message;
 }
 
-    window.createPayment = async function (token) {
+window.createPayment = async function (token) {
         const dataJsonString = JSON.stringify({
             token
         });

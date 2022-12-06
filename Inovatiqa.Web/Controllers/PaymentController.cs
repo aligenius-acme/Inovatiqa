@@ -20,19 +20,22 @@ using Inovatiqa.Web.Models.Common;
 using Inovatiqa.Services.Messages.Interfaces;
 using System.Linq;
 using Microsoft.AspNetCore.Hosting;
-using Square.Exceptions;
 using System.Threading.Tasks;
 using System.IO.Compression;
 using System.Net.Http;
 using System.Text;
 using System.Net;
 using Newtonsoft.Json.Linq;
+using Square;
+using Square.Models;
+using Square.Exceptions;
 
 namespace Inovatiqa.Web.Controllers
 {
     public class PaymentController : BasePublicController
     {
         #region Fields
+        //private static ISquareClient _client;
 
         private readonly ICustomerService _customerService;
         private readonly IOrderModelFactory _orderModelFactory;
@@ -120,6 +123,31 @@ namespace Inovatiqa.Web.Controllers
             return View(model);
         }
 
+        //public virtual IActionResult MakePayment([FromBody] RequestData requestData)
+        //{
+        //    const string ACCESS_TOKEN = "EAAAEDD2M6uGJmYkgShovGbvjPjzZZFEsvcYWn-X1B79v2Imx51cpfVrAX3DtLdB";
+        //    _client = new SquareClient.Builder()
+        //        .Environment(Square.Environment.Sandbox)
+        //        .AccessToken(ACCESS_TOKEN)
+        //        .Build();
+        //    Money ammount = new Money(1000, "USD");
+        //    string idempodencyKey = Guid.NewGuid().ToString();
+        //    CreatePaymentRequest createPaymentRequest = new CreatePaymentRequest(requestData.sourceId, idempodencyKey, ammount);
+        //    var result = _client.PaymentsApi.CreatePayment(createPaymentRequest);
+        //    //var customer = _workContextService.CurrentCustomer;
+        //    //if (!_customerService.IsRegistered(customer))
+        //    //    return Challenge();
+
+        //    //var model = _paymentModelFactory.PreparePaymentInfoModel(customer, totalPayment, amountToPay, invoiceIds, invoiceIdsAmounts);
+
+        //    //var result = model.client.LocationsApi.RetrieveLocation(InovatiqaDefaults.LocationId);
+        //    //model.Country = result.Location.Country;
+        //    //model.Currency = result.Location.Currency;
+
+        //    //return View(model);
+        //    return View("Payment succeed");
+        //}
+
         public virtual IActionResult MakePayment(decimal totalPayment, decimal amountToPay, string invoiceIds, string invoiceIdsAmounts)
         {
             var customer = _workContextService.CurrentCustomer;
@@ -127,7 +155,7 @@ namespace Inovatiqa.Web.Controllers
                 return Challenge();
 
             var model = _paymentModelFactory.PreparePaymentInfoModel(customer, totalPayment, amountToPay, invoiceIds, invoiceIdsAmounts);
-            
+
             var result = model.client.LocationsApi.RetrieveLocation(InovatiqaDefaults.LocationId);
             model.Country = result.Location.Country;
             model.Currency = result.Location.Currency;
@@ -289,6 +317,7 @@ namespace Inovatiqa.Web.Controllers
                 var response = await _paymentService.ProcessACHBankPayment(Token, Amount);
                 if (response.Errors == null || response.Errors.Count == 0)
                 {
+                    TempData["success"] = "Your Invoice number " + InvoiceIds + " have been successfully paid.";
                     for (int i = 0; i < Invoices.Count; i++)
                     {
                         var shipment = _shipmentService.GetShipmentById(Convert.ToInt32(Invoices[i]));
@@ -417,5 +446,10 @@ namespace Inovatiqa.Web.Controllers
             //return (model.Method != null && model.Method != "" && model.Controller != null && model.Controller != "") ? RedirectToAction(model.Method, model.Controller) : RedirectToAction("Index", "Home");
         }
         #endregion
+    }
+    public class RequestData
+    {
+        public string locationId { get; set; }
+        public string sourceId { get; set; }
     }
 }

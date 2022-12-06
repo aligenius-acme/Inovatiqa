@@ -1139,7 +1139,7 @@ namespace Inovatiqa.Core
 
         public static string PaymentFormScriptPath => "https://js.squareup.com/v2/paymentform";
 
-        public static string SandboxPaymentFormScriptPath => "https://js.squareupsandbox.com/v2/paymentform";
+        public static string SandboxPaymentFormScriptPath => "https://sandbox.web.squarecdn.com/v1/square.js";
 
         public static string SandboxBaseUrl => "https://connect.squareupsandbox.com";
 
@@ -1188,19 +1188,19 @@ namespace Inovatiqa.Core
         #region Settings
 
         //public static string ApplicationId => "sandbox-sq0idb-w9qW1YJHmuVGgzBfIW4TUA"; original Inovatiqa commented for testing purpose
-        public static string ApplicationId => "sandbox-sq0idb-w9qW1YJHmuVGgzBfIW4TUA";
+        public static string ApplicationId => "sandbox-sq0idb-W03tSWuQwZpjRo6rl3rSxg";
 
         public static string ApplicationSecret => "";
 
         public static string RefreshToken => "";
 
         //public static string AccessToken => "EAAAEBVN6obAsYNGG3WIxlQhjhItFPZCN_sSFsctyjOm5mtxgia0I1zmV9XnGpWu"; token commented for testing
-        public static string AccessToken => "EAAAEBVN6obAsYNGG3WIxlQhjhItFPZCN_sSFsctyjOm5mtxgia0I1zmV9XnGpWu";
+        public static string AccessToken => "EAAAEDD2M6uGJmYkgShovGbvjPjzZZFEsvcYWn-X1B79v2Imx51cpfVrAX3DtLdB";
 
         public static bool UseSandbox => true;
 
         //public static string LocationId => "LTJB2SGJ5CDM2";
-        public static string LocationId => "LTJB2SGJ5CDM2";
+        public static string LocationId => "L99HYK1A9TSV8";
 
         public static string AccessTokenVerificationString => "";
 
