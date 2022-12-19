@@ -1,7 +1,6 @@
 ﻿using Inovatiqa.Core;
 using Inovatiqa.Core.Interfaces;
 using Inovatiqa.Database.Models;
-using Inovatiqa.Services.Messages.Interfaces;
 using MailKit.Net.Smtp;
 using MailKit.Security;
 using Microsoft.Extensions.DependencyInjection;

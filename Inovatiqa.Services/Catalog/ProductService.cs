@@ -9,7 +9,6 @@ using Inovatiqa.Services.WorkContext.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Nest;
 
 namespace Inovatiqa.Services.Catalog
 {
@@ -32,6 +31,7 @@ namespace Inovatiqa.Services.Catalog
         protected readonly Database.Interfaces.IRepository<Warehouse> _warehouseRepository;
         protected readonly Database.Interfaces.IRepository<Shipment> _shipmentRepository;
         protected readonly Database.Interfaces.IRepository<TierPrice> _tierPriceRepository;
+        protected readonly Database.Interfaces.IRepository<EntityTierPrice> _entityTierPriceRepository;
         protected readonly Database.Interfaces.IRepository<ProductPictureMapping> _productPictureRepository;
         protected readonly ICustomerService _customerService;
         //protected readonly IElasticClient _elasticClient;
@@ -57,6 +57,7 @@ namespace Inovatiqa.Services.Catalog
             Database.Interfaces.IRepository<Warehouse> warehouseRepository,
             Database.Interfaces.IRepository<Shipment> shipmentRepository,
             Database.Interfaces.IRepository<TierPrice> tierPriceRepository,
+            Database.Interfaces.IRepository<EntityTierPrice> entityTierPriceRepository,
             Database.Interfaces.IRepository<ProductPictureMapping> productPictureRepository,
             ICustomerService customerService,
             //IElasticClient elasticClient,
@@ -78,6 +79,7 @@ namespace Inovatiqa.Services.Catalog
             _warehouseRepository = warehouseRepository;
             _shipmentRepository = shipmentRepository;
             _tierPriceRepository = tierPriceRepository;
+            _entityTierPriceRepository = entityTierPriceRepository;
             _productPictureRepository = productPictureRepository;
             _customerService = customerService;
             //_elasticClient = elasticClient;
@@ -1359,13 +1361,13 @@ namespace Inovatiqa.Services.Catalog
         #endregion
 
         #region Tier prices
-
-        public virtual TierPrice GetTierPriceById(int tierPriceId)
+        //tier price change
+        public virtual EntityTierPrice GetTierPriceById(int tierPriceId)
         {
             if (tierPriceId == 0)
                 return null;
 
-            return _tierPriceRepository.GetById(tierPriceId);
+            return _entityTierPriceRepository.GetById(tierPriceId);
         }
 
         public virtual void UpdateHasTierPricesProperty(Product product)
@@ -1373,50 +1375,51 @@ namespace Inovatiqa.Services.Catalog
             if (product == null)
                 throw new ArgumentNullException(nameof(product));
 
-            product.HasTierPrices = GetTierPricesByProduct(product.Id).Any();
+            product.HasTierPrices = GetTierPricesByProduct(product.Id, "Product").Any();
             UpdateProduct(product);
         }
-
-        public virtual void InsertTierPrice(TierPrice tierPrice)
+        //tier price change
+        public virtual void InsertTierPrice(EntityTierPrice tierPrice)
         {
             if (tierPrice == null)
                 throw new ArgumentNullException(nameof(tierPrice));
 
-            _tierPriceRepository.Insert(tierPrice);
+            //_tierPriceRepository.Insert(tierPrice);
+            _entityTierPriceRepository.Insert(tierPrice);
 
             //event notification
             //_eventPublisher.EntityInserted(tierPrice);
         }
-
-        public virtual void DeleteTierPrice(TierPrice tierPrice)
+        //tier price change
+        public virtual void DeleteTierPrice(EntityTierPrice tierPrice)
         {
             if (tierPrice == null)
                 throw new ArgumentNullException(nameof(tierPrice));
 
-            _tierPriceRepository.Delete(tierPrice);
+            _entityTierPriceRepository.Delete(tierPrice);
 
             //event notification
             //_eventPublisher.EntityDeleted(tierPrice);
         }
-
-        public virtual void UpdateTierPrice(TierPrice tierPrice)
+        //tier price change
+        public virtual void UpdateTierPrice(EntityTierPrice tierPrice)
         {
             if (tierPrice == null)
                 throw new ArgumentNullException(nameof(tierPrice));
 
-            _tierPriceRepository.Update(tierPrice);
+            _entityTierPriceRepository.Update(tierPrice);
 
             //event notification
             //_eventPublisher.EntityUpdated(tierPrice);
         }
-
-        public virtual IList<TierPrice> GetTierPricesByProduct(int productId)
+        //tier price change
+        public virtual IList<EntityTierPrice> GetTierPricesByProduct(int EntityId, String EntityName)
         {
-            return _tierPriceRepository.Query().Where(tp => tp.ProductId == productId)
+            return _entityTierPriceRepository.Query().Where(tp => tp.EntityId == EntityId && tp.EntityName == EntityName)
                 .ToList();
         }
-
-        public virtual TierPrice GetPreferredTierPrice(Product product, Customer customer, int storeId, int quantity)
+        //tier price change
+        public virtual EntityTierPrice GetPreferredTierPrice(Product product, Customer customer, int storeId, int quantity)
         {
             if (product is null)
                 throw new ArgumentNullException(nameof(product));
@@ -1424,13 +1427,14 @@ namespace Inovatiqa.Services.Catalog
             if (customer is null)
                 throw new ArgumentNullException(nameof(customer));
 
-            if (!product.HasTierPrices)
-                return null;
+            //if (!product.HasTierPrices)
+            //    return null;
+            //return null;
 
-            return GetTierPrices(product, customer, storeId)?.LastOrDefault(price => quantity >= price.Quantity);
+            return GetTierPrices(product, customer, storeId)?.LastOrDefault();
         }
-
-        public virtual IList<TierPrice> GetTierPrices(Product product, Customer customer, int storeId)
+        //tier price change
+        public virtual IList<EntityTierPrice> GetTierPrices(Product product, Customer customer, int storeId)
         {
             if (product is null)
                 throw new ArgumentNullException(nameof(product));
@@ -1438,151 +1442,166 @@ namespace Inovatiqa.Services.Catalog
             if (customer is null)
                 throw new ArgumentNullException(nameof(customer));
 
-            if (!product.HasTierPrices)
-                return null;
+            //if (!product.HasTierPrices)
+            //    return null;
 
-            var customerRoleIds = _customerService.GetCustomerRoleIds(customer);
+            //var customerRoleIds = _customerService.GetCustomerRoleIds(customer);
+            DateTime now = DateTime.Now;
 
-            var tierPrices = GetTierPricesByProduct(product.Id)
-                .OrderBy(price => price.Quantity)
-                .FilterByCustomerRole(customerRoleIds)
-                .FilterByDate()
-                .RemoveDuplicatedQuantities()
+            var tierPrices = GetTierPricesByProduct(product.Id, "Product")
+                .OrderBy(price => price.Rate)
                 .ToList();
+            tierPrices = tierPrices.Where(tp => tp.StartDateTimeUtc <= now && tp.EndDateTimeUtc >= now).ToList();
+            if (tierPrices.Count == 0)
+            {
+                tierPrices = GetTierPricesByProduct(Convert.ToInt32(product.RootCategoryId), "Category")
+                .OrderBy(price => price.Rate)
+                .ToList();
+                tierPrices = tierPrices.Where(tp => tp.StartDateTimeUtc <= now && tp.EndDateTimeUtc >= now).ToList();
+                if (tierPrices.Count == 0)
+                {
+                    tierPrices = GetTierPricesByProduct(0, "ALL")
+                    .OrderBy(price => price.Rate)
+                    .ToList();
+                    tierPrices = tierPrices.Where(tp => tp.StartDateTimeUtc <= now && tp.EndDateTimeUtc >= now).ToList();
+                }
+            }
 
             if (tierPrices.Count > 0)
-                return tierPrices;
-            else if (tierPrices.Count == 0)
             {
-                var allRoles = _customerService.GetAllCustomerRoles(false).Where(x=>x.IsSystemRole == true);
-                var customerRoleNames = allRoles.Where(item => customerRoleIds.Contains(item.Id))
-                     .Select(x => x.Name).ToList();
-
-                IList<TierPrice> prices = null;
-                var priceHandled = false;
-                if (customerRoleNames.Any(str => str.Contains("Guest")))
-                {
-                    prices = CalculateProductPriceRoleBased(product, InovatiqaDefaults.RetailRoleName, 60);
-                }
-                else if (customerRoleNames.Any(str => str.Contains("_" + product.RootCategoryId)))
-                {
-                    foreach (var customerRoleName in customerRoleNames)
-                    {
-                        if (priceHandled == false && customerRoleName.Contains("_"))
-                        {
-                            var currentCustomerRole = customerRoleName.Replace("\r\n", "");
-                            var split = currentCustomerRole.Split('_');
-                            var currentRoleName = split[1];
-                            switch (currentRoleName)
-                            {
-                                case InovatiqaDefaults.RetailRoleName:
-                                    prices = CalculateProductPriceRoleBased(product, "_" + split[2], 60);
-                                    priceHandled = true;
-                                    break;
-                                case InovatiqaDefaults.BronzeRoleName:
-                                    prices = CalculateProductPriceRoleBased(product, "_" + split[2], 50);
-                                    priceHandled = true;
-                                    break;
-                                case InovatiqaDefaults.BronzePremierRoleName:
-                                    prices = CalculateProductPriceRoleBased(product, "_" + split[2], 45);
-                                    priceHandled = true;
-                                    break;
-                                case InovatiqaDefaults.GoldRoleName:
-                                    prices = CalculateProductPriceRoleBased(product, "_" + split[2], 40);
-                                    priceHandled = true;
-                                    break;
-                                case InovatiqaDefaults.GoldPremierRoleName:
-                                    prices = CalculateProductPriceRoleBased(product, "_" + split[2], 35);
-                                    priceHandled = true;
-                                    break;
-                                case InovatiqaDefaults.OnyxRoleName:
-                                    prices = CalculateProductPriceRoleBased(product, "_" + split[2], 30);
-                                    priceHandled = true;
-                                    break;
-                                case InovatiqaDefaults.OnyxPremierRoleName:
-                                    prices = CalculateProductPriceRoleBased(product, "_" + split[2], 25);
-                                    priceHandled = true;
-                                    break;
-                                case InovatiqaDefaults.DiamondRoleName:
-                                    prices = CalculateProductPriceRoleBased(product, "_" + split[2], 20);
-                                    priceHandled = true;
-                                    break;
-                                case InovatiqaDefaults.DiamondPremierRoleName:
-                                    prices = CalculateProductPriceRoleBased(product, "_" + split[2], 15);
-                                    priceHandled = true;
-                                    break;
-                                case InovatiqaDefaults.DistributorRoleName:
-                                    prices = CalculateProductPriceRoleBased(product, "_" + split[2], 12);
-                                    priceHandled = true;
-                                    break;
-                                case InovatiqaDefaults.DistributorPremierRoleName:
-                                    prices = CalculateProductPriceRoleBased(product, "_" + split[2], 10);
-                                    priceHandled = true;
-                                    break;
-                                default:
-                                    break;
-                            }
-                        }
-                    }
-                }
-                priceHandled = false;
-                foreach (var customerRoleName in customerRoleNames)
-                {
-                    if (priceHandled == false)
-                    {
-                        switch (customerRoleName)
-                        {
-                            case InovatiqaDefaults.RetailRoleName:
-                                prices = CalculateProductPriceRoleBased(product, customerRoleName, 60);
-                                priceHandled = true;
-                                break;
-                            case InovatiqaDefaults.BronzeRoleName:
-                                prices = CalculateProductPriceRoleBased(product, customerRoleName, 50);
-                                priceHandled = true;
-                                break;
-                            case InovatiqaDefaults.BronzePremierRoleName:
-                                prices = CalculateProductPriceRoleBased(product, customerRoleName, 45);
-                                priceHandled = true;
-                                break;
-                            case InovatiqaDefaults.GoldRoleName:
-                                prices = CalculateProductPriceRoleBased(product, customerRoleName, 40);
-                                priceHandled = true;
-                                break;
-                            case InovatiqaDefaults.GoldPremierRoleName:
-                                prices = CalculateProductPriceRoleBased(product, customerRoleName, 35);
-                                priceHandled = true;
-                                break;
-                            case InovatiqaDefaults.OnyxRoleName:
-                                prices = CalculateProductPriceRoleBased(product, customerRoleName, 30);
-                                priceHandled = true;
-                                break;
-                            case InovatiqaDefaults.OnyxPremierRoleName:
-                                prices = CalculateProductPriceRoleBased(product, customerRoleName, 25);
-                                priceHandled = true;
-                                break;
-                            case InovatiqaDefaults.DiamondRoleName:
-                                prices = CalculateProductPriceRoleBased(product, customerRoleName, 20);
-                                priceHandled = true;
-                                break;
-                            case InovatiqaDefaults.DiamondPremierRoleName:
-                                prices = CalculateProductPriceRoleBased(product, customerRoleName, 15);
-                                priceHandled = true;
-                                break;
-                            case InovatiqaDefaults.DistributorRoleName:
-                                prices = CalculateProductPriceRoleBased(product, customerRoleName, 12);
-                                priceHandled = true;
-                                break;
-                            case InovatiqaDefaults.DistributorPremierRoleName:
-                                prices = CalculateProductPriceRoleBased(product, customerRoleName, 10);
-                                priceHandled = true;
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                }
-                return prices;
+                return tierPrices;
             }
+            //else if (tierPrices.Count == 0)
+            //{
+            //    var allRoles = _customerService.GetAllCustomerRoles(false).Where(x => x.IsSystemRole == true);
+            //    var customerRoleNames = allRoles.Where(item => customerRoleIds.Contains(item.Id))
+            //         .Select(x => x.Name).ToList();
+
+            //    IList<EntityTierPrice> prices = null;
+            //    var priceHandled = false;
+            //    if (customerRoleNames.Any(str => str.Contains("Guest")))
+            //    {
+            //        prices = CalculateProductPriceRoleBased(product, InovatiqaDefaults.RetailRoleName, 60);
+            //    }
+            //    else if (customerRoleNames.Any(str => str.Contains("_" + product.RootCategoryId)))
+            //    {
+            //        foreach (var customerRoleName in customerRoleNames)
+            //        {
+            //            if (priceHandled == false && customerRoleName.Contains("_"))
+            //            {
+            //                var currentCustomerRole = customerRoleName.Replace("\r\n", "");
+            //                var split = currentCustomerRole.Split('_');
+            //                var currentRoleName = split[1];
+            //                switch (currentRoleName)
+            //                {
+            //                    case InovatiqaDefaults.RetailRoleName:
+            //                        prices = CalculateProductPriceRoleBased(product, "_" + split[2], 60);
+            //                        priceHandled = true;
+            //                        break;
+            //                    case InovatiqaDefaults.BronzeRoleName:
+            //                        prices = CalculateProductPriceRoleBased(product, "_" + split[2], 50);
+            //                        priceHandled = true;
+            //                        break;
+            //                    case InovatiqaDefaults.BronzePremierRoleName:
+            //                        prices = CalculateProductPriceRoleBased(product, "_" + split[2], 45);
+            //                        priceHandled = true;
+            //                        break;
+            //                    case InovatiqaDefaults.GoldRoleName:
+            //                        prices = CalculateProductPriceRoleBased(product, "_" + split[2], 40);
+            //                        priceHandled = true;
+            //                        break;
+            //                    case InovatiqaDefaults.GoldPremierRoleName:
+            //                        prices = CalculateProductPriceRoleBased(product, "_" + split[2], 35);
+            //                        priceHandled = true;
+            //                        break;
+            //                    case InovatiqaDefaults.OnyxRoleName:
+            //                        prices = CalculateProductPriceRoleBased(product, "_" + split[2], 30);
+            //                        priceHandled = true;
+            //                        break;
+            //                    case InovatiqaDefaults.OnyxPremierRoleName:
+            //                        prices = CalculateProductPriceRoleBased(product, "_" + split[2], 25);
+            //                        priceHandled = true;
+            //                        break;
+            //                    case InovatiqaDefaults.DiamondRoleName:
+            //                        prices = CalculateProductPriceRoleBased(product, "_" + split[2], 20);
+            //                        priceHandled = true;
+            //                        break;
+            //                    case InovatiqaDefaults.DiamondPremierRoleName:
+            //                        prices = CalculateProductPriceRoleBased(product, "_" + split[2], 15);
+            //                        priceHandled = true;
+            //                        break;
+            //                    case InovatiqaDefaults.DistributorRoleName:
+            //                        prices = CalculateProductPriceRoleBased(product, "_" + split[2], 12);
+            //                        priceHandled = true;
+            //                        break;
+            //                    case InovatiqaDefaults.DistributorPremierRoleName:
+            //                        prices = CalculateProductPriceRoleBased(product, "_" + split[2], 10);
+            //                        priceHandled = true;
+            //                        break;
+            //                    default:
+            //                        break;
+            //                }
+            //            }
+            //        }
+            //    }
+            //    priceHandled = false;
+            //    foreach (var customerRoleName in customerRoleNames)
+            //    {
+            //        if (priceHandled == false)
+            //        {
+            //            switch (customerRoleName)
+            //            {
+            //                case InovatiqaDefaults.RetailRoleName:
+            //                    prices = CalculateProductPriceRoleBased(product, customerRoleName, 60);
+            //                    priceHandled = true;
+            //                    break;
+            //                case InovatiqaDefaults.BronzeRoleName:
+            //                    prices = CalculateProductPriceRoleBased(product, customerRoleName, 50);
+            //                    priceHandled = true;
+            //                    break;
+            //                case InovatiqaDefaults.BronzePremierRoleName:
+            //                    prices = CalculateProductPriceRoleBased(product, customerRoleName, 45);
+            //                    priceHandled = true;
+            //                    break;
+            //                case InovatiqaDefaults.GoldRoleName:
+            //                    prices = CalculateProductPriceRoleBased(product, customerRoleName, 40);
+            //                    priceHandled = true;
+            //                    break;
+            //                case InovatiqaDefaults.GoldPremierRoleName:
+            //                    prices = CalculateProductPriceRoleBased(product, customerRoleName, 35);
+            //                    priceHandled = true;
+            //                    break;
+            //                case InovatiqaDefaults.OnyxRoleName:
+            //                    prices = CalculateProductPriceRoleBased(product, customerRoleName, 30);
+            //                    priceHandled = true;
+            //                    break;
+            //                case InovatiqaDefaults.OnyxPremierRoleName:
+            //                    prices = CalculateProductPriceRoleBased(product, customerRoleName, 25);
+            //                    priceHandled = true;
+            //                    break;
+            //                case InovatiqaDefaults.DiamondRoleName:
+            //                    prices = CalculateProductPriceRoleBased(product, customerRoleName, 20);
+            //                    priceHandled = true;
+            //                    break;
+            //                case InovatiqaDefaults.DiamondPremierRoleName:
+            //                    prices = CalculateProductPriceRoleBased(product, customerRoleName, 15);
+            //                    priceHandled = true;
+            //                    break;
+            //                case InovatiqaDefaults.DistributorRoleName:
+            //                    prices = CalculateProductPriceRoleBased(product, customerRoleName, 12);
+            //                    priceHandled = true;
+            //                    break;
+            //                case InovatiqaDefaults.DistributorPremierRoleName:
+            //                    prices = CalculateProductPriceRoleBased(product, customerRoleName, 10);
+            //                    priceHandled = true;
+            //                    break;
+            //                default:
+            //                    break;
+            //            }
+            //        }
+            //    }
+            //    return prices;
+            //}
             else
                 return null;
         }

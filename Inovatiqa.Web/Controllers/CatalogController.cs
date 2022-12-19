@@ -172,7 +172,7 @@ namespace Inovatiqa.Web.Controllers
 
         
             var model = _catalogModelFactory.PrepareManufacturerModel(manufacturer, command, minPrice, maxPrice);
-
+            
             //var templateViewPath = _catalogModelFactory.PrepareManufacturerTemplateViewPath(manufacturer.ManufacturerTemplateId);
             //return View(templateViewPath, model);
             model.MinPrice = minPrice == 0 ? "" : Convert.ToString(minPrice);

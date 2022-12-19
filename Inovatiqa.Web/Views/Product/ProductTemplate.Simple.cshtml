@@ -321,7 +321,20 @@
                                                                                         }
                                                                                         else
                                                                                         {
-                                                                                                <option selected="@attributeValue.IsPreSelected" change-val="$@Decimal.Round(Convert.ToDecimal(Model.ProductPrice.PriceValue) + Convert.ToDecimal(attributeValue.PriceAdjustmentValue), 2)" value="@attributeValue.Id" msku="@attributeValue.MSku">@attributeValue.Name</option>
+                                                                                                //<option selected="@attributeValue.IsPreSelected" change-val="$@Decimal.Round(Convert.ToDecimal(Model.ProductPrice.OrignalPrice) + Convert.ToDecimal(attributeValue.PriceAdjustmentValue), 2)" value="@attributeValue.Id" msku="@attributeValue.MSku">@attributeValue.Name</option>
+                                                                                                                                             var attPriceDiscount = (Model.ProductPrice.OrignalPrice + attributeValue.PriceAdjustmentValue) - (Model.ProductPrice.PriceValue + attributeValue.PriceAdjustmentValue);
+                                                                                                @if (Decimal.Round(attPriceDiscount, 1) == Decimal.Round(Convert.ToDecimal(Model.ProductPrice.PriceValue), 1))
+                                                                                                {
+                                                                                                    <option selected="@attributeValue.IsPreSelected" change-val="$@Decimal.Round(Convert.ToDecimal(Model.ProductPrice.OrignalPrice) + Convert.ToDecimal(attributeValue.PriceAdjustmentValue), 2)" value="@attributeValue.Id" msku="@attributeValue.MSku">@attributeValue.Name</option>
+
+                                                                                                }
+                                                                                                else
+                                                                                                {
+                                                                                                    var discountPercentage = ((Model.ProductPrice.OrignalPrice - Model.ProductPrice.PriceValue) / Model.ProductPrice.OrignalPrice) * 100;
+                                                                                                    var orignalPrice = Model.ProductPrice.OrignalPrice + attributeValue.PriceAdjustmentValue;
+                                                                                                    var finalPrice = orignalPrice - ((discountPercentage / 100) * orignalPrice); 
+                                                                                                    <option selected="@attributeValue.IsPreSelected" change-val="$@Decimal.Round(finalPrice, 2)" value="@attributeValue.Id" msku="@attributeValue.MSku">@attributeValue.Name</option>
+                                                                                                }
                                                                                         }
                                                                                     }
                                                                                     </select>

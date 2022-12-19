@@ -6,7 +6,8 @@ namespace Inovatiqa.Web.Areas.Admin.Models.Catalog
     {
         #region Properties
 
-        public int ProductId { get; set; }
+        public int EntityId { get; set; }
+        public string EntityName { get; set; }
 
         #endregion
     }

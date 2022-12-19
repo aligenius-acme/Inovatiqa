@@ -17,6 +17,7 @@ namespace Inovatiqa.Services.Catalog
         private readonly IProductAttributeParserService _productAttributeParserService;
         private readonly IProductService _productService;
         private readonly IWorkContextService _workContextService;
+        private readonly IProductAttributeService _productAttributeService;
 
         #endregion
 
@@ -27,7 +28,8 @@ namespace Inovatiqa.Services.Catalog
             IManufacturerService manufacturerService,
             IProductAttributeParserService productAttributeParserService,
             IProductService productService,
-            IWorkContextService workContextService)
+            IWorkContextService workContextService,
+            IProductAttributeService productAttributeService)
         {
             _categoryService = categoryService;
             _customerService = customerService;
@@ -35,6 +37,7 @@ namespace Inovatiqa.Services.Catalog
             _productAttributeParserService = productAttributeParserService;
             _productService = productService;
             _workContextService = workContextService;
+            _productAttributeService = productAttributeService;
         }
 
         #endregion
@@ -95,7 +98,6 @@ namespace Inovatiqa.Services.Catalog
             out decimal discountAmount,
             out List<Discount> appliedDiscounts)
         {
-
             if (product == null)
                 throw new ArgumentNullException(nameof(product));
 
@@ -104,14 +106,32 @@ namespace Inovatiqa.Services.Catalog
             appliedDiscounts = new List<Discount>();
 
             var price = overriddenProductPrice ?? product.Price;
-
+            price += additionalCharge;
+            
             var tierPrice = _productService.GetPreferredTierPrice(product, customer, InovatiqaDefaults.StoreId, quantity);
             if (tierPrice != null)
-                //price = tierPrice.Price * quantity;
-                // 07-06-2022 ALI AHMAD - DUE TO ISSUE IN OVERAL PRODUCT PRICE WAS MULTIPLIED BY ITS QUANTITY
-                price = tierPrice.Price;
+            {
+                if (tierPrice.EntityName == "Product" && tierPrice.CustomerId == customer.Id && product.HasTierPrices)
+                {
+                    //price = tierPrice.Price * quantity;
+                    // 07-06-2022 ALI AHMAD - DUE TO ISSUE IN OVERAL PRODUCT PRICE WAS MULTIPLIED BY ITS QUANTITY
+                    if(additionalCharge == 0)
+                    {
+                        price = Convert.ToDecimal(tierPrice.Rate);
+                    }
+                }
+                else if (tierPrice.EntityName == "Category")
+                {
+                        price = price - (Convert.ToDecimal(tierPrice.Rate) / 100 * price);
+                }
+                else if (tierPrice.EntityName == "ALL")
+                {
+                    price = price - (Convert.ToDecimal(tierPrice.Rate) / 100 * price);
+                }
 
-            price += additionalCharge;
+            }
+
+            //price += additionalCharge;
 
             if (price < decimal.Zero)
                 price = decimal.Zero;
@@ -149,9 +169,30 @@ namespace Inovatiqa.Services.Catalog
                                 Id = product.Id,
                                 HasTierPrices = true
                             };
-                            var tierPrices = _productService.GetTierPrices(prod, customer, InovatiqaDefaults.StoreId);
-                            if (tierPrices != null)
-                                adjustment = tierPrices[0].Price;
+                            //var tierPrice = _productService.GetTierPrices(prod, customer, InovatiqaDefaults.StoreId);
+                            //if (tierPrice != null)
+                            //    adjustment = Convert.ToInt32(tierPrice[0].Rate);
+                            //if (tierPrice != null)
+                            //{
+                            //    if (tierPrice[0].EntityName == "Product" && tierPrice[0].CustomerId == customer.Id)
+                            //    {
+                            //        if (prod.HasTierPrices)
+                            //        {
+                            //            //price = tierPrice.Price * quantity;
+                            //            // 07-06-2022 ALI AHMAD - DUE TO ISSUE IN OVERAL PRODUCT PRICE WAS MULTIPLIED BY ITS QUANTITY
+                            //            adjustment = Convert.ToDecimal(tierPrice[0].Rate);
+                            //        }
+                            //    }
+                            //    else if (tierPrice[0].EntityName == "Category")
+                            //    {
+                            //        adjustment = prod.Price - (Convert.ToDecimal(tierPrice[0].Rate) / 100 * prod.Price);
+                            //    }
+                            //    else if (tierPrice[0].EntityName == "ALL")
+                            //    {
+                            //        adjustment = prod.Price - (Convert.ToDecimal(tierPrice[0].Rate) / 100 * prod.Price);
+                            //    }
+
+                            //}
                         }
                     }
 

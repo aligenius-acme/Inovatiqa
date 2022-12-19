@@ -33,6 +33,8 @@ namespace Inovatiqa.Web.Factories
         private readonly ILoggerService _loggerService;
         private readonly IWorkContextService _workContextService;
         private readonly ICompareProductsService _compareProductsService;
+        private readonly IPriceCalculationService _priceCalculationService;
+        private readonly IPriceFormatter _priceFormatter;
 
 
         #endregion
@@ -49,7 +51,9 @@ namespace Inovatiqa.Web.Factories
             IProductAttributeService productAttributeService,
             ILoggerService loggerService,
             IWorkContextService workContextService,
-            ICompareProductsService compareProductsService)
+            ICompareProductsService compareProductsService,
+            IPriceFormatter priceFormatter,
+            IPriceCalculationService priceCalculationService)
         {
             _categoryService = categoryService;
             _urlRecordService = urlRecordService;
@@ -62,6 +66,8 @@ namespace Inovatiqa.Web.Factories
             _loggerService = loggerService;
             _workContextService = workContextService;
             _compareProductsService = compareProductsService;
+            _priceFormatter = priceFormatter;
+            _priceCalculationService = priceCalculationService;
         }
 
         #endregion
@@ -1472,6 +1478,11 @@ namespace Inovatiqa.Web.Factories
             var list = new List<KeyValuePair<string, int>>();
             foreach (var cat in elasticProducts.Documents)
             {
+                var product = _productService.GetProductById(cat.Id);
+                var customer = _workContextService.CurrentCustomer;
+                cat.ProductPrice.OrignalPrice = Convert.ToDecimal(cat.ProductPrice.PriceValue);
+                cat.ProductPrice.PriceValue = _priceCalculationService.GetFinalPrice(product, customer);
+                cat.ProductPrice.Price = _priceFormatter.FormatPrice(cat.ProductPrice.PriceValue);
                 cat.IsInCompareList = ComprisonList.Where(prod => prod.Id == cat.Id).ToList().Count > 0;
                 foreach (var ccat in cat.ProductCategories.Select(s => s.childCategory))
                 {
@@ -1969,7 +1980,7 @@ namespace Inovatiqa.Web.Factories
                 pageIndex: command.PageNumber - 1,
                 pageSize: command.PageSize);
             model.Products = _productModelFactory.PrepareProductOverviewModels(products, prepareProductAttributes: true).ToList();
-
+            
             model.PagingFilteringContext.LoadPagedList(products);
 
             return model;

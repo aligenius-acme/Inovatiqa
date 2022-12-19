@@ -1,18 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Inovatiqa.Services.Catalog.Interfaces;
-using Inovatiqa.Services.Media.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Inovatiqa.Web.Models.Catalog;
 using Inovatiqa.Services.WorkContext.Interfaces;
 using Inovatiqa.Services.Common.Interfaces;
 using Inovatiqa.Services.Directory.Interfaces;
 
 namespace Inovatiqa.Web.Components
 {
-   public class DashboardBlueBandViewComponent : ViewComponent
+    public class DashboardBlueBandViewComponent : ViewComponent
     {
         private readonly IWorkContextService _workContextService;
         private readonly IAddressService _addressService;

@@ -59,32 +59,44 @@
                                                             @await Html.PartialAsync("../Product/_ProductAttributes", Model.ProductAttributes, dataDictAttributes)
                                                     }*@
                                                     <div class="uom_box m_t_30">
-                                                                            <label>UOM</label>
-                                                                            <img src="/images/UIComponents/downarrow.svg" class="options_pane_down_arrow">
-                                                                            @{
-                                                                                var uomModel = Model.ProductAttributes.Where(x => x.Name == "UOM").FirstOrDefault();
+                                                        <label>UOM</label>
+                                                        <img src="/images/UIComponents/downarrow.svg" class="options_pane_down_arrow">
+                                                        @{
+                                                            var uomModel = Model.ProductAttributes.Where(x => x.Name == "UOM").FirstOrDefault();
 
-                                                                                var controlId = $"{InovatiqaDefaults.ProductAttributePrefix}{uomModel.Id}";
-                                                                                var textPrompt = !string.IsNullOrEmpty(uomModel.TextPrompt) ? uomModel.TextPrompt : uomModel.Name;
-                                                                                                <select name="@(controlId)" id="@(controlId)" class="form-control" onchange="checkBoxChange(this.options[this.selectedIndex].getAttribute('change-val'), @Model.Id)" @(uomModel.Values.Any(value => value.CustomerEntersQty) ? Html.Raw(string.Format("onchange=\"showHideDropdownQuantity('{0}')\"", controlId)) : null)>
-                                                                                                    @foreach (var attributeValue in uomModel.Values)
-                                                                                    {
-                                                                                        var attributeName = string.IsNullOrEmpty(attributeValue.PriceAdjustment) ?
-                                                                                        attributeValue.Name :
-                                                                                        string.Format("{0} [{1}{2}]", attributeValue.Name, attributeValue.PriceAdjustment,
-                                                                                            attributeValue.CustomerEntersQty ? " per item" : string.Empty);
-                                                                                        if (attributeValue == uomModel.Values.First())
-                                                                                        {
-                                                                                                            <option selected="@attributeValue.IsPreSelected" change-val="@Model.ProductPrice.Price" value="@attributeValue.Id" msku="@attributeValue.MSku">@attributeName</option>
-                                                                                        }
-                                                                                        else
-                                                                                        {
-                                                                                                            <option selected="@attributeValue.IsPreSelected" change-val="$@Decimal.Round(Convert.ToDecimal(Model.ProductPrice.PriceValue) + Convert.ToDecimal(attributeValue.PriceAdjustmentValue), 2)" value="@attributeValue.Id" msku="@attributeValue.MSku">@attributeValue.Name</option>
-                                                                                        }
-                                                                                    }
-                                                                                                </select>
-                                                                            }
-                                                                        </div>
+                                                            var controlId = $"{InovatiqaDefaults.ProductAttributePrefix}{uomModel.Id}";
+                                                            var textPrompt = !string.IsNullOrEmpty(uomModel.TextPrompt) ? uomModel.TextPrompt : uomModel.Name;
+                                                            <select name="@(controlId)" id="@(controlId)" class="form-control" onchange="checkBoxChange(this.options[this.selectedIndex].getAttribute('change-val'), @Model.Id)" @(uomModel.Values.Any(value => value.CustomerEntersQty) ? Html.Raw(string.Format("onchange=\"showHideDropdownQuantity('{0}')\"", controlId)) : null)>
+                                                                @foreach (var attributeValue in uomModel.Values)
+                                                                {
+                                                                    var attributeName = string.IsNullOrEmpty(attributeValue.PriceAdjustment) ?
+                                                                    attributeValue.Name :
+                                                                    string.Format("{0} [{1}{2}]", attributeValue.Name, attributeValue.PriceAdjustment,
+                                                                        attributeValue.CustomerEntersQty ? " per item" : string.Empty);
+                                                                    if (attributeValue == uomModel.Values.First())
+                                                                    {
+                                                                        <option selected="@attributeValue.IsPreSelected" change-val="@Model.ProductPrice.Price" value="@attributeValue.Id" msku="@attributeValue.MSku">@attributeName</option>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        var attPriceDiscount = (Model.ProductPrice.OrignalPrice + attributeValue.PriceAdjustmentValue) - (Model.ProductPrice.PriceValue + attributeValue.PriceAdjustmentValue);
+                                                                        @if (Decimal.Round(attPriceDiscount, 1) == Decimal.Round(Convert.ToDecimal(Model.ProductPrice.PriceValue), 1))
+                                                                        {
+                                                                            <option selected="@attributeValue.IsPreSelected" change-val="$@Decimal.Round(Convert.ToDecimal(Model.ProductPrice.OrignalPrice) + Convert.ToDecimal(attributeValue.PriceAdjustmentValue), 2)" value="@attributeValue.Id" msku="@attributeValue.MSku">@attributeValue.Name</option>
+
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            var discountPercentage = ((Model.ProductPrice.OrignalPrice - Model.ProductPrice.PriceValue) / Model.ProductPrice.OrignalPrice) * 100;
+                                                                            var orignalPrice = Model.ProductPrice.OrignalPrice + attributeValue.PriceAdjustmentValue;
+                                                                            var finalPrice = orignalPrice - ((discountPercentage / 100) * orignalPrice); 
+                                                                            <option selected="@attributeValue.IsPreSelected" change-val="$@Decimal.Round(finalPrice, 2)" value="@attributeValue.Id" msku="@attributeValue.MSku">@attributeValue.Name</option>
+                                                                        }
+                                                                    }
+                                                                }
+                                                            </select>
+                                                        }
+                                                    </div>
                                                     <div class="attributes">
                                                         <dl class="row" style="margin-bottom: 5px; margin-top:50px;">
                                                             <dt class="col-sm-4 col-md-4">

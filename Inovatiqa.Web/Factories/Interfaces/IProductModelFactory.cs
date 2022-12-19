@@ -1,5 +1,4 @@
-﻿using Inovatiqa.Core.Interfaces;
-using Inovatiqa.Database.Models;
+﻿using Inovatiqa.Database.Models;
 using Inovatiqa.Web.Models.Catalog;
 using System.Collections.Generic;
 

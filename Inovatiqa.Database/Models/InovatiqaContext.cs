@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Inovatiqa.Database.Models;
 
-namespace Inovatiqa.Database.DbContexts
+namespace Inovatiqa.Database.Models
 {
     public partial class InovatiqaContext : DbContext
     {

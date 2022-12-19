@@ -1,0 +1,95 @@
+﻿@model ProductSearchModel
+
+
+<div class="panel-group">
+    <div class="panel">
+        <div class="panel-body">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Tier prices
+            </div>
+                <div class="panel-body">
+                    <p>
+                        Tier pricing based upon all products.
+                    </p>
+                    @await Html.PartialAsync("Table", new DataTablesModel
+                    {
+                        Name = "tierprices-grid",
+                        UrlRead = new DataUrl("TierPriceList", "Product", new RouteValueDictionary { [nameof(Model.TierPriceSearchModel.EntityId)] = 0, [nameof(Model.TierPriceSearchModel.EntityName)] = "ALL"}),
+                        UrlDelete = new DataUrl("TierPriceDelete", "Product", null),
+                        Length = Model.TierPriceSearchModel.PageSize,
+                        LengthMenu = Model.TierPriceSearchModel.AvailablePageSizes,
+                        ColumnCollection = new List<ColumnProperty>
+                        {
+                            //new ColumnProperty(nameof(TierPriceModel.Store))
+                            //{
+                            //    Title = "Store",
+                            //    Visible = false
+                            //},
+                            new ColumnProperty(nameof(TierPriceModel.EntityName))
+                            {
+                                Title = "Discount"
+                            },
+                            //new ColumnProperty(nameof(TierPriceModel.Quantity))
+                            //{
+                            //    Title = "Quantity",
+                            //    Visible = false
+                            //},
+                            new ColumnProperty(nameof(TierPriceModel.Rate))
+                            {
+                                Title = "Rate"
+                            },
+                            new ColumnProperty(nameof(TierPriceModel.StartDateTimeUtc))
+                            {
+                                Title = "Start date",
+                                Render = new RenderDate()
+                            },
+                            new ColumnProperty(nameof(TierPriceModel.EndDateTimeUtc))
+                            {
+                                Title = "End date",
+                                Render = new RenderDate()
+                            },
+                            new ColumnProperty(nameof(TierPriceModel.Id))
+                            {
+                                Title = "Edit",
+                                Width = "100",
+                                ClassName =  InovatiqaColumnClassDefaults.Button,
+                                Render = new RenderCustom("renderPriceColumnEdit")
+                            },
+                            new ColumnProperty(nameof(TierPriceModel.Id))
+                            {
+                                Title = "Delete",
+                                Width = "100",
+                                Render = new RenderButtonRemove("Delete"),
+                                ClassName =  InovatiqaColumnClassDefaults.Button
+                            }
+                        }
+                    })
+
+                    @Html.Resource(@<script type="text/javascript">
+                        function renderPriceColumnEdit(data, type, row, meta) {
+                            return '<button onclick=\"javascript:OpenWindow(\'@Url.Content("~/Admin/Product/TierPriceEditPopup/")' + data + '?btnId=btnRefreshTierPrices&formId=product-form\', 800, 600, true); return false;\" class="btn btn-default"><i class="fa fa-pencil"></i>Edit</button>';
+                        }
+                    </script>, "js")
+                </div>
+                <div class="panel-footer">
+                    <button type="submit" id="btnAddNewTierPrice" onclick="javascript:OpenWindow('@(Url.Action("TierPriceCreatePopup", "Product", new {  EntityId = 0, EntityName = "ALL", btnId = "btnRefreshTierPrices", formId = "product-form"}))', 800, 600, true); return false;" class="btn btn-primary">
+                        Add new tier price
+                    </button>
+                    <input type="submit" id="btnRefreshTierPrices" style="display: none" />
+                    @Html.Resource(@<script type="text/javascript">
+                                        $(document).ready(function () {
+                                            $('#btnRefreshTierPrices').click(function () {
+                                                updateTable('#tierprices-grid');
+                                                //return false to don't reload a page
+                                                return false;
+                                            });
+                                        });
+                    </script>, "js")
+                </div>
+            
+           
+        </div>
+    </div>
+    </div>
+</div>

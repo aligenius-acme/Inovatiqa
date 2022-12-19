@@ -165,8 +165,8 @@ namespace Inovatiqa.Web.Areas.Admin.Factories
 
             _baseAdminModelFactory.PrepareCategoryTemplates(model.AvailableCategoryTemplates, false);
 
-            _baseAdminModelFactory.PrepareCategories(model.AvailableCategories,
-                defaultItemText: "[None]");
+            //_baseAdminModelFactory.PrepareCategories(model.AvailableCategories,
+            //    defaultItemText: "[None]");
 
             return model;
         }

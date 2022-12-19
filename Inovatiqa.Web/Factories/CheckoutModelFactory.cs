@@ -136,7 +136,7 @@ namespace Inovatiqa.Web.Factories
                     //08/06/22 add SeName for required in checkout page also inject _urlRecordService and ProductAttributes
                     SeName = _urlRecordService.GetActiveSlug(product.ProductId, InovatiqaDefaults.ProductSlugName, InovatiqaDefaults.LanguageId),
                     StartRating = 5,
-                    Price = _priceFormatter.FormatPrice(_priceCalculationService.GetFinalPrice(Product, _workContextService.CurrentCustomer, 0, false, product.Quantity)).Replace("$", ""),
+                    Price = _priceFormatter.FormatPrice(_priceCalculationService.GetFinalPrice(Product, _workContextService.CurrentCustomer, temp.First().PriceAdjustment, false, product.Quantity)).Replace("$", ""),
                     OldPriceEnabled = Product.OldPrice > Product.Price,
                     OldPrice = _priceFormatter.FormatPrice(Product.OldPrice).Replace("$", ""),
                     DefaultPictureModel = PrepareProductOverviewPictureModel(Product, null),

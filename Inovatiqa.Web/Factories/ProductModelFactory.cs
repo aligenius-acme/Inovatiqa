@@ -296,6 +296,8 @@ namespace Inovatiqa.Web.Factories
 
             model.DisplayTaxShippingInfo = false;
 
+            model.OrignalPrice = product.Price;
+
             model.BasePricePAngV = null;
             model.CurrencyCode = InovatiqaDefaults.CurrencyCode;
 
@@ -885,6 +887,7 @@ namespace Inovatiqa.Web.Factories
                 if (preparePriceModel)
                 {
                     model.ProductPrice = PrepareProductOverviewPriceModel(product, forceRedirectionAfterAddingToCart);
+                    model.ProductPrice.OrignalPrice = product.Price;
                 }
 
                 if (preparePictureModel)

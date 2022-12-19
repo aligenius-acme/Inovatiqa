@@ -18,12 +18,14 @@ namespace Inovatiqa.Web.Areas.Admin.Models.Catalog
             AvailableVendors = new List<SelectListItem>();
             AvailableProductTypes = new List<SelectListItem>();
             AvailablePublishedOptions = new List<SelectListItem>();
+            TierPriceSearchModel = new TierPriceSearchModel();
         }
 
         #endregion
 
         #region Properties
 
+        public TierPriceSearchModel TierPriceSearchModel { get; set; }
         [Display(Name = "Product name")]
         public string SearchProductName { get; set; }
 

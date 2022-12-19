@@ -5,12 +5,9 @@ using Inovatiqa.Services.Security.Interfaces;
 using Inovatiqa.Web.Areas.Admin.Factories.Interfaces;
 using Inovatiqa.Web.Areas.Admin.Infrastructure.Mapper.Extensions;
 using Inovatiqa.Web.Areas.Admin.Models.Catalog;
-using Inovatiqa.Services.Seo.Interfaces;
 using Inovatiqa.Web.Mvc;
 using Microsoft.AspNetCore.Mvc;
-using Inovatiqa.Web.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.Razor;
-using Inovatiqa.Database.Models;
 
 namespace Inovatiqa.Web.Areas.Admin.Controllers
 {

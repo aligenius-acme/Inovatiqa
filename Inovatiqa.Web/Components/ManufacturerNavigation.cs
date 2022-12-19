@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
-using System;
 using Inovatiqa.Web.Models.Catalog;
 
 namespace Inovatiqa.Web.Components

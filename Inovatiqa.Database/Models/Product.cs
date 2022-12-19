@@ -132,6 +132,7 @@ namespace Inovatiqa.Database.Models
         public bool IsCovid19Product { get; set; }
         public bool ShowCovid19OnHomepage { get; set; }
         public int? Msku { get; set; }
+        public int? MckessonProductId { get; set; }
         public int? RootCategoryId { get; set; }
 
         public virtual ICollection<BackInStockSubscription> BackInStockSubscription { get; set; }

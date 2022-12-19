@@ -19,14 +19,15 @@ namespace Inovatiqa.Web.Areas.Admin.Factories.Interfaces
 
         ProductAttributeMappingModel PrepareProductAttributeMappingModel(ProductAttributeMappingModel model,
             Product product, ProductProductAttributeMapping productAttributeMapping, bool excludeProperties = false);
-
-        TierPriceListModel PrepareTierPriceListModel(TierPriceSearchModel searchModel, Product product);
+        //tier price change
+        TierPriceListModel PrepareTierPriceListModel(TierPriceSearchModel searchModel, int EntityId, string EntityName);
 
         ProductPictureListModel PrepareProductPictureListModel(ProductPictureSearchModel searchModel, Product product);
 
         ProductOrderListModel PrepareProductOrderListModel(ProductOrderSearchModel searchModel, Product product);
-
+        //tier price change
         TierPriceModel PrepareTierPriceModel(TierPriceModel model,
-            Product product, TierPrice tierPrice, bool excludeProperties = false);
+            int EntityId, string EntityName, EntityTierPrice tierPrice, bool excludeProperties = false);
+
     }
 }

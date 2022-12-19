@@ -364,7 +364,7 @@ namespace Inovatiqa.Web.Areas.Admin.Infrastructure.Mapper
                 .ForMember(model => model.OverrideAltAttribute, options => options.Ignore())
                 .ForMember(model => model.OverrideTitleAttribute, options => options.Ignore())
                 .ForMember(model => model.PictureUrl, options => options.Ignore());
-
+            
             CreateMap<TierPrice, TierPriceModel>()
                 .ForMember(model => model.Store, options => options.Ignore())
                 .ForMember(model => model.AvailableCustomerRoles, options => options.Ignore())

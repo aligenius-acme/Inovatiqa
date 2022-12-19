@@ -1,6 +1,5 @@
 using Inovatiqa.Core.Interfaces;
 using Inovatiqa.Web.Paging.Interfaces;
-using System.Collections.Generic;
 using Inovatiqa.Core;
 using System;
 

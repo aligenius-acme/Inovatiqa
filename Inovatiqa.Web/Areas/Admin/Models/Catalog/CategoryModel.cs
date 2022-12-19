@@ -30,11 +30,13 @@ namespace Inovatiqa.Web.Areas.Admin.Models.Catalog
             AvailableStores = new List<SelectListItem>();
 
             CategoryProductSearchModel = new CategoryProductSearchModel();
+            TierPriceSearchModel = new TierPriceSearchModel();
         }
 
         #endregion
 
         #region Properties
+        public TierPriceSearchModel TierPriceSearchModel { get; set; }
 
         [Display(Name = "Name")]
         public string Name { get; set; }

@@ -195,21 +195,21 @@ namespace Inovatiqa.Services.Catalog.Interfaces
 
         #region Tier prices
 
-        IList<TierPrice> GetTierPricesByProduct(int productId);
+        //tier price change
+        IList<EntityTierPrice> GetTierPricesByProduct(int EntityId, string EntityName); 
 
-        TierPrice GetPreferredTierPrice(Product product, Customer customer, int storeId, int quantity);
+        EntityTierPrice GetPreferredTierPrice(Product product, Customer customer, int storeId, int quantity);
 
-        IList<TierPrice> GetTierPrices(Product product, Customer customer, int storeId);
+        IList<EntityTierPrice> GetTierPrices(Product product, Customer customer, int storeId);
+        void InsertTierPrice(EntityTierPrice tierPrice);
 
-        void InsertTierPrice(TierPrice tierPrice);
+        void DeleteTierPrice(EntityTierPrice tierPrice);
 
-        void DeleteTierPrice(TierPrice tierPrice);
-
-        void UpdateTierPrice(TierPrice tierPrice);
+        void UpdateTierPrice(EntityTierPrice tierPrice);
 
         void UpdateHasTierPricesProperty(Product product);
 
-        TierPrice GetTierPriceById(int tierPriceId);
+        EntityTierPrice GetTierPriceById(int tierPriceId);
 
         #endregion
     }

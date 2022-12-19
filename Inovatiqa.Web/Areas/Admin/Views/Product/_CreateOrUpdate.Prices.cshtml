@@ -276,32 +276,32 @@
             {
                 <div class="panel-body">
                     <p>
-                        Tier pricing based upon customer roles.
+                        Tier pricing based upon customer.
                     </p>
                     @await Html.PartialAsync("Table", new DataTablesModel
                     {
                         Name = "tierprices-grid",
-                        UrlRead = new DataUrl("TierPriceList", "Product", new RouteValueDictionary { [nameof(Model.ProductPictureSearchModel.ProductId)] = Model.ProductPictureSearchModel.ProductId }),
+                        UrlRead = new DataUrl("TierPriceList", "Product", new RouteValueDictionary { [nameof(Model.TierPriceSearchModel.EntityId)] = Model.ProductPictureSearchModel.ProductId, [nameof(Model.TierPriceSearchModel.EntityName)] = Model.TierPriceSearchModel.EntityName}),
                         UrlDelete = new DataUrl("TierPriceDelete", "Product", null),
                         Length = Model.ProductPictureSearchModel.PageSize,
                         LengthMenu = Model.ProductPictureSearchModel.AvailablePageSizes,
                         ColumnCollection = new List<ColumnProperty>
                         {
-                            new ColumnProperty(nameof(TierPriceModel.Store))
+                            //new ColumnProperty(nameof(TierPriceModel.EntityName))
+                            //{
+                            //    Title = "Store",
+                            //    Visible = false
+                            //},
+                            new ColumnProperty(nameof(TierPriceModel.Customer))
                             {
-                                Title = "Store",
-                                Visible = false
+                                Title = "Customer"
                             },
-                            new ColumnProperty(nameof(TierPriceModel.CustomerRole))
-                            {
-                                Title = "Customer role"
-                            },
-                            new ColumnProperty(nameof(TierPriceModel.Quantity))
-                            {
-                                Title = "Quantity",
-                                Visible = false
-                            },
-                            new ColumnProperty(nameof(TierPriceModel.Price))
+                            //new ColumnProperty(nameof(TierPriceModel.Quantity))
+                            //{
+                            //    Title = "Quantity",
+                            //    Visible = false
+                            //},
+                            new ColumnProperty(nameof(TierPriceModel.Rate))
                             {
                                 Title = "Price"
                             },
@@ -339,7 +339,7 @@
                     </script>, "js")
                 </div>
                 <div class="panel-footer">
-                    <button type="submit" id="btnAddNewTierPrice" onclick="javascript:OpenWindow('@(Url.Action("TierPriceCreatePopup", "Product", new { productId = Model.Id, btnId = "btnRefreshTierPrices", formId = "product-form"}))', 800, 600, true); return false;" class="btn btn-primary">
+                    <button type="submit" id="btnAddNewTierPrice" onclick="javascript:OpenWindow('@(Url.Action("TierPriceCreatePopup", "Product", new { EntityId = Model.Id, EntityName = "Product", btnId = "btnRefreshTierPrices", formId = "product-form"}))', 800, 600, true); return false;" class="btn btn-primary">
                         Add new tier price
                     </button>
                     <input type="submit" id="btnRefreshTierPrices" style="display: none" />

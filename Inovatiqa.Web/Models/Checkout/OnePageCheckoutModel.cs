@@ -1,5 +1,4 @@
-﻿using Inovatiqa.Web.Models.Catalog;
-using Inovatiqa.Web.Models.Media;
+﻿using Inovatiqa.Web.Models.Media;
 using System.Collections.Generic;
 namespace Inovatiqa.Web.Models.Checkout
 {

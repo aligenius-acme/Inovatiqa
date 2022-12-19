@@ -319,7 +319,9 @@ namespace Inovatiqa.Web.Areas.Admin.Factories
             if (product == null)
                 throw new ArgumentNullException(nameof(product));
 
-            searchModel.ProductId = product.Id;
+            searchModel.EntityId = product.Id;
+            searchModel.EntityName = "Product";
+            
 
             searchModel.SetGridPageSize();
 
@@ -378,22 +380,30 @@ namespace Inovatiqa.Web.Areas.Admin.Factories
         #endregion
 
         #region Methods
-
+        //tier price change
         public virtual TierPriceModel PrepareTierPriceModel(TierPriceModel model,
-            Product product, TierPrice tierPrice, bool excludeProperties = false)
+            int EntityId, string EntityName, EntityTierPrice tierPrice, bool excludeProperties = false)
         {
-            if (product == null)
-                throw new ArgumentNullException(nameof(product));
+            //if (product == null)
+            //    throw new ArgumentNullException(nameof(product));
 
             if (tierPrice != null)
             {
                 if (model == null)
                 {
-                    model = tierPrice.ToTierPriceModel<TierPriceModel>();
+                    //model = tierPrice.ToTierPriceModel<TierPriceModel>();
+                    model = new TierPriceModel();
+                    model.EntityId = Convert.ToInt32(tierPrice.EntityId);
+                    model.EntityName = tierPrice.EntityName;
+                    model.Id = tierPrice.Id;
+                    model.CustomerId = Convert.ToInt32(tierPrice.CustomerId > 0 ? tierPrice.CustomerId : (int?)null);
+                    model.StartDateTimeUtc = tierPrice.StartDateTimeUtc;
+                    model.EndDateTimeUtc = tierPrice.EndDateTimeUtc;
+                    model.Rate = Convert.ToInt32(tierPrice.Rate);
                 }
             }
-
-            _baseAdminModelFactory.PrepareCustomerRoles(model.AvailableCustomerRoles);
+            model.EntityName = EntityName;
+            //_baseAdminModelFactory.PrepareCustomerRoles(model.AvailableCustomerRoles);
 
             return model;
         }
@@ -857,30 +867,39 @@ namespace Inovatiqa.Web.Areas.Admin.Factories
 
             return model;
         }
-
-        public virtual TierPriceListModel PrepareTierPriceListModel(TierPriceSearchModel searchModel, Product product)
+        //tier price change
+        public virtual TierPriceListModel PrepareTierPriceListModel(TierPriceSearchModel searchModel, int EntityId, String EntityName)
         {
             if (searchModel == null)
                 throw new ArgumentNullException(nameof(searchModel));
 
-            if (product == null)
-                throw new ArgumentNullException(nameof(product));
+            //if (product == null)
+            //    throw new ArgumentNullException(nameof(product));
 
-            var tierPrices = _productService.GetTierPricesByProduct(product.Id)
-                .OrderBy(price => price.StoreId).ThenBy(price => price.Quantity).ThenBy(price => price.CustomerRoleId)
+            var tierPrices = _productService.GetTierPricesByProduct(EntityId, EntityName)
+                .OrderBy(price => price.EntityId).ThenBy(price => price.CustomerId).ThenBy(price => price.Rate)
                 .ToList().ToPagedList(searchModel);
 
             var model = new TierPriceListModel().PrepareToGrid(searchModel, tierPrices, () =>
             {
                 return tierPrices.Select(price =>
                 {
-                    var tierPriceModel = price.ToTierPriceModel<TierPriceModel>();
-  
-                    tierPriceModel.Store = InovatiqaDefaults.CurrentStoreName;
-                    tierPriceModel.CustomerRoleId = price.CustomerRoleId ?? 0;
-                    tierPriceModel.CustomerRole = price.CustomerRoleId.HasValue
-                        ? _customerService.GetCustomerRoleById(price.CustomerRoleId.Value).Name
-                        : "All customer roles";
+                    //var tierPriceModel = price.ToTierPriceModel<TierPriceModel>();
+                    var tierPriceModel = new TierPriceModel();
+                    tierPriceModel.Id = price.Id;
+                    tierPriceModel.EntityId = Convert.ToInt32(price.EntityId);
+                    tierPriceModel.EntityName = price.EntityName;
+                    tierPriceModel.StartDateTimeUtc = price.StartDateTimeUtc;
+                    tierPriceModel.EndDateTimeUtc = price.EndDateTimeUtc;
+                    tierPriceModel.Rate = Convert.ToDecimal(price.Rate);
+                    //tierPriceModel.Store = InovatiqaDefaults.CurrentStoreName;
+                    tierPriceModel.CustomerId = price.CustomerId ?? 0;
+                    var customer = _customerService.GetCustomerById(Convert.ToInt32(price.CustomerId));
+                    var category = _categoryService.GetCategoryById(Convert.ToInt32(price.EntityId));
+                    tierPriceModel.Customer = customer?.Email;
+                    tierPriceModel.Category = category?.Name;
+                    //    ? _customerService.GetCustomerRoleById(price.CustomerRoleId.Value).Name
+                    //    : "All customer roles";
 
                     return tierPriceModel;
                 });

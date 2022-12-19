@@ -14,20 +14,27 @@ namespace Inovatiqa.Web.Areas.Admin.Models.Catalog
         {
             AvailableStores = new List<SelectListItem>();
             AvailableCustomerRoles = new List<SelectListItem>();
+            AvailabelCustomer = new List<SelectListItem>();
         }
 
         #endregion
 
         #region Properties
-
         public int ProductId { get; set; }
+        public string Category { get; set; }
+        public int EntityId { get; set; }
+        public string EntityName { get; set; }
+
+        [Display(Name = "Customer")]
+        public int CustomerId { get; set; }
+        public IList<SelectListItem> AvailabelCustomer { get; set; }
+        public string Customer { get; set; }
 
         [Display(Name = "Customer role")]
         public int CustomerRoleId { get; set; }
-
         public IList<SelectListItem> AvailableCustomerRoles { get; set; }
-
         public string CustomerRole { get; set; }
+
 
         [Display(Name = "Store")]
         public int StoreId { get; set; }
@@ -38,9 +45,11 @@ namespace Inovatiqa.Web.Areas.Admin.Models.Catalog
 
         [Display(Name = "Quantity")]
         public int Quantity { get; set; }
-
         [Display(Name = "Price")]
         public decimal Price { get; set; }
+
+        [Display(Name = "Rate")]
+        public decimal Rate { get; set; }
 
         [Display(Name = "Start date")]
         [UIHint("DateTimeNullable")]

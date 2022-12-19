@@ -327,7 +327,7 @@ namespace Inovatiqa.Services.Orders
                     product.IsRental ? rentalEndDate : null,
                     out discountAmount, out appliedDiscounts);
             }
-
+            
             return finalPrice;
         }
 

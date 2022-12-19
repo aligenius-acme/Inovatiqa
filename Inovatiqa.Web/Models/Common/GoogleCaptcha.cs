@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
-using Inovatiqa.Core;
 namespace Inovatiqa.Web.Models.Common
 {
     public class GoogleCaptcha
