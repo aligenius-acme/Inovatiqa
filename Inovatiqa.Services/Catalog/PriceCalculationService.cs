@@ -107,28 +107,31 @@ namespace Inovatiqa.Services.Catalog
 
             var price = overriddenProductPrice ?? product.Price;
             price += additionalCharge;
-            
-            var tierPrice = _productService.GetPreferredTierPrice(product, customer, InovatiqaDefaults.StoreId, quantity);
-            if (tierPrice != null)
-            {
-                if (tierPrice.EntityName == "Product" && tierPrice.CustomerId == customer.Id && product.HasTierPrices)
-                {
-                    //price = tierPrice.Price * quantity;
-                    // 07-06-2022 ALI AHMAD - DUE TO ISSUE IN OVERAL PRODUCT PRICE WAS MULTIPLIED BY ITS QUANTITY
-                    if(additionalCharge == 0)
-                    {
-                        price = Convert.ToDecimal(tierPrice.Rate);
-                    }
-                }
-                else if (tierPrice.EntityName == "Category")
-                {
-                        price = price - (Convert.ToDecimal(tierPrice.Rate) / 100 * price);
-                }
-                else if (tierPrice.EntityName == "ALL")
-                {
-                    price = price - (Convert.ToDecimal(tierPrice.Rate) / 100 * price);
-                }
 
+            if (_customerService.IsRegistered(customer))
+            {
+                var tierPrice = _productService.GetPreferredTierPrice(product, customer, InovatiqaDefaults.StoreId, quantity);
+                if (tierPrice != null)
+                {
+                    if (tierPrice.EntityName == "Product" && tierPrice.CustomerId == customer.Id && product.HasTierPrices)
+                    {
+                        //price = tierPrice.Price * quantity;
+                        // 07-06-2022 ALI AHMAD - DUE TO ISSUE IN OVERAL PRODUCT PRICE WAS MULTIPLIED BY ITS QUANTITY
+                        if(additionalCharge == 0)
+                        {
+                            price = Convert.ToDecimal(tierPrice.Rate);
+                        }
+                    }
+                    else if (tierPrice.EntityName == "Category")
+                    {
+                            price = price - (Convert.ToDecimal(tierPrice.Rate) / 100 * price);
+                    }
+                    else if (tierPrice.EntityName == "ALL")
+                    {
+                        price = price - (Convert.ToDecimal(tierPrice.Rate) / 100 * price);
+                    }
+
+                }
             }
 
             //price += additionalCharge;
