@@ -321,7 +321,7 @@
                                                         <td>Brand</td>
                                                         @foreach (var product in Model.Products)
                                                         {
-                                                            <td>@product.SpecificationAttributeModels.Where(attribute => attribute.SpecificationAttributeName == "Brand").FirstOrDefault().ValueRaw</td>
+                                                            <td>@product.SpecificationAttributeModels.Where(attribute => attribute.SpecificationAttributeName == "Brand").FirstOrDefault()?.ValueRaw</td>
 
                                                         }
 

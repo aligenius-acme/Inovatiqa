@@ -164,6 +164,7 @@ namespace Inovatiqa.Web.Models.Catalog
         public partial class ProductPriceModel
         {
             public decimal OrignalPrice { get; set; }
+            public string EntityName { get; set; }
             public string CurrencyCode { get; set; }
 
             public string OldPrice { get; set; }

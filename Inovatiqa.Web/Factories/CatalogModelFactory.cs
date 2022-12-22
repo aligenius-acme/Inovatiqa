@@ -35,6 +35,7 @@ namespace Inovatiqa.Web.Factories
         private readonly ICompareProductsService _compareProductsService;
         private readonly IPriceCalculationService _priceCalculationService;
         private readonly IPriceFormatter _priceFormatter;
+        protected readonly Database.Interfaces.IRepository<EntityTierPrice> _entityTierPriceRepository;
 
 
         #endregion
@@ -53,7 +54,8 @@ namespace Inovatiqa.Web.Factories
             IWorkContextService workContextService,
             ICompareProductsService compareProductsService,
             IPriceFormatter priceFormatter,
-            IPriceCalculationService priceCalculationService)
+            IPriceCalculationService priceCalculationService,
+            Database.Interfaces.IRepository<EntityTierPrice> entityTierPriceRepository)
         {
             _categoryService = categoryService;
             _urlRecordService = urlRecordService;
@@ -68,6 +70,7 @@ namespace Inovatiqa.Web.Factories
             _compareProductsService = compareProductsService;
             _priceFormatter = priceFormatter;
             _priceCalculationService = priceCalculationService;
+            _entityTierPriceRepository = entityTierPriceRepository;
         }
 
         #endregion
@@ -1483,6 +1486,13 @@ namespace Inovatiqa.Web.Factories
                 cat.ProductPrice.OrignalPrice = Convert.ToDecimal(cat.ProductPrice.PriceValue);
                 cat.ProductPrice.PriceValue = _priceCalculationService.GetFinalPrice(product, customer);
                 cat.ProductPrice.Price = _priceFormatter.FormatPrice(cat.ProductPrice.PriceValue);
+                var price = cat.ProductPrice.PriceValue;
+                DateTime now = DateTime.Now;
+                var hasTierPrice = _entityTierPriceRepository.Query().Where(tp => tp.EntityId == product.Id && tp.Rate == price && tp.CustomerId == customer.Id && tp.StartDateTimeUtc <= now && tp.EndDateTimeUtc >= now);
+                if (hasTierPrice.Count() > 0)
+                {
+                    cat.ProductPrice.EntityName = "Product";
+                }
                 cat.IsInCompareList = ComprisonList.Where(prod => prod.Id == cat.Id).ToList().Count > 0;
                 foreach (var ccat in cat.ProductCategories.Select(s => s.childCategory))
                 {

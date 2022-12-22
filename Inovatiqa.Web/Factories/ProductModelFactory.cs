@@ -44,6 +44,7 @@ namespace Inovatiqa.Web.Factories
         private readonly IReviewTypeService _reviewTypeService;
         private readonly IDateTimeHelperService _dateTimeHelperService;
         private readonly ICompareProductsService _compareProductsService;
+        protected readonly Database.Interfaces.IRepository<EntityTierPrice> _entityTierPriceRepository;
 
         #endregion
 
@@ -65,7 +66,8 @@ namespace Inovatiqa.Web.Factories
             IPriceCalculationService priceCalculationService,
             IReviewTypeService reviewTypeService,
             IDateTimeHelperService dateTimeHelperService,
-            ICompareProductsService compareProductsService)
+            ICompareProductsService compareProductsService,
+            Database.Interfaces.IRepository<EntityTierPrice> entityTierPriceRepository)
         {
             _categoryService = categoryService;
             _productService = productService;
@@ -84,6 +86,7 @@ namespace Inovatiqa.Web.Factories
             _reviewTypeService = reviewTypeService;
             _dateTimeHelperService = dateTimeHelperService;
             _compareProductsService = compareProductsService;
+            _entityTierPriceRepository = entityTierPriceRepository;
         }
 
         #endregion
@@ -888,6 +891,14 @@ namespace Inovatiqa.Web.Factories
                 {
                     model.ProductPrice = PrepareProductOverviewPriceModel(product, forceRedirectionAfterAddingToCart);
                     model.ProductPrice.OrignalPrice = product.Price;
+                    var customer = _workContextService.CurrentCustomer;
+                    var price = model.ProductPrice.PriceValue;
+                    DateTime now = DateTime.Now;
+                    var hasTierPrice = _entityTierPriceRepository.Query().Where(tp => tp.EntityId == product.Id && tp.Rate == price && tp.CustomerId == customer.Id && tp.StartDateTimeUtc <= now && tp.EndDateTimeUtc >= now);
+                    if (hasTierPrice.Count() > 0)
+                    {
+                        model.ProductPrice.EntityName = "Product";
+                    }
                 }
 
                 if (preparePictureModel)
@@ -1045,7 +1056,14 @@ namespace Inovatiqa.Web.Factories
             model.PictureModels = allPictureModels;
 
             model.ProductPrice = PrepareProductPriceModel(product);
-
+            var customer = _workContextService.CurrentCustomer; 
+            var price = model.ProductPrice.PriceValue;
+            DateTime now = DateTime.Now;
+            var hasTierPrice = _entityTierPriceRepository.Query().Where(tp => tp.EntityId == product.Id && tp.Rate == price && tp.CustomerId == customer.Id && tp.StartDateTimeUtc <= now && tp.EndDateTimeUtc >= now);
+            if(hasTierPrice.Count() > 0)
+            {
+                model.ProductPrice.EntityName = "Product";
+            }
             model.AddToCart = PrepareProductAddToCartModel(product, updatecartitem);
 
             model.ProductAttributes = PrepareProductAttributeModels(product, updatecartitem);

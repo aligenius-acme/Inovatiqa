@@ -92,7 +92,7 @@
                                                     <div style="display: flex; justify-content: space-between; max-width: 60%;">
                                                         <div>
                                                             <span>
-                                                                <p><span style="font-weight: 600;">Account</span> #@(ViewBag.Id != null ? ViewBag.Id : null) @(ViewBag.LoggedUser != "" ? "( " + ViewBag.LoggedUser + " )" : "")</p>
+                                                                <p><span style="font-weight: 600;">Account</span> #@(ViewBag.Id != null ? ViewBag.Id : null) @(ViewBag.LoggedUser != "" ? "( " + (ViewBag.LoggedUser.Length >= 15 ? ViewBag.LoggedUser.Substring(0,15).Insert(15,"....") : ViewBag.LoggedUser) + " )" : "")</p>
                                                             </span>
                                                         </div>
                                                         @{
