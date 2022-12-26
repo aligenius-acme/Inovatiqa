@@ -306,7 +306,9 @@
                                         <div class="cat_i">
                                             <img style="width:79px; height:68px;" src="@category.PictureModel.FullSizeImageUrl" />
                                         </div>
-                                        <h4><div style="cursor: pointer; color: #6A983C;"  onclick="childCategory_Filter('@(Convert.ToString(category.Id))')">@category.Name</div></h4>
+                                        @*<h4><div style="cursor: pointer; color: #6A983C;"  onclick="childCategory_Filter('@(Convert.ToString(category.Id))')">@category.Name</div></h4>*@
+
+                                        <h4><div style="cursor: pointer; color: #6A983C;" ><a href="@Url.RouteUrl("Category", new { SeName = category.SeName })">@category.Name</a></div></h4>
                                     </div>
                                 </div>
                         }

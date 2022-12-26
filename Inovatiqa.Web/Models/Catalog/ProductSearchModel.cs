@@ -61,6 +61,7 @@ namespace Inovatiqa.Web.Models.Catalog
     {
         public int Id { get; set; }
         public int Count { get; set; }
+        public string SeName { get; set; }
         public string ChildCategoriesCount { get; set; }
         public string Name { get; set; }
         public PictureModel PictureModel { get; set; }

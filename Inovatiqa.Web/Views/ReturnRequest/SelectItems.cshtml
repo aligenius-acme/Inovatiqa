@@ -623,7 +623,7 @@
                             reloadWithParams();
                         });
                         $('#returnItemClear').click(function() {
-                            setLocation('@Url.RouteUrl("ReturnRequest/SelectItems")');
+                            setLocation('@Url.Action("SelectItems", "ReturnRequest")');
                         });
                         if (searchParams.has('startDateValue') && searchParams.has('endDateValue')) {
                             $("#fromdate").val(searchParams.get('startDateValue'));

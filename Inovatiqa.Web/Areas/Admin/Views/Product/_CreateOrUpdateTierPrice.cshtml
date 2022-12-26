@@ -6,105 +6,155 @@
 @if (ViewBag.RefreshPage == true)
 {
     @Html.Resource(@<script type="text/javascript">
-            try {window.opener.document.forms['@(Context.Request.Query["formId"])'].@(Context.Request.Query["btnId"]).click();}
-            catch (e){}
-            window.close();
+                                                                                                                                                                    try {window.opener.document.forms['@(Context.Request.Query["formId"])'].@(Context.Request.Query["btnId"]).click();}
+                                                                                                                                                                    catch (e){}
+                                                                                                                                                                    window.close();
     </script>, "js")
 }
 
-    <div class="content">
-        <div class="form-horizontal">
-            <div class="panel-group">
-                <div class="panel panel-default panel-popup">
-                    <div class="panel-body">
-                        @*<div class="form-group" style="display:none;">
-                            <div class="col-sm-3">
-                                <nop-label asp-for="Quantity" />
-                            </div>
-                            <div class="col-sm-9">
-                                <nop-editor asp-for="Quantity" />
-                                <span asp-validation-for="Quantity"></span>
-                            </div>
-                        </div>*@
-                        <div class="form-group" style="display:none;">
-                            <div class="col-sm-3">
-                                <nop-label asp-for="EntityId" />
-                            </div>
-                            <div class="col-sm-9">
-                                <nop-editor asp-for="EntityId" />
-                                <span asp-validation-for="EntityId"></span>
-                            </div>
+<div class="content">
+    <div class="form-horizontal">
+        <div class="panel-group">
+            <div class="panel panel-default panel-popup">
+                <div class="panel-body">
+                    @*<div class="form-group" style="display:none;">
+                        <div class="col-sm-3">
+                            <nop-label asp-for="Quantity" />
                         </div>
-                        <div class="form-group" style="display:none;">
-                            <div class="col-sm-3">
-                                <nop-label asp-for="EntityName" />
-                            </div>
-                            <div class="col-sm-9">
-                                <nop-editor asp-for="EntityName" />
-                                <span asp-validation-for="EntityName"></span>
-                            </div>
+                        <div class="col-sm-9">
+                            <nop-editor asp-for="Quantity" />
+                            <span asp-validation-for="Quantity"></span>
                         </div>
-                        @if(Model.EntityName != "Product"){
-                            <div class="form-group">
-                                <div class="col-sm-3">
-                                </div>
-                                <div class="col-sm-9">
-                                    <p style="color:red;">Enter Discount Rate in persentage(%).</p>
-                                </div>
-                            </div>
-                        }
+                    </div>*@
+                    <div class="form-group" style="display:none;">
+                        <div class="col-sm-3">
+                            <nop-label asp-for="EntityId" />
+                        </div>
+                        <div class="col-sm-9">
+                            <nop-editor asp-for="EntityId" />
+                            <span asp-validation-for="EntityId"></span>
+                        </div>
+                    </div>
+                    <div class="form-group" style="display:none;">
+                        <div class="col-sm-3">
+                            <nop-label asp-for="EntityName" />
+                        </div>
+                        <div class="col-sm-9">
+                            <nop-editor asp-for="EntityName" />
+                            <span asp-validation-for="EntityName"></span>
+                        </div>
+                    </div>
+                    @if(Model.EntityName != "Product"){
                         <div class="form-group">
                             <div class="col-sm-3">
-                                <nop-label asp-for="Rate" />
                             </div>
                             <div class="col-sm-9">
-                                <nop-editor asp-for="Rate" />
-                                <span asp-validation-for="Rate"></span>
+                                <p style="color:red;">Enter Discount Rate in persentage(%).</p>
                             </div>
                         </div>
-                        @*<div class="form-group" @(Model.AvailableStores.SelectionIsNotPossible() ? Html.Raw("style=\"display:none\"") : null)>
-                            <div class="col-sm-3">
-                                <nop-label asp-for="StoreId" />
-                            </div>
-                            <div class="col-sm-9">
-                                <nop-select asp-for="StoreId" asp-items="Model.AvailableStores" />
-                                <span asp-validation-for="StoreId"></span>
-                            </div>
-                        </div>*@
-                        @if(Model.EntityName == "Product")
-                        {
-                            <div class="form-group">
-                                <div class="col-sm-3">
-                                    <nop-label asp-for="CustomerId" />
-                                </div>
-                                <div class="col-sm-9">
-                                    @*<nop-select asp-for="CustomerRoleId" asp-items="Model.AvailableCustomerRoles" />
-                                    <span asp-validation-for="CustomerRoleId"></span>*@
-                                    <nop-select asp-for="CustomerId" asp-items="Model.AvailabelCustomer" />
-                                    <span asp-validation-for="CustomerId"></span>
-                                </div>
-                            </div>
-                        }
+                    }
+                    <div class="form-group">
+                        <div class="col-sm-3">
+                            <nop-label asp-for="Rate" />
+                        </div>
+                        <div class="col-sm-9">
+                            <nop-editor asp-for="Rate" />
+                            <span asp-validation-for="Rate"></span>
+                        </div>
+                    </div>
+                    @*<div class="form-group" @(Model.AvailableStores.SelectionIsNotPossible() ? Html.Raw("style=\"display:none\"") : null)>
+                        <div class="col-sm-3">
+                            <nop-label asp-for="StoreId" />
+                        </div>
+                        <div class="col-sm-9">
+                            <nop-select asp-for="StoreId" asp-items="Model.AvailableStores" />
+                            <span asp-validation-for="StoreId"></span>
+                        </div>
+                    </div>*@
+                    @if(Model.EntityName == "Product")
+                    {
                         <div class="form-group">
-                            <div class="col-sm-3">
-                                <nop-label asp-for="StartDateTimeUtc" />
+                            <div class="col-sm-3" style="text-align: right;">
+                                <label>UserName:</label>
                             </div>
-                            <div class="col-sm-9">
-                                <nop-editor asp-for="StartDateTimeUtc" />
-                                <span asp-validation-for="StartDateTimeUtc"></span>
+                            <div class="col-sm-6">
+                                <input type="text" id="customerName"/>
+                                <span id="noCustomerAvailable" hidden style="color:red;">Customer Not Available.</span>
+                            </div>
+                            <div class="col-sm-3">
+                                <input type="button" onclick="availabelCustomer()" class="btn bg-blue" value="Search Customer"/>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-sm-3">
-                                <nop-label asp-for="EndDateTimeUtc" />
+                                <nop-label asp-for="CustomerId" />
                             </div>
                             <div class="col-sm-9">
-                                <nop-editor asp-for="EndDateTimeUtc" />
-                                <span asp-validation-for="EndDateTimeUtc"></span>
+                                @*<select asp-for="CustomerId" id="CustomerList">
+
+                                </select>*@
+                                @*<nop-select asp-for="CustomerRoleId" asp-items="Model.AvailableCustomerRoles" />
+                                <span asp-validation-for="CustomerRoleId"></span>*@
+                                @*<nop-select asp-for="CustomerId" asp-items="Model.AvailabelCustomer" />*@
+                                <nop-select asp-for="CustomerId" />
+                                <span asp-validation-for="CustomerId"></span>
                             </div>
+                        </div>
+                    }
+                    <div class="form-group">
+                        <div class="col-sm-3">
+                            <nop-label asp-for="StartDateTimeUtc" />
+                        </div>
+                        <div class="col-sm-9">
+                            <nop-editor asp-for="StartDateTimeUtc" />
+                            <span asp-validation-for="StartDateTimeUtc"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-3">
+                            <nop-label asp-for="EndDateTimeUtc" />
+                        </div>
+                        <div class="col-sm-9">
+                            <nop-editor asp-for="EndDateTimeUtc" />
+                            <span asp-validation-for="EndDateTimeUtc"></span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
+<script>
+    function availabelCustomer(){
+        const myNode = document.getElementById("CustomerId");
+        while (myNode.firstChild) {
+            myNode.removeChild(myNode.lastChild);
+        }
+        var customer = {
+            customerName: $('#customerName').val()
+        };
+        $.ajax({
+            cache: false,
+            type: "GET",
+            url: "@(Url.Action("SearchCustomer", "Product"))",
+            data: customer,
+            success: function (data) {
+                if (data.length > 0) {
+                    data.forEach(customer => {
+                        const option = document.createElement('option');
+                        option.value = customer.Id;
+                        option.text = customer.Username;
+                        console.log(option);
+                        $('#CustomerId').append(option);
+                    });
+                }
+                else{
+                    $('#noCustomerAvailable').show();
+                }
+            },
+            error: function(err) {
+                console.log(err);
+            }
+        });
+    }
+</script>

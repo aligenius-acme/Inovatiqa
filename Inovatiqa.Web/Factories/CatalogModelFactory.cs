@@ -1520,6 +1520,7 @@ namespace Inovatiqa.Web.Factories
                     {
                         Id = catt.Id,
                         Name = catt.Name,
+                        SeName = _urlRecordService.GetActiveSlug(catt.Id, InovatiqaDefaults.CategorySlugName, InovatiqaDefaults.LanguageId),
                         PictureModel = new PictureModel
                         {
                             FullSizeImageUrl = catt.PictureId > 0 ? _pictureService.GetPictureUrl(catt.PictureId) : _pictureService.GetDefaultPictureUrl()

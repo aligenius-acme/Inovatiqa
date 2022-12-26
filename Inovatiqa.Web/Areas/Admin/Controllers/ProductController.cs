@@ -18,6 +18,7 @@ using Inovatiqa.Services.Media.Interfaces;
 using System.Linq;
 using Inovatiqa.Services.Customers.Interfaces;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Inovatiqa.Database.Interfaces;
 
 namespace Inovatiqa.Web.Areas.Admin.Controllers
 {
@@ -37,6 +38,7 @@ namespace Inovatiqa.Web.Areas.Admin.Controllers
         private readonly IManufacturerService _manufacturerService;
         private readonly ICustomerActivityService _customerActivityService;
         private readonly ICustomerService _customerService;
+        private readonly IRepository<Customer> _customerRepository;
 
         #endregion
 
@@ -54,7 +56,8 @@ namespace Inovatiqa.Web.Areas.Admin.Controllers
             IManufacturerService manufacturerService,
             ICustomerActivityService customerActivityService,
             IRazorViewEngine viewEngine,
-            ICustomerService customerService) : base(viewEngine)
+            ICustomerService customerService,
+            IRepository<Customer> customerRepository) : base(viewEngine)
         {
             _permissionService = permissionService;
             _workContextService = workContextService;
@@ -68,6 +71,7 @@ namespace Inovatiqa.Web.Areas.Admin.Controllers
             _manufacturerService = manufacturerService;
             _customerActivityService = customerActivityService;
             _customerService = customerService;
+            _customerRepository = customerRepository;
         }
 
         #endregion
@@ -678,7 +682,11 @@ namespace Inovatiqa.Web.Areas.Admin.Controllers
 
             return Json(model);
         }
-
+        public virtual IActionResult SearchCustomer(string customerName)
+        {
+            var customer = _customerRepository.Query().Where(c => c.Username.Contains(customerName)).ToList();
+            return Json(customer);
+        }
         public virtual IActionResult TierPriceCreatePopup(int EntityId, string EntityName)
         {
             if (!_permissionService.Authorize(StandardPermissionProvider.ManageProducts))
