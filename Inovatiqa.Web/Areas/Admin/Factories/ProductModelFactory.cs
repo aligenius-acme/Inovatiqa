@@ -381,6 +381,32 @@ namespace Inovatiqa.Web.Areas.Admin.Factories
 
         #region Methods
         //tier price change
+        public virtual TierPriceModel PrepareTierPriceCustomerModel(TierPriceModel model,
+            int CustomerId, EntityTierPrice tierPrice, bool excludeProperties = false)
+        {
+            //if (product == null)
+            //    throw new ArgumentNullException(nameof(product));
+
+            if (tierPrice != null)
+            {
+                if (model == null)
+                {
+                    //model = tierPrice.ToTierPriceModel<TierPriceModel>();
+                    model = new TierPriceModel();
+                    model.EntityId = Convert.ToInt32(tierPrice.EntityId);
+                    model.CustomerId = CustomerId;
+                    model.EntityName = tierPrice.EntityName;
+                    model.Id = tierPrice.Id;
+                    model.CustomerId = Convert.ToInt32(tierPrice.CustomerId > 0 ? tierPrice.CustomerId : (int?)null);
+                    model.StartDateTimeUtc = tierPrice.StartDateTimeUtc;
+                    model.EndDateTimeUtc = tierPrice.EndDateTimeUtc;
+                    model.Rate = Convert.ToInt32(tierPrice.Rate);
+                }
+            }
+            //_baseAdminModelFactory.PrepareCustomerRoles(model.AvailableCustomerRoles);
+
+            return model;
+        }
         public virtual TierPriceModel PrepareTierPriceModel(TierPriceModel model,
             int EntityId, string EntityName, EntityTierPrice tierPrice, bool excludeProperties = false)
         {
@@ -399,7 +425,7 @@ namespace Inovatiqa.Web.Areas.Admin.Factories
                     model.CustomerId = Convert.ToInt32(tierPrice.CustomerId > 0 ? tierPrice.CustomerId : (int?)null);
                     model.StartDateTimeUtc = tierPrice.StartDateTimeUtc;
                     model.EndDateTimeUtc = tierPrice.EndDateTimeUtc;
-                    model.Rate = Convert.ToInt32(tierPrice.Rate);
+                    model.Rate = Convert.ToDecimal(tierPrice.Rate);
                 }
             }
             model.EntityName = EntityName;
@@ -867,7 +893,61 @@ namespace Inovatiqa.Web.Areas.Admin.Factories
 
             return model;
         }
+        public virtual TierPriceListModel PrepareTierPriceListModelByCustomer(TierPriceSearchModel searchModel, int CustomerId)
+        {
+            if (searchModel == null)
+                throw new ArgumentNullException(nameof(searchModel));
+
+            //if (product == null)
+            //    throw new ArgumentNullException(nameof(product));
+
+            var tierPrices = _productService.GetTierPricesByCustomerId(CustomerId)
+                .OrderBy(price => price.EntityId).ThenBy(price => price.CustomerId).ThenBy(price => price.Rate)
+                .ToList().ToPagedList(searchModel);
+
+            var model = new TierPriceListModel().PrepareToGrid(searchModel, tierPrices, () =>
+            {
+                return tierPrices.Select(price =>
+                {
+                    //var tierPriceModel = price.ToTierPriceModel<TierPriceModel>();
+                    var tierPriceModel = new TierPriceModel();
+                    tierPriceModel.Id = price.Id;
+                    tierPriceModel.EntityId = Convert.ToInt32(price.EntityId);
+                    tierPriceModel.EntityName = price.EntityName;
+                    tierPriceModel.StartDateTimeUtc = price.StartDateTimeUtc;
+                    tierPriceModel.EndDateTimeUtc = price.EndDateTimeUtc;
+                    tierPriceModel.Rate = Convert.ToDecimal(price.Rate);
+                    //tierPriceModel.Store = InovatiqaDefaults.CurrentStoreName;
+                    tierPriceModel.CustomerId = price.CustomerId ?? 0;
+                    var customer = _customerService.GetCustomerById(Convert.ToInt32(price.CustomerId));
+                    if(price.EntityName == "Category")
+                    {
+                        var category = _categoryService.GetCategoryById(Convert.ToInt32(price.EntityId));
+                        tierPriceModel.Category = "Category: " + category?.Name;
+                    }
+                    else if (price.EntityName == "Product")
+                    {
+                        var product = _productService.GetProductById(Convert.ToInt32(price.EntityId));
+                        tierPriceModel.Category = "Product: " + product?.Sku;
+                    }
+                    else if (price.EntityName == "ALL")
+                    {
+                        tierPriceModel.Category = "All Products";
+                    }
+
+                    tierPriceModel.Customer = customer?.Email;
+                    
+                    //    ? _customerService.GetCustomerRoleById(price.CustomerRoleId.Value).Name
+                    //    : "All customer roles";
+
+                    return tierPriceModel;
+                });
+            });
+
+            return model;
+        }
         //tier price change
+
         public virtual TierPriceListModel PrepareTierPriceListModel(TierPriceSearchModel searchModel, int EntityId, String EntityName)
         {
             if (searchModel == null)

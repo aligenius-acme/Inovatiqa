@@ -122,11 +122,11 @@ namespace Inovatiqa.Services.Catalog
                             price = Convert.ToDecimal(tierPrice.Rate);
                         }
                     }
-                    else if (tierPrice.EntityName == "Category")
+                    else if (tierPrice.EntityName == "Category" && tierPrice.CustomerId == customer.Id)
                     {
                             price = price - (Convert.ToDecimal(tierPrice.Rate) / 100 * price);
                     }
-                    else if (tierPrice.EntityName == "ALL")
+                    else if (tierPrice.EntityName == "ALL" && tierPrice.CustomerId == customer.Id)
                     {
                         price = price - (Convert.ToDecimal(tierPrice.Rate) / 100 * price);
                     }

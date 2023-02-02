@@ -6,9 +6,9 @@
 @if (ViewBag.RefreshPage == true)
 {
     @Html.Resource(@<script type="text/javascript">
-                                                                                                                                                                    try {window.opener.document.forms['@(Context.Request.Query["formId"])'].@(Context.Request.Query["btnId"]).click();}
-                                                                                                                                                                    catch (e){}
-                                                                                                                                                                    window.close();
+                                                                                        try {window.opener.document.forms['@(Context.Request.Query["formId"])'].@(Context.Request.Query["btnId"]).click();}
+                                                                                        catch (e){}
+                                                                                        window.close();
     </script>, "js")
 }
 
@@ -28,31 +28,98 @@
                     </div>*@
                     <div class="form-group" style="display:none;">
                         <div class="col-sm-3">
-                            <nop-label asp-for="EntityId" />
+                            <nop-label asp-for="CustomerId" />
                         </div>
                         <div class="col-sm-9">
-                            <nop-editor asp-for="EntityId" />
-                            <span asp-validation-for="EntityId"></span>
+                            <nop-editor asp-for="CustomerId" />
+                            <span asp-validation-for="CustomerId"></span>
                         </div>
                     </div>
-                    <div class="form-group" style="display:none;">
-                        <div class="col-sm-3">
-                            <nop-label asp-for="EntityName" />
+                    @{
+                        bool AP = true;
+                        bool SP = false;
+                        bool SC = false;
+                        bool SPH = true;
+                        bool SCH = true;
+                        if (Model.EntityName == "Product")
+                        {
+                            SP = true;
+                            SPH = false;
+                        }
+                        else if (Model.EntityName == "Category")
+                        {
+                            SC = true;
+                            SCH = false;
+                        }
+                        else
+                            AP = true;
+                    }
+                    <div class="form-group" hidden = "@Model.IsEdit">
+                        <div class="col-sm-3" style="text-align: right;">
+                                <label>Select Type:</label>
                         </div>
+                        @*disabled = "@Model.IsEdit"*@
                         <div class="col-sm-9">
-                            <nop-editor asp-for="EntityName" />
-                            <span asp-validation-for="EntityName"></span>
+                            <select id="entityType" asp-for="EntityName" >
+                                <option Value = "ALL" selected = "@AP">Tier Price for All Product</option>
+                                <option Value = "Product" selected = "@SP">Tier Price for Specific Product</option>
+                                <option Value = "Category" selected = "@SC">Tier Price for Specific Category</option>
+                            </select>
                         </div>
                     </div>
-                    @if(Model.EntityName != "Product"){
+                    <div id="ProductModel" hidden = "@SPH">
                         <div class="form-group">
+                            <div class="col-sm-3" style="text-align: right;">
+                                <label>Product Sku:</label>
+                            </div>
+                            <div class="col-sm-6">
+                                <input type="text" id="productSku" value="@Model.ProductSku"/>
+                                <span id="noProductAvailable" hidden style="color:red;">Product Not Available.</span>
+                            </div>
                             <div class="col-sm-3">
+                                <input type="button" onclick="availabelProduct()" class="btn bg-blue" value="Search Product"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-3" style="text-align: right;">
+                                <label>Product:</label>
                             </div>
                             <div class="col-sm-9">
-                                <p style="color:red;">Enter Discount Rate in persentage(%).</p>
+                                <nop-select asp-for="ProductEntityId" />
+                                <span asp-validation-for="ProductEntityId"></span>
                             </div>
                         </div>
-                    }
+                    </div>
+                    <div id="CategoryModel" hidden = "@SCH">
+                        <div class="form-group">
+                            <div class="col-sm-3" style="text-align: right;">
+                                <label>Category Name:</label>
+                            </div>
+                            <div class="col-sm-6">
+                                <input type="text" id="CategoryName" value="@Model.CategoryName"/>
+                                <span id="noCategoryAvailable" hidden style="color:red;">Category Not Available.</span>
+                            </div>
+                            <div class="col-sm-3">
+                                <input type="button" onclick="availabelCategory()" class="btn bg-blue" value="Search Category"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-3" style="text-align: right;">
+                                <label>Category:</label>
+                            </div>
+                            <div class="col-sm-9">
+                                <nop-select asp-for="EntityId" />
+                                <span asp-validation-for="EntityId"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" id="rateType">
+                        <div class="col-sm-3">
+                        </div>
+                        <div class="col-sm-9">
+                            <p style="color:red;">Enter Discount Rate in persentage(%).</p>
+                        </div>
+                    </div>
                     <div class="form-group">
                         <div class="col-sm-3">
                             <nop-label asp-for="Rate" />
@@ -62,6 +129,43 @@
                             <span asp-validation-for="Rate"></span>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <div class="col-sm-3">
+                            <nop-label asp-for="StartDateTimeUtc" />
+                        </div>
+                        <div class="col-sm-9">
+                            <nop-editor asp-for="StartDateTimeUtc" />
+                            <span asp-validation-for="StartDateTimeUtc"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-3">
+                            <nop-label asp-for="EndDateTimeUtc" />
+                        </div>
+                        <div class="col-sm-9">
+                            <nop-editor asp-for="EndDateTimeUtc" />
+                            <span asp-validation-for="EndDateTimeUtc"></span>
+                        </div>
+                    </div>
+                    @*<div class="form-group" style="display:none;">
+                        <div class="col-sm-3">
+                            <nop-label asp-for="EntityName" />
+                        </div>
+                        <div class="col-sm-9">
+                            <nop-editor asp-for="EntityName" />
+                            <span asp-validation-for="EntityName"></span>
+                        </div>
+                    </div>*@
+                    @*<div class="form-group" style="display:none;">
+                        <div class="col-sm-3">
+                            <nop-label asp-for="EntityId" />
+                        </div>
+                        <div class="col-sm-9">
+                            <nop-editor asp-for="EntityId" />
+                            <span asp-validation-for="EntityId"></span>
+                        </div>
+                    </div>*@
+                    
                     @*<div class="form-group" @(Model.AvailableStores.SelectionIsNotPossible() ? Html.Raw("style=\"display:none\"") : null)>
                         <div class="col-sm-3">
                             <nop-label asp-for="StoreId" />
@@ -71,7 +175,7 @@
                             <span asp-validation-for="StoreId"></span>
                         </div>
                     </div>*@
-                    @if(Model.EntityName == "Product")
+                    @*@if(Model.EntityName == "Product")
                     {
                         <div class="form-group">
                             <div class="col-sm-3" style="text-align: right;">
@@ -92,69 +196,162 @@
                             <div class="col-sm-9">
                                 @*<select asp-for="CustomerId" id="CustomerList">
 
-                                </select>*@
+                                </select>@
                                 @*<nop-select asp-for="CustomerRoleId" asp-items="Model.AvailableCustomerRoles" />
-                                <span asp-validation-for="CustomerRoleId"></span>*@
-                                @*<nop-select asp-for="CustomerId" asp-items="Model.AvailabelCustomer" />*@
+                                <span asp-validation-for="CustomerRoleId"></span>@
+                                @*<nop-select asp-for="CustomerId" asp-items="Model.AvailabelCustomer" />@
                                 <nop-select asp-for="CustomerId" />
                                 <span asp-validation-for="CustomerId"></span>
                             </div>
                         </div>
-                    }
-                    <div class="form-group">
-                        <div class="col-sm-3">
-                            <nop-label asp-for="StartDateTimeUtc" />
-                        </div>
-                        <div class="col-sm-9">
-                            <nop-editor asp-for="StartDateTimeUtc" />
-                            <span asp-validation-for="StartDateTimeUtc"></span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-3">
-                            <nop-label asp-for="EndDateTimeUtc" />
-                        </div>
-                        <div class="col-sm-9">
-                            <nop-editor asp-for="EndDateTimeUtc" />
-                            <span asp-validation-for="EndDateTimeUtc"></span>
-                        </div>
-                    </div>
+                    }*@
                 </div>
             </div>
         </div>
     </div>
 </div>
-<script>
-    function availabelCustomer(){
-        const myNode = document.getElementById("CustomerId");
-        while (myNode.firstChild) {
-            myNode.removeChild(myNode.lastChild);
-        }
-        var customer = {
-            customerName: $('#customerName').val()
-        };
-        $.ajax({
-            cache: false,
-            type: "GET",
-            url: "@(Url.Action("SearchCustomer", "Product"))",
-            data: customer,
-            success: function (data) {
-                if (data.length > 0) {
-                    data.forEach(customer => {
-                        const option = document.createElement('option');
-                        option.value = customer.Id;
-                        option.text = customer.Username;
-                        console.log(option);
-                        $('#CustomerId').append(option);
+@Html.Resource(@<script type="text/javascript">
+                    $(document).ready(function () {
+                        var entityName = "@Model.EntityName";
+                        if (entityName == "Product") {
+                            productSearch("@Model.ProductSku");
+                        }
+                        else if (entityName == "Category") {
+                            searchCategory("@Model.CategoryName");
+                        }
                     });
-                }
-                else{
-                    $('#noCustomerAvailable').show();
-                }
-            },
-            error: function(err) {
-                console.log(err);
-            }
-        });
-    }
-</script>
+                    $('#entityType').on('change', function(e) {
+                        var optionSelected = $("option:selected", this);
+                        var valueSelected = this.value;
+                        console.log(valueSelected);
+                        if (valueSelected == "Product") {
+                            $('#ProductModel').show();
+                            $('#CategoryModel').hide();
+                            $('#rateType').hide();
+                        }
+                        else if (valueSelected == "Category") {
+                            $('#CategoryModel').show();
+                            $('#ProductModel').hide();
+                            $('#rateType').show();
+                        }
+                        else {
+                            $('#ProductModel').hide();
+                            $('#CategoryModel').hide();
+                            $('#rateType').show();
+                        }
+                    });
+                    function availabelProduct() {
+                        const myNode = document.getElementById("EntityId");
+                        while (myNode.firstChild) {
+                            myNode.removeChild(myNode.lastChild);
+                        }
+                        var productsku = $('#productSku').val();
+                        productSearch(productsku);
+                    }
+                    function productSearch(productsku) {
+                        var product = {
+                            productSku: productsku
+                        };
+                        $.ajax({
+                            cache: false,
+                            type: "GET",
+                            url: "@(Url.Action("SearchProduct", "Product"))",
+                            data: product,
+                            success: function (data) {
+                                if (data.length > 0) {
+                                    data.forEach(product => {
+                                        const option = document.createElement('option');
+                                        option.value = product.Id;
+                                        var prodName = "";
+                                        if (product.Name.length > 80) {
+                                            prodName = product.Name.substr(0, 80) + '...';
+                                        }
+                                        else{
+                                            prodName = product.Name;
+                                        }
+                                        option.text = prodName;
+                                        console.log(option);
+                                        $('#ProductEntityId').append(option);
+                                    });
+                                    $('#noProductAvailable').hide();
+                                }
+                                else{
+                                    $('#noProductAvailable').show();
+                                }
+                            },
+                            error: function(err) {
+                                console.log(err);
+                            }
+                        });
+                    }
+                    function availabelCategory() {
+                        const myNode = document.getElementById("EntityId");
+                        while (myNode.firstChild) {
+                            myNode.removeChild(myNode.lastChild);
+                        }
+                        var CategoryName = $('#CategoryName').val();
+                        searchCategory(CategoryName);
+                    }
+                    function searchCategory(categoryName) {
+                        var category = {
+                            CategoryName: categoryName
+                        };
+                        $.ajax({
+                            cache: false,
+                            type: "GET",
+                            url: "@(Url.Action("SearchCategory", "Product"))",
+                            data: category,
+                            success: function (data) {
+                                if (data.length > 0) {
+                                    data.forEach(category => {
+                                        const option = document.createElement('option');
+                                        option.value = category.Id;
+                                        option.text = category.Name;
+                                        console.log(option);
+                                        $('#EntityId').append(option);
+                                    });
+                                    $('#noCategoryAvailable').hide();
+                                }
+                                else{
+                                    $('#noCategoryAvailable').show();
+                                }
+                            },
+                            error: function(err) {
+                                console.log(err);
+                            }
+                        });
+                    }
+
+                    //function availabelCustomer(){
+                    //    const myNode = document.getElementById("CustomerId");
+                    //    while (myNode.firstChild) {
+                    //        myNode.removeChild(myNode.lastChild);
+                    //    }
+                    //    var customer = {
+                    //        customerName: $('#customerName').val()
+                    //    };
+                    //    $.ajax({
+                    //        cache: false,
+                    //        type: "GET",
+                    //        url: "(Url.Action("SearchCustomer", "Product"))",
+                    //        data: customer,
+                    //        success: function (data) {
+                    //            if (data.length > 0) {
+                    //                data.forEach(customer => {
+                    //                    const option = document.createElement('option');
+                    //                    option.value = customer.Id;
+                    //                    option.text = customer.Name;
+                    //                    console.log(option);
+                    //                    $('#CustomerId').append(option);
+                    //                });
+                    //            }
+                    //            else{
+                    //                $('#noCustomerAvailable').show();
+                    //            }
+                    //        },
+                    //        error: function(err) {
+                    //            console.log(err);
+                    //        }
+                    //    });
+                    //}
+    </script>, "js")

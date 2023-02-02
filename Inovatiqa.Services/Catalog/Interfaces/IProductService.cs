@@ -196,7 +196,8 @@ namespace Inovatiqa.Services.Catalog.Interfaces
         #region Tier prices
 
         //tier price change
-        IList<EntityTierPrice> GetTierPricesByProduct(int EntityId, string EntityName); 
+        IList<EntityTierPrice> GetTierPricesByProduct(int EntityId, string EntityName);
+        IList<EntityTierPrice> GetTierPricesByCustomerId(int customerId);
 
         EntityTierPrice GetPreferredTierPrice(Product product, Customer customer, int storeId, int quantity);
 

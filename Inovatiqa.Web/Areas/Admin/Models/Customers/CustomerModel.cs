@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Inovatiqa.Web.Areas.Admin.Models.Catalog;
 using Inovatiqa.Web.Framework.Models;
 using Inovatiqa.Web.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -36,12 +37,13 @@ namespace Inovatiqa.Web.Areas.Admin.Models.Customers
             CustomerAssociatedExternalAuthRecordsSearchModel = new CustomerAssociatedExternalAuthRecordsSearchModel();
             AvailablePaymentModes = new List<SelectListItem>();
             AvailablePaymentTerms = new List<SelectListItem>();
+            TierPriceSearchModel = new TierPriceSearchModel();
         }
 
         #endregion
 
         #region Properties
-
+        public TierPriceSearchModel TierPriceSearchModel { get; set; }
         public bool UsernamesEnabled { get; set; }
 
         [Display(Name = "Username")]

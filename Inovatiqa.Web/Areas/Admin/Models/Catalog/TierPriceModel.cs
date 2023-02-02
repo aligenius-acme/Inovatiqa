@@ -20,9 +20,13 @@ namespace Inovatiqa.Web.Areas.Admin.Models.Catalog
         #endregion
 
         #region Properties
+        public bool IsEdit { get; set; }
         public int ProductId { get; set; }
+        public string ProductSku { get; set; }
+        public string CategoryName { get; set; }
         public string Category { get; set; }
         public int EntityId { get; set; }
+        public int ProductEntityId { get; set; }
         public string EntityName { get; set; }
 
         [Display(Name = "Customer")]

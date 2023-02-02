@@ -28,6 +28,9 @@ namespace Inovatiqa.Web.Areas.Admin.Factories.Interfaces
         //tier price change
         TierPriceModel PrepareTierPriceModel(TierPriceModel model,
             int EntityId, string EntityName, EntityTierPrice tierPrice, bool excludeProperties = false);
+        TierPriceListModel PrepareTierPriceListModelByCustomer(TierPriceSearchModel searchModel, int CustomerId);
+        TierPriceModel PrepareTierPriceCustomerModel(TierPriceModel model,
+            int CustomerId, EntityTierPrice tierPrice, bool excludeProperties = false);
 
     }
 }

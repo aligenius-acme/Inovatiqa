@@ -39,6 +39,8 @@ namespace Inovatiqa.Web.Areas.Admin.Controllers
         private readonly ICustomerActivityService _customerActivityService;
         private readonly ICustomerService _customerService;
         private readonly IRepository<Customer> _customerRepository;
+        private readonly IRepository<Category> _categoryRepository;
+        private readonly IRepository<Product> _productRepository;
 
         #endregion
 
@@ -57,7 +59,9 @@ namespace Inovatiqa.Web.Areas.Admin.Controllers
             ICustomerActivityService customerActivityService,
             IRazorViewEngine viewEngine,
             ICustomerService customerService,
-            IRepository<Customer> customerRepository) : base(viewEngine)
+            IRepository<Customer> customerRepository,
+            IRepository<Category> categoryRepository,
+            IRepository<Product> productRepository) : base(viewEngine)
         {
             _permissionService = permissionService;
             _workContextService = workContextService;
@@ -72,6 +76,8 @@ namespace Inovatiqa.Web.Areas.Admin.Controllers
             _customerActivityService = customerActivityService;
             _customerService = customerService;
             _customerRepository = customerRepository;
+            _categoryRepository = categoryRepository;
+            _productRepository = productRepository;
         }
 
         #endregion
@@ -645,6 +651,20 @@ namespace Inovatiqa.Web.Areas.Admin.Controllers
         #endregion
 
         #region Tier prices
+        [HttpPost]
+        public virtual IActionResult TierPricesListByCustomer(TierPriceSearchModel searchModel)
+        {
+            if(!_permissionService.Authorize(StandardPermissionProvider.ManageProducts))
+                return AccessDeniedDataTablesJson();
+            var vendor = _workContextService.CurrentVendor;
+            if (searchModel.CustomerId != 0)
+            {
+               var model = _productModelFactory.PrepareTierPriceListModelByCustomer(searchModel, searchModel.CustomerId);
+                return Json(model);
+            }
+            else
+                return Json("");
+        }
 
         [HttpPost]
         public virtual IActionResult TierPriceList(TierPriceSearchModel searchModel)
@@ -682,38 +702,63 @@ namespace Inovatiqa.Web.Areas.Admin.Controllers
 
             return Json(model);
         }
-        public virtual IActionResult SearchCustomer(string customerName)
+        //public virtual IActionResult SearchCustomer(string customerName)
+        //{
+        //    //var customer = _customerRepository.Query().Where(c => c.Username.Contains(customerName)).ToList();
+        //    //var customer = _categoryRepository.Query().Where(c => c.Name.Contains(customerName)).ToList();
+        //    var customer = _productRepository.Query().Where(p => p.Sku == customerName).ToList();
+            
+        //    return Json(customer);
+        //}
+        public virtual IActionResult SearchCategory(string CategoryName)
         {
-            var customer = _customerRepository.Query().Where(c => c.Username.Contains(customerName)).ToList();
-            return Json(customer);
+            var category = _categoryRepository.Query().Where(c => c.Name.Contains(CategoryName)).ToList();
+
+            return Json(category);
         }
-        public virtual IActionResult TierPriceCreatePopup(int EntityId, string EntityName)
+        
+        public virtual IActionResult SearchProduct(string productSku)
+        {
+            var product = _productRepository.Query().Where(p => p.Sku == productSku).ToList();
+
+            return Json(product);
+        }
+        //public virtual IActionResult TierPriceCreatePopup(int EntityId, string EntityName)
+        //{
+        //    if (!_permissionService.Authorize(StandardPermissionProvider.ManageProducts))
+        //        return AccessDeniedView();
+        //    var product = new Product();
+        //    var category = new Category();
+        //    if (EntityName == "Product")
+        //    {
+        //        product = _productService.GetProductById(EntityId)
+        //            ?? throw new ArgumentException("No product found with the specified id");
+        //    }
+        //    else if (EntityName == "Category")
+        //    {
+        //        category = _categoryService.GetCategoryById(EntityId)
+        //            ?? throw new ArgumentException("No product found with the specified id");
+        //    }
+
+
+        //    var model = _productModelFactory.PrepareTierPriceModel(new TierPriceModel(), EntityId, EntityName, null);
+
+        //    if (EntityName == "Product")
+        //    {
+        //        var customerList = _customerService.GetAllCustomers().ToList();
+        //        model.AvailabelCustomer = customerList.Where(ac => ac.Email != null).Select(ac => new SelectListItem { Text = ac.Email.ToString(), Value = ac.Id.ToString() }).ToList();
+        //    }
+
+
+        //    return View(model);
+        //}
+        public virtual IActionResult TierPriceCreatePopup(int CustomerId)
         {
             if (!_permissionService.Authorize(StandardPermissionProvider.ManageProducts))
                 return AccessDeniedView();
             var product = new Product();
             var category = new Category();
-            if (EntityName == "Product")
-            {
-                product = _productService.GetProductById(EntityId)
-                    ?? throw new ArgumentException("No product found with the specified id");
-            }
-            else if (EntityName == "Category")
-            {
-                category = _categoryService.GetCategoryById(EntityId)
-                    ?? throw new ArgumentException("No product found with the specified id");
-            }
-            
-
-            var model = _productModelFactory.PrepareTierPriceModel(new TierPriceModel(), EntityId, EntityName, null);
-
-            if(EntityName == "Product")
-            {
-                var customerList = _customerService.GetAllCustomers().ToList();
-                model.AvailabelCustomer =  customerList.Where(ac => ac.Email != null).Select(ac => new SelectListItem { Text = ac.Email.ToString(), Value = ac.Id.ToString() }).ToList();
-            }
-
-
+            var model = _productModelFactory.PrepareTierPriceCustomerModel(new TierPriceModel(), CustomerId, null);
             return View(model);
         }
 
@@ -727,6 +772,7 @@ namespace Inovatiqa.Web.Areas.Admin.Controllers
             var category = new Category();
             if(model.EntityName == "Product")
             {
+                model.EntityId = model.ProductEntityId;
                 product = _productService.GetProductById(model.EntityId)
                     ?? throw new ArgumentException("No product found with the specified id");
             }
@@ -767,13 +813,14 @@ namespace Inovatiqa.Web.Areas.Admin.Controllers
 
             return View(model);
         }
-
         public virtual IActionResult TierPriceEditPopup(int id)
         {
             if (!_permissionService.Authorize(StandardPermissionProvider.ManageProducts))
                 return AccessDeniedView();
 
             var tierPrice = _productService.GetTierPriceById(id);
+            var productSku = "";
+            var categoryName = "";
             if (tierPrice == null)
                 return RedirectToAction("List", "Product");
             if(tierPrice.EntityName == "Product")
@@ -781,7 +828,7 @@ namespace Inovatiqa.Web.Areas.Admin.Controllers
                 var product = _productService.GetProductById(Convert.ToInt32(tierPrice.EntityId))
                     ?? throw new ArgumentException("No product found with the specified id");
                 var vendor = _workContextService.CurrentVendor;
-
+                productSku = product.Sku;
                 if (vendor != null && product.VendorId != vendor.Id)
                     return RedirectToAction("List", "Product");
             }
@@ -789,9 +836,13 @@ namespace Inovatiqa.Web.Areas.Admin.Controllers
             {
                 var category = _categoryService.GetCategoryById(Convert.ToInt32(tierPrice.EntityId))
                     ?? throw new ArgumentException("No product found with the specified id");
+                categoryName = category.Name;
             }
 
             var model = _productModelFactory.PrepareTierPriceModel(null, Convert.ToInt32(tierPrice.EntityId), tierPrice.EntityName, tierPrice);
+            model.ProductSku = productSku;
+            model.CategoryName = categoryName;
+            model.IsEdit = true;
 
             var customerList = _customerService.GetAllCustomers().ToList();
             model.AvailabelCustomer = customerList.Where(ac => ac.Email != null).Select(ac => new SelectListItem { Text = ac.Email.ToString(), Value = ac.Id.ToString() }).ToList();
@@ -805,7 +856,7 @@ namespace Inovatiqa.Web.Areas.Admin.Controllers
         {
             if (!_permissionService.Authorize(StandardPermissionProvider.ManageProducts))
                 return AccessDeniedView();
-
+            model.EntityId = model.ProductEntityId;
             var tierPrice = _productService.GetTierPriceById(model.Id);
             if (tierPrice == null && model.EntityName == "Product")
                 return RedirectToAction("List", "Product");

@@ -1418,6 +1418,10 @@ namespace Inovatiqa.Services.Catalog
             return _entityTierPriceRepository.Query().Where(tp => tp.EntityId == EntityId && tp.EntityName == EntityName)
                 .ToList();
         }
+        public virtual IList<EntityTierPrice> GetTierPricesByCustomerId(int customerId)
+        {
+            return _entityTierPriceRepository.Query().Where(tp => tp.CustomerId == customerId).ToList();
+        }
         //tier price change
         public virtual EntityTierPrice GetPreferredTierPrice(Product product, Customer customer, int storeId, int quantity)
         {

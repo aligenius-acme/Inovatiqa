@@ -271,6 +271,7 @@
         });
 
         ach.addEventListener('ontokenization', async function(event) {
+            debugger;
             const { tokenResult, error } = event.verificationDetails;
             if (error) {
                 cardButton.disabled = false;
@@ -780,8 +781,8 @@
                                     <div id="payment_info" class="tab-section">
                                         <div id="checkout-step-payment-info" class="step a-item">
                                             @Html.Resource(@<script type="text/javascript">
-                                                                                                                            PaymentInfoSecond.init('#co-payment-info-form', '@(InovatiqaDefaults.StoreUrl)Payment/SavePaymentInfo/');
-                                                                                                                        </script>, "js")
+                                                                                                                                    PaymentInfoSecond.init('#co-payment-info-form', '@(InovatiqaDefaults.StoreUrl)Payment/SavePaymentInfo/');
+                                                                                                                                </script>, "js")
                                             <div class="buttons" id="payment-info-buttons-container">
                                                 <div class="col-md-8 col-sm-8 col-xs-12">
                                                     <div class="form-group font_lato">

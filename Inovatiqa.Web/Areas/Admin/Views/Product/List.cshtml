@@ -193,7 +193,7 @@
                         </div>
                     </div>
 
-                    <div class="panel panel-default panel-search">
+                    @*<div class="panel panel-default panel-search">
                         <div class="panel-body">
                             <div class="row search-row @(!hideSearchBlock ? "opened" : "")" data-hideAttribute="@hideSearchBlockAttributeName">
                                 <div class="search-text">Tier Price</div>
@@ -201,11 +201,11 @@
                                 <div class="icon-collapse"><i class="fa fa-angle-down" aria-hidden="true"></i></div>
                             </div>
 
-                            <div class="search-body @(hideSearchBlock ? "closed" : "")">
+                            @*<div class="search-body @(hideSearchBlock ? "closed" : "")" hidden>
                                 @await Html.PartialAsync("_CreateOrUpdate.AllProductTierPrice", Model)
-                            </div>
+                            </div>@
                         </div>
-                    </div>
+                    </div>*@
 
                 <div class="panel panel-default">
                     <div class="panel-body">

@@ -267,7 +267,7 @@
         </div>
     </div>
 
-    <div class="panel-body">
+    <div class="panel-body" hidden>
         <div class="panel panel-default @(Model.ProductEditorSettingsModel.TierPrices ? null : "advanced-setting")">
             <div class="panel-heading">
                 Tier prices
@@ -332,13 +332,13 @@
                         }
                     })
 
-                    @Html.Resource(@<script type="text/javascript">
+                    @*@Html.Resource(@<script type="text/javascript">
                         function renderPriceColumnEdit(data, type, row, meta) {
                             return '<button onclick=\"javascript:OpenWindow(\'@Url.Content("~/Admin/Product/TierPriceEditPopup/")' + data + '?btnId=btnRefreshTierPrices&formId=product-form\', 800, 600, true); return false;\" class="btn btn-default"><i class="fa fa-pencil"></i>Edit</button>';
                         }
-                    </script>, "js")
+                    </script>, "js")*@
                 </div>
-                <div class="panel-footer">
+                @*<div class="panel-footer">
                     <button type="submit" id="btnAddNewTierPrice" onclick="javascript:OpenWindow('@(Url.Action("TierPriceCreatePopup", "Product", new { EntityId = Model.Id, EntityName = "Product", btnId = "btnRefreshTierPrices", formId = "product-form"}))', 800, 600, true); return false;" class="btn btn-primary">
                         Add new tier price
                     </button>
@@ -352,7 +352,7 @@
                                             });
                                         });
                     </script>, "js")
-                </div>
+                </div>*@
             }
             else
             {
