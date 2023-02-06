@@ -856,7 +856,7 @@ namespace Inovatiqa.Web.Areas.Admin.Controllers
         {
             if (!_permissionService.Authorize(StandardPermissionProvider.ManageProducts))
                 return AccessDeniedView();
-            model.EntityId = model.ProductEntityId;
+            model.EntityId = model.EntityName == "Product" ? model.ProductEntityId : model.EntityId;
             var tierPrice = _productService.GetTierPriceById(model.Id);
             if (tierPrice == null && model.EntityName == "Product")
                 return RedirectToAction("List", "Product");
