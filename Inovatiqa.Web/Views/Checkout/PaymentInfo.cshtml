@@ -67,7 +67,7 @@
     }
     
     async function domContentLoading() {
-
+        displayAjaxLoading(true);
         $('#@Html.IdFor(model => model.StoredCardId)').on('change', toggleStoredCard);
         toggleStoredCard();
         if (!window.Square) {
@@ -78,9 +78,11 @@
         let card;
         try {
             card = await initializeCard(payments);
+            displayAjaxLoading(false);
         }
         catch (e) {
             console.error('Initializing Card failed', e);
+            displayAjaxLoading(false);
             return;
         } 
         
