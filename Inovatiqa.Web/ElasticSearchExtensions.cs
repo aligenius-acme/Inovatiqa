@@ -20,13 +20,13 @@ namespace InovatiqaElasticSearch
                 .DefaultIndex(defaultIndex)
                 .BasicAuthentication(InovatiqaDefaults.ElasticUsername, InovatiqaDefaults.ElasticPassword);
 
-            //AddDefaultMappings(settings);
+            AddDefaultMappings(settings);
 
             var client = new ElasticClient(settings);
 
             services.AddSingleton<IElasticClient>(client);
 
-            //CreateIndex(client, defaultIndex);
+            CreateIndex(client, defaultIndex);
 
         }
 

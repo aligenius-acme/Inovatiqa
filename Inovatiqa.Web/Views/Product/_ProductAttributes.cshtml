@@ -42,28 +42,37 @@
                                             var attributeName = string.IsNullOrEmpty(attributeValue.PriceAdjustment) ?
                                             attributeValue.Name :
                                             string.Format("{0} [{1}{2}]", attributeValue.Name, attributeValue.PriceAdjustment,
-                                                attributeValue.CustomerEntersQty ? " per item" : string.Empty);
+                                            attributeValue.CustomerEntersQty ? " per item" : string.Empty);
                                             <option selected="@attributeValue.IsPreSelected" value="@attributeValue.Id" msku="@attributeValue.MSku">@attributeName</option>
                                         }
                                     </select>
                                 }
-                                else if (@textPrompt != "UOM")
+                                @*else if (@textPrompt != "UOM" && @textPrompt != "Product Spec Sheet")
+            {*@
+                                @foreach (var attributeValue in attribute.Values)
                                 {
-                                    @foreach (var attributeValue in attribute.Values)
+                                    if (@textPrompt != "UOM" && @textPrompt != "Product Spec Sheet")
                                     {
                                         var attributeName = string.IsNullOrEmpty(attributeValue.PriceAdjustment) ?
                                         attributeValue.Name :
                                         string.Format("{0} [{1}{2}]", attributeValue.Name, attributeValue.PriceAdjustment,
-                                            attributeValue.CustomerEntersQty ? " per item" : string.Empty);
+                                        attributeValue.CustomerEntersQty ? " per item" : string.Empty);
 
                                         var selectedStyle = "";
                                         if (@attributeValue.IsPreSelected)
                                             selectedStyle = "background:aliceblue;";
                                         <div class="options_heigh">
-                                        <a href="javascript:;" id="product_attribute_link_@attributeValue.Id" name="product_attribute_link_@attributeValue.Id" class="pull-left" msku="@attributeValue.MSku" style="border:solid 1px; padding:6px; white-space:nowrap; text-decoration:none; margin-right:3px; margin-bottom:3px;  @selectedStyle">@attributeName</a>
+                                            <a href="javascript:;" id="product_attribute_link_@attributeValue.Id" name="product_attribute_link_@attributeValue.Id" class="pull-left" msku="@attributeValue.MSku" style="border:solid 1px; padding:6px; white-space:nowrap; text-decoration:none; margin-right:3px; margin-bottom:3px;  @selectedStyle">@attributeName</a>
+                                        </div>
+                                    }
+                                    else if (@textPrompt == "Product Spec Sheet" || @textPrompt == "Instructions for Use")
+                                    {
+                                        <div class="options_heigh">
+                                            <a href="@attributeValue.Name" target="_blank" id="product_attribute_link_@attributeValue.Id" name="product_attribute_link_@attributeValue.Id" class="pull-left" msku="@attributeValue.MSku" style="border:solid 1px; padding:6px; white-space:nowrap; text-decoration:none; margin-right:3px; margin-bottom:3px;">Download</a>
                                         </div>
                                     }
                                 }
+                                @*}*@
                                 foreach (var attributeValue in attribute.Values.Where(value => value.CustomerEntersQty))
                                 {
                                     <div class="qty-box" id="@(controlId)_@(attributeValue.Id)_qty_box" style="display:none">
@@ -76,10 +85,10 @@
                                     </div>
                                 }
                                 @Html.Resource(@<script type="text/javascript">
-                                        $(document).ready(function() {
-                                            showHideDropdownQuantity("@controlId");
-                                        });
-                                </script>, "js")
+                                    $(document).ready(function () {
+                                        showHideDropdownQuantity("@controlId");
+                                    });
+                </script>, "js")
                             }
                             break;
                         case (int)AttributeControlType.RadioList:
@@ -88,12 +97,12 @@
                                     @foreach (var attributeValue in attribute.Values)
                                     {
                                         var attributeName = string.IsNullOrEmpty(attributeValue.PriceAdjustment) ?
-                                            attributeValue.Name :
-                                            string.Format("{0} [{1}{2}]", attributeValue.Name, attributeValue.PriceAdjustment,
-                                                attributeValue.CustomerEntersQty ? " per item" : string.Empty);
+                                        attributeValue.Name :
+                                        string.Format("{0} [{1}{2}]", attributeValue.Name, attributeValue.PriceAdjustment,
+                                        attributeValue.CustomerEntersQty ? " per item" : string.Empty);
                                         <li>
                                             <input id="@(controlId)_@(attributeValue.Id)" type="radio" name="@(controlId)" value="@attributeValue.Id" checked="@attributeValue.IsPreSelected"
-                                                   @(attribute.Values.Any(value => value.CustomerEntersQty) ? Html.Raw($"onclick=\"showHideRadioQuantity('{controlId}')\"") : null) />
+                                            @(attribute.Values.Any(value => value.CustomerEntersQty) ? Html.Raw($"onclick=\"showHideRadioQuantity('{controlId}')\"") : null) />
                                             <label for="@(controlId)_@(attributeValue.Id)">@attributeName</label>
 
                                             @if (attributeValue.CustomerEntersQty)
@@ -111,10 +120,10 @@
                                     }
                                 </ul>
                                 @Html.Resource(@<script type="text/javascript">
-                                        $(document).ready(function() {
-                                            showHideRadioQuantity("@controlId");
-                                        });
-                                </script>, "js")
+                                    $(document).ready(function () {
+                                        showHideRadioQuantity("@controlId");
+                                    });
+                </script>, "js")
                             }
                             break;
                         case (int)AttributeControlType.Checkboxes:
@@ -124,12 +133,12 @@
                                     @foreach (var attributeValue in attribute.Values)
                                     {
                                         var attributeName = string.IsNullOrEmpty(attributeValue.PriceAdjustment) ?
-                                            attributeValue.Name :
-                                            string.Format("{0} [{1}{2}]", attributeValue.Name, attributeValue.PriceAdjustment,
-                                                attributeValue.CustomerEntersQty ? " per item" : string.Empty);
+                                        attributeValue.Name :
+                                        string.Format("{0} [{1}{2}]", attributeValue.Name, attributeValue.PriceAdjustment,
+                                        attributeValue.CustomerEntersQty ? " per item" : string.Empty);
                                         <li>
                                             <input id="@(controlId)_@(attributeValue.Id)" type="checkbox" name="@(controlId)" value="@attributeValue.Id" checked="@attributeValue.IsPreSelected" @(attribute.AttributeControlTypeId == (int)AttributeControlType.ReadonlyCheckboxes ? Html.Raw(" disabled=\"disabled\"") : null)
-                                                   @(attributeValue.CustomerEntersQty ? Html.Raw($"onchange=\"showHideCheckboxQuantity('{controlId}_{attributeValue.Id}')\"") : null) />
+                                            @(attributeValue.CustomerEntersQty ? Html.Raw($"onchange=\"showHideCheckboxQuantity('{controlId}_{attributeValue.Id}')\"") : null) />
                                             <label for="@(controlId)_@(attributeValue.Id)">@attributeName</label>
 
                                             @if (attributeValue.CustomerEntersQty)
@@ -140,10 +149,10 @@
                                                         <div class="col-md-8 qty-text">
                                                             <input class="form-control" type="text" name="@(controlId)_@(attributeValue.Id)_qty" id="@(controlId)_@(attributeValue.Id)_qty" value="@(attributeValue.Quantity)" />
                                                             @Html.Resource(@<script type="text/javascript">
-                                                                $(document).ready(function() {
-                                                                    showHideCheckboxQuantity('@(controlId)_@(attributeValue.Id)');
-                                                                })
-                                                            </script>, "js")
+                                                        $(document).ready(function () {
+                                                            showHideCheckboxQuantity('@(controlId)_@(attributeValue.Id)');
+                                                        })
+                                    </script>, "js")
                                                         </div>
                                                     </div>
                                                 </div>
@@ -181,15 +190,15 @@
                                     @foreach (var attributeValue in attribute.Values)
                                     {
                                         var attributeName = string.IsNullOrEmpty(attributeValue.PriceAdjustment) ?
-                                            attributeValue.Name :
-                                            string.Format("{0} [{1}{2}]", attributeValue.Name, attributeValue.PriceAdjustment, string.Empty);
+                                        attributeValue.Name :
+                                        string.Format("{0} [{1}{2}]", attributeValue.Name, attributeValue.PriceAdjustment, string.Empty);
                                         <li @(attributeValue.IsPreSelected ? @Html.Raw(" class=\"selected-value\"") : null)>
                                             <label for="@(controlId)_@(attributeValue.Id)">
                                                 <span class="color-container" title="@attributeName">
                                                     <span class="color" style="background-color:@(attributeValue.ColorSquaresRgb);">&nbsp;</span>
                                                 </span>
                                                 <input id="@(controlId)_@(attributeValue.Id)" type="radio" name="@(controlId)" value="@attributeValue.Id" checked="@attributeValue.IsPreSelected"
-                                                       @(attribute.Values.Any(value => value.CustomerEntersQty) ? Html.Raw($"onclick=\"showHideRadioQuantity('{controlId}')\"") : null) />
+                                                @(attribute.Values.Any(value => value.CustomerEntersQty) ? Html.Raw($"onclick=\"showHideRadioQuantity('{controlId}')\"") : null) />
                                             </label>
                                         </li>
                                     }
@@ -206,14 +215,14 @@
                                     </div>
                                 }
                                 @Html.Resource(@<script type="text/javascript">
-                                        $(document).ready(function() {
-                                            $('.attributes #color-squares-@(attribute.Id)').on('click', 'input', function(event) {
-                                                $('.attributes #color-squares-@(attribute.Id)').find('li').removeClass('selected-value');
-                                                $(this).closest('li').addClass('selected-value');
-                                            });
-                                            showHideRadioQuantity("@controlId");
+                                    $(document).ready(function () {
+                                        $('.attributes #color-squares-@(attribute.Id)').on('click', 'input', function (event) {
+                                            $('.attributes #color-squares-@(attribute.Id)').find('li').removeClass('selected-value');
+                                            $(this).closest('li').addClass('selected-value');
                                         });
-                                </script>, "js")
+                                        showHideRadioQuantity("@controlId");
+                                    });
+                </script>, "js")
                             }
                             break;
                         case (int)AttributeControlType.ImageSquares:
@@ -222,15 +231,15 @@
                                     @foreach (var attributeValue in attribute.Values)
                                     {
                                         var attributeName = string.IsNullOrEmpty(attributeValue.PriceAdjustment) ?
-                                            attributeValue.Name :
-                                            string.Format("{0} [{1}{2}]", attributeValue.Name, attributeValue.PriceAdjustment, string.Empty);
+                                        attributeValue.Name :
+                                        string.Format("{0} [{1}{2}]", attributeValue.Name, attributeValue.PriceAdjustment, string.Empty);
                                         <li @(attributeValue.IsPreSelected ? @Html.Raw(" class=\"selected-value\"") : null)>
                                             <label for="@(controlId)_@(attributeValue.Id)">
                                                 <span class="image-container image-squares-container">
                                                     <span class="image" style="background: url('@(attributeValue.ImageSquaresPictureModel.ImageUrl)') 50% 50% no-repeat;">&nbsp;</span>
                                                 </span>
                                                 <input id="@(controlId)_@(attributeValue.Id)" type="radio" name="@(controlId)" value="@attributeValue.Id" checked="@attributeValue.IsPreSelected"
-                                                       @(attribute.Values.Any(value => value.CustomerEntersQty) ? Html.Raw($"onclick=\"showHideRadioQuantity('{controlId}', true)\"") : null) />
+                                                @(attribute.Values.Any(value => value.CustomerEntersQty) ? Html.Raw($"onclick=\"showHideRadioQuantity('{controlId}', true)\"") : null) />
                                             </label>
                                             <div class="tooltip-container">
                                                 <div class="tooltip-header">@attributeName</div>
@@ -251,14 +260,14 @@
                                     </div>
                                 }
                                 @Html.Resource(@<script type="text/javascript">
-                                    $(document).ready(function() {
-                                        $('.attributes #image-squares-@(attribute.Id)').on('click', 'input', function(event) {
+                                    $(document).ready(function () {
+                                        $('.attributes #image-squares-@(attribute.Id)').on('click', 'input', function (event) {
                                             $('.attributes #color-squares-@(attribute.Id)').find('li').removeClass('selected-value');
                                             $(this).closest('li').addClass('selected-value');
                                         });
                                         showHideRadioQuantity("@controlId", true);
                                     });
-                                </script>, "js")
+                </script>, "js")
                             }
                             break;
                     }
@@ -343,106 +352,106 @@
         //render scripts
         //almost the same implementation is used in the \Views\Product\_RentalInfo.cshtml file
         @Html.Resource(@<script type="text/javascript">
-        //<script>
-            function @(attributeClickHandlerFuncName)() {
-                var selectedAttributeValueId = 0;
-                var mSKU = 0;
-                mSKU = $( "#" + $(event.target).attr("id")).attr("msku");
+                                //<script>
+                                function @(attributeClickHandlerFuncName)() {
+                                    var selectedAttributeValueId = 0;
+                                    var mSKU = 0;
+                                    mSKU = $("#" + $(event.target).attr("id")).attr("msku");
 
-                var data = $('#product-details-form').serialize() + '&' + $.param({ 'selectedAttributeVaueId': selectedAttributeValueId}) + '&mSKU=' + mSKU;
+                                    var data = $('#product-details-form').serialize() + '&' + $.param({ 'selectedAttributeVaueId': selectedAttributeValueId }) + '&mSKU=' + mSKU;
 
-                $.ajax({
-                    cache: false,
-                    url: "@Html.Raw(Url.Action("productdetails_attributechange", "shoppingcart", new {productId = productId, validateAttributeConditions = attributesHaveConditions, loadPicture = attributesHaveAssociatedPictures }))",
-                    data: data,
-                    type: "POST",
-                    success: function (data, textStatus, jqXHR) {
-                        if (data.parentProductURL) {
-                            window.location.href = "/" + data.parentProductURL;
-                        }
-                    }
-                });
-                return false;
-            }
-            function @(attributeChangeHandlerFuncName)() {
-                var selectedAttributeValueId = 0;
-                var mSKU = 0;
-                if (event != undefined) {
-                    if (event.target.nodeName == "SELECT") {
-                        selectedAttributeValueId = $(event.target).val();
-                        mSKU = $( "#" + $(event.target).attr("id") + " option:selected" ).attr("msku");
-                    }
-                }
-
-                var data = $('#product-details-form').serialize() + '&' + $.param({ 'selectedAttributeVaueId': selectedAttributeValueId}) + '&mSKU=' + mSKU;
-
-                $.ajax({
-                    cache: false,
-                    url: "@Html.Raw(Url.Action("productdetails_attributechange", "shoppingcart", new {productId = productId, validateAttributeConditions = attributesHaveConditions, loadPicture = attributesHaveAssociatedPictures }))",
-                    data: data,
-                    type: "POST",
-                    success: function (data, textStatus, jqXHR) {
-                        if (data.parentProductURL) {
-                            window.location.href = "/" + data.parentProductURL;
-                        }
-                        else {
-                            if (data.price) {
-                                $('.price-value-@productId').text(data.price);
-                            }
-                            if (data.basepricepangv) {
-                                $('#base-price-pangv-@productId').text(data.basepricepangv);
-                            } else {
-                                $('#base-price-pangv-@productId').hide();
-                            }
-                            @*if (data.sku) {
-                                $('#sku-@productId').text(data.sku).parent(".sku").show();
-                            } else {
-                                $('#sku-@productId').parent(".sku").hide();
-                            }
-                            if (data.mpn) {
-                                $('#mpn-@productId').text(data.mpn).parent(".manufacturer-part-number").show();
-                            } else {
-                                $('#mpn-@productId').parent(".manufacturer-part-number").hide();
-                            }*@
-                            if (data.gtin) {
-                                $('#gtin-@productId').text(data.gtin).parent(".gtin").show();
-                            } else {
-                                $('#gtin-@productId').parent(".gtin").hide();
-                            }
-                            if (data.stockAvailability) {
-                                $('#stock-availability-value-@productId').text(data.stockAvailability);
-                            }
-                            if (data.enabledattributemappingids) {
-                                for (var i = 0; i < data.enabledattributemappingids.length; i++) {
-                                    $('#@(InovatiqaDefaults.ProductAttributePrefix)label_' + data.enabledattributemappingids[i]).show();
-                                    $('#@(InovatiqaDefaults.ProductAttributePrefix)input_' + data.enabledattributemappingids[i]).show();
+                                    $.ajax({
+                                        cache: false,
+                                        url: "@Html.Raw(Url.Action("productdetails_attributechange", "shoppingcart", new {productId = productId, validateAttributeConditions = attributesHaveConditions, loadPicture = attributesHaveAssociatedPictures }))",
+                                        data: data,
+                                        type: "POST",
+                                        success: function (data, textStatus, jqXHR) {
+                                            if (data.parentProductURL) {
+                                                window.location.href = "/" + data.parentProductURL;
+                                            }
+                                        }
+                                    });
+                                    return false;
                                 }
-                            }
-                            if (data.disabledattributemappingids) {
-                                for (var i = 0; i < data.disabledattributemappingids.length; i++) {
-                                    $('#@(InovatiqaDefaults.ProductAttributePrefix)label_' + data.disabledattributemappingids[i]).hide();
-                                    $('#@(InovatiqaDefaults.ProductAttributePrefix)input_' + data.disabledattributemappingids[i]).hide();
+                                function @(attributeChangeHandlerFuncName)() {
+                                    var selectedAttributeValueId = 0;
+                                    var mSKU = 0;
+                                    if (event != undefined) {
+                                        if (event.target.nodeName == "SELECT") {
+                                            selectedAttributeValueId = $(event.target).val();
+                                            mSKU = $("#" + $(event.target).attr("id") + " option:selected").attr("msku");
+                                        }
+                                    }
+
+                                    var data = $('#product-details-form').serialize() + '&' + $.param({ 'selectedAttributeVaueId': selectedAttributeValueId }) + '&mSKU=' + mSKU;
+
+                                    $.ajax({
+                                        cache: false,
+                                        url: "@Html.Raw(Url.Action("productdetails_attributechange", "shoppingcart", new {productId = productId, validateAttributeConditions = attributesHaveConditions, loadPicture = attributesHaveAssociatedPictures }))",
+                                        data: data,
+                                        type: "POST",
+                                        success: function (data, textStatus, jqXHR) {
+                                            if (data.parentProductURL) {
+                                                window.location.href = "/" + data.parentProductURL;
+                                            }
+                                            else {
+                                                if (data.price) {
+                                                    $('.price-value-@productId').text(data.price);
+                                                }
+                                                if (data.basepricepangv) {
+                                                    $('#base-price-pangv-@productId').text(data.basepricepangv);
+                                                } else {
+                                                    $('#base-price-pangv-@productId').hide();
+                                                }
+                                                @*if (data.sku) {
+                                                $('#sku-@productId').text(data.sku).parent(".sku").show();
+                                                } else {
+                                                $('#sku-@productId').parent(".sku").hide();
+                                                }
+                                                if (data.mpn) {
+                                                $('#mpn-@productId').text(data.mpn).parent(".manufacturer-part-number").show();
+                                                } else {
+                                                $('#mpn-@productId').parent(".manufacturer-part-number").hide();
+                                                }*@
+                                                            if (data.gtin) {
+                                                    $('#gtin-@productId').text(data.gtin).parent(".gtin").show();
+                                                } else {
+                                                    $('#gtin-@productId').parent(".gtin").hide();
+                                                }
+                                                if (data.stockAvailability) {
+                                                    $('#stock-availability-value-@productId').text(data.stockAvailability);
+                                                }
+                                                if (data.enabledattributemappingids) {
+                                                    for (var i = 0; i < data.enabledattributemappingids.length; i++) {
+                                                        $('#@(InovatiqaDefaults.ProductAttributePrefix)label_' + data.enabledattributemappingids[i]).show();
+                                                        $('#@(InovatiqaDefaults.ProductAttributePrefix)input_' + data.enabledattributemappingids[i]).show();
+                                                    }
+                                                }
+                                                if (data.disabledattributemappingids) {
+                                                    for (var i = 0; i < data.disabledattributemappingids.length; i++) {
+                                                        $('#@(InovatiqaDefaults.ProductAttributePrefix)label_' + data.disabledattributemappingids[i]).hide();
+                                                        $('#@(InovatiqaDefaults.ProductAttributePrefix)input_' + data.disabledattributemappingids[i]).hide();
+                                                    }
+                                                }
+                                                if (data.pictureDefaultSizeUrl) {
+                                                    $('#main-product-img-@productId').attr("src", data.pictureDefaultSizeUrl);
+                                                }
+                                                if (data.pictureFullSizeUrl) {
+                                                    $('#main-product-img-lightbox-anchor-@productId').attr("href", data.pictureFullSizeUrl);
+                                                }
+                                                if (data.message) {
+                                                    alert(data.message);
+                                                }
+                                                $(document).trigger({ type: "product_attributes_changed", changedData: data });
+                                            }
+                                        }
+                                    });
                                 }
-                            }
-                            if (data.pictureDefaultSizeUrl) {
-                                $('#main-product-img-@productId').attr("src", data.pictureDefaultSizeUrl);
-                            }
-                            if (data.pictureFullSizeUrl) {
-                                $('#main-product-img-lightbox-anchor-@productId').attr("href", data.pictureFullSizeUrl);
-                            }
-                            if (data.message) {
-                                alert(data.message);
-                            }
-                            $(document).trigger({ type: "product_attributes_changed", changedData: data });
-                        }
-                    }
-                });
-            }
-            $(document).ready(function() {
-                @(attributeChangeHandlerFuncName)();
-                @Html.Raw(attributeChangeScriptsBuilder.ToString())
-            });
-        @*</script>*@
-        </script>, "js")
+                                $(document).ready(function () {
+                                    @(attributeChangeHandlerFuncName)();
+                                    @Html.Raw(attributeChangeScriptsBuilder.ToString())
+                                            });
+                                @*</script>*@
+    </script>, "js")
     }
 }

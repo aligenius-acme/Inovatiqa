@@ -37,11 +37,11 @@ namespace Inovatiqa.Core
         public static int StoreId => 0;
 
         public static int PrimaryStoreId => 1;
-        public static string StoreUrl => "https://app-inovatiqa-prod-01.azurewebsites.net/";
+        //public static string StoreUrl => "https://app-inovatiqa-prod-01.azurewebsites.net/";
 
         //public static string StoreUrl => "https://inovatiqadev.azurewebsites.net/";
 
-        //public static string StoreUrl => "https://localhost:44355/";
+        public static string StoreUrl => "https://localhost:5001/";
 
         //public static string StoreUrl => "https://inovatiqa-stg.azurewebsites.net/";
 
@@ -1751,9 +1751,10 @@ namespace Inovatiqa.Core
         #endregion
 
         #region Elastic
-        public static string ElasticEndPoint => "https://inovatiqaelasticcloud.es.eastus2.azure.elastic-cloud.com";
+        public static string ElasticEndPoint => "https://elastic-inovatiqa-prod-01.es.centralus.azure.elastic-cloud.com";
+        //public static string ElasticEndPoint => "https://inovatiqaelasticcloud.es.eastus2.azure.elastic-cloud.com";
         public static string ElasticUsername => "elastic";
-        public static string ElasticPassword => "wG51AmvuPJ9ilKWccKAs2HNq";
+        public static string ElasticPassword => "nhlT60QSDLGaJKyH7CCArPPb";
         public static string DefaultIndexName => "inovatiqa";
 
         #endregion

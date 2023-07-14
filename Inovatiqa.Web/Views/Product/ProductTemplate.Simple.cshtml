@@ -394,6 +394,68 @@
                                                 <div class="col-md-12">
                                                     @await Html.PartialAsync("_ProductSpecifications", Model.ProductSpecifications)
                                                 </div>
+                                                @foreach (var attributeValue in Model.ProductAttributes)
+                                                {
+                                                    @if (@attributeValue.Name == "Instructions for Use")
+                                                    {
+                                                        <div class="col-md-12">
+                                                            <div class="tab_body active t2">
+                                                                <div class="table-responsive">
+                                                                    <table class="table table-striped">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Attribute Name</th>
+                                                                                <th>Attribute Value</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+
+                                                                            <tr>
+                                                                                <td>
+                                                                                    @attributeValue.Name
+                                                                                </td>
+                                                                                <td>
+                                                                                    <a href="@attributeValue.Values[0].Name" target="_blank">Download</a>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                }
+                                                @foreach (var attributeValue in Model.ProductAttributes)
+                                                {
+                                                    @if (@attributeValue.Name == "Product Spec Sheet")
+                                                    {
+                                                        <div class="col-md-12">
+                                                            <div class="tab_body active t3">
+                                                                <div class="table-responsive">
+                                                                    <table class="table table-striped">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Attribute Name</th>
+                                                                                <th>Attribute Value</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+
+                                                                            <tr>
+                                                                                <td>
+                                                                                    @attributeValue.Name
+                                                                                </td>
+                                                                                <td>
+                                                                                    <a href="@attributeValue.Values[0].Name" target="_blank">Download</a>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                }
                                             </div>
 
                                         </div>

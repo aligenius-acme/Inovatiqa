@@ -20,7 +20,8 @@ namespace Inovatiqa.Web
                 }).ConfigureServices(services =>
                 {
                     services.AddHostedService<EmailSenderTaskService>();
-                }).ConfigureServices(services =>
+                });
+            /*.ConfigureServices(services =>
                 {
                     services.AddHostedService<DeleteGuestsTaskService>();
                 }).ConfigureServices(services =>
@@ -32,7 +33,7 @@ namespace Inovatiqa.Web
                 }).ConfigureServices(services =>
                 {
                     services.AddHostedService<UpdateRolesForEachCategoryTaskService>();
-                });
+                });*/
         //public static IHostBuilder CreateHostBuilder(string[] args) =>
         //    Host.CreateDefaultBuilder(args)
         //        .ConfigureWebHostDefaults(webBuilder =>
