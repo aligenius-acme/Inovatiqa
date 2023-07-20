@@ -51,7 +51,7 @@
             {*@
                                 @foreach (var attributeValue in attribute.Values)
                                 {
-                                    if (@textPrompt != "UOM" && @textPrompt != "Product Spec Sheet")
+                                    if (@textPrompt != "UOM" && (@textPrompt != "Product Spec Sheet" && @textPrompt != "Instructions for Use"))
                                     {
                                         var attributeName = string.IsNullOrEmpty(attributeValue.PriceAdjustment) ?
                                         attributeValue.Name :
