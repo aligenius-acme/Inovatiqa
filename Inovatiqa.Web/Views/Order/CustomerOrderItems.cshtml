@@ -512,7 +512,10 @@
                                                                                 <td style="width: 30%;">
                                                                                     <a style="color:unset;" href="@Url.RouteUrl("Product", new { SeName = item.ProductSeName })"><p style="color:unset;">@item.ProductName</p></a>
                                                                                     <p class="des-fontsize">Mfr #@item.ManufacturerPartNumber.Replace("Mfr#", "") @item.ProductManufacturers.FirstOrDefault().Name</p>
-                                                                                    <p class="des-orange">[DC Houston, TX] Item being packaged, Delivery expected on 6/14/2021</p>
+                                                                                    @if(Inovatiqa.Core.InovatiqaDefaults.ShowExpectedDeliveryText)
+                                                                                    {
+                                                                                        <p class="des-orange">[DC Houston, TX] Item being packaged, Delivery expected on 6/14/2021</p>
+                                                                                    }
                                                                                 </td>
                                                                                 <td>
                                                                                     <p class="num-green pointer" onclick="setLocation('@Url.RouteUrl("OrderDetails", new { orderId = order.Id })')">@order.Id</p>

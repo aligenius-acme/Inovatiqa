@@ -1,8 +1,13 @@
 Inovatiqa Defaults:
 1.	public static string StoreUrl => "http://localhost:15536/";
-	change about with the domain url
 
-2. 	Always query Setting Table to look for shippingsettings.shippingoriginaddressid and update Id below.
-	See Shipping Origin Address section
+2. 	Always query Setting Table to look for shippingsettings.shippingoriginaddressid and update Id accordingly.
+
+		Make sure below Code inside Defaults has the same information as available in db
+
+		public static string CurrentStoreName => "Inovatiqa";
+        	public static string CompanyAddress => "12815 Capricorn St, Stafford, TX 77477, United States";
+        	public static string CompanyPhoneNo => "(346) 229-4142";
+        	public static string CompanyFaxNo => "281-220-1350";
 
 3.	Email Account Table: Update SMTP settings for email account responsible for sending emails.

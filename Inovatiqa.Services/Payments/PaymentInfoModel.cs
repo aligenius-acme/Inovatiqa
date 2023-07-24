@@ -17,7 +17,7 @@ namespace Inovatiqa.Services.Payments
             LocationId = InovatiqaDefaults.LocationId;
 
             WebPaymentsSdkUrl = environment == Square.Environment.Sandbox ?
-                "https://sandbox.web.squarecdn.com/v1/square.js" : "https://web.squarecdn.com/v1/square.js";
+                InovatiqaDefaults.SandboxPaymentFormScriptPath : InovatiqaDefaults.ProdPaymentFormScriptPath;
             client = new SquareClient.Builder()
                 .Environment(environment)
                 .AccessToken(InovatiqaDefaults.AccessToken)

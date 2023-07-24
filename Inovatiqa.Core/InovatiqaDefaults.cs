@@ -36,21 +36,9 @@ namespace Inovatiqa.Core
 
         public static int StoreId => 0;
 
-        public static int PrimaryStoreId => 1;
-        //public static string StoreUrl => "https://app-inovatiqa-prod-01.azurewebsites.net/";
-
-        //public static string StoreUrl => "https://inovatiqadev.azurewebsites.net/";
-
-        public static string StoreUrl => "https://localhost:5001/";
-
-        //public static string StoreUrl => "https://inovatiqa-stg.azurewebsites.net/";
+        public static int PrimaryStoreId => 1;       
 
         public static string CurrentStoreName => "Inovatiqa";
-
-        public static string CompanyAddress => "12815 Capricorn St, Stafford, TX 77477, United States";
-
-        public static string CompanyPhoneNo => "(346) 229-4142";
-        public static string CompanyFaxNo => "281-220-1350";
 
         public static string FacebookLink => "https://www.facebook.com/inovatiqa.crop";
 
@@ -81,8 +69,6 @@ namespace Inovatiqa.Core
         public static int MinimumOrderPlacementInterval => 30;
 
         public static decimal CurrencyRate => 1;
-
-        public static bool ForceTaxExclusionFromOrderSubtotal => true;
 
         public static int LanguageDefaultCurrencyId => 0;
 
@@ -352,8 +338,6 @@ namespace Inovatiqa.Core
 
         public static bool ShowProductImagesInMiniShoppingCart => true;
 
-        public static int MaximumShoppingCartItems => 20;
-
         public static int MaximumWishlistItems => int.MaxValue; // set by Ali Ahmad for allowing any number of items to be stored in wishlist
 
         public static bool AllowOutOfStockItemsToBeAddedToWishlist => false;
@@ -622,8 +606,6 @@ namespace Inovatiqa.Core
 
         public const int ManageStock = 1;
 
-        public const int CompareProductsNumber = 10;
-
         public const int CompareProductsCookieExpires = 10;
 
         public const int ManageStockByAttributes = 2;
@@ -698,9 +680,6 @@ namespace Inovatiqa.Core
 
         public static bool ShowOnForgotPasswordPage => false;
 
-        public static string CaptchaSiteKey => "REDACTED_RECAPTCHA_SITE_KEY";
-
-        public static string CaptchaPrivateKey => "REDACTED_RECAPTCHA_PRIVATE_KEY";
 
         #endregion
 
@@ -912,12 +891,6 @@ namespace Inovatiqa.Core
 
         public static bool DisplayShipmentEventsToStoreOwner => true;
 
-        public static bool FreeShippingOverXEnabled => false;
-
-        public static bool FreeShippingOverXIncludingTax => false;
-
-        public static decimal FreeShippingOverXValue => 0;
-
         public static bool IgnoreAdditionalShippingChargeForPickupInStore => true;
 
         public static bool IgnoreDiscounts => false;
@@ -1036,14 +1009,6 @@ namespace Inovatiqa.Core
 
         public const string MEASURE_DIMENSION_SYSTEM_KEYWORD = "inches";
 
-        public const string FEDEXKey = "REDACTED_FEDEX_KEY_OLD3";
-
-        public const string Password = "REDACTED_FEDEX_PASSWORD_OLD3";
-
-        public const string AccountNumber = "510087380";
-
-        public const string MeterNumber = "119164650";
-
         public const bool PassDimensions = true;
 
         public const int PackByDimensions = 0;
@@ -1076,8 +1041,6 @@ namespace Inovatiqa.Core
 
         public const string Station = "40";
 
-        public const string FEDEXUrl = "https://wsbeta.fedex.com:443/web-services";
-
         public const bool UseCubeRootMethod = true;
 
         public const bool ReturnValidOptionsIfThereAreAny = true;
@@ -1086,12 +1049,6 @@ namespace Inovatiqa.Core
 
         public const string FedExShippingMethodName = "Shipping.FedEx";
 
-        #region "Shipping Origin Address"
-
-        // Always query Setting Table to look for shippingsettings.shippingoriginaddressid and update Id below.
-        public const int ShippingOriginAddressId = 1;
-
-        #endregion
 
         #endregion
 
@@ -1133,15 +1090,11 @@ namespace Inovatiqa.Core
 
         public static string UserAgent => $"inovatiqa-1.0";
 
-        public static string IntegrationId => "sqi_4efb0346e2ef4b1375319dcd6e9977c0";
-
         public static string OnePageCheckoutRouteName => "CheckoutOnePage";
 
         public static string PaymentFormScriptPath => "https://js.squareup.com/v2/paymentform";
 
-        public static string SandboxPaymentFormScriptPath => "https://sandbox.web.squarecdn.com/v1/square.js";
-
-        public static string SandboxBaseUrl => "https://connect.squareupsandbox.com";
+        //public static string SandboxBaseUrl => "https://connect.squareupsandbox.com";
 
         public static string CustomerIdAttribute => "SquareCustomerId";
 
@@ -1188,19 +1141,16 @@ namespace Inovatiqa.Core
         #region Settings
 
         //public static string ApplicationId => "sandbox-sq0idb-w9qW1YJHmuVGgzBfIW4TUA"; original Inovatiqa commented for testing purpose
-        public static string ApplicationId => "sandbox-sq0idb-W03tSWuQwZpjRo6rl3rSxg";
+        
 
         public static string ApplicationSecret => "";
 
         public static string RefreshToken => "";
 
         //public static string AccessToken => "EAAAEBVN6obAsYNGG3WIxlQhjhItFPZCN_sSFsctyjOm5mtxgia0I1zmV9XnGpWu"; token commented for testing
-        public static string AccessToken => "EAAAEDD2M6uGJmYkgShovGbvjPjzZZFEsvcYWn-X1B79v2Imx51cpfVrAX3DtLdB";
 
-        public static bool UseSandbox => true;
 
         //public static string LocationId => "LTJB2SGJ5CDM2";
-        public static string LocationId => "L99HYK1A9TSV8";
 
         public static string AccessTokenVerificationString => "";
 
@@ -1750,12 +1700,89 @@ namespace Inovatiqa.Core
 
         #endregion
 
-        #region Elastic
+
+
+
+
+        #region Deployment Settings
+
+
+        #region Generic
+        public static bool FreeShippingOverXEnabled => true;
+        public static bool FreeShippingOverXIncludingTax => true;
+        public static bool ForceTaxExclusionFromOrderSubtotal => false;
+        public static decimal FreeShippingOverXValue => 150;
+        public static int MaximumShoppingCartItems => 50;
+        public const int CompareProductsNumber = 10;
+        // Always query Setting Table to look for shippingsettings.shippingoriginaddressid and update Id below.
+        public const int ShippingOriginAddressId = 3;
+
+        public static string CompanyAddress => "12815 Capricorn St, Stafford, TX 77477, United States";
+        public static string CompanyPhoneNo => "(346) 229-4142";
+        public static string CompanyFaxNo => "281-220-1350";
+
+        public static string SandboxPaymentFormScriptPath => "https://sandbox.web.squarecdn.com/v1/square.js";
+        public static string ProdPaymentFormScriptPath => "https://web.squarecdn.com/v1/square.js";
+        public static bool UseSandbox => true;
+
+        public static bool ShowExpectedDeliveryText => false;
+        #endregion
+
+        #region Elastic Production
         public static string ElasticEndPoint => "https://elastic-inovatiqa-prod-01.es.centralus.azure.elastic-cloud.com";
         //public static string ElasticEndPoint => "https://inovatiqaelasticcloud.es.eastus2.azure.elastic-cloud.com";
         public static string ElasticUsername => "elastic";
         public static string ElasticPassword => "nhlT60QSDLGaJKyH7CCArPPb";
         public static string DefaultIndexName => "inovatiqa";
+        #endregion
+
+
+
+
+
+
+        #region Development
+        public static string StoreUrl => "https://localhost:5001/";
+        //public static string StoreUrl => "https://inovatiqadev.azurewebsites.net/";
+        
+        //Google Captcha
+        public static string CaptchaSiteKey => "REDACTED_RECAPTCHA_SITE_KEY";
+        public static string CaptchaPrivateKey => "REDACTED_RECAPTCHA_PRIVATE_KEY";
+        
+        //FedEx
+        public const string FEDEXKey = "REDACTED_FEDEX_KEY_OLD";
+        public const string Password = "REDACTED_FEDEX_PASSWORD_OLD";
+        public const string AccountNumber = "510087100";
+        public const string MeterNumber = "118995780";
+        public const string FEDEXUrl = "https://wsbeta.fedex.com:443/web-services";
+
+        //Square
+        public static string IntegrationId => "";
+        public static string ApplicationId => "REDACTED_SQUARE_SANDBOX_APP_ID";
+        public static string AccessToken => "REDACTED_SQUARE_SANDBOX_TOKEN";
+        public static string LocationId => "REDACTED_SQUARE_SANDBOX_LOCATION_ID";
+        #endregion
+
+        #region Production
+        //public static string StoreUrl => "https://app-inovatiqa-prod-01.azurewebsites.net/";
+
+        //Google Captcha
+        //public static string CaptchaSiteKey => "REDACTED_RECAPTCHA_SITE_KEY";
+        //public static string CaptchaPrivateKey => "REDACTED_RECAPTCHA_PRIVATE_KEY";
+
+        //FedEx
+        //public const string FEDEXKey = "REDACTED_FEDEX_KEY_OLD4";
+        //public const string Password = "REDACTED_FEDEX_PASSWORD_OLD4";
+        //public const string AccountNumber = "740561073";
+        //public const string MeterNumber = "119164650";
+        //public const string FEDEXUrl = "https://wsbeta.fedex.com:443/web-services";
+
+        //Square
+        //public static string IntegrationId => "";
+        //public static string ApplicationId => "REDACTED_SQUARE_APP_ID";
+        //public static string AccessToken => "REDACTED_SQUARE_ACCESS_TOKEN";
+        //public static string LocationId => "REDACTED_SQUARE_LOCATION_ID";
+        #endregion
 
         #endregion
     }

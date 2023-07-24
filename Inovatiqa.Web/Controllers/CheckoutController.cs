@@ -1087,19 +1087,7 @@ namespace Inovatiqa.Web.Controllers
                 InovatiqaDefaults.SelectedPaymentMethodAttribute, customer.Id, InovatiqaDefaults.StoreId);
                 HttpContext.Session.Set<ProcessPaymentRequest>("OrderPaymentInfo", processPaymentRequest);
                 var placeOrderResult = _orderProcessingService.PlaceOrder(processPaymentRequest);
-                if (!string.IsNullOrEmpty(message))
-                {
-                    var orderNote = new OrderNote
-                    {
-                        OrderId = placeOrderResult.PlacedOrder.Id,
-                        DisplayToCustomer = true,
-                        Note = message,
-                        DownloadId = downloadId,
-                        CreatedOnUtc = DateTime.UtcNow
-                    };
-
-                    _orderService.InsertOrderNote(orderNote);
-                }
+                
                 if (placeOrderResult.Success)
                 {
                     HttpContext.Session.Set<ProcessPaymentRequest>("OrderPaymentInfo", null);
@@ -1120,6 +1108,24 @@ namespace Inovatiqa.Web.Controllers
                     customer.CanPurchaseCart = false;
                     _customerService.UpdateCustomer(customer);
                     return Json(new { success = 1 });
+                }
+                else
+                {
+                    return Json(new { error = 1, message = placeOrderResult.Errors[0] });
+                }
+
+                if (!string.IsNullOrEmpty(message))
+                {
+                    var orderNote = new OrderNote
+                    {
+                        OrderId = placeOrderResult.PlacedOrder.Id,
+                        DisplayToCustomer = true,
+                        Note = message,
+                        DownloadId = downloadId,
+                        CreatedOnUtc = DateTime.UtcNow
+                    };
+
+                    _orderService.InsertOrderNote(orderNote);
                 }
 
                 var confirmOrderModel = new CheckoutConfirmModel();

@@ -673,7 +673,11 @@
                                                                             <td style="width: 30%;">
                                                                                 <a href="@Url.RouteUrl("Manufacturer", new { SeName = item.ProductSeName} )" style="color:unset;">
                                                                                     <p class="des-padding">@item.ProductName</p>
-                                                                                </a><p class="des-orange">[DC Houston, TX] Item being packaged, Delivery expected on 6/14/2021</p>
+                                                                                </a>
+                                                                                @if (Inovatiqa.Core.InovatiqaDefaults.ShowExpectedDeliveryText)
+                                                                                {
+                                                                                    <p class="des-orange">[DC Houston, TX] Item being packaged, Delivery expected on 6/14/2021</p>
+                                                                                }
                                                                             </td>
                                                                             <td>
                                                                                 <p>@item.ProductManufacturers.FirstOrDefault().Name / @item.ManufacturerPartNumber </p>
@@ -746,7 +750,10 @@
                                                                                 <a href="@Url.RouteUrl("Manufacturer", new { SeName = item.ProductSeName} )" style="color:unset;">
                                                                                     <p class="des-padding">@item.ProductName</p>
                                                                                 </a>
-                                                                                <p class="des-orange">[DC Houston, TX] Item being packaged, Delivery expected on 6/14/2021</p>
+                                                                                @if (Inovatiqa.Core.InovatiqaDefaults.ShowExpectedDeliveryText)
+                                                                                {
+                                                                                    <p class="des-orange">[DC Houston, TX] Item being packaged, Delivery expected on 6/14/2021</p>
+                                                                                }
                                                                             </td>
                                                                             <td>
                                                                                 <p>@item.ProductManufacturers.FirstOrDefault().Name / @item.ManufacturerPartNumber </p>
@@ -820,7 +827,10 @@
                                                                                 <a href="@Url.RouteUrl("Manufacturer", new { SeName = item.ProductSeName} )" style="color:unset;">
                                                                                     <p class="des-padding">@item.ProductName</p>
                                                                                 </a>
-                                                                                <p class="des-orange">[DC Houston, TX] Item being packaged, Delivery expected on 6/14/2021</p>
+                                                                                @if (Inovatiqa.Core.InovatiqaDefaults.ShowExpectedDeliveryText)
+                                                                                {
+                                                                                    <p class="des-orange">[DC Houston, TX] Item being packaged, Delivery expected on 6/14/2021</p>
+                                                                                }
                                                                             </td>
                                                                             <td>
                                                                                 <p>@item.ProductManufacturers.FirstOrDefault().Name /</p>
