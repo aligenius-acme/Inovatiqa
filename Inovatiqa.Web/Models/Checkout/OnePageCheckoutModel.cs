@@ -11,6 +11,7 @@ namespace Inovatiqa.Web.Models.Checkout
         }
         public bool ShippingRequired { get; set; }
         public bool DisableBillingAddressCheckoutStep { get; set; }
+        public bool? IsB2BAndPOCustomer { get; set; }
 
         public CheckoutBillingAddressModel BillingAddress { get; set; }
         public OrderSummaryBox orderSummaryBox { get; set; }

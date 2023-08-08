@@ -193,17 +193,27 @@
                                         <div class="col-md-12">
                                             <div class="payment_box" style="padding-top: 10px; padding-bottom: 10px;">
                                                 <div class="payment_head mb0">
-                                                    <label>
-                                                        <input type="radio" name="r2" />
-                                                        Credit card
-                                                    </label>
-                                                    <div class="accept_logos">
-                                                        <img src="~/images/UIComponents/p5.png">
-                                                        <img src="~/images/UIComponents/p4.png">
-                                                        <img src="~/images/UIComponents/p1.png">
-                                                        <img src="~/images/UIComponents/p3.png">
-                                                        <img src="~/images/UIComponents/p2.png">
-                                                    </div>
+                                                    @if (Model.IsB2BAndPOCustomer == true)
+                                                    {
+                                                        <label>
+                                                            <input type="radio" name="r2" />
+                                                            Purchase Order
+                                                        </label>
+                                                    }
+                                                    else
+                                                    {
+                                                        <label>
+                                                            <input type="radio" name="r2" />
+                                                            Credit Card
+                                                        </label>
+                                                        <div class="accept_logos">
+                                                            <img src="~/images/UIComponents/p5.png">
+                                                            <img src="~/images/UIComponents/p4.png">
+                                                            <img src="~/images/UIComponents/p1.png">
+                                                            <img src="~/images/UIComponents/p3.png">
+                                                            <img src="~/images/UIComponents/p2.png">
+                                                        </div>
+                                                    }
                                                 </div>
                                             </div>
                                         </div>
@@ -240,7 +250,9 @@
                                             <p>Step 3 of 5</p>
                                         </div>
                                     </div>
-                                    <div class="row flex_col m_t_20">
+                                    @if (Model.IsB2BAndPOCustomer == false)
+                                    {
+                                        <div class="row flex_col m_t_20">
                                         <div class="col-md-12">
                                             <div class="payment_box">
                                                 <div class="payment_head">
@@ -275,7 +287,36 @@
                                             </div>
                                         </div>
                                     </div>
+                                    }
+                                    else {
+                                        <div class="row flex_col m_t_20">
+                                            <div class="col-md-12">
+                                                <div class="payment_box">
+                                                    <div class="payment_body">
+                                                        <div class="row">
+                                                            <div id="square-card-details">
+                                                                <div class="col-md-12 col-sm-12 col-xs-12 form-group">
+                                                                    <label class="purchaseOrderLabel">Enter purchase order number or name (Required)</label>
+                                                                    <input type="text" style="border-color: #FF8B00; border-radius: 5px; background-color: #F5F5CF;" class="form-control" autocomplete="off" />
+                                                                    <label class="purchaseOrderLabel" style="margin-top:10px;">Email order confirmation to</label>
+                                                                    <input type="text" class="form-control purchaseOrderInput" placeholder="purchasing@inovatiqa.com" autocomplete="off" />
+                                                                    <p class="purchaseOrderParaghraph" style="margin-top: 10px; color: #000000;">Separate multiple addresses with spaces, commas, or semi-colons.</p>
+                                                                    <div class="checkbox">
+                                                                        <label>
+                                                                            <input type="checkbox" style="height: 20px; width: 20px;" disabled />
+                                                                            <span style="color: #6A983C;">Schedule this order</span> &nbsp;(Optional)
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
                                 </div>
+
 
 
 

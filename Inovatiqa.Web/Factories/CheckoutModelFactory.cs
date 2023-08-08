@@ -328,7 +328,7 @@ namespace Inovatiqa.Web.Factories
                     };
                     model.PaymentMethods.Add(pmModelPO);
                     // add by hamza for displaying both payment methods
-                    model.PaymentMethods.Add(pmModel);
+                    //model.PaymentMethods.Add(pmModel);
                 }
                 else
                     model.PaymentMethods.Add(pmModel);

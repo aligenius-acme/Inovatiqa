@@ -1742,46 +1742,46 @@ namespace Inovatiqa.Core
 
 
         #region Development
-        public static string StoreUrl => "https://localhost:5001/";
-        //public static string StoreUrl => "https://inovatiqadev.azurewebsites.net/";
-        
-        //Google Captcha
-        public static string CaptchaSiteKey => "REDACTED_RECAPTCHA_SITE_KEY";
-        public static string CaptchaPrivateKey => "REDACTED_RECAPTCHA_PRIVATE_KEY";
-        
-        //FedEx
-        public const string FEDEXKey = "REDACTED_FEDEX_KEY_OLD";
-        public const string Password = "REDACTED_FEDEX_PASSWORD_OLD";
-        public const string AccountNumber = "510087100";
-        public const string MeterNumber = "118995780";
-        public const string FEDEXUrl = "https://wsbeta.fedex.com:443/web-services";
+        //public static string StoreUrl => "https://localhost:5001/";
+        ////public static string StoreUrl => "https://inovatiqadev.azurewebsites.net/";
 
-        //Square
-        public static string IntegrationId => "";
-        public static string ApplicationId => "REDACTED_SQUARE_SANDBOX_APP_ID";
-        public static string AccessToken => "REDACTED_SQUARE_SANDBOX_TOKEN";
-        public static string LocationId => "REDACTED_SQUARE_SANDBOX_LOCATION_ID";
-        #endregion
-
-        #region Production
-        //public static string StoreUrl => "https://app-inovatiqa-prod-01.azurewebsites.net/";
-
-        //Google Captcha
+        ////Google Captcha
         //public static string CaptchaSiteKey => "REDACTED_RECAPTCHA_SITE_KEY";
         //public static string CaptchaPrivateKey => "REDACTED_RECAPTCHA_PRIVATE_KEY";
 
-        //FedEx
-        //public const string FEDEXKey = "REDACTED_FEDEX_KEY_OLD4";
-        //public const string Password = "REDACTED_FEDEX_PASSWORD_OLD4";
-        //public const string AccountNumber = "740561073";
-        //public const string MeterNumber = "119164650";
+        ////FedEx
+        //public const string FEDEXKey = "REDACTED_FEDEX_KEY_OLD";
+        //public const string Password = "REDACTED_FEDEX_PASSWORD_OLD";
+        //public const string AccountNumber = "510087100";
+        //public const string MeterNumber = "118995780";
         //public const string FEDEXUrl = "https://wsbeta.fedex.com:443/web-services";
 
-        //Square
+        ////Square
         //public static string IntegrationId => "";
-        //public static string ApplicationId => "REDACTED_SQUARE_APP_ID";
-        //public static string AccessToken => "REDACTED_SQUARE_ACCESS_TOKEN";
-        //public static string LocationId => "REDACTED_SQUARE_LOCATION_ID";
+        //public static string ApplicationId => "REDACTED_SQUARE_SANDBOX_APP_ID";
+        //public static string AccessToken => "REDACTED_SQUARE_SANDBOX_TOKEN";
+        //public static string LocationId => "REDACTED_SQUARE_SANDBOX_LOCATION_ID";
+        #endregion
+
+        #region Production
+        public static string StoreUrl => "https://app-inovatiqa-prod-01.azurewebsites.net/";
+
+        //Google Captcha
+        public static string CaptchaSiteKey => "REDACTED_RECAPTCHA_SITE_KEY";
+        public static string CaptchaPrivateKey => "REDACTED_RECAPTCHA_PRIVATE_KEY";
+
+        //FedEx
+        public const string FEDEXKey = "REDACTED_FEDEX_KEY";
+        public const string Password = "REDACTED_FEDEX_PASSWORD";
+        public const string AccountNumber = "912164489";
+        public const string MeterNumber = "258554998";
+        public const string FEDEXUrl = "https://ws.fedex.com:443/web-services";
+
+        //Square
+        public static string IntegrationId => "";
+        public static string ApplicationId => "REDACTED_SQUARE_APP_ID";
+        public static string AccessToken => "REDACTED_SQUARE_ACCESS_TOKEN";
+        public static string LocationId => "REDACTED_SQUARE_LOCATION_ID";
         #endregion
 
         #endregion

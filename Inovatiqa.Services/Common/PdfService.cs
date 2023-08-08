@@ -250,17 +250,32 @@ namespace Inovatiqa.Services.Common
                 {
                     var orderShippingInclTaxInCustomerCurrency = order.OrderShippingInclTax;
 
+                    var shipment = _shipmentService.GetShipmentById(shipmentId);
+                    var shipmentItems = _shipmentService.GetShipmentItemsByShipmentId(shipmentId);
+
+                    int? firstShipmentId = _shipmentService.GetShipmentsByOrderId(order.Id).OrderBy(s => s.Id).FirstOrDefault()?.Id;
+
                     var orderShippingInclTaxStr = _priceFormatter.FormatPrice(orderShippingInclTaxInCustomerCurrency);
 
                     if (shipmentId != 0)
                     {
                         order.OrderSubtotalInclTax += orderShippingInclTaxInCustomerCurrency;
                     }
-
-                    var p = GetPdfCell($"{"Shipping:"} {orderShippingInclTaxStr}", font);
-                    p.HorizontalAlignment = Element.ALIGN_RIGHT;
-                    p.Border = Rectangle.NO_BORDER;
-                    totalsTable.AddCell(p);
+                    
+                    if(firstShipmentId == shipment.Id)
+                    {
+                        var p = GetPdfCell($"{"Shipping:"} {orderShippingInclTaxStr}", font);
+                        p.HorizontalAlignment = Element.ALIGN_RIGHT;
+                        p.Border = Rectangle.NO_BORDER;
+                        totalsTable.AddCell(p);
+                    }
+                    else
+                    {
+                        var p = GetPdfCell($"{"Shipping:"} {_priceFormatter.FormatPrice(0)}", font);
+                        p.HorizontalAlignment = Element.ALIGN_RIGHT;
+                        p.Border = Rectangle.NO_BORDER;
+                        totalsTable.AddCell(p);
+                    }
                 }
                 else
                 {
@@ -375,7 +390,14 @@ namespace Inovatiqa.Services.Common
 
             if(shipmentId != 0)
             {
-                orderTotalInCustomerCurrency = order.OrderSubtotalInclTax;
+                if(_shipmentService.GetShipmentsByOrderId(order.Id).OrderBy(s => s.Id).FirstOrDefault()?.Id == shipmentId)
+                {
+                    orderTotalInCustomerCurrency = order.OrderSubtotalInclTax;
+                }
+                else
+                {
+                    orderTotalInCustomerCurrency = order.OrderSubtotalInclTax - order.OrderShippingInclTax;
+                }
             }
 
             var orderTotalStr = _priceFormatter.FormatPrice(orderTotalInCustomerCurrency);

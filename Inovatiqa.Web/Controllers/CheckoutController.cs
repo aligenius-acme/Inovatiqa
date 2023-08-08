@@ -14,6 +14,7 @@ using Inovatiqa.Services.Payments;
 using Inovatiqa.Services.Payments.Interfaces;
 using Inovatiqa.Services.Shipping.Interfaces;
 using Inovatiqa.Services.WorkContext.Interfaces;
+using Inovatiqa.Web.Areas.Admin.Infrastructure.Mapper.Extensions;
 using Inovatiqa.Web.Extensions;
 using Inovatiqa.Web.Factories.Interfaces;
 using Inovatiqa.Web.Models.Catalog;
@@ -623,6 +624,7 @@ namespace Inovatiqa.Web.Controllers
                 return Challenge();
 
             var model = _checkoutModelFactory.PrepareOnePageCheckoutModel(cart);
+            model.IsB2BAndPOCustomer = _customerService.IsB2B(customer) && _customerService.IsPO(customer);
             return View(model);
         }
 

@@ -222,7 +222,8 @@ namespace Inovatiqa.Web.Controllers
                             var ammountpaid = shipment.AmountPaid;
                             var OrderTotalPaid = _shipmentService.GetShipmentsByOrderId(shipment.OrderId).Sum(s => s.AmountPaid);
                             var order = _orderService.GetOrderById(shipment.OrderId);
-                            order.PaymentStatusId = order.OrderSubtotalInclTax == OrderTotalPaid ? (int)PaymentStatus.Paid : (int)PaymentStatus.PartiallyPaid;
+                            // Added Shipping Cost by Ali Ahmad in order totals
+                            order.PaymentStatusId = order.OrderSubtotalInclTax + order.OrderShippingInclTax == OrderTotalPaid ? (int)PaymentStatus.Paid : (int)PaymentStatus.PartiallyPaid;
                             _orderService.UpdateOrder(order);
                             foreach (var error in processPaymentResult.Errors)
                             {

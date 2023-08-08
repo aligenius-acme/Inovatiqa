@@ -1442,6 +1442,15 @@ namespace Inovatiqa.Web.Areas.Admin.Controllers
             if (vendor != null && !HasAccessToOrder(order))
                 return RedirectToAction("List");
 
+            // Added by Ali Ahmad to add up Shipping Cost
+
+            var orderShipments = _shipmentService.GetShipmentsByOrderId(order.Id);
+            decimal shippingCost = order.OrderShippingInclTax;
+            if (orderShipments.Any())
+                shippingCost = 0;       // if user have any other shipments against the order, the shipping cost will not be charged. It will only be charged on first shipment.
+
+            // End of code added by Ali Ahmad
+
             var orderItems = _orderService.GetOrderItems(order.Id, isShipEnabled: true);
 
             if (vendor != null)
@@ -1544,7 +1553,7 @@ namespace Inovatiqa.Web.Areas.Admin.Controllers
             if (shipmentItems.Any())
             {
                 shipment.TotalWeight = totalWeight;
-                shipment.TotalAmount = totalAmount;
+                shipment.TotalAmount = totalAmount + shippingCost;
 
                 if(_customerService.IsB2B(customer) == false)
                 {
