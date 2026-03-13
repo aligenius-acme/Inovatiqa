@@ -1019,7 +1019,7 @@ namespace Inovatiqa.Core
 
         public const int DefaultPackageType = 0;
 
-        public const string CarrierServicesOffered = "FEDEX_1_DAY_FREIGHT:FEDEX_2_DAY:FEDEX_2_DAY_FREIGHT:FEDEX_3_DAY_FREIGHT:FEDEX_GROUND:FIRST_OVERNIGHT:";
+        public const string CarrierServicesOffered = "FEDEX_1_DAY_FREIGHT:FEDEX_2_DAY:FEDEX_2_DAY_FREIGHT:FEDEX_3_DAY_FREIGHT:FEDEX_GROUND:FIRST_OVERNIGHT:PRIORITY_OVERNIGHT:STANDARD_OVERNIGHT:FEDEX_2_DAY_AM:FEDEX_EXPRESS_SAVER";
 
         public const bool ApplyDiscounts = false;
 
@@ -1767,21 +1767,21 @@ namespace Inovatiqa.Core
         public static string StoreUrl => "https://app-inovatiqa-prod-01.azurewebsites.net/";
 
         //Google Captcha
-        public static string CaptchaSiteKey => "REDACTED_RECAPTCHA_SITE_KEY";
-        public static string CaptchaPrivateKey => "REDACTED_RECAPTCHA_PRIVATE_KEY";
+        public static string CaptchaSiteKey => "YOUR_RECAPTCHA_SITE_KEY";
+        public static string CaptchaPrivateKey => "YOUR_RECAPTCHA_PRIVATE_KEY";
 
         //FedEx
-        public const string FEDEXKey = "REDACTED_FEDEX_KEY";
-        public const string Password = "REDACTED_FEDEX_PASSWORD";
-        public const string AccountNumber = "912164489";
-        public const string MeterNumber = "258554998";
+        public const string FEDEXKey = "YOUR_FEDEX_KEY";
+        public const string Password = "YOUR_FEDEX_PASSWORD";
+        public const string AccountNumber = "YOUR_FEDEX_ACCOUNT_NUMBER";
+        public const string MeterNumber = "YOUR_FEDEX_METER_NUMBER";
         public const string FEDEXUrl = "https://ws.fedex.com:443/web-services";
 
         //Square
         public static string IntegrationId => "";
-        public static string ApplicationId => "REDACTED_SQUARE_APP_ID";
-        public static string AccessToken => "REDACTED_SQUARE_ACCESS_TOKEN";
-        public static string LocationId => "REDACTED_SQUARE_LOCATION_ID";
+        public static string ApplicationId => "YOUR_SQUARE_APPLICATION_ID";
+        public static string AccessToken => "YOUR_SQUARE_ACCESS_TOKEN";
+        public static string LocationId => "YOUR_SQUARE_LOCATION_ID";
         #endregion
 
         #endregion
